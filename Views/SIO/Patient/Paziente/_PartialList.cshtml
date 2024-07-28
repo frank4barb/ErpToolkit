@@ -1,0 +1,252 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.Patient.Paziente>
+@{
+    ViewData["Title"] = "Paziente List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PaCodFiscale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaCodSanitario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaNome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaCognome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaSesso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaDataNascita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaOraNascita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaIdComuneNascita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaIdNazioneNascita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaIdCittadinanza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaIndirizzoRes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaNumCivicoRes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaCapRes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaIdComuneRes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaIdDistrettoRes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaIdNazioneDom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaMail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaIndirizzoDom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaNumCivicoDom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaCapDom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaIdComuneDom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaTelefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaCellulare)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaIdDistrettoDom)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaDataDecesso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaOraDecesso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaIdNazioneRes)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaCodFiscale)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaCodSanitario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaNome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaCognome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaSesso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaDataNascita)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaOraNascita)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaIdComuneNascita)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaIdNazioneNascita)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaIdCittadinanza)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaIndirizzoRes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaNumCivicoRes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaCapRes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaIdComuneRes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaIdDistrettoRes)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaIdNazioneDom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaMail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaIndirizzoDom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaNumCivicoDom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaCapDom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaIdComuneDom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaTelefono)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaCellulare)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaIdDistrettoDom)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaDataDecesso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaOraDecesso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PaIdNazioneRes)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Paziente/Edit','@Html.DisplayFor(modelItem => item.Pa1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Paziente/Alert','@Html.DisplayFor(modelItem => item.Pa1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "PaCodFiscale", "name": "PaCodFiscale", "title": "Cod Fiscale", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaCodSanitario", "name": "PaCodSanitario", "title": "Cod Sanitario", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaNome", "name": "PaNome", "title": "Nome", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaCognome", "name": "PaCognome", "title": "Cognome", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaSesso", "name": "PaSesso", "title": "Sesso", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaDataNascita", "name": "PaDataNascita", "title": "Data Nascita", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaOraNascita", "name": "PaOraNascita", "title": "Ora Nascita", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaIdComuneNascita", "name": "PaIdComuneNascita", "title": "Id Comune Nascita", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaIdNazioneNascita", "name": "PaIdNazioneNascita", "title": "Id Nazione Nascita", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaIdCittadinanza", "name": "PaIdCittadinanza", "title": "Id Cittadinanza", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaIndirizzoRes", "name": "PaIndirizzoRes", "title": "Indirizzo Res", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaNumCivicoRes", "name": "PaNumCivicoRes", "title": "Num Civico Res", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaCapRes", "name": "PaCapRes", "title": "Cap Res", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaIdComuneRes", "name": "PaIdComuneRes", "title": "Id Comune Res", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaIdDistrettoRes", "name": "PaIdDistrettoRes", "title": "Id Distretto Res", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaIdNazioneDom", "name": "PaIdNazioneDom", "title": "Id Nazione Dom", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaMail", "name": "PaMail", "title": "Mail", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaIndirizzoDom", "name": "PaIndirizzoDom", "title": "Indirizzo Dom", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaNumCivicoDom", "name": "PaNumCivicoDom", "title": "Num Civico Dom", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaCapDom", "name": "PaCapDom", "title": "Cap Dom", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaIdComuneDom", "name": "PaIdComuneDom", "title": "Id Comune Dom", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaTelefono", "name": "PaTelefono", "title": "Telefono", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaCellulare", "name": "PaCellulare", "title": "Cellulare", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaIdDistrettoDom", "name": "PaIdDistrettoDom", "title": "Id Distretto Dom", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaNote", "name": "PaNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaDataDecesso", "name": "PaDataDecesso", "title": "Data Decesso", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaOraDecesso", "name": "PaOraDecesso", "title": "Ora Decesso", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PaIdNazioneRes", "name": "PaIdNazioneRes", "title": "Id Nazione Res", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Paziente/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

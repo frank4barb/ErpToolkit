@@ -1,0 +1,161 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.Act.Attivita>
+@{
+    ViewData["Title"] = "Attivita List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AvCodice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvDescrizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvFiltroRegimeErogazione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvCostoMedio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvIdGruppo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvAttivitaPreferenziale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvDurataValidita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvDurataMedia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvInEvidenza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvIdTipoAttivita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvRoutine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvNoteEstese)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvAttributi1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AvAttributi2)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvCodice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvDescrizione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvFiltroRegimeErogazione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvCostoMedio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvIdGruppo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvAttivitaPreferenziale)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvDurataValidita)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvDurataMedia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvInEvidenza)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvIdTipoAttivita)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvRoutine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvNoteEstese)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvAttributi1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvAttributi2)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Attivita/Edit','@Html.DisplayFor(modelItem => item.Av1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Attivita/Alert','@Html.DisplayFor(modelItem => item.Av1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "AvCodice", "name": "AvCodice", "title": "Codice", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AvDescrizione", "name": "AvDescrizione", "title": "Descrizione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AvNote", "name": "AvNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AvFiltroRegimeErogazione", "name": "AvFiltroRegimeErogazione", "title": "Filtro Regime Erogazione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AvCostoMedio", "name": "AvCostoMedio", "title": "Costo Medio", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AvIdGruppo", "name": "AvIdGruppo", "title": "Id Gruppo", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AvAttivitaPreferenziale", "name": "AvAttivitaPreferenziale", "title": "Attivita Preferenziale", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AvDurataValidita", "name": "AvDurataValidita", "title": "Durata Validita", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AvDurataMedia", "name": "AvDurataMedia", "title": "Durata Media", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AvInEvidenza", "name": "AvInEvidenza", "title": "In Evidenza", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AvIdTipoAttivita", "name": "AvIdTipoAttivita", "title": "Id Tipo Attivita", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AvRoutine", "name": "AvRoutine", "title": "Routine", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AvNoteEstese", "name": "AvNoteEstese", "title": "Note Estese", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AvAttributi1", "name": "AvAttributi1", "title": "Attributi1", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AvAttributi2", "name": "AvAttributi2", "title": "Attributi2", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Attivita/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

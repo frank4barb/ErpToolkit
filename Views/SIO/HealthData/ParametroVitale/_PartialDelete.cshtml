@@ -1,0 +1,94 @@
+﻿@model ErpToolkit.Models.SIO.HealthData.ParametroVitale
+@{
+    ViewData["Title"] = "ParametroVitale Delete";
+}
+<div class="modal-dialog" role="document">
+    @Html.AntiForgeryToken()
+    <!--GESTISCE AZIONI CLICK PULSANTE-->
+    @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+    @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+    @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                Sei proprio sicuro di voler cancellare il seguente record?
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PvClasse, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PvClasse, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PvIdPaziente, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PvIdPaziente, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PvIdEpisodio, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PvIdEpisodio, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PvIdTipoDatoClinico, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PvIdTipoDatoClinico, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PvValoreMinimo, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PvValoreMinimo, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PvValoreMassimo, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PvValoreMassimo, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PvValoreScelta, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PvValoreScelta, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PvValoreTesto, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PvValoreTesto, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PvNote, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PvNote, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PvCodiceReferto, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PvCodiceReferto, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PvDataAcquisizione, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PvDataAcquisizione, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PvOraAcquisizione, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PvOraAcquisizione, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PvStatoDatoClinico, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PvStatoDatoClinico, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PvDataValidazione, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PvDataValidazione, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PvOraValidazione, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PvOraValidazione, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PvSequenza, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PvSequenza, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <br />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+            <button type="button" class="btn btn-primary" onclick='updateModalWithContent("DeleteModale","/ParametroVitale/Delete",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Elimina</button>
+        </div>
+    </div>
+</div>

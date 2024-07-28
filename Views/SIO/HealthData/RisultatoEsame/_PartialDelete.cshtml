@@ -1,0 +1,94 @@
+﻿@model ErpToolkit.Models.SIO.HealthData.RisultatoEsame
+@{
+    ViewData["Title"] = "RisultatoEsame Delete";
+}
+<div class="modal-dialog" role="document">
+    @Html.AntiForgeryToken()
+    <!--GESTISCE AZIONI CLICK PULSANTE-->
+    @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+    @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+    @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                Sei proprio sicuro di voler cancellare il seguente record?
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReClasse, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReClasse, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReIdPaziente, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReIdPaziente, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReIdTipoDatoClinico, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReIdTipoDatoClinico, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReIdGruppoDatoClinico, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReIdGruppoDatoClinico, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReValoreMinimo, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReValoreMinimo, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReValoreMassimo, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReValoreMassimo, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReValoreScelta, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReValoreScelta, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReValoreTesto, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReValoreTesto, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReNote, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReNote, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReCodiceReferto, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReCodiceReferto, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReDataAcquisizione, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReDataAcquisizione, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReOraAcquisizione, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReOraAcquisizione, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReStatoDatoClinico, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReStatoDatoClinico, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReDataValidazione, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReDataValidazione, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReOraValidazione, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReOraValidazione, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ReSequenza, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReSequenza, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <br />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+            <button type="button" class="btn btn-primary" onclick='updateModalWithContent("DeleteModale","/RisultatoEsame/Delete",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Elimina</button>
+        </div>
+    </div>
+</div>

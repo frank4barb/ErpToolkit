@@ -1,0 +1,38 @@
+@using ErpToolkit.Extensions
+
+
+@model ErpToolkit.Controllers.HomeController.User
+
+
+
+
+<div class="panel panel-primary">
+    <div class="panel-body">
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true)
+@*                 @Html.MyHtmlHelperRow(model => model.ShortDistrictName)
+                @Html.MyHtmlHelperRowSaveButton(model => model.Id)
+ *@            </div>
+            <div class="form-horizontal">
+                <h4>Notes</h4>
+                @Html.Raw("Note")
+            </div>
+        }
+    </div>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+@Html.ErpCarousel(["/images/alert-box.jpg",
+"/images/alert-box-usage.jpg",
+"/images/fluent-api-set-attributes.jpg",
+"/images/fluent-api-set-style.jpg",
+"/images/markup-details.jpg",
+"/images/parameter-breakdown.jpg"])

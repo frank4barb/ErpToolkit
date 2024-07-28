@@ -1,0 +1,189 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.Resource.Farmaco>
+@{
+    ViewData["Title"] = "Farmaco List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FmCodice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmDescrizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmIdTipoRisorsa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmCostoUnitarioUso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmMisuraUnitariaUso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmDisponibilita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmQuantitaDisponibile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmQuantitaMinimaMagazzino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmUsoMedioGiornaliero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmDataUltimoOrdine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmQuantitaUltimoOrdine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmDataProssimoOrdine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmQuantitaMediaOrdine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmRiferimentiFornitore)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmCodiceNazionale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmCodiceAic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmDataInizioAutorizzazione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FmDataFineAutorizzazione)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmCodice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmDescrizione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmIdTipoRisorsa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmCostoUnitarioUso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmMisuraUnitariaUso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmDisponibilita)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmQuantitaDisponibile)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmQuantitaMinimaMagazzino)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmUsoMedioGiornaliero)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmDataUltimoOrdine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmQuantitaUltimoOrdine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmDataProssimoOrdine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmQuantitaMediaOrdine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmRiferimentiFornitore)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmCodiceNazionale)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmCodiceAic)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmDataInizioAutorizzazione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FmDataFineAutorizzazione)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Farmaco/Edit','@Html.DisplayFor(modelItem => item.Fm1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Farmaco/Alert','@Html.DisplayFor(modelItem => item.Fm1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "FmCodice", "name": "FmCodice", "title": "Codice", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmDescrizione", "name": "FmDescrizione", "title": "Descrizione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmIdTipoRisorsa", "name": "FmIdTipoRisorsa", "title": "Id Tipo Risorsa", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmCostoUnitarioUso", "name": "FmCostoUnitarioUso", "title": "Costo Unitario Uso", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmMisuraUnitariaUso", "name": "FmMisuraUnitariaUso", "title": "Misura Unitaria Uso", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmNote", "name": "FmNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmDisponibilita", "name": "FmDisponibilita", "title": "Disponibilita", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmQuantitaDisponibile", "name": "FmQuantitaDisponibile", "title": "Quantita Disponibile", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmQuantitaMinimaMagazzino", "name": "FmQuantitaMinimaMagazzino", "title": "Quantita Minima Magazzino", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmUsoMedioGiornaliero", "name": "FmUsoMedioGiornaliero", "title": "Uso Medio Giornaliero", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmDataUltimoOrdine", "name": "FmDataUltimoOrdine", "title": "Data Ultimo Ordine", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmQuantitaUltimoOrdine", "name": "FmQuantitaUltimoOrdine", "title": "Quantita Ultimo Ordine", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmDataProssimoOrdine", "name": "FmDataProssimoOrdine", "title": "Data Prossimo Ordine", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmQuantitaMediaOrdine", "name": "FmQuantitaMediaOrdine", "title": "Quantita Media Ordine", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmRiferimentiFornitore", "name": "FmRiferimentiFornitore", "title": "Riferimenti Fornitore", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmCodiceNazionale", "name": "FmCodiceNazionale", "title": "Codice Nazionale", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmCodiceAic", "name": "FmCodiceAic", "title": "Codice Aic", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmDataInizioAutorizzazione", "name": "FmDataInizioAutorizzazione", "title": "Data Inizio Autorizzazione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "FmDataFineAutorizzazione", "name": "FmDataFineAutorizzazione", "title": "Data Fine Autorizzazione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Farmaco/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

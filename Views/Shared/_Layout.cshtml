@@ -1,0 +1,165 @@
+@using ErpToolkit.Extensions
+
+@model ErpToolkit.Controllers.ControllerErp
+
+@{
+    //ErpToolkit.Models.InputLogin? _login = ViewData["_Login"] as ErpToolkit.Models.InputLogin;
+    ErpToolkit.Models.InputLogin _login = new ErpToolkit.Models.InputLogin();
+    if (Model != null) _login = @Model.Input2;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ErpToolkit</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" asp-append-version="true" />
+<!--link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui.min.css" asp-append-version="true" /-->
+<!--link rel="stylesheet" href="~/lib/jquery-ui/styles.css" asp-append-version="true" /-->
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ErpToolkit.styles.css" asp-append-version="true" />
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<!--script src="~/lib/jquery-ui/jquery-ui.min.js"></script-->
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Shared" asp-action="Index">ErpToolkit</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Shared" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Shared" asp-action="Privacy">Privacy</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Shared" asp-action="Mermaid">Mermaid</a>
+                            </li>
+                            <li class="nav-item">
+                                <!--a class="nav-link text-dark" asp-area="" asp-controller="Datatable" asp-action="Table">Table</a-->
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Shared" asp-action="Table">Table</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Datatable" asp-action="Table">Direct Table</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Shared" asp-action="ERModel">ERModel</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Attivita" asp-action="Index">Direct Attivita</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Episodio" asp-action="Index">Direct Episodio</a>
+                            </li>
+                        </ul>
+
+
+ @*                        @using (Html.BeginForm("Login", "Shared", FormMethod.Post))
+                        {
+                            <!--input type="submit" value="Login" class="btn btn-default" /-->
+                            <button type="submit" class="btn btn-primary">Logout @User.Identity?.Name</button>
+                        }
+ *@
+
+                    }
+                    else
+                    {
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Shared" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Shared" asp-action="Privacy">Privacy</a>
+                            </li>
+                            <li class="nav-item">
+                                <!--a class="nav-link text-dark" asp-area="" asp-controller="Datatable" asp-action="Table">Table</a-->
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Shared" asp-action="Table">Table</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Datatable" asp-action="Table">Direct Table</a>
+                            </li>
+                        </ul>
+
+ @*                        @using (Html.BeginForm("CheckLoginX", "Home", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            <table cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td valign="bottom">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => _login.Matricola, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => _login.Matricola, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => _login.Matricola, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td valign="bottom">
+                                        <div class="form-group">
+                                            @Html.LabelFor(model => _login.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => _login.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => _login.Password, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td valign="bottom">
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                <!--input type="submit" value="Login" class="btn btn-default" /-->
+                                                <button type="submit" class="btn btn-primary">Login</button>
+
+                                                <!--button-- type="button" class="btn btn-primary" onclick='updateModalWithContent("","/Home/Index",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(_login)))'>Salva</!--button-->
+
+
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        }
+ *@
+
+                    }
+                    @{
+                        await Html.RenderPartialAsync("_PartialLogout", _login);
+                    }
+
+
+
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2024 - ErpToolkit - <a asp-area="" asp-controller="Shared" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    @await RenderSectionAsync("Scripts", required: false)
+    @Html.RenderPartialViewScripts()
+</body>
+</html>

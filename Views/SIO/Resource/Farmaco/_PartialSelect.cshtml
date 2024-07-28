@@ -1,0 +1,117 @@
+﻿@model ErpToolkit.Models.SIO.Resource.SelFarmaco
+@{
+    ViewData["Title"] = "Farmaco Select";
+}
+<div class="row justify-content-start align-items-end">
+    @using (Html.BeginForm("Index", "Farmaco", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <!--GESTISCE AZIONI CLICK PULSANTE-->
+        @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+        @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+        @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+        <div class="container">
+            <div class="row justify-content-between align-items-end">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label asp-for="FmCodice" class="control-label"></label>
+                    <input asp-for="FmCodice" class="form-control" />
+                    <span asp-validation-for="FmCodice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmDescrizione" class="control-label"></label>
+                    <input asp-for="FmDescrizione" class="form-control" />
+                    <span asp-validation-for="FmDescrizione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmIdTipoRisorsa" class="control-label"></label>
+                    <input asp-for="FmIdTipoRisorsa" class="form-control" />
+                    <span asp-validation-for="FmIdTipoRisorsa" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmCostoUnitarioUso" class="control-label"></label>
+                    <input asp-for="FmCostoUnitarioUso" class="form-control" />
+                    <span asp-validation-for="FmCostoUnitarioUso" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmMisuraUnitariaUso" class="control-label"></label>
+                    <input asp-for="FmMisuraUnitariaUso" class="form-control" />
+                    <span asp-validation-for="FmMisuraUnitariaUso" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmNote" class="control-label"></label>
+                    <input asp-for="FmNote" class="form-control" />
+                    <span asp-validation-for="FmNote" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmDisponibilita" class="control-label"></label>
+                    <input asp-for="FmDisponibilita" class="form-control" />
+                    <span asp-validation-for="FmDisponibilita" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmQuantitaDisponibile" class="control-label"></label>
+                    <input asp-for="FmQuantitaDisponibile" class="form-control" />
+                    <span asp-validation-for="FmQuantitaDisponibile" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmQuantitaMinimaMagazzino" class="control-label"></label>
+                    <input asp-for="FmQuantitaMinimaMagazzino" class="form-control" />
+                    <span asp-validation-for="FmQuantitaMinimaMagazzino" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmUsoMedioGiornaliero" class="control-label"></label>
+                    <input asp-for="FmUsoMedioGiornaliero" class="form-control" />
+                    <span asp-validation-for="FmUsoMedioGiornaliero" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmDataUltimoOrdine" class="control-label"></label>
+                    <input asp-for="FmDataUltimoOrdine" class="form-control" />
+                    <span asp-validation-for="FmDataUltimoOrdine" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmQuantitaUltimoOrdine" class="control-label"></label>
+                    <input asp-for="FmQuantitaUltimoOrdine" class="form-control" />
+                    <span asp-validation-for="FmQuantitaUltimoOrdine" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmDataProssimoOrdine" class="control-label"></label>
+                    <input asp-for="FmDataProssimoOrdine" class="form-control" />
+                    <span asp-validation-for="FmDataProssimoOrdine" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmQuantitaMediaOrdine" class="control-label"></label>
+                    <input asp-for="FmQuantitaMediaOrdine" class="form-control" />
+                    <span asp-validation-for="FmQuantitaMediaOrdine" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmRiferimentiFornitore" class="control-label"></label>
+                    <input asp-for="FmRiferimentiFornitore" class="form-control" />
+                    <span asp-validation-for="FmRiferimentiFornitore" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmCodiceNazionale" class="control-label"></label>
+                    <input asp-for="FmCodiceNazionale" class="form-control" />
+                    <span asp-validation-for="FmCodiceNazionale" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmCodiceAic" class="control-label"></label>
+                    <input asp-for="FmCodiceAic" class="form-control" />
+                    <span asp-validation-for="FmCodiceAic" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmDataInizioAutorizzazione" class="control-label"></label>
+                    <input asp-for="FmDataInizioAutorizzazione" class="form-control" />
+                    <span asp-validation-for="FmDataInizioAutorizzazione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FmDataFineAutorizzazione" class="control-label"></label>
+                    <input asp-for="FmDataFineAutorizzazione" class="form-control" />
+                    <span asp-validation-for="FmDataFineAutorizzazione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <p></p><input type="submit" value="Ricarica" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+</div>

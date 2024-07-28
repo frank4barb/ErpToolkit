@@ -1,0 +1,52 @@
+@using ErpToolkit.Extensions
+
+@model ErpToolkit.Controllers.HomeController
+@{
+    ViewData["Title"] = "Mermaid";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>https://mermaid.js.org/syntax/entityRelationshipDiagram.html</p>
+
+<pre class="mermaid">
+            graph LR 
+            A --- B 
+            B-->C[fa:fa-ban forbidden] 
+            B-->D(fa:fa-spinner);
+    </pre>
+<pre class="mermaid">
+            graph TD 
+            A[<a href="/Attivita">Attivita</a>] --> B[Load Balancer] 
+            B --> C[Server1] 
+            B --> D[Server2]
+    </pre>
+<pre class="mermaid">
+            graph TD 
+            Aa[<a href="/Attivita">Attivita</a>] --> Ay[Load Balancer] 
+            Ay[Load Balancer] --> Zr[Server1] 
+            Ay[Load Balancer] --> Zq[Server2]
+    </pre>
+<pre class="mermaid">
+            ---
+            title: Order example
+            ---
+            erDiagram
+                <a href="/TipoAttivita">TipoAttivita</a> ||--o{ <a href="Prestazione">Prestazione</a> : IdTipoAttivita 
+                <a href="/Attivita">Attivita</a> ||--o{ <a href="Prestazione">Prestazione</a> : IdAttivitaRichiesta 
+                <a href="/Attivita">Attivita</a> ||--o{ <a href="Prestazione">Prestazione</a> : IdAttivitaEseguita 
+        </pre>
+
+@* @Html.Script(@<script src="~/lib/Mermaid.js"></script>) *@
+@* @Html.Script(
+    @<script type="module">
+             import mermaid from '/lib/mermaid@10/dist/mermaid.esm.min.mjs';
+             mermaid.initialize({ startOnLoad: true });
+    </script>
+    ) *@
+@Html.Script(
+    @<script type="module">
+             import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+             mermaid.initialize({ startOnLoad: true });
+    </script>
+    )
+

@@ -1,0 +1,84 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.Common.TipoRichiesta>
+@{
+    ViewData["Title"] = "TipoRichiesta List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TiCodice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TiGruppo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TiDescrizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TiNote)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TiCodice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TiGruppo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TiDescrizione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TiNote)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/TipoRichiesta/Edit','@Html.DisplayFor(modelItem => item.Ti1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/TipoRichiesta/Alert','@Html.DisplayFor(modelItem => item.Ti1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "TiCodice", "name": "TiCodice", "title": "Codice", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "TiGruppo", "name": "TiGruppo", "title": "Gruppo", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "TiDescrizione", "name": "TiDescrizione", "title": "Descrizione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "TiNote", "name": "TiNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/TipoRichiesta/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

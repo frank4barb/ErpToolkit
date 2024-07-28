@@ -1,0 +1,174 @@
+﻿@using ErpToolkit.Extensions
+@{
+    ViewData["Title"] = "Struttura ERP Sanitario";
+}
+<h1>@ViewData["Title"]</h1>
+<p></p>
+<pre class="mermaid">
+            graph TD
+Pa[<a href="/Paziente">Paziente</a>] --> Ep[<a href="/Episodio">Episodio</a>] 
+Ep[<a href="/Episodio">Episodio</a>] --- Ric(fa:fa-spinner Ricovero) 
+Ep[<a href="/Episodio">Episodio</a>] --- Dh(fa:fa-spinner Day Hospital) 
+Ep[<a href="/Episodio">Episodio</a>] --- Amb(fa:fa-spinner Ambulatoriale) 
+Ep[<a href="/Episodio">Episodio</a>] --- AP(fa:fa-spinner Attività Privata) 
+Ep[<a href="/Episodio">Episodio</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Cp[<a href="/Campione">Campione</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+RIS[Risorse: <a href="/Farmaco">Farmaco</a>, <a href="/Attrezzatura">Attrezzatura</a>, <a href="/Sala">Sala</a>, <a href="/Materiale">Materiale</a>, <a href="/Personale">Personale</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Pr[<a href="/Prestazione">Prestazione</a>] --> HRI[Dati Clinici: <a href="/RisultatoEsame">RisultatoEsame</a>, <a href="/StatoSalute">StatoSalute</a>, <a href="/DocumentoClinico">DocumentoClinico</a>, <a href="/ParametroVitale">ParametroVitale</a>] 
+Pr[<a href="/Prestazione">Prestazione</a>] --> FAT[Dati di Fatturazione e Convenzioni] 
+</pre> 
+<p></p>
+<h3>Attività</h3>
+<pre class="mermaid">
+            graph TD
+Ta[<a href="/TipoAttivita">TipoAttivita</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Av[<a href="/Attivita">Attivita</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Av[<a href="/Attivita">Attivita</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Pr[<a href="/Prestazione">Prestazione</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Pa[<a href="/Paziente">Paziente</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Ep[<a href="/Episodio">Episodio</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Te[<a href="/TipoEpisodio">TipoEpisodio</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Ri[<a href="/Richiesta">Richiesta</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Pr[<a href="/Prestazione">Prestazione</a>] 
+Av[<a href="/Attivita">Attivita</a>] --> Av[<a href="/Attivita">Attivita</a>] 
+Ta[<a href="/TipoAttivita">TipoAttivita</a>] --> Av[<a href="/Attivita">Attivita</a>] 
+Cp[<a href="/Campione">Campione</a>] --> Pc(fa:fa-spinner) 
+Pr[<a href="/Prestazione">Prestazione</a>] --> Pc(fa:fa-spinner) 
+Tp[<a href="/TipoCampione">TipoCampione</a>] --> Pc(fa:fa-spinner) 
+Pr[<a href="/Prestazione">Prestazione</a>] --> Pu(fa:fa-spinner) 
+Ts[<a href="/TipoRisorsa">TipoRisorsa</a>] --> Pu(fa:fa-spinner) 
+Pe[<a href="/Personale">Personale</a>] --> Pu(fa:fa-spinner) 
+Mt[<a href="/Materiale">Materiale</a>] --> Pu(fa:fa-spinner) 
+At[<a href="/Attrezzatura">Attrezzatura</a>] --> Pu(fa:fa-spinner) 
+Sa[<a href="/Sala">Sala</a>] --> Pu(fa:fa-spinner) 
+Fm[<a href="/Farmaco">Farmaco</a>] --> Pu(fa:fa-spinner) 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Oo(fa:fa-spinner) 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Oo(fa:fa-spinner) 
+Av[<a href="/Attivita">Attivita</a>] --> Ac(fa:fa-spinner) 
+Tp[<a href="/TipoCampione">TipoCampione</a>] --> Ac(fa:fa-spinner) 
+Av[<a href="/Attivita">Attivita</a>] --> Ar(fa:fa-spinner) 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Ar(fa:fa-spinner) 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Ar(fa:fa-spinner) 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Ar(fa:fa-spinner) 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Ar(fa:fa-spinner) 
+Av[<a href="/Attivita">Attivita</a>] --> Au(fa:fa-spinner) 
+Ts[<a href="/TipoRisorsa">TipoRisorsa</a>] --> Au(fa:fa-spinner) 
+Pe[<a href="/Personale">Personale</a>] --> Au(fa:fa-spinner) 
+Mt[<a href="/Materiale">Materiale</a>] --> Au(fa:fa-spinner) 
+At[<a href="/Attrezzatura">Attrezzatura</a>] --> Au(fa:fa-spinner) 
+Sa[<a href="/Sala">Sala</a>] --> Au(fa:fa-spinner) 
+Fm[<a href="/Farmaco">Farmaco</a>] --> Au(fa:fa-spinner) 
+Au[<a href="/RelAttivitaUsa">RelAttivitaUsa</a>] --> Au(fa:fa-spinner) 
+Tp[<a href="/TipoCampione">TipoCampione</a>] --> Cp[<a href="/Campione">Campione</a>] 
+Ep[<a href="/Episodio">Episodio</a>] --> Cp[<a href="/Campione">Campione</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Cp[<a href="/Campione">Campione</a>] 
+Av[<a href="/Attivita">Attivita</a>] --> Ae(fa:fa-spinner) 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Ae(fa:fa-spinner) 
+Ta[<a href="/TipoAttivita">TipoAttivita</a>] --> Ta[<a href="/TipoAttivita">TipoAttivita</a>] 
+Tz[<a href="/TipoOrganizzazione">TipoOrganizzazione</a>] --> Tz[<a href="/TipoOrganizzazione">TipoOrganizzazione</a>] 
+Av[<a href="/Attivita">Attivita</a>] --> Aa(fa:fa-spinner) 
+Av[<a href="/Attivita">Attivita</a>] --> Aa(fa:fa-spinner) 
+</pre>
+<p></p>
+<h3>Dati clinici</h3>
+<pre class="mermaid">
+            graph TD
+Cc[<a href="/CategoriaDatoClinico">CategoriaDatoClinico</a>] --> Cc[<a href="/CategoriaDatoClinico">CategoriaDatoClinico</a>] 
+Pa[<a href="/Paziente">Paziente</a>] --> Re[<a href="/RisultatoEsame">RisultatoEsame</a>] 
+Cc[<a href="/CategoriaDatoClinico">CategoriaDatoClinico</a>] --> Re[<a href="/RisultatoEsame">RisultatoEsame</a>] 
+Ep[<a href="/Episodio">Episodio</a>] --> Re[<a href="/RisultatoEsame">RisultatoEsame</a>] 
+Tc[<a href="/TipoDatoClinico">TipoDatoClinico</a>] --> Re[<a href="/RisultatoEsame">RisultatoEsame</a>] 
+Cc[<a href="/CategoriaDatoClinico">CategoriaDatoClinico</a>] --> Tc[<a href="/TipoDatoClinico">TipoDatoClinico</a>] 
+Tc[<a href="/TipoDatoClinico">TipoDatoClinico</a>] --> Tc[<a href="/TipoDatoClinico">TipoDatoClinico</a>] 
+Pa[<a href="/Paziente">Paziente</a>] --> Ss[<a href="/StatoSalute">StatoSalute</a>] 
+Ep[<a href="/Episodio">Episodio</a>] --> Ss[<a href="/StatoSalute">StatoSalute</a>] 
+Tc[<a href="/TipoDatoClinico">TipoDatoClinico</a>] --> Ss[<a href="/StatoSalute">StatoSalute</a>] 
+Cc[<a href="/CategoriaDatoClinico">CategoriaDatoClinico</a>] --> Ss[<a href="/StatoSalute">StatoSalute</a>] 
+Pv[<a href="/ParametroVitale">ParametroVitale</a>] --> Pd(fa:fa-spinner) 
+Re[<a href="/RisultatoEsame">RisultatoEsame</a>] --> Pd(fa:fa-spinner) 
+Ss[<a href="/StatoSalute">StatoSalute</a>] --> Pd(fa:fa-spinner) 
+Dc[<a href="/DocumentoClinico">DocumentoClinico</a>] --> Pd(fa:fa-spinner) 
+Pr[<a href="/Prestazione">Prestazione</a>] --> Pd(fa:fa-spinner) 
+Pa[<a href="/Paziente">Paziente</a>] --> Dc[<a href="/DocumentoClinico">DocumentoClinico</a>] 
+Ep[<a href="/Episodio">Episodio</a>] --> Dc[<a href="/DocumentoClinico">DocumentoClinico</a>] 
+Tc[<a href="/TipoDatoClinico">TipoDatoClinico</a>] --> Dc[<a href="/DocumentoClinico">DocumentoClinico</a>] 
+Cc[<a href="/CategoriaDatoClinico">CategoriaDatoClinico</a>] --> Dc[<a href="/DocumentoClinico">DocumentoClinico</a>] 
+Pa[<a href="/Paziente">Paziente</a>] --> Pv[<a href="/ParametroVitale">ParametroVitale</a>] 
+Ep[<a href="/Episodio">Episodio</a>] --> Pv[<a href="/ParametroVitale">ParametroVitale</a>] 
+Tc[<a href="/TipoDatoClinico">TipoDatoClinico</a>] --> Pv[<a href="/ParametroVitale">ParametroVitale</a>] 
+Cc[<a href="/CategoriaDatoClinico">CategoriaDatoClinico</a>] --> Pv[<a href="/ParametroVitale">ParametroVitale</a>] 
+</pre>
+<p></p>
+<h3>Organizzazione ospedaliera</h3>
+<pre class="mermaid">
+            graph TD
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Ri[<a href="/Richiesta">Richiesta</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Ri[<a href="/Richiesta">Richiesta</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Ri[<a href="/Richiesta">Richiesta</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Ri[<a href="/Richiesta">Richiesta</a>] 
+Ti[<a href="/TipoRichiesta">TipoRichiesta</a>] --> Ri[<a href="/Richiesta">Richiesta</a>] 
+Pa[<a href="/Paziente">Paziente</a>] --> Ri[<a href="/Richiesta">Richiesta</a>] 
+Ep[<a href="/Episodio">Episodio</a>] --> Ri[<a href="/Richiesta">Richiesta</a>] 
+Tz[<a href="/TipoOrganizzazione">TipoOrganizzazione</a>] --> Or[<a href="/Organizzazione">Organizzazione</a>] 
+Pe[<a href="/Personale">Personale</a>] --> Or[<a href="/Organizzazione">Organizzazione</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Or[<a href="/Organizzazione">Organizzazione</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Or[<a href="/Organizzazione">Organizzazione</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Or[<a href="/Organizzazione">Organizzazione</a>] 
+</pre>
+<p></p>
+<h3>Accoglienza</h3>
+<pre class="mermaid">
+            graph TD
+Pa[<a href="/Paziente">Paziente</a>] --> Ep[<a href="/Episodio">Episodio</a>] 
+Te[<a href="/TipoEpisodio">TipoEpisodio</a>] --> Ep[<a href="/Episodio">Episodio</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Ep[<a href="/Episodio">Episodio</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Ep[<a href="/Episodio">Episodio</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Ep[<a href="/Episodio">Episodio</a>] 
+Dg[<a href="/Diagnosi">Diagnosi</a>] --> Ep[<a href="/Episodio">Episodio</a>] 
+Dg[<a href="/Diagnosi">Diagnosi</a>] --> Ep[<a href="/Episodio">Episodio</a>] 
+Pr[<a href="/Prestazione">Prestazione</a>] --> Ep[<a href="/Episodio">Episodio</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Ep[<a href="/Episodio">Episodio</a>] 
+Or[<a href="/Organizzazione">Organizzazione</a>] --> Ep[<a href="/Episodio">Episodio</a>] 
+Cm[<a href="/Comune">Comune</a>] --> Di[<a href="/Distretto">Distretto</a>] 
+Cm[<a href="/Comune">Comune</a>] --> Pa[<a href="/Paziente">Paziente</a>] 
+Nz[<a href="/Nazione">Nazione</a>] --> Pa[<a href="/Paziente">Paziente</a>] 
+Nz[<a href="/Nazione">Nazione</a>] --> Pa[<a href="/Paziente">Paziente</a>] 
+Cm[<a href="/Comune">Comune</a>] --> Pa[<a href="/Paziente">Paziente</a>] 
+Di[<a href="/Distretto">Distretto</a>] --> Pa[<a href="/Paziente">Paziente</a>] 
+Nz[<a href="/Nazione">Nazione</a>] --> Pa[<a href="/Paziente">Paziente</a>] 
+Cm[<a href="/Comune">Comune</a>] --> Pa[<a href="/Paziente">Paziente</a>] 
+Di[<a href="/Distretto">Distretto</a>] --> Pa[<a href="/Paziente">Paziente</a>] 
+Nz[<a href="/Nazione">Nazione</a>] --> Pa[<a href="/Paziente">Paziente</a>] 
+</pre>
+<p></p>
+<h3>Risorse</h3>
+<pre class="mermaid">
+            graph TD
+Ts[<a href="/TipoRisorsa">TipoRisorsa</a>] --> Fm[<a href="/Farmaco">Farmaco</a>] 
+Ts[<a href="/TipoRisorsa">TipoRisorsa</a>] --> At[<a href="/Attrezzatura">Attrezzatura</a>] 
+Ts[<a href="/TipoRisorsa">TipoRisorsa</a>] --> Sa[<a href="/Sala">Sala</a>] 
+Ts[<a href="/TipoRisorsa">TipoRisorsa</a>] --> Mt[<a href="/Materiale">Materiale</a>] 
+Ts[<a href="/TipoRisorsa">TipoRisorsa</a>] --> Pe[<a href="/Personale">Personale</a>] 
+Ts[<a href="/TipoRisorsa">TipoRisorsa</a>] --> Ts[<a href="/TipoRisorsa">TipoRisorsa</a>] 
+</pre>
+<p></p>
+<h3>Controllo di gestione</h3>
+<pre class="mermaid">
+            graph TD
+Td[<a href="/TipoDiagnosi">TipoDiagnosi</a>] --> Dg[<a href="/Diagnosi">Diagnosi</a>] 
+Dg[<a href="/Diagnosi">Diagnosi</a>] --> Dg[<a href="/Diagnosi">Diagnosi</a>] 
+Td[<a href="/TipoDiagnosi">TipoDiagnosi</a>] --> Td[<a href="/TipoDiagnosi">TipoDiagnosi</a>] 
+</pre>
+@Html.Script(
+    @<script type="module">
+             import mermaid from '/lib/mermaid@10/dist/mermaid.esm.min.mjs';
+             mermaid.initialize({ startOnLoad: true });
+    </script>
+    )

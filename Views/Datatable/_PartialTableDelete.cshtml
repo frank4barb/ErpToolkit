@@ -1,0 +1,53 @@
+@* @model ErpToolkit.Controllers.DatatableController *@
+@model ErpToolkit.Models.Customers
+
+@{
+    ViewData["Title"] = "TableDelete";
+}
+
+<div class="modal-dialog" role="document">
+    @Html.AntiForgeryToken()
+    <!--GESTISCE AZIONI CLICK PULSANTE-->
+    @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+    @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+    @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
+            <br />Cancella Record</p>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                Sei proprio sicuro di voler cancellare il seguente record?
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CompanyName, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.CompanyName, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ContactName, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ContactName, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ContactTitle, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ContactTitle, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <br />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick='updateModalWithContent("DeleteModale","/Datatable/DeleteCustomer",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Elimina</button>
+        </div>
+    </div>
+</div>
+
+
+

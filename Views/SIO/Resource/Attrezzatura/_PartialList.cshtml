@@ -1,0 +1,161 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.Resource.Attrezzatura>
+@{
+    ViewData["Title"] = "Attrezzatura List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AtCodice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AtDescrizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AtIdTipoRisorsa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AtCostoUnitarioUso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AtMisuraUnitariaUso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AtNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AtDisponibilita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AtTelefonoFornitore)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AtNumeroSeriale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AtRiferimentiAssistenza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AtTelefonoAssistenza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AtDataUltimaManutenzione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AtFrequenzaManutenzione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AtUsoMedioGiornaliero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AtDataProssimaManutenzione)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AtCodice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AtDescrizione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AtIdTipoRisorsa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AtCostoUnitarioUso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AtMisuraUnitariaUso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AtNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AtDisponibilita)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AtTelefonoFornitore)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AtNumeroSeriale)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AtRiferimentiAssistenza)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AtTelefonoAssistenza)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AtDataUltimaManutenzione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AtFrequenzaManutenzione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AtUsoMedioGiornaliero)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AtDataProssimaManutenzione)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Attrezzatura/Edit','@Html.DisplayFor(modelItem => item.At1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Attrezzatura/Alert','@Html.DisplayFor(modelItem => item.At1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "AtCodice", "name": "AtCodice", "title": "Codice", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AtDescrizione", "name": "AtDescrizione", "title": "Descrizione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AtIdTipoRisorsa", "name": "AtIdTipoRisorsa", "title": "Id Tipo Risorsa", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AtCostoUnitarioUso", "name": "AtCostoUnitarioUso", "title": "Costo Unitario Uso", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AtMisuraUnitariaUso", "name": "AtMisuraUnitariaUso", "title": "Misura Unitaria Uso", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AtNote", "name": "AtNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AtDisponibilita", "name": "AtDisponibilita", "title": "Disponibilita", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AtTelefonoFornitore", "name": "AtTelefonoFornitore", "title": "Telefono Fornitore", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AtNumeroSeriale", "name": "AtNumeroSeriale", "title": "Numero Seriale", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AtRiferimentiAssistenza", "name": "AtRiferimentiAssistenza", "title": "Riferimenti Assistenza", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AtTelefonoAssistenza", "name": "AtTelefonoAssistenza", "title": "Telefono Assistenza", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AtDataUltimaManutenzione", "name": "AtDataUltimaManutenzione", "title": "Data Ultima Manutenzione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AtFrequenzaManutenzione", "name": "AtFrequenzaManutenzione", "title": "Frequenza Manutenzione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AtUsoMedioGiornaliero", "name": "AtUsoMedioGiornaliero", "title": "Uso Medio Giornaliero", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "AtDataProssimaManutenzione", "name": "AtDataProssimaManutenzione", "title": "Data Prossima Manutenzione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Attrezzatura/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

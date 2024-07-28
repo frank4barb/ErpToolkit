@@ -1,0 +1,42 @@
+﻿@model ErpToolkit.Models.SIO.HealthData.SelCategoriaDatoClinico
+@{
+    ViewData["Title"] = "CategoriaDatoClinico Select";
+}
+<div class="row justify-content-start align-items-end">
+    @using (Html.BeginForm("Index", "CategoriaDatoClinico", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <!--GESTISCE AZIONI CLICK PULSANTE-->
+        @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+        @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+        @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+        <div class="container">
+            <div class="row justify-content-between align-items-end">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label asp-for="CcCodice" class="control-label"></label>
+                    <input asp-for="CcCodice" class="form-control" />
+                    <span asp-validation-for="CcCodice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CcDescrizione" class="control-label"></label>
+                    <input asp-for="CcDescrizione" class="form-control" />
+                    <span asp-validation-for="CcDescrizione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CcNote" class="control-label"></label>
+                    <input asp-for="CcNote" class="form-control" />
+                    <span asp-validation-for="CcNote" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CcIdGruppo" class="control-label"></label>
+                    <input asp-for="CcIdGruppo" class="form-control" />
+                    <span asp-validation-for="CcIdGruppo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <p></p><input type="submit" value="Ricarica" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+</div>

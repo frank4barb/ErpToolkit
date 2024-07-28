@@ -1,0 +1,168 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.HealthData.ParametroVitale>
+@{
+    ViewData["Title"] = "ParametroVitale List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PvClasse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvIdPaziente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvIdEpisodio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvIdTipoDatoClinico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvValoreMinimo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvValoreMassimo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvValoreScelta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvValoreTesto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvCodiceReferto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvDataAcquisizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvOraAcquisizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvStatoDatoClinico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvDataValidazione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvOraValidazione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PvSequenza)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PvClasse)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PvIdPaziente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PvIdEpisodio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PvIdTipoDatoClinico)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PvValoreMinimo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PvValoreMassimo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PvValoreScelta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PvValoreTesto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PvNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PvCodiceReferto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PvDataAcquisizione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PvOraAcquisizione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PvStatoDatoClinico)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PvDataValidazione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PvOraValidazione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PvSequenza)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/ParametroVitale/Edit','@Html.DisplayFor(modelItem => item.Pv1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/ParametroVitale/Alert','@Html.DisplayFor(modelItem => item.Pv1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "PvClasse", "name": "PvClasse", "title": "Classe", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PvIdPaziente", "name": "PvIdPaziente", "title": "Id Paziente", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PvIdEpisodio", "name": "PvIdEpisodio", "title": "Id Episodio", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PvIdTipoDatoClinico", "name": "PvIdTipoDatoClinico", "title": "Id Tipo Dato Clinico", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PvValoreMinimo", "name": "PvValoreMinimo", "title": "Valore Minimo", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PvValoreMassimo", "name": "PvValoreMassimo", "title": "Valore Massimo", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PvValoreScelta", "name": "PvValoreScelta", "title": "Valore Scelta", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PvValoreTesto", "name": "PvValoreTesto", "title": "Valore Testo", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PvNote", "name": "PvNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PvCodiceReferto", "name": "PvCodiceReferto", "title": "Codice Referto", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PvDataAcquisizione", "name": "PvDataAcquisizione", "title": "Data Acquisizione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PvOraAcquisizione", "name": "PvOraAcquisizione", "title": "Ora Acquisizione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PvStatoDatoClinico", "name": "PvStatoDatoClinico", "title": "Stato Dato Clinico", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PvDataValidazione", "name": "PvDataValidazione", "title": "Data Validazione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PvOraValidazione", "name": "PvOraValidazione", "title": "Ora Validazione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PvSequenza", "name": "PvSequenza", "title": "Sequenza", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/ParametroVitale/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

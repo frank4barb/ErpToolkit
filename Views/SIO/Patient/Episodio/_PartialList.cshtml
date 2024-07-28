@@ -1,0 +1,238 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.Patient.Episodio>
+@{
+    ViewData["Title"] = "Episodio List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EpCodEpisodio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpIdPaziente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpSesso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpIdTipoEpisodio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpStatoEpisodio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpIdUnitaIngresso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpDataInizio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpOraInizio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpDataFine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpOraFine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpCartellaPs)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpIdCorsia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpIdReparto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpLetto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpStanza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpIdDiagnosiAmmissione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpIdDiagnosiDimissione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpIdAttoAmministrativo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpDataInizioLa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpOraInizioLa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpIdRepartoLa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpDataInizioPreh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpOraInizioPreh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpIdRepartoPreh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EpFaseEpisodio)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpCodEpisodio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpIdPaziente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpSesso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpIdTipoEpisodio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpStatoEpisodio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpIdUnitaIngresso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpDataInizio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpOraInizio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpDataFine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpOraFine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpCartellaPs)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpIdCorsia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpIdReparto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpLetto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpStanza)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpIdDiagnosiAmmissione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpIdDiagnosiDimissione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpIdAttoAmministrativo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpDataInizioLa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpOraInizioLa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpIdRepartoLa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpDataInizioPreh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpOraInizioPreh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpIdRepartoPreh)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EpFaseEpisodio)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Episodio/Edit','@Html.DisplayFor(modelItem => item.Ep1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Episodio/Alert','@Html.DisplayFor(modelItem => item.Ep1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "EpCodEpisodio", "name": "EpCodEpisodio", "title": "Cod Episodio", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpIdPaziente", "name": "EpIdPaziente", "title": "Id Paziente", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpSesso", "name": "EpSesso", "title": "Sesso", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpIdTipoEpisodio", "name": "EpIdTipoEpisodio", "title": "Id Tipo Episodio", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpStatoEpisodio", "name": "EpStatoEpisodio", "title": "Stato Episodio", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpIdUnitaIngresso", "name": "EpIdUnitaIngresso", "title": "Id Unita Ingresso", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpDataInizio", "name": "EpDataInizio", "title": "Data Inizio", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpOraInizio", "name": "EpOraInizio", "title": "Ora Inizio", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpDataFine", "name": "EpDataFine", "title": "Data Fine", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpOraFine", "name": "EpOraFine", "title": "Ora Fine", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpCartellaPs", "name": "EpCartellaPs", "title": "Cartella Ps", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpIdCorsia", "name": "EpIdCorsia", "title": "Id Corsia", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpIdReparto", "name": "EpIdReparto", "title": "Id Reparto", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpLetto", "name": "EpLetto", "title": "Letto", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpStanza", "name": "EpStanza", "title": "Stanza", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpIdDiagnosiAmmissione", "name": "EpIdDiagnosiAmmissione", "title": "Id Diagnosi Ammissione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpIdDiagnosiDimissione", "name": "EpIdDiagnosiDimissione", "title": "Id Diagnosi Dimissione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpNote", "name": "EpNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpIdAttoAmministrativo", "name": "EpIdAttoAmministrativo", "title": "Id Atto Amministrativo", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpDataInizioLa", "name": "EpDataInizioLa", "title": "Data Inizio La", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpOraInizioLa", "name": "EpOraInizioLa", "title": "Ora Inizio La", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpIdRepartoLa", "name": "EpIdRepartoLa", "title": "Id Reparto La", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpDataInizioPreh", "name": "EpDataInizioPreh", "title": "Data Inizio Preh", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpOraInizioPreh", "name": "EpOraInizioPreh", "title": "Ora Inizio Preh", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpIdRepartoPreh", "name": "EpIdRepartoPreh", "title": "Id Reparto Preh", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "EpFaseEpisodio", "name": "EpFaseEpisodio", "title": "Fase Episodio", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Episodio/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

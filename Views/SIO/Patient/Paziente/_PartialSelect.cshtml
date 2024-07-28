@@ -1,0 +1,162 @@
+﻿@model ErpToolkit.Models.SIO.Patient.SelPaziente
+@{
+    ViewData["Title"] = "Paziente Select";
+}
+<div class="row justify-content-start align-items-end">
+    @using (Html.BeginForm("Index", "Paziente", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <!--GESTISCE AZIONI CLICK PULSANTE-->
+        @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+        @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+        @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+        <div class="container">
+            <div class="row justify-content-between align-items-end">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label asp-for="PaCodFiscale" class="control-label"></label>
+                    <input asp-for="PaCodFiscale" class="form-control" />
+                    <span asp-validation-for="PaCodFiscale" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaCodSanitario" class="control-label"></label>
+                    <input asp-for="PaCodSanitario" class="form-control" />
+                    <span asp-validation-for="PaCodSanitario" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaNome" class="control-label"></label>
+                    <input asp-for="PaNome" class="form-control" />
+                    <span asp-validation-for="PaNome" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaCognome" class="control-label"></label>
+                    <input asp-for="PaCognome" class="form-control" />
+                    <span asp-validation-for="PaCognome" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaSesso" class="control-label"></label>
+                    <input asp-for="PaSesso" class="form-control" />
+                    <span asp-validation-for="PaSesso" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaDataNascita" class="control-label"></label>
+                    <input asp-for="PaDataNascita" class="form-control" />
+                    <span asp-validation-for="PaDataNascita" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaOraNascita" class="control-label"></label>
+                    <input asp-for="PaOraNascita" class="form-control" />
+                    <span asp-validation-for="PaOraNascita" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaIdComuneNascita" class="control-label"></label>
+                    <input asp-for="PaIdComuneNascita" class="form-control" />
+                    <span asp-validation-for="PaIdComuneNascita" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaIdNazioneNascita" class="control-label"></label>
+                    <input asp-for="PaIdNazioneNascita" class="form-control" />
+                    <span asp-validation-for="PaIdNazioneNascita" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaIdCittadinanza" class="control-label"></label>
+                    <input asp-for="PaIdCittadinanza" class="form-control" />
+                    <span asp-validation-for="PaIdCittadinanza" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaIndirizzoRes" class="control-label"></label>
+                    <input asp-for="PaIndirizzoRes" class="form-control" />
+                    <span asp-validation-for="PaIndirizzoRes" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaNumCivicoRes" class="control-label"></label>
+                    <input asp-for="PaNumCivicoRes" class="form-control" />
+                    <span asp-validation-for="PaNumCivicoRes" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaCapRes" class="control-label"></label>
+                    <input asp-for="PaCapRes" class="form-control" />
+                    <span asp-validation-for="PaCapRes" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaIdComuneRes" class="control-label"></label>
+                    <input asp-for="PaIdComuneRes" class="form-control" />
+                    <span asp-validation-for="PaIdComuneRes" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaIdDistrettoRes" class="control-label"></label>
+                    <input asp-for="PaIdDistrettoRes" class="form-control" />
+                    <span asp-validation-for="PaIdDistrettoRes" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaIdNazioneDom" class="control-label"></label>
+                    <input asp-for="PaIdNazioneDom" class="form-control" />
+                    <span asp-validation-for="PaIdNazioneDom" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaMail" class="control-label"></label>
+                    <input asp-for="PaMail" class="form-control" />
+                    <span asp-validation-for="PaMail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaIndirizzoDom" class="control-label"></label>
+                    <input asp-for="PaIndirizzoDom" class="form-control" />
+                    <span asp-validation-for="PaIndirizzoDom" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaNumCivicoDom" class="control-label"></label>
+                    <input asp-for="PaNumCivicoDom" class="form-control" />
+                    <span asp-validation-for="PaNumCivicoDom" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaCapDom" class="control-label"></label>
+                    <input asp-for="PaCapDom" class="form-control" />
+                    <span asp-validation-for="PaCapDom" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaIdComuneDom" class="control-label"></label>
+                    <input asp-for="PaIdComuneDom" class="form-control" />
+                    <span asp-validation-for="PaIdComuneDom" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaTelefono" class="control-label"></label>
+                    <input asp-for="PaTelefono" class="form-control" />
+                    <span asp-validation-for="PaTelefono" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaCellulare" class="control-label"></label>
+                    <input asp-for="PaCellulare" class="form-control" />
+                    <span asp-validation-for="PaCellulare" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaIdDistrettoDom" class="control-label"></label>
+                    <input asp-for="PaIdDistrettoDom" class="form-control" />
+                    <span asp-validation-for="PaIdDistrettoDom" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaNote" class="control-label"></label>
+                    <input asp-for="PaNote" class="form-control" />
+                    <span asp-validation-for="PaNote" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaDataDecesso" class="control-label"></label>
+                    <input asp-for="PaDataDecesso" class="form-control" />
+                    <span asp-validation-for="PaDataDecesso" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaOraDecesso" class="control-label"></label>
+                    <input asp-for="PaOraDecesso" class="form-control" />
+                    <span asp-validation-for="PaOraDecesso" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PaIdNazioneRes" class="control-label"></label>
+                    <input asp-for="PaIdNazioneRes" class="form-control" />
+                    <span asp-validation-for="PaIdNazioneRes" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <p></p><input type="submit" value="Ricarica" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+</div>

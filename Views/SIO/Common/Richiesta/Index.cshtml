@@ -1,0 +1,29 @@
+﻿@model ErpToolkit.Controllers.SIO.Common.RichiestaController
+@{
+    ViewData["Title"] = "Richiesta";
+}
+<h1>@ViewData["Title"]</h1>
+<div class="container row justify-content-start align-items-end" style="width:100%; margin:0 auto;">
+    <div style="width:100%; margin:0 auto;">
+        <div id="SelectNonModale" tabindex="-1" role="dialog" aria-labelledby="titolo" aria-hidden="false">
+            @{
+                await Html.RenderPartialAsync("~/Views/SIO/Common/Richiesta/_PartialSelect.cshtml", Model.Select);
+            }
+        </div>
+        <div id="ListNonModale" tabindex="-1" role="dialog" aria-labelledby="titolo" aria-hidden="false">
+            @{
+                await Html.RenderPartialAsync("~/Views/SIO/Common/Richiesta/_PartialList.cshtml", Model.List);
+            }
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="EditModale" tabindex="-1" role="dialog" aria-labelledby="titolo" aria-hidden="true">
+    @{
+        await Html.RenderPartialAsync("~/Views/SIO/Common/Richiesta/_PartialEdit.cshtml", Model.Row);
+    }
+</div>
+<div class="modal fade" id="DeleteModale" tabindex="-1" role="dialog" aria-labelledby="titolo" aria-hidden="true">
+    @{
+        await Html.RenderPartialAsync("~/Views/SIO/Common/Richiesta/_PartialDelete.cshtml", Model.Row);
+    }
+</div>

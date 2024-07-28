@@ -1,0 +1,140 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.Resource.Sala>
+@{
+    ViewData["Title"] = "Sala List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SaCodice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SaIdTipoRisorsa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SaDescrizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SaCostoUnitarioUso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SaMisuraUnitariaUso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SaNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SaDisponibilita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SaTelefonoFornitore)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SaDataUltimaManutenzione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SaFrequenzaManutenzione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SaUsoMedioGiornaliero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SaDataProssimaManutenzione)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SaCodice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SaIdTipoRisorsa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SaDescrizione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SaCostoUnitarioUso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SaMisuraUnitariaUso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SaNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SaDisponibilita)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SaTelefonoFornitore)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SaDataUltimaManutenzione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SaFrequenzaManutenzione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SaUsoMedioGiornaliero)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SaDataProssimaManutenzione)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Sala/Edit','@Html.DisplayFor(modelItem => item.Sa1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Sala/Alert','@Html.DisplayFor(modelItem => item.Sa1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "SaCodice", "name": "SaCodice", "title": "Codice", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "SaIdTipoRisorsa", "name": "SaIdTipoRisorsa", "title": "Id Tipo Risorsa", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "SaDescrizione", "name": "SaDescrizione", "title": "Descrizione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "SaCostoUnitarioUso", "name": "SaCostoUnitarioUso", "title": "Costo Unitario Uso", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "SaMisuraUnitariaUso", "name": "SaMisuraUnitariaUso", "title": "Misura Unitaria Uso", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "SaNote", "name": "SaNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "SaDisponibilita", "name": "SaDisponibilita", "title": "Disponibilita", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "SaTelefonoFornitore", "name": "SaTelefonoFornitore", "title": "Telefono Fornitore", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "SaDataUltimaManutenzione", "name": "SaDataUltimaManutenzione", "title": "Data Ultima Manutenzione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "SaFrequenzaManutenzione", "name": "SaFrequenzaManutenzione", "title": "Frequenza Manutenzione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "SaUsoMedioGiornaliero", "name": "SaUsoMedioGiornaliero", "title": "Uso Medio Giornaliero", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "SaDataProssimaManutenzione", "name": "SaDataProssimaManutenzione", "title": "Data Prossima Manutenzione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Sala/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

@@ -1,0 +1,329 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.Act.Prestazione>
+@{
+    ViewData["Title"] = "Prestazione List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PrIdAttivitaRichiesta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrIdAttivitaEseguita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrIdGruppo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrInEvidenza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrIdPaziente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrIdEpisodio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrStatoPrestazione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrIdOperatoreRichiedente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrIdUnitaRichiedente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrIdPostazioneRichiedente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrDataRichiesta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrOraRichiesta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrIdRichiesta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrDataPropostaEsecuzione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrOraPropostaEsecuzione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrDurataPrevista)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrUrgenza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrNoteRichiesta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrRoutine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrDataAppuntamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrOraAppuntamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrNotePianificazione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrDataInizioEsecuzione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrOraInizioEsecuzione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrDataFineEsecuzione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrOraFineEsecuzione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrDataRefertazione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrOraRefertazione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrIdOperatoreEsecutore)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrIdUnitaEsecutrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrIdPostazioneEsecutrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrDurataEffettiva)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrCostoPrestazione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrNoteEsecuzione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrIdOperatorePianificatore)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrDataPianificazione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrOraPianificazione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrMobilita)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrIdAttivitaRichiesta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrIdAttivitaEseguita)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrIdGruppo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrInEvidenza)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrIdPaziente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrIdEpisodio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrStatoPrestazione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrIdOperatoreRichiedente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrIdUnitaRichiedente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrIdPostazioneRichiedente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrDataRichiesta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrOraRichiesta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrIdRichiesta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrDataPropostaEsecuzione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrOraPropostaEsecuzione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrDurataPrevista)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrUrgenza)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrNoteRichiesta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrRoutine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrDataAppuntamento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrOraAppuntamento)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrNotePianificazione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrDataInizioEsecuzione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrOraInizioEsecuzione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrDataFineEsecuzione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrOraFineEsecuzione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrDataRefertazione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrOraRefertazione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrIdOperatoreEsecutore)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrIdUnitaEsecutrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrIdPostazioneEsecutrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrDurataEffettiva)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrCostoPrestazione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrNoteEsecuzione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrIdOperatorePianificatore)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrDataPianificazione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrOraPianificazione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrMobilita)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Prestazione/Edit','@Html.DisplayFor(modelItem => item.Pr1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Prestazione/Alert','@Html.DisplayFor(modelItem => item.Pr1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "PrIdAttivitaRichiesta", "name": "PrIdAttivitaRichiesta", "title": "Id Attivita Richiesta", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrIdAttivitaEseguita", "name": "PrIdAttivitaEseguita", "title": "Id Attivita Eseguita", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrIdGruppo", "name": "PrIdGruppo", "title": "Id Gruppo", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrInEvidenza", "name": "PrInEvidenza", "title": "In Evidenza", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrIdPaziente", "name": "PrIdPaziente", "title": "Id Paziente", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrIdEpisodio", "name": "PrIdEpisodio", "title": "Id Episodio", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrStatoPrestazione", "name": "PrStatoPrestazione", "title": "Stato Prestazione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrIdOperatoreRichiedente", "name": "PrIdOperatoreRichiedente", "title": "Id Operatore Richiedente", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrIdUnitaRichiedente", "name": "PrIdUnitaRichiedente", "title": "Id Unita Richiedente", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrIdPostazioneRichiedente", "name": "PrIdPostazioneRichiedente", "title": "Id Postazione Richiedente", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrDataRichiesta", "name": "PrDataRichiesta", "title": "Data Richiesta", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrOraRichiesta", "name": "PrOraRichiesta", "title": "Ora Richiesta", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrIdRichiesta", "name": "PrIdRichiesta", "title": "Id Richiesta", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrDataPropostaEsecuzione", "name": "PrDataPropostaEsecuzione", "title": "Data Proposta Esecuzione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrOraPropostaEsecuzione", "name": "PrOraPropostaEsecuzione", "title": "Ora Proposta Esecuzione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrDurataPrevista", "name": "PrDurataPrevista", "title": "Durata Prevista", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrUrgenza", "name": "PrUrgenza", "title": "Urgenza", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrNoteRichiesta", "name": "PrNoteRichiesta", "title": "Note Richiesta", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrRoutine", "name": "PrRoutine", "title": "Routine", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrDataAppuntamento", "name": "PrDataAppuntamento", "title": "Data Appuntamento", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrOraAppuntamento", "name": "PrOraAppuntamento", "title": "Ora Appuntamento", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrNotePianificazione", "name": "PrNotePianificazione", "title": "Note Pianificazione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrDataInizioEsecuzione", "name": "PrDataInizioEsecuzione", "title": "Data Inizio Esecuzione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrOraInizioEsecuzione", "name": "PrOraInizioEsecuzione", "title": "Ora Inizio Esecuzione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrDataFineEsecuzione", "name": "PrDataFineEsecuzione", "title": "Data Fine Esecuzione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrOraFineEsecuzione", "name": "PrOraFineEsecuzione", "title": "Ora Fine Esecuzione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrDataRefertazione", "name": "PrDataRefertazione", "title": "Data Refertazione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrOraRefertazione", "name": "PrOraRefertazione", "title": "Ora Refertazione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrIdOperatoreEsecutore", "name": "PrIdOperatoreEsecutore", "title": "Id Operatore Esecutore", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrIdUnitaEsecutrice", "name": "PrIdUnitaEsecutrice", "title": "Id Unita Esecutrice", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrIdPostazioneEsecutrice", "name": "PrIdPostazioneEsecutrice", "title": "Id Postazione Esecutrice", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrDurataEffettiva", "name": "PrDurataEffettiva", "title": "Durata Effettiva", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrCostoPrestazione", "name": "PrCostoPrestazione", "title": "Costo Prestazione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrNoteEsecuzione", "name": "PrNoteEsecuzione", "title": "Note Esecuzione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrIdOperatorePianificatore", "name": "PrIdOperatorePianificatore", "title": "Id Operatore Pianificatore", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrDataPianificazione", "name": "PrDataPianificazione", "title": "Data Pianificazione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrOraPianificazione", "name": "PrOraPianificazione", "title": "Ora Pianificazione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrNote", "name": "PrNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PrMobilita", "name": "PrMobilita", "title": "Mobilita", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Prestazione/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

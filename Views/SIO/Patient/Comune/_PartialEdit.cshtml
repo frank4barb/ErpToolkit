@@ -1,0 +1,49 @@
+﻿@model ErpToolkit.Models.SIO.Patient.Comune
+@{
+    ViewData["Title"] = "Comune Edit";
+}
+<div class="modal-dialog" role="document">
+    @Html.AntiForgeryToken()
+    <!--GESTISCE AZIONI CLICK PULSANTE-->
+    @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+    @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+    @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label asp-for="CmCodice" class="control-label"></label>
+                    <input asp-for="CmCodice" class="form-control" />
+                    <span asp-validation-for="CmCodice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CmNome" class="control-label"></label>
+                    <input asp-for="CmNome" class="form-control" />
+                    <span asp-validation-for="CmNome" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CmCodIstat" class="control-label"></label>
+                    <input asp-for="CmCodIstat" class="form-control" />
+                    <span asp-validation-for="CmCodIstat" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CmNote" class="control-label"></label>
+                    <input asp-for="CmNote" class="form-control" />
+                    <span asp-validation-for="CmNote" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+            <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/Comune/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,59 @@
+﻿@model ErpToolkit.Models.SIO.Act.TipoCampione
+@{
+    ViewData["Title"] = "TipoCampione Edit";
+}
+<div class="modal-dialog" role="document">
+    @Html.AntiForgeryToken()
+    <!--GESTISCE AZIONI CLICK PULSANTE-->
+    @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+    @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+    @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label asp-for="TpCodice" class="control-label"></label>
+                    <input asp-for="TpCodice" class="form-control" />
+                    <span asp-validation-for="TpCodice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TpDescrizione" class="control-label"></label>
+                    <input asp-for="TpDescrizione" class="form-control" />
+                    <span asp-validation-for="TpDescrizione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TpNote" class="control-label"></label>
+                    <input asp-for="TpNote" class="form-control" />
+                    <span asp-validation-for="TpNote" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TpContesto" class="control-label"></label>
+                    <input asp-for="TpContesto" class="form-control" />
+                    <span asp-validation-for="TpContesto" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TpContenitore" class="control-label"></label>
+                    <input asp-for="TpContenitore" class="form-control" />
+                    <span asp-validation-for="TpContenitore" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TpAttributi" class="control-label"></label>
+                    <input asp-for="TpAttributi" class="form-control" />
+                    <span asp-validation-for="TpAttributi" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+            <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/TipoCampione/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
+        </div>
+    </div>
+</div>

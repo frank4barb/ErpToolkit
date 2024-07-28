@@ -1,0 +1,82 @@
+﻿@model ErpToolkit.Models.SIO.Resource.SelSala
+@{
+    ViewData["Title"] = "Sala Select";
+}
+<div class="row justify-content-start align-items-end">
+    @using (Html.BeginForm("Index", "Sala", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <!--GESTISCE AZIONI CLICK PULSANTE-->
+        @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+        @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+        @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+        <div class="container">
+            <div class="row justify-content-between align-items-end">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label asp-for="SaCodice" class="control-label"></label>
+                    <input asp-for="SaCodice" class="form-control" />
+                    <span asp-validation-for="SaCodice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SaIdTipoRisorsa" class="control-label"></label>
+                    <input asp-for="SaIdTipoRisorsa" class="form-control" />
+                    <span asp-validation-for="SaIdTipoRisorsa" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SaDescrizione" class="control-label"></label>
+                    <input asp-for="SaDescrizione" class="form-control" />
+                    <span asp-validation-for="SaDescrizione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SaCostoUnitarioUso" class="control-label"></label>
+                    <input asp-for="SaCostoUnitarioUso" class="form-control" />
+                    <span asp-validation-for="SaCostoUnitarioUso" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SaMisuraUnitariaUso" class="control-label"></label>
+                    <input asp-for="SaMisuraUnitariaUso" class="form-control" />
+                    <span asp-validation-for="SaMisuraUnitariaUso" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SaNote" class="control-label"></label>
+                    <input asp-for="SaNote" class="form-control" />
+                    <span asp-validation-for="SaNote" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SaDisponibilita" class="control-label"></label>
+                    <input asp-for="SaDisponibilita" class="form-control" />
+                    <span asp-validation-for="SaDisponibilita" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SaTelefonoFornitore" class="control-label"></label>
+                    <input asp-for="SaTelefonoFornitore" class="form-control" />
+                    <span asp-validation-for="SaTelefonoFornitore" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SaDataUltimaManutenzione" class="control-label"></label>
+                    <input asp-for="SaDataUltimaManutenzione" class="form-control" />
+                    <span asp-validation-for="SaDataUltimaManutenzione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SaFrequenzaManutenzione" class="control-label"></label>
+                    <input asp-for="SaFrequenzaManutenzione" class="form-control" />
+                    <span asp-validation-for="SaFrequenzaManutenzione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SaUsoMedioGiornaliero" class="control-label"></label>
+                    <input asp-for="SaUsoMedioGiornaliero" class="form-control" />
+                    <span asp-validation-for="SaUsoMedioGiornaliero" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="SaDataProssimaManutenzione" class="control-label"></label>
+                    <input asp-for="SaDataProssimaManutenzione" class="form-control" />
+                    <span asp-validation-for="SaDataProssimaManutenzione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <p></p><input type="submit" value="Ricarica" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+</div>

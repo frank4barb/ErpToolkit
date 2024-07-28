@@ -1,0 +1,102 @@
+﻿@model ErpToolkit.Models.SIO.HealthData.SelDocumentoClinico
+@{
+    ViewData["Title"] = "DocumentoClinico Select";
+}
+<div class="row justify-content-start align-items-end">
+    @using (Html.BeginForm("Index", "DocumentoClinico", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <!--GESTISCE AZIONI CLICK PULSANTE-->
+        @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+        @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+        @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+        <div class="container">
+            <div class="row justify-content-between align-items-end">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label asp-for="DcClasse" class="control-label"></label>
+                    <input asp-for="DcClasse" class="form-control" />
+                    <span asp-validation-for="DcClasse" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DcIdPaziente" class="control-label"></label>
+                    <input asp-for="DcIdPaziente" class="form-control" />
+                    <span asp-validation-for="DcIdPaziente" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DcIdEpisodio" class="control-label"></label>
+                    <input asp-for="DcIdEpisodio" class="form-control" />
+                    <span asp-validation-for="DcIdEpisodio" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DcIdTipoDatoClinico" class="control-label"></label>
+                    <input asp-for="DcIdTipoDatoClinico" class="form-control" />
+                    <span asp-validation-for="DcIdTipoDatoClinico" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DcValoreMinimo" class="control-label"></label>
+                    <input asp-for="DcValoreMinimo" class="form-control" />
+                    <span asp-validation-for="DcValoreMinimo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DcValoreMassimo" class="control-label"></label>
+                    <input asp-for="DcValoreMassimo" class="form-control" />
+                    <span asp-validation-for="DcValoreMassimo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DcValoreScelta" class="control-label"></label>
+                    <input asp-for="DcValoreScelta" class="form-control" />
+                    <span asp-validation-for="DcValoreScelta" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DcValoreTesto" class="control-label"></label>
+                    <input asp-for="DcValoreTesto" class="form-control" />
+                    <span asp-validation-for="DcValoreTesto" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DcNote" class="control-label"></label>
+                    <input asp-for="DcNote" class="form-control" />
+                    <span asp-validation-for="DcNote" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DcCodiceReferto" class="control-label"></label>
+                    <input asp-for="DcCodiceReferto" class="form-control" />
+                    <span asp-validation-for="DcCodiceReferto" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DcDataAcquisizione" class="control-label"></label>
+                    <input asp-for="DcDataAcquisizione" class="form-control" />
+                    <span asp-validation-for="DcDataAcquisizione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DcOraAcquisizione" class="control-label"></label>
+                    <input asp-for="DcOraAcquisizione" class="form-control" />
+                    <span asp-validation-for="DcOraAcquisizione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DcStatoDatoClinico" class="control-label"></label>
+                    <input asp-for="DcStatoDatoClinico" class="form-control" />
+                    <span asp-validation-for="DcStatoDatoClinico" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DcDataValidazione" class="control-label"></label>
+                    <input asp-for="DcDataValidazione" class="form-control" />
+                    <span asp-validation-for="DcDataValidazione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DcOraValidazione" class="control-label"></label>
+                    <input asp-for="DcOraValidazione" class="form-control" />
+                    <span asp-validation-for="DcOraValidazione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DcSequenza" class="control-label"></label>
+                    <input asp-for="DcSequenza" class="form-control" />
+                    <span asp-validation-for="DcSequenza" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <p></p><input type="submit" value="Ricarica" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+</div>

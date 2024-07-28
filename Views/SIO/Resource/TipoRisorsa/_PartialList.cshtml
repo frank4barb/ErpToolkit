@@ -1,0 +1,98 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.Resource.TipoRisorsa>
+@{
+    ViewData["Title"] = "TipoRisorsa List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TsCodice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsClasseRisorsa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsIdGruppo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsDescrizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TsUnitaDiMisura)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TsCodice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TsClasseRisorsa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TsIdGruppo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TsDescrizione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TsNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TsUnitaDiMisura)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/TipoRisorsa/Edit','@Html.DisplayFor(modelItem => item.Ts1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/TipoRisorsa/Alert','@Html.DisplayFor(modelItem => item.Ts1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "TsCodice", "name": "TsCodice", "title": "Codice", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "TsClasseRisorsa", "name": "TsClasseRisorsa", "title": "Classe Risorsa", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "TsIdGruppo", "name": "TsIdGruppo", "title": "Id Gruppo", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "TsDescrizione", "name": "TsDescrizione", "title": "Descrizione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "TsNote", "name": "TsNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "TsUnitaDiMisura", "name": "TsUnitaDiMisura", "title": "Unita Di Misura", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/TipoRisorsa/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

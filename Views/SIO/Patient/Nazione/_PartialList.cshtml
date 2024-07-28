@@ -1,0 +1,84 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.Patient.Nazione>
+@{
+    ViewData["Title"] = "Nazione List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NzCodice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NzNome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NzCodIstat)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NzNote)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NzCodice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NzNome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NzCodIstat)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NzNote)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Nazione/Edit','@Html.DisplayFor(modelItem => item.Nz1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Nazione/Alert','@Html.DisplayFor(modelItem => item.Nz1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "NzCodice", "name": "NzCodice", "title": "Codice", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "NzNome", "name": "NzNome", "title": "Nome", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "NzCodIstat", "name": "NzCodIstat", "title": "Cod Istat", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "NzNote", "name": "NzNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Nazione/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

@@ -1,0 +1,90 @@
+﻿@model ErpToolkit.Models.SIO.Resource.Attrezzatura
+@{
+    ViewData["Title"] = "Attrezzatura Delete";
+}
+<div class="modal-dialog" role="document">
+    @Html.AntiForgeryToken()
+    <!--GESTISCE AZIONI CLICK PULSANTE-->
+    @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+    @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+    @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                Sei proprio sicuro di voler cancellare il seguente record?
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AtCodice, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AtCodice, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AtDescrizione, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AtDescrizione, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AtIdTipoRisorsa, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AtIdTipoRisorsa, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AtCostoUnitarioUso, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AtCostoUnitarioUso, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AtMisuraUnitariaUso, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AtMisuraUnitariaUso, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AtNote, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AtNote, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AtDisponibilita, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AtDisponibilita, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AtTelefonoFornitore, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AtTelefonoFornitore, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AtNumeroSeriale, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AtNumeroSeriale, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AtRiferimentiAssistenza, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AtRiferimentiAssistenza, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AtTelefonoAssistenza, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AtTelefonoAssistenza, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AtDataUltimaManutenzione, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AtDataUltimaManutenzione, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AtFrequenzaManutenzione, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AtFrequenzaManutenzione, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AtUsoMedioGiornaliero, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AtUsoMedioGiornaliero, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AtDataProssimaManutenzione, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AtDataProssimaManutenzione, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <br />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+            <button type="button" class="btn btn-primary" onclick='updateModalWithContent("DeleteModale","/Attrezzatura/Delete",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Elimina</button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+@model ErpToolkit.Controllers.HomeController
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+
+<select asp-for="Country" asp-items="Model.Countries"></select>
+
+<div class="container">
+    <template-renderer></template-renderer>
+    <hr />
+    <template-renderer-new-viewdata></template-renderer-new-viewdata>
+</div>
+
+<h1>Kablam</h1>
+<renderer></renderer>
+
+
+<div class="text-center" id="userPartialView">
+    @{
+        await Html.RenderPartialAsync("_UserPartial", Model.userModel);
+    }
+</div>
+
+
+<div class="text-center" id="userPartialView">
+    @{
+        await Html.RenderPartialAsync("_UserPartial2", Model.userModel);
+    }
+</div>
+
+<div class="text-center" id="userPartialView">
+    @{
+        await Html.RenderPartialAsync("_UserAutocomplete", Model.userModel);
+    }
+</div>
+

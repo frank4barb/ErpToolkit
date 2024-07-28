@@ -1,0 +1,19 @@
+@model ErpToolkit.Models.InputLogin
+@{
+    //ErpToolkit.Models.InputLogin? _login = ViewData["_Login"] as ErpToolkit.Models.InputLogin;
+    ErpToolkit.Models.InputLogin _login = new ErpToolkit.Models.InputLogin();
+}
+
+
+
+@if (User.Identity.IsAuthenticated)
+{
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    {
+        <!--input type="submit" value="Login" class="btn btn-default" /-->
+        <button type="submit" class="btn btn-primary">Logout @User.Identity?.Name</button>
+    }
+}
+else {
+    <h5>Utente non autenticato</h5>
+}

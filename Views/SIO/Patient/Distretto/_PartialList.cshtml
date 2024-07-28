@@ -1,0 +1,84 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.Patient.Distretto>
+@{
+    ViewData["Title"] = "Distretto List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DiCodice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiNome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiIdComune)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiCodice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiNome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DiIdComune)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Distretto/Edit','@Html.DisplayFor(modelItem => item.Di1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Distretto/Alert','@Html.DisplayFor(modelItem => item.Di1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "DiCodice", "name": "DiCodice", "title": "Codice", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "DiNome", "name": "DiNome", "title": "Nome", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "DiNote", "name": "DiNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "DiIdComune", "name": "DiIdComune", "title": "Id Comune", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Distretto/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

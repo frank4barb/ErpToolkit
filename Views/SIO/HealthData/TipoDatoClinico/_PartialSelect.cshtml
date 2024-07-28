@@ -1,0 +1,67 @@
+﻿@model ErpToolkit.Models.SIO.HealthData.SelTipoDatoClinico
+@{
+    ViewData["Title"] = "TipoDatoClinico Select";
+}
+<div class="row justify-content-start align-items-end">
+    @using (Html.BeginForm("Index", "TipoDatoClinico", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <!--GESTISCE AZIONI CLICK PULSANTE-->
+        @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+        @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+        @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+        <div class="container">
+            <div class="row justify-content-between align-items-end">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label asp-for="TcCodice" class="control-label"></label>
+                    <input asp-for="TcCodice" class="form-control" />
+                    <span asp-validation-for="TcCodice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TcDescrizione" class="control-label"></label>
+                    <input asp-for="TcDescrizione" class="form-control" />
+                    <span asp-validation-for="TcDescrizione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TcNote" class="control-label"></label>
+                    <input asp-for="TcNote" class="form-control" />
+                    <span asp-validation-for="TcNote" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TcIdCategoriaDatoClinico" class="control-label"></label>
+                    <input asp-for="TcIdCategoriaDatoClinico" class="form-control" />
+                    <span asp-validation-for="TcIdCategoriaDatoClinico" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TcUnitaDiMisura" class="control-label"></label>
+                    <input asp-for="TcUnitaDiMisura" class="form-control" />
+                    <span asp-validation-for="TcUnitaDiMisura" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TcIdGruppo" class="control-label"></label>
+                    <input asp-for="TcIdGruppo" class="form-control" />
+                    <span asp-validation-for="TcIdGruppo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TcSequenza" class="control-label"></label>
+                    <input asp-for="TcSequenza" class="form-control" />
+                    <span asp-validation-for="TcSequenza" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TcAttributi1" class="control-label"></label>
+                    <input asp-for="TcAttributi1" class="form-control" />
+                    <span asp-validation-for="TcAttributi1" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TcAttributi2" class="control-label"></label>
+                    <input asp-for="TcAttributi2" class="form-control" />
+                    <span asp-validation-for="TcAttributi2" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <p></p><input type="submit" value="Ricarica" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+</div>

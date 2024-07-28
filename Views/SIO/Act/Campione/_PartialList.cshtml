@@ -1,0 +1,161 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.Act.Campione>
+@{
+    ViewData["Title"] = "Campione List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CpIdTipoCampione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CpDescrizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CpCodiceUnivoco)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CpDataPrelievo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CpOraPrelievo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CpNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CpIdEpisodio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CpIdPaziente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CpCodiceAssoluto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CpStatoCampione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CpIdPosizioneAttuale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CpDescPosizioneAttuale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CpDataCambiamentoStato)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CpOraCambiamentoStato)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CpNoteCambiamentoStato)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpIdTipoCampione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpDescrizione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpCodiceUnivoco)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpDataPrelievo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpOraPrelievo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpIdEpisodio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpIdPaziente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpCodiceAssoluto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpStatoCampione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpIdPosizioneAttuale)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpDescPosizioneAttuale)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpDataCambiamentoStato)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpOraCambiamentoStato)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CpNoteCambiamentoStato)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Campione/Edit','@Html.DisplayFor(modelItem => item.Cp1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Campione/Alert','@Html.DisplayFor(modelItem => item.Cp1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "CpIdTipoCampione", "name": "CpIdTipoCampione", "title": "Id Tipo Campione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "CpDescrizione", "name": "CpDescrizione", "title": "Descrizione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "CpCodiceUnivoco", "name": "CpCodiceUnivoco", "title": "Codice Univoco", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "CpDataPrelievo", "name": "CpDataPrelievo", "title": "Data Prelievo", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "CpOraPrelievo", "name": "CpOraPrelievo", "title": "Ora Prelievo", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "CpNote", "name": "CpNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "CpIdEpisodio", "name": "CpIdEpisodio", "title": "Id Episodio", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "CpIdPaziente", "name": "CpIdPaziente", "title": "Id Paziente", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "CpCodiceAssoluto", "name": "CpCodiceAssoluto", "title": "Codice Assoluto", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "CpStatoCampione", "name": "CpStatoCampione", "title": "Stato Campione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "CpIdPosizioneAttuale", "name": "CpIdPosizioneAttuale", "title": "Id Posizione Attuale", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "CpDescPosizioneAttuale", "name": "CpDescPosizioneAttuale", "title": "Desc Posizione Attuale", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "CpDataCambiamentoStato", "name": "CpDataCambiamentoStato", "title": "Data Cambiamento Stato", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "CpOraCambiamentoStato", "name": "CpOraCambiamentoStato", "title": "Ora Cambiamento Stato", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "CpNoteCambiamentoStato", "name": "CpNoteCambiamentoStato", "title": "Note Cambiamento Stato", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Campione/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

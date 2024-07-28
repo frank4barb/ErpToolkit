@@ -1,0 +1,42 @@
+﻿@model ErpToolkit.Models.SIO.Patient.SelComune
+@{
+    ViewData["Title"] = "Comune Select";
+}
+<div class="row justify-content-start align-items-end">
+    @using (Html.BeginForm("Index", "Comune", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <!--GESTISCE AZIONI CLICK PULSANTE-->
+        @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+        @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+        @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+        <div class="container">
+            <div class="row justify-content-between align-items-end">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label asp-for="CmCodice" class="control-label"></label>
+                    <input asp-for="CmCodice" class="form-control" />
+                    <span asp-validation-for="CmCodice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CmNome" class="control-label"></label>
+                    <input asp-for="CmNome" class="form-control" />
+                    <span asp-validation-for="CmNome" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CmCodIstat" class="control-label"></label>
+                    <input asp-for="CmCodIstat" class="form-control" />
+                    <span asp-validation-for="CmCodIstat" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CmNote" class="control-label"></label>
+                    <input asp-for="CmNote" class="form-control" />
+                    <span asp-validation-for="CmNote" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <p></p><input type="submit" value="Ricarica" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+</div>

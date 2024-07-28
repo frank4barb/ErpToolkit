@@ -1,0 +1,147 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.Resource.Personale>
+@{
+    ViewData["Title"] = "Personale List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.PeCodice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeDescrizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeIdTipoRisorsa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeCostoUnitarioUso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeMisuraUnitariaUso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeDisponibilita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeTelefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeCellulare)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeNome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeCognome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeCodiceFiscale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PeEmail)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PeCodice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PeDescrizione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PeIdTipoRisorsa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PeCostoUnitarioUso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PeMisuraUnitariaUso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PeNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PeDisponibilita)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PeTelefono)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PeCellulare)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PeNome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PeCognome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PeCodiceFiscale)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PeEmail)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Personale/Edit','@Html.DisplayFor(modelItem => item.Pe1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Personale/Alert','@Html.DisplayFor(modelItem => item.Pe1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "PeCodice", "name": "PeCodice", "title": "Codice", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PeDescrizione", "name": "PeDescrizione", "title": "Descrizione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PeIdTipoRisorsa", "name": "PeIdTipoRisorsa", "title": "Id Tipo Risorsa", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PeCostoUnitarioUso", "name": "PeCostoUnitarioUso", "title": "Costo Unitario Uso", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PeMisuraUnitariaUso", "name": "PeMisuraUnitariaUso", "title": "Misura Unitaria Uso", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PeNote", "name": "PeNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PeDisponibilita", "name": "PeDisponibilita", "title": "Disponibilita", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PeTelefono", "name": "PeTelefono", "title": "Telefono", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PeCellulare", "name": "PeCellulare", "title": "Cellulare", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PeNome", "name": "PeNome", "title": "Nome", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PeCognome", "name": "PeCognome", "title": "Cognome", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PeCodiceFiscale", "name": "PeCodiceFiscale", "title": "Codice Fiscale", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "PeEmail", "name": "PeEmail", "title": "Email", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Personale/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

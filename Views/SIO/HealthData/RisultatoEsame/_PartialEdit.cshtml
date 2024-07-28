@@ -1,0 +1,109 @@
+﻿@model ErpToolkit.Models.SIO.HealthData.RisultatoEsame
+@{
+    ViewData["Title"] = "RisultatoEsame Edit";
+}
+<div class="modal-dialog" role="document">
+    @Html.AntiForgeryToken()
+    <!--GESTISCE AZIONI CLICK PULSANTE-->
+    @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+    @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+    @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label asp-for="ReClasse" class="control-label"></label>
+                    <input asp-for="ReClasse" class="form-control" />
+                    <span asp-validation-for="ReClasse" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReIdPaziente" class="control-label"></label>
+                    <input asp-for="ReIdPaziente" class="form-control" />
+                    <span asp-validation-for="ReIdPaziente" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReIdTipoDatoClinico" class="control-label"></label>
+                    <input asp-for="ReIdTipoDatoClinico" class="form-control" />
+                    <span asp-validation-for="ReIdTipoDatoClinico" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReIdGruppoDatoClinico" class="control-label"></label>
+                    <input asp-for="ReIdGruppoDatoClinico" class="form-control" />
+                    <span asp-validation-for="ReIdGruppoDatoClinico" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReValoreMinimo" class="control-label"></label>
+                    <input asp-for="ReValoreMinimo" class="form-control" />
+                    <span asp-validation-for="ReValoreMinimo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReValoreMassimo" class="control-label"></label>
+                    <input asp-for="ReValoreMassimo" class="form-control" />
+                    <span asp-validation-for="ReValoreMassimo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReValoreScelta" class="control-label"></label>
+                    <input asp-for="ReValoreScelta" class="form-control" />
+                    <span asp-validation-for="ReValoreScelta" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReValoreTesto" class="control-label"></label>
+                    <input asp-for="ReValoreTesto" class="form-control" />
+                    <span asp-validation-for="ReValoreTesto" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReNote" class="control-label"></label>
+                    <input asp-for="ReNote" class="form-control" />
+                    <span asp-validation-for="ReNote" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReCodiceReferto" class="control-label"></label>
+                    <input asp-for="ReCodiceReferto" class="form-control" />
+                    <span asp-validation-for="ReCodiceReferto" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReDataAcquisizione" class="control-label"></label>
+                    <input asp-for="ReDataAcquisizione" class="form-control" />
+                    <span asp-validation-for="ReDataAcquisizione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReOraAcquisizione" class="control-label"></label>
+                    <input asp-for="ReOraAcquisizione" class="form-control" />
+                    <span asp-validation-for="ReOraAcquisizione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReStatoDatoClinico" class="control-label"></label>
+                    <input asp-for="ReStatoDatoClinico" class="form-control" />
+                    <span asp-validation-for="ReStatoDatoClinico" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReDataValidazione" class="control-label"></label>
+                    <input asp-for="ReDataValidazione" class="form-control" />
+                    <span asp-validation-for="ReDataValidazione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReOraValidazione" class="control-label"></label>
+                    <input asp-for="ReOraValidazione" class="form-control" />
+                    <span asp-validation-for="ReOraValidazione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ReSequenza" class="control-label"></label>
+                    <input asp-for="ReSequenza" class="form-control" />
+                    <span asp-validation-for="ReSequenza" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+            <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/RisultatoEsame/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
+        </div>
+    </div>
+</div>

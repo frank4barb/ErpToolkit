@@ -1,0 +1,87 @@
+﻿@model ErpToolkit.Models.SIO.Resource.SelPersonale
+@{
+    ViewData["Title"] = "Personale Select";
+}
+<div class="row justify-content-start align-items-end">
+    @using (Html.BeginForm("Index", "Personale", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <!--GESTISCE AZIONI CLICK PULSANTE-->
+        @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+        @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+        @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+        <div class="container">
+            <div class="row justify-content-between align-items-end">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label asp-for="PeCodice" class="control-label"></label>
+                    <input asp-for="PeCodice" class="form-control" />
+                    <span asp-validation-for="PeCodice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PeDescrizione" class="control-label"></label>
+                    <input asp-for="PeDescrizione" class="form-control" />
+                    <span asp-validation-for="PeDescrizione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PeIdTipoRisorsa" class="control-label"></label>
+                    <input asp-for="PeIdTipoRisorsa" class="form-control" />
+                    <span asp-validation-for="PeIdTipoRisorsa" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PeCostoUnitarioUso" class="control-label"></label>
+                    <input asp-for="PeCostoUnitarioUso" class="form-control" />
+                    <span asp-validation-for="PeCostoUnitarioUso" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PeMisuraUnitariaUso" class="control-label"></label>
+                    <input asp-for="PeMisuraUnitariaUso" class="form-control" />
+                    <span asp-validation-for="PeMisuraUnitariaUso" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PeNote" class="control-label"></label>
+                    <input asp-for="PeNote" class="form-control" />
+                    <span asp-validation-for="PeNote" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PeDisponibilita" class="control-label"></label>
+                    <input asp-for="PeDisponibilita" class="form-control" />
+                    <span asp-validation-for="PeDisponibilita" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PeTelefono" class="control-label"></label>
+                    <input asp-for="PeTelefono" class="form-control" />
+                    <span asp-validation-for="PeTelefono" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PeCellulare" class="control-label"></label>
+                    <input asp-for="PeCellulare" class="form-control" />
+                    <span asp-validation-for="PeCellulare" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PeNome" class="control-label"></label>
+                    <input asp-for="PeNome" class="form-control" />
+                    <span asp-validation-for="PeNome" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PeCognome" class="control-label"></label>
+                    <input asp-for="PeCognome" class="form-control" />
+                    <span asp-validation-for="PeCognome" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PeCodiceFiscale" class="control-label"></label>
+                    <input asp-for="PeCodiceFiscale" class="form-control" />
+                    <span asp-validation-for="PeCodiceFiscale" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="PeEmail" class="control-label"></label>
+                    <input asp-for="PeEmail" class="form-control" />
+                    <span asp-validation-for="PeEmail" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <p></p><input type="submit" value="Ricarica" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    }
+</div>

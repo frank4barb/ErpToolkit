@@ -1,0 +1,54 @@
+﻿@model ErpToolkit.Models.SIO.Act.TipoOrganizzazione
+@{
+    ViewData["Title"] = "TipoOrganizzazione Edit";
+}
+<div class="modal-dialog" role="document">
+    @Html.AntiForgeryToken()
+    <!--GESTISCE AZIONI CLICK PULSANTE-->
+    @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+    @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+    @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label asp-for="TzCodice" class="control-label"></label>
+                    <input asp-for="TzCodice" class="form-control" />
+                    <span asp-validation-for="TzCodice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TzDescrizione" class="control-label"></label>
+                    <input asp-for="TzDescrizione" class="form-control" />
+                    <span asp-validation-for="TzDescrizione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TzNote" class="control-label"></label>
+                    <input asp-for="TzNote" class="form-control" />
+                    <span asp-validation-for="TzNote" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TzGruppo" class="control-label"></label>
+                    <input asp-for="TzGruppo" class="form-control" />
+                    <span asp-validation-for="TzGruppo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TzSequenza" class="control-label"></label>
+                    <input asp-for="TzSequenza" class="form-control" />
+                    <span asp-validation-for="TzSequenza" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+            <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/TipoOrganizzazione/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
+        </div>
+    </div>
+</div>

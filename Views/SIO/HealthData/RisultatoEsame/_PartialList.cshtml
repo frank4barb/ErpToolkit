@@ -1,0 +1,168 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.HealthData.RisultatoEsame>
+@{
+    ViewData["Title"] = "RisultatoEsame List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ReClasse)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReIdPaziente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReIdTipoDatoClinico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReIdGruppoDatoClinico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReValoreMinimo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReValoreMassimo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReValoreScelta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReValoreTesto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReCodiceReferto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReDataAcquisizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReOraAcquisizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReStatoDatoClinico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReDataValidazione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReOraValidazione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReSequenza)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReClasse)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReIdPaziente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReIdTipoDatoClinico)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReIdGruppoDatoClinico)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReValoreMinimo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReValoreMassimo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReValoreScelta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReValoreTesto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReCodiceReferto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReDataAcquisizione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReOraAcquisizione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReStatoDatoClinico)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReDataValidazione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReOraValidazione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReSequenza)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/RisultatoEsame/Edit','@Html.DisplayFor(modelItem => item.Re1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/RisultatoEsame/Alert','@Html.DisplayFor(modelItem => item.Re1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "ReClasse", "name": "ReClasse", "title": "Classe", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "ReIdPaziente", "name": "ReIdPaziente", "title": "Id Paziente", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "ReIdTipoDatoClinico", "name": "ReIdTipoDatoClinico", "title": "Id Tipo Dato Clinico", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "ReIdGruppoDatoClinico", "name": "ReIdGruppoDatoClinico", "title": "Id Gruppo Dato Clinico", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "ReValoreMinimo", "name": "ReValoreMinimo", "title": "Valore Minimo", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "ReValoreMassimo", "name": "ReValoreMassimo", "title": "Valore Massimo", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "ReValoreScelta", "name": "ReValoreScelta", "title": "Valore Scelta", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "ReValoreTesto", "name": "ReValoreTesto", "title": "Valore Testo", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "ReNote", "name": "ReNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "ReCodiceReferto", "name": "ReCodiceReferto", "title": "Codice Referto", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "ReDataAcquisizione", "name": "ReDataAcquisizione", "title": "Data Acquisizione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "ReOraAcquisizione", "name": "ReOraAcquisizione", "title": "Ora Acquisizione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "ReStatoDatoClinico", "name": "ReStatoDatoClinico", "title": "Stato Dato Clinico", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "ReDataValidazione", "name": "ReDataValidazione", "title": "Data Validazione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "ReOraValidazione", "name": "ReOraValidazione", "title": "Ora Validazione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "ReSequenza", "name": "ReSequenza", "title": "Sequenza", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/RisultatoEsame/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

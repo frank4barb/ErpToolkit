@@ -1,0 +1,119 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.HealthData.TipoDatoClinico>
+@{
+    ViewData["Title"] = "TipoDatoClinico List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TcCodice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TcDescrizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TcNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TcIdCategoriaDatoClinico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TcUnitaDiMisura)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TcIdGruppo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TcSequenza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TcAttributi1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TcAttributi2)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TcCodice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TcDescrizione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TcNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TcIdCategoriaDatoClinico)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TcUnitaDiMisura)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TcIdGruppo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TcSequenza)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TcAttributi1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TcAttributi2)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/TipoDatoClinico/Edit','@Html.DisplayFor(modelItem => item.Tc1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/TipoDatoClinico/Alert','@Html.DisplayFor(modelItem => item.Tc1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "TcCodice", "name": "TcCodice", "title": "Codice", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "TcDescrizione", "name": "TcDescrizione", "title": "Descrizione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "TcNote", "name": "TcNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "TcIdCategoriaDatoClinico", "name": "TcIdCategoriaDatoClinico", "title": "Id Categoria Dato Clinico", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "TcUnitaDiMisura", "name": "TcUnitaDiMisura", "title": "Unita Di Misura", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "TcIdGruppo", "name": "TcIdGruppo", "title": "Id Gruppo", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "TcSequenza", "name": "TcSequenza", "title": "Sequenza", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "TcAttributi1", "name": "TcAttributi1", "title": "Attributi1", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "TcAttributi2", "name": "TcAttributi2", "title": "Attributi2", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/TipoDatoClinico/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

@@ -1,0 +1,154 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.Common.Organizzazione>
+@{
+    ViewData["Title"] = "Organizzazione List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OrClasseAssistenza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrCodice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrDescrizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrTipoAssistenza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrTelefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrIdPersonale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrIdIstituto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrIdUnita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrIdPostazione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrPwdCrypt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrAttivo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrIdentificativo)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrClasseAssistenza)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrCodice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrDescrizione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrEmail)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrTipoAssistenza)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrTelefono)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrIdPersonale)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrIdIstituto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrIdUnita)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrIdPostazione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrPwdCrypt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrAttivo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrIdentificativo)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Organizzazione/Edit','@Html.DisplayFor(modelItem => item.Or1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Organizzazione/Alert','@Html.DisplayFor(modelItem => item.Or1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "OrClasseAssistenza", "name": "OrClasseAssistenza", "title": "Classe Assistenza", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "OrCodice", "name": "OrCodice", "title": "Codice", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "OrDescrizione", "name": "OrDescrizione", "title": "Descrizione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "OrNote", "name": "OrNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "OrEmail", "name": "OrEmail", "title": "Email", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "OrTipoAssistenza", "name": "OrTipoAssistenza", "title": "Tipo Assistenza", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "OrTelefono", "name": "OrTelefono", "title": "Telefono", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "OrIdPersonale", "name": "OrIdPersonale", "title": "Id Personale", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "OrIdIstituto", "name": "OrIdIstituto", "title": "Id Istituto", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "OrIdUnita", "name": "OrIdUnita", "title": "Id Unita", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "OrIdPostazione", "name": "OrIdPostazione", "title": "Id Postazione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "OrPwdCrypt", "name": "OrPwdCrypt", "title": "Pwd Crypt", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "OrAttivo", "name": "OrAttivo", "title": "Attivo", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "OrIdentificativo", "name": "OrIdentificativo", "title": "Identificativo", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Organizzazione/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

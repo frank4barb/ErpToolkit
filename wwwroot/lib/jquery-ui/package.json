@@ -1,0 +1,55 @@
+{
+	"name": "jquery-ui",
+	"title": "jQuery UI",
+	"description": "A curated set of user interface interactions, effects, widgets, and themes built on top of the jQuery JavaScript Library.",
+	"version": "1.13.3",
+	"homepage": "https://jqueryui.com",
+	"author": {
+		"name": "OpenJS Foundation and other contributors",
+		"url": "https://github.com/jquery/jquery-ui/blob/1.13.3/AUTHORS.txt"
+	},
+	"main": "ui/widget.js",
+	"maintainers": [
+		{
+			"name": "Jörn Zaefferer",
+			"email": "joern.zaefferer@gmail.com",
+			"url": "https://bassistance.de"
+		},
+		{
+			"name": "Mike Sherov",
+			"email": "mike.sherov@gmail.com",
+			"url": "https://mike.sherov.com"
+		},
+		{
+			"name": "TJ VanToll",
+			"email": "tj.vantoll@gmail.com",
+			"url": "https://www.tjvantoll.com"
+		},
+		{
+			"name": "Felix Nagel",
+			"email": "info@felixnagel.com",
+			"url": "https://www.felixnagel.com"
+		},
+		{
+			"name": "Alex Schmitz",
+			"email": "arschmitz@gmail.com",
+			"url": "https://github.com/arschmitz"
+		}
+	],
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/jquery/jquery-ui.git"
+	},
+	"bugs": {
+		"url": "https://github.com/jquery/jquery-ui/issues"
+	},
+	"license": "MIT",
+	"scripts": {
+		"build": "grunt build",
+		"lint": "grunt lint",
+		"test:server": "node tests/runner/server.js",
+		"test:unit": "node tests/runner/command.js",
+		"test": "grunt && npm run test:unit -- -h"
+	},
+	"keywords": []
+}

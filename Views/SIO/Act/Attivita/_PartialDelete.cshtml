@@ -1,0 +1,90 @@
+﻿@model ErpToolkit.Models.SIO.Act.Attivita
+@{
+    ViewData["Title"] = "Attivita Delete";
+}
+<div class="modal-dialog" role="document">
+    @Html.AntiForgeryToken()
+    <!--GESTISCE AZIONI CLICK PULSANTE-->
+    @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+    @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+    @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                Sei proprio sicuro di voler cancellare il seguente record?
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AvCodice, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AvCodice, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AvDescrizione, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AvDescrizione, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AvNote, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AvNote, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AvFiltroRegimeErogazione, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AvFiltroRegimeErogazione, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AvCostoMedio, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AvCostoMedio, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AvIdGruppo, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AvIdGruppo, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AvAttivitaPreferenziale, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AvAttivitaPreferenziale, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AvDurataValidita, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AvDurataValidita, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AvDurataMedia, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AvDurataMedia, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AvInEvidenza, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AvInEvidenza, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AvIdTipoAttivita, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AvIdTipoAttivita, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AvRoutine, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AvRoutine, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AvNoteEstese, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AvNoteEstese, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AvAttributi1, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AvAttributi1, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.AvAttributi2, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AvAttributi2, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <br />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+            <button type="button" class="btn btn-primary" onclick='updateModalWithContent("DeleteModale","/Attivita/Delete",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Elimina</button>
+        </div>
+    </div>
+</div>

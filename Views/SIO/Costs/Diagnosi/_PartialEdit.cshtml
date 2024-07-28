@@ -1,0 +1,69 @@
+﻿@model ErpToolkit.Models.SIO.Costs.Diagnosi
+@{
+    ViewData["Title"] = "Diagnosi Edit";
+}
+<div class="modal-dialog" role="document">
+    @Html.AntiForgeryToken()
+    <!--GESTISCE AZIONI CLICK PULSANTE-->
+    @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+    @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+    @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label asp-for="DgTipoDiagnosi" class="control-label"></label>
+                    <input asp-for="DgTipoDiagnosi" class="form-control" />
+                    <span asp-validation-for="DgTipoDiagnosi" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DgClasse" class="control-label"></label>
+                    <input asp-for="DgClasse" class="form-control" />
+                    <span asp-validation-for="DgClasse" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DgDescrizione" class="control-label"></label>
+                    <input asp-for="DgDescrizione" class="form-control" />
+                    <span asp-validation-for="DgDescrizione" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DgNote" class="control-label"></label>
+                    <input asp-for="DgNote" class="form-control" />
+                    <span asp-validation-for="DgNote" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DgCodice" class="control-label"></label>
+                    <input asp-for="DgCodice" class="form-control" />
+                    <span asp-validation-for="DgCodice" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DgIdGruppo" class="control-label"></label>
+                    <input asp-for="DgIdGruppo" class="form-control" />
+                    <span asp-validation-for="DgIdGruppo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DgTipoDrg" class="control-label"></label>
+                    <input asp-for="DgTipoDrg" class="form-control" />
+                    <span asp-validation-for="DgTipoDrg" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DgTipoIcd9" class="control-label"></label>
+                    <input asp-for="DgTipoIcd9" class="form-control" />
+                    <span asp-validation-for="DgTipoIcd9" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+            <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/Diagnosi/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
+        </div>
+    </div>
+</div>

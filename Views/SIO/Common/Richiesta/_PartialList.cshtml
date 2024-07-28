@@ -1,0 +1,140 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.Common.Richiesta>
+@{
+    ViewData["Title"] = "Richiesta List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.RiIdUnitaRichiedente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RiIdPostazioneRichiedente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RiIdIstitutoRichiedente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RiIdOperatoreRichiedente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RiDataRichiesta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RiOraRichiesta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RiUrgenza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RiOggetto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RiStatoRichiesta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RiIdTipoRichiesta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RiIdPaziente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RiIdEpisodio)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RiIdUnitaRichiedente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RiIdPostazioneRichiedente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RiIdIstitutoRichiedente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RiIdOperatoreRichiedente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RiDataRichiesta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RiOraRichiesta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RiUrgenza)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RiOggetto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RiStatoRichiesta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RiIdTipoRichiesta)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RiIdPaziente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RiIdEpisodio)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Richiesta/Edit','@Html.DisplayFor(modelItem => item.Ri1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Richiesta/Alert','@Html.DisplayFor(modelItem => item.Ri1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "RiIdUnitaRichiedente", "name": "RiIdUnitaRichiedente", "title": "Id Unita Richiedente", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "RiIdPostazioneRichiedente", "name": "RiIdPostazioneRichiedente", "title": "Id Postazione Richiedente", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "RiIdIstitutoRichiedente", "name": "RiIdIstitutoRichiedente", "title": "Id Istituto Richiedente", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "RiIdOperatoreRichiedente", "name": "RiIdOperatoreRichiedente", "title": "Id Operatore Richiedente", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "RiDataRichiesta", "name": "RiDataRichiesta", "title": "Data Richiesta", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "RiOraRichiesta", "name": "RiOraRichiesta", "title": "Ora Richiesta", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "RiUrgenza", "name": "RiUrgenza", "title": "Urgenza", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "RiOggetto", "name": "RiOggetto", "title": "Oggetto", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "RiStatoRichiesta", "name": "RiStatoRichiesta", "title": "Stato Richiesta", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "RiIdTipoRichiesta", "name": "RiIdTipoRichiesta", "title": "Id Tipo Richiesta", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "RiIdPaziente", "name": "RiIdPaziente", "title": "Id Paziente", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "RiIdEpisodio", "name": "RiIdEpisodio", "title": "Id Episodio", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Richiesta/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

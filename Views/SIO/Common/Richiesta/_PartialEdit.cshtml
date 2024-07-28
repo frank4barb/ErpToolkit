@@ -1,0 +1,89 @@
+﻿@model ErpToolkit.Models.SIO.Common.Richiesta
+@{
+    ViewData["Title"] = "Richiesta Edit";
+}
+<div class="modal-dialog" role="document">
+    @Html.AntiForgeryToken()
+    <!--GESTISCE AZIONI CLICK PULSANTE-->
+    @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+    @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+    @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label asp-for="RiIdUnitaRichiedente" class="control-label"></label>
+                    <input asp-for="RiIdUnitaRichiedente" class="form-control" />
+                    <span asp-validation-for="RiIdUnitaRichiedente" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RiIdPostazioneRichiedente" class="control-label"></label>
+                    <input asp-for="RiIdPostazioneRichiedente" class="form-control" />
+                    <span asp-validation-for="RiIdPostazioneRichiedente" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RiIdIstitutoRichiedente" class="control-label"></label>
+                    <input asp-for="RiIdIstitutoRichiedente" class="form-control" />
+                    <span asp-validation-for="RiIdIstitutoRichiedente" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RiIdOperatoreRichiedente" class="control-label"></label>
+                    <input asp-for="RiIdOperatoreRichiedente" class="form-control" />
+                    <span asp-validation-for="RiIdOperatoreRichiedente" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RiDataRichiesta" class="control-label"></label>
+                    <input asp-for="RiDataRichiesta" class="form-control" />
+                    <span asp-validation-for="RiDataRichiesta" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RiOraRichiesta" class="control-label"></label>
+                    <input asp-for="RiOraRichiesta" class="form-control" />
+                    <span asp-validation-for="RiOraRichiesta" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RiUrgenza" class="control-label"></label>
+                    <input asp-for="RiUrgenza" class="form-control" />
+                    <span asp-validation-for="RiUrgenza" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RiOggetto" class="control-label"></label>
+                    <input asp-for="RiOggetto" class="form-control" />
+                    <span asp-validation-for="RiOggetto" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RiStatoRichiesta" class="control-label"></label>
+                    <input asp-for="RiStatoRichiesta" class="form-control" />
+                    <span asp-validation-for="RiStatoRichiesta" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RiIdTipoRichiesta" class="control-label"></label>
+                    <input asp-for="RiIdTipoRichiesta" class="form-control" />
+                    <span asp-validation-for="RiIdTipoRichiesta" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RiIdPaziente" class="control-label"></label>
+                    <input asp-for="RiIdPaziente" class="form-control" />
+                    <span asp-validation-for="RiIdPaziente" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RiIdEpisodio" class="control-label"></label>
+                    <input asp-for="RiIdEpisodio" class="form-control" />
+                    <span asp-validation-for="RiIdEpisodio" class="text-danger"></span>
+                </div>
+            </div>
+            <br />
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+            <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/Richiesta/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
+        </div>
+    </div>
+</div>

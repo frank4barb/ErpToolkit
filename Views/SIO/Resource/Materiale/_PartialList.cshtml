@@ -1,0 +1,168 @@
+﻿@using ErpToolkit.Extensions
+@model IEnumerable<ErpToolkit.Models.SIO.Resource.Materiale>
+@{
+    ViewData["Title"] = "Materiale List";
+}
+@Html.AntiForgeryToken()
+<!--GESTISCE AZIONI CLICK PULSANTE-->
+@Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+@Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+@Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+<br />
+<table id="example" class="table" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MtCodice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MtDescrizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MtIdTipoRisorsa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MtCostoUnitarioUso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MtMisuraUnitariaUso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MtNote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MtDisponibilita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MtTelefonoFornitore)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MtQuantitaDisponibile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MtQuantitaMinimaMagazzino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MtUsoMedioGiornaliero)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MtDataUltimoOrdine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MtQuantitaUltimoOrdine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MtDataProssimoOrdine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MtQuantitaMediaOrdine)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MtCodiceNazionale)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MtCodice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MtDescrizione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MtIdTipoRisorsa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MtCostoUnitarioUso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MtMisuraUnitariaUso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MtNote)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MtDisponibilita)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MtTelefonoFornitore)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MtQuantitaDisponibile)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MtQuantitaMinimaMagazzino)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MtUsoMedioGiornaliero)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MtDataUltimoOrdine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MtQuantitaUltimoOrdine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MtDataProssimoOrdine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MtQuantitaMediaOrdine)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MtCodiceNazionale)
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Materiale/Edit','@Html.DisplayFor(modelItem => item.Mt1Icode)')">Edit</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Materiale/Alert','@Html.DisplayFor(modelItem => item.Mt1Icode)')">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>&shy;</p>
+<p>&shy;</p>
+
+@Html.Script(@<link href="~/lib/datatables/datatables.css" rel="stylesheet">)
+@Html.Script(@<script src="~/lib/datatables/datatables.js"></script>)
+@Html.Script(
+    @<script>
+        $(document).ready(function () {
+            $("#example").DataTable({
+
+                "responsive": false, // disabilita funzione che adatta tabella a pagina e visualizza rimanenti colonne sotto
+                "processing": true, // for show progress bar
+                "serverSide": false, // for process server side
+                "filter": true, // this is for disable filter (search box)
+                "orderMulti": false, // for disable multiple column at once
+                "pageLength": 10,
+
+                "columns": [
+                    { "visible": true, "data": "MtCodice", "name": "MtCodice", "title": "Codice", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "MtDescrizione", "name": "MtDescrizione", "title": "Descrizione", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "MtIdTipoRisorsa", "name": "MtIdTipoRisorsa", "title": "Id Tipo Risorsa", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "MtCostoUnitarioUso", "name": "MtCostoUnitarioUso", "title": "Costo Unitario Uso", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "MtMisuraUnitariaUso", "name": "MtMisuraUnitariaUso", "title": "Misura Unitaria Uso", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "MtNote", "name": "MtNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "MtDisponibilita", "name": "MtDisponibilita", "title": "Disponibilita", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "MtTelefonoFornitore", "name": "MtTelefonoFornitore", "title": "Telefono Fornitore", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "MtQuantitaDisponibile", "name": "MtQuantitaDisponibile", "title": "Quantita Disponibile", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "MtQuantitaMinimaMagazzino", "name": "MtQuantitaMinimaMagazzino", "title": "Quantita Minima Magazzino", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "MtUsoMedioGiornaliero", "name": "MtUsoMedioGiornaliero", "title": "Uso Medio Giornaliero", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "MtDataUltimoOrdine", "name": "MtDataUltimoOrdine", "title": "Data Ultimo Ordine", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "MtQuantitaUltimoOrdine", "name": "MtQuantitaUltimoOrdine", "title": "Quantita Ultimo Ordine", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "MtDataProssimoOrdine", "name": "MtDataProssimoOrdine", "title": "Data Prossimo Ordine", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "MtQuantitaMediaOrdine", "name": "MtQuantitaMediaOrdine", "title": "Quantita Media Ordine", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "MtCodiceNazionale", "name": "MtCodiceNazionale", "title": "Codice Nazionale", "defaultContent": ".", "autoWidth": true },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Materiale/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                ]
+
+            });
+        });
+    </script>
+)

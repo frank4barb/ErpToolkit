@@ -1,0 +1,115 @@
+@model ErpToolkit.Controllers.DatatableController
+@{
+    if (ViewData["Title"] == null) ViewData["Title"] = "Table";
+
+    ViewData["Test"] = "Test da visualizzare nella form modale di EDIT";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Only authroized users can access this page</p>
+
+@* Comment goes here 
+   --------------------------------------------------------------------------------------------------
+    Bootstrap https://getbootstrap.com/docs/5.0/layout/columns/
+    DataTable https://datatables.net/reference/option/columns.render
+   --------------------------------------------------------------------------------------------------
+*@
+
+<!--TABELLA CON FILTRO-->
+
+<div class="container row justify-content-start align-items-end" style="width:100%; margin:0 auto;">
+
+    <div style="width:100%; margin:0 auto;">
+
+
+        <div id="SelectNonModale" tabindex="-1" role="dialog" aria-labelledby="titolo" aria-hidden="false">
+            @{
+                await Html.RenderPartialAsync("_PartialTableSelect", Model.Filtro);
+            }
+        </div>
+
+        <div id="ListNonModale" tabindex="-1" role="dialog" aria-labelledby="titolo" aria-hidden="false">
+            @{
+                await Html.RenderPartialAsync("_PartialTableList3", Model.ListCustomers);
+            }
+        </div>
+
+
+
+    </div>
+
+</div>
+
+
+<!--FINESTRA MODALE https://www.iprogrammatori.it/articoli/microsoft-net-framework/art_aspnet-core-mvc-aprire-una-finestra-modale_1689.aspx -->
+<!--ALTRO MODALE  https://www.red-gate.com/simple-talk/development/dotnet-development/modal-input-forms-in-asp-net-mvc/ -->
+<!--PARTIAL VIEW MODALE https://stackoverflow.com/questions/59660340/add-edit-record-through-a-modal-on-net-core-->
+<!--PARTIAL VIEW MODALE https://learn.microsoft.com/it-it/aspnet/core/mvc/views/tag-helpers/built-in/partial-tag-helper?view=aspnetcore-8.0-->
+<!-- finestre modali https://getbootstrap.com/docs/5.0/components/modal/-->
+
+<!--partial name="_PartialTableEdit.cshtml" for="Product" view-data="ViewData" /-->
+<!--partial name="_PartialTableEdit" view-data="ViewData" /-->
+
+<div class="modal fade" id="EditModale" tabindex="-1" role="dialog" aria-labelledby="titolo" aria-hidden="true">
+    @{
+        await Html.RenderPartialAsync("_PartialTableEdit", Model.RowCustomer);
+    }
+</div>
+<div class="modal fade" id="DeleteModale" tabindex="-1" role="dialog" aria-labelledby="titolo" aria-hidden="true">
+    @{
+        await Html.RenderPartialAsync("_PartialTableDelete", Model.RowCustomer);
+    }
+</div>
+
+
+
+@* <div class="modal fade" id="EditModale" tabindex="-1" role="dialog" aria-labelledby="titolo" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titolo">Titolo Finestra</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Table", "Home", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="container">
+
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Sanitario, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.Sanitario, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Sanitario, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.TestoLibero, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.TestoLibero, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TestoLibero, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DataInizio, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.DataInizio, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DataInizio, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.DataFine, htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.DataFine, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.DataFine, "", new { @class = "text-danger" })
+                        </div>
+                        <!--input type="submit" value="Ricarica" class="btn btn-primary" /-->
+                    </div>
+                }
+                <br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                <button type="submit" class="btn btn-primary" onclick="alert('test');">Salva</button>
+            </div>
+        </div>
+    </div>
+</div>
+ *@
+
