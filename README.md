@@ -8,17 +8,17 @@ L'obiettivo del progetto è costruire una piattaforma di supporto per la creazion
 
 I tre moduli condividono una libreria che espone le seguenti funzionalità.
 
-**COMP:** Componenti grafici per facilitare la creazione delle pagine web: Autocomplete, Calendario, Tabella, ecc.
-**DB:** Moduli di accesso a diversi database e normalizzazione dei dati: SQL Server, ORACLE, IRIS, MongoDB, PostgreSQL, ecc.
-**DOG:** Funzionalità di archiviazione controllata dei dati per la generazione dei contatori, la gestione delle transazioni, l'audit delle attività e i processi di allineamento asincrono da DB.
-**BO:** Business Objects per la verifica dei dati e la governance delle transazioni complesse su DB.
-**ENV:** Sistema di autenticazione e profilazione utente, con gestione delle variabili di sessione.
+- **COMP:** Componenti grafici per facilitare la creazione delle pagine web: Autocomplete, Calendario, Tabella, ecc.
+- **DB:** Moduli di accesso a diversi database e normalizzazione dei dati: SQL Server, ORACLE, IRIS, MongoDB, PostgreSQL, ecc.
+- **DOG:** Funzionalità di archiviazione controllata dei dati per la generazione dei contatori, la gestione delle transazioni, l'audit delle attività e i processi di allineamento asincrono da DB.
+- **BO:** Business Objects per la verifica dei dati e la governance delle transazioni complesse su DB.
+- **ENV:** Sistema di autenticazione e profilazione utente, con gestione delle variabili di sessione.
 
 La logica di programmazione del progetto risiede nei file:
 
-**Model:** struttura dati e proprietà dei campi del modello
-**Controller:** accesso alla base di dati ed elaborazioni funzionali
-**View:** usato esclusivamente per formalizzare disposizione grafica dei componenti nella pagina
+- **Model:** struttura dati e proprietà dei campi del modello,
+- **Controller:** accesso alla base di dati ed elaborazioni funzionali,
+- **View:** usato esclusivamente per formalizzare disposizione grafica dei componenti nella pagina.
 
 ![](./wwwroot/images/ERPtoolkit-Architettura.png)
 
