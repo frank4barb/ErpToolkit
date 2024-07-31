@@ -8,17 +8,17 @@ L'obiettivo del progetto è costruire una piattaforma di supporto per la creazion
 
 I tre moduli condividono una libreria che espone le seguenti funzionalità.
 
-- **COMP:** Componenti grafici per facilitare la creazione delle pagine web: Autocomplete, Calendario, Tabella, ecc.
-- **DB:** Moduli di accesso a diversi database e normalizzazione dei dati: SQL Server, ORACLE, IRIS, MongoDB, PostgreSQL, ecc.
-- **DOG:** Funzionalità di archiviazione controllata dei dati per la generazione dei contatori, la gestione delle transazioni, l'audit delle attività e i processi di allineamento asincrono da DB.
-- **BO:** Business Objects per la verifica dei dati e la governance delle transazioni complesse su DB.
-- **ENV:** Sistema di autenticazione e profilazione utente, con gestione delle variabili di sessione.
+- `COMP`: Componenti grafici per facilitare la creazione delle pagine web: Autocomplete, Calendario, Tabella, ecc.
+- `DB`: Moduli di accesso a diversi database e normalizzazione dei dati: SQL Server, ORACLE, IRIS, MongoDB, PostgreSQL, ecc.
+- `DOG`: Funzionalità di archiviazione controllata dei dati per la generazione dei contatori, la gestione delle transazioni, l'audit delle attività e i processi di allineamento asincrono da DB.
+- `BO`: Business Objects per la verifica dei dati e la governance delle transazioni complesse su DB.
+- `ENV`: Sistema di autenticazione e profilazione utente, con gestione delle variabili di sessione.
 
 La logica di programmazione del progetto risiede nei file:
 
-- **Model:** struttura dati e proprietà dei campi del modello,
-- **Controller:** accesso alla base di dati ed elaborazioni funzionali,
-- **View:** usato esclusivamente per formalizzare la disposizione grafica dei componenti nella pagina.
+- `Model`: struttura dati e proprietà dei campi del modello,
+- `Controller`: accesso alla base di dati ed elaborazioni funzionali,
+- `View`: usato esclusivamente per formalizzare la disposizione grafica dei componenti nella pagina.
 
 ![](./wwwroot/images/ERPtoolkit-Architettura.png)
 
@@ -50,7 +50,14 @@ Come Use Case consideriamo il modello dati di un **ERP sanitario**, di cui propo
 ![](./wwwroot/images/ERPtoolkit-Modello-sanitario.png)
 
 
-Al centro del processo è presente il paziente, che viene anagrafato e contestualizzato nel territorio. Ogni suo contatto con la struttura ospedaliera genera un episodio, che può caratterizzarsi in ricovero, day hospital, ambulatoriale o in attività privata. Nel corso dell'episodio, per il paziente vengono effettuate un certo numero di prestazioni, eventualmente raggruppate in una richiesta. L'esecuzione di una prestazione può prevedere il prelievo di un campione e l'uso di diverse risorse, quali: materiali, farmaci, personale sanitario, sale operatorie, ecc. Durante il ciclo di esecuzione della prestazione il paziente è gestito da diversi utenti (amministrativi, sanitari, infermieristici) ed è alternativamente sotto la responsabilità di diverse unità di cura (centri di prenotazione, reparti, centri di erogazione prestazione, ecc.), che fanno tutti parte dell'organizzazione ospedaliera. L'esecuzione di una prestazione produce dei dati clinici, tra cui: parametri vitali, risultati di esami, documenti clinici, ecc., che vanno archiviati e distribuiti. L'erogazione del servizio prevede una gestione di cassa (contabile) per la fatturazione delle prestazioni ed i rimborsi regionali. L'uso delle risorse prevede una gestione di magazzino ed amministrativa del personale.
+- Al centro del processo è presente il `pazient`, che viene anagrafato e contestualizzato nel territorio. 
+	- Ogni suo contatto con la struttura ospedaliera genera un `episodio`, che può caratterizzarsi in **ricovero**, **day hospital**, **ambulatoriale** o in **attività privata**. 
+		- Nel corso dell'episodio, per il paziente vengono effettuate un certo numero di `prestazioni`, eventualmente raggruppate in una `richiesta`. 
+		- L'esecuzione di una prestazione può prevedere il prelievo di un `campione` e l'uso di diverse `risorse`, quali: `materiali`, `farmaci`, `personale sanitario`, `sale operatorie`, ecc. 
+		- Durante il ciclo di esecuzione della prestazione il paziente è gestito da diversi `utenti` (amministrativi, sanitari, infermieristici) ed è alternativamente sotto la responsabilità di diverse `unità di cura` (**centri di prenotazione**, **reparti**, **centri di erogazione prestazione**, ecc.), che fanno tutti parte dell'`organizzazione` ospedaliera. 
+			- L'esecuzione di una prestazione produce dei `dati clinici`, tra cui: `parametri vitali`, `risultati di esami`, `documenti clinici`, ecc., che vanno archiviati e distribuiti. 
+			- L'erogazione del servizio prevede una gestione di cassa (contabile) per la fatturazione delle prestazioni ed i rimborsi regionali. 
+			- L'uso delle risorse prevede una gestione di magazzino ed amministrativa del personale.
 
 ## Business Objects ERP sanitario
 
