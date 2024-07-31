@@ -18,7 +18,7 @@ La logica di programmazione del progetto risiede nei file:
 
 - **Model:** struttura dati e proprietà dei campi del modello,
 - **Controller:** accesso alla base di dati ed elaborazioni funzionali,
-- **View:** usato esclusivamente per formalizzare disposizione grafica dei componenti nella pagina.
+- **View:** usato esclusivamente per formalizzare la disposizione grafica dei componenti nella pagina.
 
 ![](./wwwroot/images/ERPtoolkit-Architettura.png)
 
