@@ -2,9 +2,9 @@
 
 L'obiettivo del progetto è costruire una piattaforma di supporto per la creazione, gestione e monitoraggio di semplici ERP (Enterprise Resource Planning). La struttura del software si compone di:
 
-	1. Server Web (ASP.NET Core 8) per la visualizzazione dell'interfaccia grafica basata su architettura MVC (Model-View-Controller), che separa logicamente struttura, visualizzazione e gestione dei dati.
-	2. Scheduler programmabile per l'esecuzione temporizzata di attività.
-	3. Listener per l'esposizione di servizi SOAP, REST, ecc.
+1. **Server Web** (ASP.NET Core 8) per la visualizzazione dell'interfaccia grafica basata su architettura MVC (Model-View-Controller), che separa logicamente struttura, visualizzazione e gestione dei dati.
+2. **Scheduler programmabile** per l'esecuzione temporizzata di attività.
+3. **Listener** per l'esposizione di servizi SOAP, REST, ecc.
 
 I tre moduli condividono una libreria che espone le seguenti funzionalità.
 
