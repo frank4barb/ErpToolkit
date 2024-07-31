@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
 public class RelAttivitaErogataDa {
-public const string Description = "Strutture che possono eseguire un certo tipo di attività ... intcode:[81] prefix:[AE_] has_xdt:[AE_XDATA] is_xdt:[0] ";
+public const string Description = "Strutture che possono eseguire un certo tipo di attività";
 public const string SqlTableName = "REL_ATTIVITA_EROGATA_DA";
 public const string SqlTableNameExt = "REL_ATTIVITA_EROGATA_DA";
 public const string SqlRowIdName = "AE__ID";

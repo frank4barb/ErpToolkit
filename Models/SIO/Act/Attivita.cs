@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
 public class Attivita {
-public const string Description = "Tipi di attività che possono essere richieste e/o eseguite ... intcode:[11] prefix:[AV_] has_xdt:[AV_XDATA] is_xdt:[0] ";
+public const string Description = "Tipi di attività che possono essere richieste e/o eseguite";
 public const string SqlTableName = "ATTIVITA";
 public const string SqlTableNameExt = "ATTIVITA";
 public const string SqlRowIdName = "AV__ID";

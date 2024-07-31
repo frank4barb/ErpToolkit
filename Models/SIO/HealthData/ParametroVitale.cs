@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.HealthData {
 public class ParametroVitale {
-public const string Description = "Dati sanitari - Parametri vitali ... intcode:[38] prefix:[PV_] has_xdt:[PV_XDATA] is_xdt:[0] ";
+public const string Description = "Dati sanitari - Parametri vitali";
 public const string SqlTableName = "PARAMETRO_VITALE";
 public const string SqlTableNameExt = "PARAMETRO_VITALE";
 public const string SqlRowIdName = "PV__ID";

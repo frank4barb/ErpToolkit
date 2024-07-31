@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
 public class RelPrestazioneUsa {
-public const string Description = "Risorse pianificate ed effettive utilizzate per l'esecuzione di una singola prestazione individuale ... intcode:[36] prefix:[PU_] has_xdt:[PU_XDATA] is_xdt:[0] ";
+public const string Description = "Risorse pianificate ed effettive utilizzate per l'esecuzione di una singola prestazione individuale";
 public const string SqlTableName = "REL_PRESTAZIONE_USA";
 public const string SqlTableNameExt = "REL_PRESTAZIONE_USA";
 public const string SqlRowIdName = "PU__ID";

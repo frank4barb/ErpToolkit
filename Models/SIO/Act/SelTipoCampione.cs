@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
 public class SelTipoCampione {
-public const string Description = "Tipo di campione ... intcode:[100] prefix:[TP_] has_xdt:[TP_XDATA] is_xdt:[0] ";
+public const string Description = "Tipo di campione";
 public const string SqlTableName = "TIPO_CAMPIONE";
 public const string SqlTableNameExt = "TIPO_CAMPIONE";
 public const string SqlRowIdName = "TP__ID";

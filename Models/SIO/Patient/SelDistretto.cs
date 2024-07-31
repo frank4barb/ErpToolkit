@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Patient {
 public class SelDistretto {
-public const string Description = "Distretto territoriale (circoscrizione) ... intcode:[128] prefix:[DI_] has_xdt:[DI_XDATA] is_xdt:[0] ";
+public const string Description = "Distretto territoriale (circoscrizione)";
 public const string SqlTableName = "DISTRETTO";
 public const string SqlTableNameExt = "DISTRETTO";
 public const string SqlRowIdName = "DI__ID";

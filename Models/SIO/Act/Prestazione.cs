@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
 public class Prestazione {
-public const string Description = "Prestazione effettuata: dettaglio delle attività effettivamente eseguite durante il lavoro quotidiano nell'organizzazione ... intcode:[31] prefix:[PR_] has_xdt:[PR_XDATA] is_xdt:[0] ";
+public const string Description = "Prestazione effettuata: dettaglio delle attività effettivamente eseguite durante il lavoro quotidiano nell'organizzazione";
 public const string SqlTableName = "PRESTAZIONE";
 public const string SqlTableNameExt = "PRESTAZIONE";
 public const string SqlRowIdName = "PR__ID";

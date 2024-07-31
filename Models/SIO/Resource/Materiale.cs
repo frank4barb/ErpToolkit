@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Resource {
 public class Materiale {
-public const string Description = "Risorse: materiali ... intcode:[97] prefix:[MT_] has_xdt:[MT_XDATA] is_xdt:[0] ";
+public const string Description = "Risorse: materiali";
 public const string SqlTableName = "MATERIALE";
 public const string SqlTableNameExt = "MATERIALE";
 public const string SqlRowIdName = "MT__ID";

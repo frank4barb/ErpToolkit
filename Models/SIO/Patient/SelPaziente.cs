@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Patient {
 public class SelPaziente {
-public const string Description = "Pazienti rilevanti per l'organizzazione sanitaria ... intcode:[51] prefix:[PA_] has_xdt:[PA_XDATA] is_xdt:[0] ";
+public const string Description = "Pazienti rilevanti per l'organizzazione sanitaria";
 public const string SqlTableName = "PAZIENTE";
 public const string SqlTableNameExt = "PAZIENTE";
 public const string SqlRowIdName = "PA__ID";

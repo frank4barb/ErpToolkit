@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Patient {
 public class Nazione {
-public const string Description = "Nazioni ... intcode:[58] prefix:[NZ_] has_xdt:[NZ_XDATA] is_xdt:[0] ";
+public const string Description = "Nazioni";
 public const string SqlTableName = "NAZIONE";
 public const string SqlTableNameExt = "NAZIONE";
 public const string SqlRowIdName = "NZ__ID";

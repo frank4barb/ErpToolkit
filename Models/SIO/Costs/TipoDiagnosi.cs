@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Costs {
 public class TipoDiagnosi {
-public const string Description = "Tipi generali di classificazioni diagnostiche. ... intcode:[114] prefix:[TD_] has_xdt:[TD_XDATA] is_xdt:[0] ";
+public const string Description = "Tipi generali di classificazioni diagnostiche.";
 public const string SqlTableName = "TIPO_DIAGNOSI";
 public const string SqlTableNameExt = "TIPO_DIAGNOSI";
 public const string SqlRowIdName = "TD__ID";

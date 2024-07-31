@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
 public class SelTipoOrganizzazione {
-public const string Description = "Classificazione delle strutture ... intcode:[91] prefix:[TZ_] has_xdt:[TZ_XDATA] is_xdt:[0] ";
+public const string Description = "Classificazione delle strutture";
 public const string SqlTableName = "TIPO_ORGANIZZAZIONE";
 public const string SqlTableNameExt = "TIPO_ORGANIZZAZIONE";
 public const string SqlRowIdName = "TZ__ID";

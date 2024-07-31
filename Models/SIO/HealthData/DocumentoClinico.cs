@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.HealthData {
 public class DocumentoClinico {
-public const string Description = "Dati sanitari - Altri tipi di dati ... intcode:[41] prefix:[DC_] has_xdt:[DC_XDATA] is_xdt:[0] ";
+public const string Description = "Dati sanitari - Altri tipi di dati";
 public const string SqlTableName = "DOCUMENTO_CLINICO";
 public const string SqlTableNameExt = "DOCUMENTO_CLINICO";
 public const string SqlRowIdName = "DC__ID";

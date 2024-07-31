@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
 public class RelAttivitaRichiestaDa {
-public const string Description = "Tipi di attività che possono essere richiesti da un certo operatore/struttura sanitaria ... intcode:[15] prefix:[AR_] has_xdt:[AR_XDATA] is_xdt:[0] ";
+public const string Description = "Tipi di attività che possono essere richiesti da un certo operatore/struttura sanitaria";
 public const string SqlTableName = "REL_ATTIVITA_RICHIESTA_DA";
 public const string SqlTableNameExt = "REL_ATTIVITA_RICHIESTA_DA";
 public const string SqlRowIdName = "AR__ID";

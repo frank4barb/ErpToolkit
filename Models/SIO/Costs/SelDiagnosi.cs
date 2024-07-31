@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Costs {
 public class SelDiagnosi {
-public const string Description = "Classificazioni diagnostiche adottate nelle organizzazioni sanitarie (ad esempio, DRG, AVG, ICD9, ecc.) ... intcode:[63] prefix:[DG_] has_xdt:[DG_XDATA] is_xdt:[0] ";
+public const string Description = "Classificazioni diagnostiche adottate nelle organizzazioni sanitarie (ad esempio, DRG, AVG, ICD9, ecc.)";
 public const string SqlTableName = "DIAGNOSI";
 public const string SqlTableNameExt = "DIAGNOSI";
 public const string SqlRowIdName = "DG__ID";

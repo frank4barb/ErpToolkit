@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
 public class RelOrganizzazioneContiene {
-public const string Description = "Relazioni generiche esistenti tra diverse strutture ... intcode:[115] prefix:[OO_] has_xdt:[OO_XDATA] is_xdt:[0] ";
+public const string Description = "Relazioni generiche esistenti tra diverse strutture";
 public const string SqlTableName = "REL_ORGANIZZAZIONE_CONTIENE";
 public const string SqlTableNameExt = "REL_ORGANIZZAZIONE_CONTIENE";
 public const string SqlRowIdName = "OO__ID";

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
 public class SelTipoEpisodio {
-public const string Description = "Classe di episodi ... intcode:[6] prefix:[TE_] has_xdt:[TE_XDATA] is_xdt:[0] ";
+public const string Description = "Classe di episodi";
 public const string SqlTableName = "TIPO_EPISODIO";
 public const string SqlTableNameExt = "TIPO_EPISODIO";
 public const string SqlRowIdName = "TE__ID";

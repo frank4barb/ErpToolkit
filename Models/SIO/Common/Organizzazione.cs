@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Common {
 public class Organizzazione {
-public const string Description = "Struttura sanitaria: centro sanitario, unità organizzativa, individuo, componente software, ecc. ... intcode:[2] prefix:[OR_] has_xdt:[OR_XDATA] is_xdt:[0] ";
+public const string Description = "Struttura sanitaria: centro sanitario, unità organizzativa, individuo, componente software, ecc.";
 public const string SqlTableName = "ORGANIZZAZIONE";
 public const string SqlTableNameExt = "ORGANIZZAZIONE";
 public const string SqlRowIdName = "OR__ID";

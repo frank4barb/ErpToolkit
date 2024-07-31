@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Patient {
 public class Comune {
-public const string Description = "Comuni ... intcode:[55] prefix:[CM_] has_xdt:[CM_XDATA] is_xdt:[0] ";
+public const string Description = "Comuni";
 public const string SqlTableName = "COMUNE";
 public const string SqlTableNameExt = "COMUNE";
 public const string SqlRowIdName = "CM__ID";

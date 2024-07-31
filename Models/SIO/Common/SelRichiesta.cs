@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Common {
 public class SelRichiesta {
-public const string Description = "Comunicazione e/o richiesta di prestazioni ... intcode:[46] prefix:[RI_] has_xdt:[RI_XDATA] is_xdt:[0] ";
+public const string Description = "Comunicazione e/o richiesta di prestazioni";
 public const string SqlTableName = "RICHIESTA";
 public const string SqlTableNameExt = "RICHIESTA";
 public const string SqlRowIdName = "RI__ID";

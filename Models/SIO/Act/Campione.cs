@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
 public class Campione {
-public const string Description = "Campione effettivo raccolto durante le attività quotidiane ... intcode:[101] prefix:[CP_] has_xdt:[CP_XDATA] is_xdt:[0] ";
+public const string Description = "Campione effettivo raccolto durante le attività quotidiane";
 public const string SqlTableName = "CAMPIONE";
 public const string SqlTableNameExt = "CAMPIONE";
 public const string SqlRowIdName = "CP__ID";

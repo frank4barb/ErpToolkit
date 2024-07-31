@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
 public class RelPrestazioneCampione {
-public const string Description = "Campioni utilizzati e/o generati da una prestazione ... intcode:[102] prefix:[PC_] has_xdt:[PC_XDATA] is_xdt:[0] ";
+public const string Description = "Campioni utilizzati e/o generati da una prestazione";
 public const string SqlTableName = "REL_PRESTAZIONE_CAMPIONE";
 public const string SqlTableNameExt = "REL_PRESTAZIONE_CAMPIONE";
 public const string SqlRowIdName = "PC__ID";

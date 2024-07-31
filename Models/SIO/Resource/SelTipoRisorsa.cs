@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Resource {
 public class SelTipoRisorsa {
-public const string Description = "Tipi di risorse disponibili/utilizzate nell'organizzazione sanitaria ... intcode:[20] prefix:[TS_] has_xdt:[TS_XDATA] is_xdt:[0] ";
+public const string Description = "Tipi di risorse disponibili/utilizzate nell'organizzazione sanitaria";
 public const string SqlTableName = "TIPO_RISORSA";
 public const string SqlTableNameExt = "TIPO_RISORSA";
 public const string SqlRowIdName = "TS__ID";

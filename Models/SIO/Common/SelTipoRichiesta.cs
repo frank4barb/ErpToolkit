@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Common {
 public class SelTipoRichiesta {
-public const string Description = "Tipo di richieste ... intcode:[48] prefix:[TI_] has_xdt:[TI_XDATA] is_xdt:[0] ";
+public const string Description = "Tipo di richieste";
 public const string SqlTableName = "TIPO_RICHIESTA";
 public const string SqlTableNameExt = "TIPO_RICHIESTA";
 public const string SqlRowIdName = "TI__ID";

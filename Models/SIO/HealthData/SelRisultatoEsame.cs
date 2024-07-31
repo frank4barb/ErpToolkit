@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.HealthData {
 public class SelRisultatoEsame {
-public const string Description = "Dati sanitari - Risultato degli esami ... intcode:[39] prefix:[RE_] has_xdt:[RE_XDATA] is_xdt:[0] ";
+public const string Description = "Dati sanitari - Risultato degli esami";
 public const string SqlTableName = "RISULTATO_ESAME";
 public const string SqlTableNameExt = "RISULTATO_ESAME";
 public const string SqlRowIdName = "RE__ID";

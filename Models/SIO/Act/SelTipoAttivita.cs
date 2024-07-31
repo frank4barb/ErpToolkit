@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
 public class SelTipoAttivita {
-public const string Description = "Tassonomie e classe di tipi di attività ... intcode:[3] prefix:[TA_] has_xdt:[TA_XDATA] is_xdt:[0] ";
+public const string Description = "Tassonomie e classe di tipi di attività";
 public const string SqlTableName = "TIPO_ATTIVITA";
 public const string SqlTableNameExt = "TIPO_ATTIVITA";
 public const string SqlRowIdName = "TA__ID";
