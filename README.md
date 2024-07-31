@@ -20,11 +20,11 @@ La logica di programmazione del progetto risiede nei file:
 	Controller: accesso alla base di dati ed elaborazioni funzionali
 	View: usato esclusivamente per formalizzare disposizione grafica dei componenti nella pagina
 
-![](./wwwroot/imgages/ERPtoolkit-Architettura.png)
+![](./wwwroot/images/ERPtoolkit-Architettura.png)
 
 Il modello tecnologico prevede l'uso di un servizio Windows o di un processo in background Linux con scalabilità su più macchine in load-balancing, collaborazione tra i processi e monitoraggio centralizzato.
 
-![](./wwwroot/imgages/ERPtoolkit-Moduli-scalabili-collaborativi.png)
+![](./wwwroot/images/ERPtoolkit-Moduli-scalabili-collaborativi.png)
 
 # Storyboard
 Per ogni oggetto del modello si prevede una vista standard composta da:
@@ -36,14 +36,14 @@ Per ogni oggetto del modello si prevede una vista standard composta da:
 	5. Le celle della tabella possono contenere link che consentono di proseguire nel percorso o di aprire una nuova finestra di dettaglio.
 	6. Il pulsante "Add" in testa alla tabella consente di aggiungere un nuovo record alla tabella.
 
-![](./wwwroot/imgages/ERPtoolkit-Storyboard.png)
+![](./wwwroot/images/ERPtoolkit-Storyboard.png)
 
 Il menù della form consente di accedere direttamente a una vista del modello, o di programmare un percorso logico tra le viste aggiungendo di volta in volta nuovi parametri di selezione da applicare alle form successive. Ogni percorso può prevedere vincoli programmabili che impediscono di finalizzare l'obiettivo se mancano alcune informazioni necessarie. Le stesse form possono essere incluse in diversi percorsi, con diversi vincoli di percorribilità e diversi parametri di ingresso. Si può prevedere l'uso di form più complesse che operano contemporaneamente su diversi oggetti, appoggiandosi eventualmente alle funzionalità di un Business Object.
 
 # Use Case
 Come Use Case consideriamo il modello dati di un ERP sanitario, di cui proponiamo una semplice rappresentazione a puro titolo esemplificativo.
 
-![](./wwwroot/imgages/ERPtoolkit-Modello-sanitario.png)
+![](./wwwroot/images/ERPtoolkit-Modello-sanitario.png)
 
 Al centro del processo è presente il paziente, che viene anagrafato e contestualizzato nel territorio. Ogni suo contatto con la struttura ospedaliera genera un episodio, che può caratterizzarsi in ricovero, day hospital, ambulatoriale o in attività privata. Nel corso dell'episodio, per il paziente vengono effettuate un certo numero di prestazioni, eventualmente raggruppate in una richiesta. L'esecuzione di una prestazione può prevedere il prelievo di un campione e l'uso di diverse risorse, quali: materiali, farmaci, personale sanitario, sale operatorie, ecc. Durante il ciclo di esecuzione della prestazione il paziente è gestito da diversi utenti (amministrativi, sanitari, infermieristici) ed è alternativamente sotto la responsabilità di diverse unità di cura (centri di prenotazione, reparti, centri di erogazione prestazione, ecc.), che fanno tutti parte dell'organizzazione ospedaliera. L'esecuzione di una prestazione produce dei dati clinici, tra cui: parametri vitali, risultati di esami, documenti clinici, ecc., che vanno archiviati e distribuiti. L'erogazione del servizio prevede una gestione di cassa (contabile) per la fatturazione delle prestazioni ed i rimborsi regionali. L'uso delle risorse prevede una gestione di magazzino ed amministrativa del personale.
 
