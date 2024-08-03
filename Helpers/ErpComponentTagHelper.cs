@@ -450,6 +450,11 @@ namespace ErpToolkit.Helpers
                 output.Attributes.SetAttribute("data-selected-items-div-id", divId); // Aggiungi l'ID del div degli elementi selezionati
                 output.Attributes.SetAttribute("value", ""); //pulisco valore campo
 
+                // Aggiungi il wrapper per l'input e l'icona
+                output.PreElement.AppendHtml("<div class='autocomplete-wrapper'>");
+                output.PostElement.AppendHtml("<span class='autocomplete-icon'><i class='bi bi-search' aria-hidden='true'></i></span></div>");
+                //--
+
                 output.PostElement.AppendHtml(selectedItemsDiv);
                 output.PostElement.AppendHtml($"<div id='{For.Name}AutocompleteResults' class='autocomplete-results' style='display: none;'></div>"); // Aggiungi l'ID del div dei risultati dell'autocomplete
             }
@@ -479,10 +484,17 @@ namespace ErpToolkit.Helpers
                 output.Attributes.SetAttribute("data-selected-items-div-id", divId); // Aggiungi l'ID del div degli elementi selezionati
                 output.Attributes.SetAttribute("value", ""); //pulisco valore campo
 
+                // Aggiungi il wrapper per l'input e l'icona
+                output.PreElement.AppendHtml("<div class='autocomplete-wrapper'>");
+                output.PostElement.AppendHtml("<span class='autocomplete-icon'><i class='bi bi-search' aria-hidden='true'></i></span></div>");
+                //--
+
                 output.PostElement.AppendHtml(selectedItemsDiv);
                 output.PostElement.AppendHtml($"<div id='{For.Name}AutocompleteResults' class='autocomplete-results' style='display: none;'></div>"); // Aggiungi l'ID del div dei risultati dell'autocomplete
             }
         }
+
+
 
     }
 

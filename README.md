@@ -46,6 +46,43 @@ Ogni percorso può prevedere **vincoli** programmabili che impediscono di finaliz
 Le stesse form possono essere incluse in diversi percorsi, con diversi vincoli di percorribilità e diversi parametri di ingresso.<br> 
 Si può prevedere l'uso di **form più complesse** che operano contemporaneamente su diversi oggetti, appoggiandosi eventualmente alle funzionalità di un Business Object.
 
+
+#  Model
+
+Attributi usati a corredo di una proprietà del Model
+
+```c#
+public class Attivita {
+	[Display(Name = "Id Gruppo", ShortName="", Description = "Codice dell'attività di cui questa è una sotto-attività", Prompt="")]
+	[ErpDogField("AV_ID_GRUPPO", SqlFieldNameExt="AV_ID_GRUPPO", SqlFieldProperties="prop() xref(ATTIVITA.AV__ICODE) xdup() multbxref()")]
+	[DefaultValue("")]
+	[AutocompleteClient("Attivita", "AutocompleteGetAll", 1)]
+	[DataType(DataType.Text)]
+	public string? AvIdGruppo  { get; set; }
+	public ErpToolkit.Models.SIO.Act.Attivita? AvIdGruppoObj  { get; set; }
+}
+```
+
+#  View
+
+Tag usati nel View è per visualizzare una proprietà del model. 
+
+```html
+@model Attivita
+@{
+    ViewData["Title"] = "Attivita Edit";
+}
+<div class="modal-dialog" role="document">
+                <div class="form-group">
+                    <label asp-for="AvIdGruppo" class="control-label"></label>
+                    <input asp-for="AvIdGruppo" class="form-control" />
+                    <span asp-validation-for="AvIdGruppo" class="text-danger"></span>
+                </div>
+</div>
+```
+
+Il formato grafico è deciso nel Model. Nel View si dispongono semplicemente i tag nella pagina. 
+
 # Use Case
 
 Come Use Case consideriamo il modello dati di un **ERP sanitario**, di cui proponiamo una semplice rappresentazione a puro titolo esemplificativo.

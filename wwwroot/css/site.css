@@ -23,6 +23,25 @@ body {
 
 /*  init autocomplete  */
 
+/*autocomplete icon*/
+.autocomplete-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.autocomplete-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.autocomplete-input {
+    padding-right: 30px; /* Spazio per l'icona */
+}
+/**/
 
 .autocomplete-results {
     position: absolute;
