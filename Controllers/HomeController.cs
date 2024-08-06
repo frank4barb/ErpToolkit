@@ -89,6 +89,68 @@ namespace ErpToolkit.Controllers
         }
 
 
+        ////==========================================================================================================
+        ////==========================================================================================================
+
+        //// GESTIONE MENU' PERCORSI
+        ////---------------------------------
+
+
+        //<ul class="navbar-nav mr-auto">
+        //    <li class="nav-item">
+        //        <a class="nav-link" asp-controller="Home" asp-action="Percorso1Start">Percorso 1</a>
+        //    </li>
+        //    <li class="nav-item">
+        //        <a class="nav-link" asp-controller="Home" asp-action="Percorso2Start">Percorso 2</a>
+        //    </li>
+        //</ul>
+
+
+        //// Use HomeController's method to determine the next page
+        //return RedirectToAction("RedirectToNextPage", "Home", new { currentPage = "Page1" });
+
+        //// Use HomeController's method to determine the next page
+        //return RedirectToAction("RedirectToNextPage", "Home", new { currentPage = "Page2" });
+
+        //public static readonly List<string> Percorso1 = new List<string> { "Page1", "Page2" };
+        //public static readonly List<string> Percorso2 = new List<string> { "Page2", "Page1" };
+
+        public static readonly List<string> Percorso1 = new List<string> { "Paziente", "Episodio" };
+        public static readonly List<string> Percorso2 = new List<string> { "Page2", "Page1" };
+
+        [Authorize(AuthenticationSchemes = "Cookies")]
+        [HttpGet]
+        public IActionResult Percorso1Start()
+        {
+            TempData["Sequence"] = "Percorso1";
+            return RedirectToAction("Index", Percorso1[0] );
+        }
+
+        [Authorize(AuthenticationSchemes = "Cookies")]
+        [HttpGet]
+        public IActionResult Percorso2Start()
+        {
+            TempData["Sequence"] = "Percorso2";
+            return RedirectToAction("Index", Percorso2[0] );
+        }
+
+        public IActionResult RedirectToNextPage(string currentPage)
+        {
+            string sequence = TempData["Sequence"] as string;
+            List<string> pageSequence = sequence == "Percorso2" ? Percorso2 : Percorso1;
+
+            int currentPageIndex = pageSequence.IndexOf(currentPage);
+            int nextPageIndex = currentPageIndex + 1;
+
+            if (nextPageIndex < pageSequence.Count)
+            {
+                var nextPage = pageSequence[nextPageIndex];
+                return RedirectToAction("Index", nextPage );
+            }
+
+            // If there are no more pages in the sequence, redirect to the first page
+            return RedirectToAction("Index", pageSequence[0] );
+        }
 
         ////==========================================================================================================
         ////==========================================================================================================

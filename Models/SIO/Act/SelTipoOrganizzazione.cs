@@ -23,22 +23,16 @@ public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
 
 [Display(Name = "Codice", ShortName="", Description = "Codice assegnato dall'utente", Prompt="")]
 [ErpDogField("TZ_CODICE", SqlFieldNameExt="TZ_CODICE", SqlFieldProperties="prop() xref() xdup(TIPO_ORGANIZZAZIONE.TZ__ICODE[TZ__ICODE] {TZ_CODICE=' '}) multbxref()")]
-[DefaultValue("")]
-[StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? TzCodice  { get; set; }
 
 [Display(Name = "Descrizione", ShortName="", Description = "Descrizione estesa", Prompt="")]
 [ErpDogField("TZ_DESCRIZIONE", SqlFieldNameExt="TZ_DESCRIZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(50, ErrorMessage = "Inserire massimo 50 caratteri")]
 [DataType(DataType.Text)]
 public string? TzDescrizione  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note", Prompt="")]
 [ErpDogField("TZ_NOTE", SqlFieldNameExt="TZ_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? TzNote  { get; set; }
 

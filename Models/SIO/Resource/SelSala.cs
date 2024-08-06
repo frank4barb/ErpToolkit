@@ -27,15 +27,11 @@ public List<ErpToolkit.Models.SIO.Act.RelAttivitaUsa> RelAttivitaUsa4AuIdRisorsa
 
 [Display(Name = "Codice", ShortName="", Description = "Codice assegnato dall'utente", Prompt="")]
 [ErpDogField("SA_CODICE", SqlFieldNameExt="SA_CODICE", SqlFieldProperties="prop() xref() xdup(SALA.SA__ICODE[SA__ICODE] {SA_CODICE=' '}) multbxref()")]
-[DefaultValue("")]
-[StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? SaCodice  { get; set; }
 
 [Display(Name = "Classe Risorsa", ShortName="", Description = "Classe di risorse: L[ocations] (Località)", Prompt="")]
 [ErpDogField("SA_CLASSE_RISORSA", SqlFieldNameExt="SA_CLASSE_RISORSA", SqlFieldProperties="prop() xref() xdup(TIPO_RISORSA.TS_CLASSE_RISORSA[SALA.SA_ID_TIPO_RISORSA]) multbxref()")]
-[DefaultValue("L")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [DataType(DataType.Text)]
 public string? SaClasseRisorsa  { get; set; }
 
@@ -48,8 +44,6 @@ public List<string> SaIdTipoRisorsa  { get; set; } = new List<string>();
 
 [Display(Name = "Descrizione", ShortName="", Description = "Descrizione estesa", Prompt="")]
 [ErpDogField("SA_DESCRIZIONE", SqlFieldNameExt="SA_DESCRIZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(50, ErrorMessage = "Inserire massimo 50 caratteri")]
 [DataType(DataType.Text)]
 public string? SaDescrizione  { get; set; }
 
@@ -60,36 +54,26 @@ public double? SaCostoUnitarioUso  { get; set; }
 
 [Display(Name = "Misura Unitaria Uso", ShortName="", Description = "Unità di misura per l'utilizzo", Prompt="")]
 [ErpDogField("SA_MISURA_UNITARIA_USO", SqlFieldNameExt="SA_MISURA_UNITARIA_USO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? SaMisuraUnitariaUso  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note", Prompt="")]
 [ErpDogField("SA_NOTE", SqlFieldNameExt="SA_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? SaNote  { get; set; }
 
 [Display(Name = "Disponibilita", ShortName="", Description = "Descrizione testuale dello stato attuale di disponibilità", Prompt="")]
 [ErpDogField("SA_DISPONIBILITA", SqlFieldNameExt="SA_DISPONIBILITA", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(20, ErrorMessage = "Inserire massimo 20 caratteri")]
 [DataType(DataType.Text)]
 public string? SaDisponibilita  { get; set; }
 
 [Display(Name = "Telefono Fornitore", ShortName="", Description = "Numero di telefono", Prompt="")]
 [ErpDogField("SA_TELEFONO_FORNITORE", SqlFieldNameExt="SA_TELEFONO_FORNITORE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(15, ErrorMessage = "Inserire massimo 15 caratteri")]
 [DataType(DataType.Text)]
 public string? SaTelefonoFornitore  { get; set; }
 
 [Display(Name = "Data Ultima Manutenzione", ShortName="", Description = "Data dell'ultima manutenzione", Prompt="")]
 [ErpDogField("SA_DATA_ULTIMA_MANUTENZIONE", SqlFieldNameExt="SA_DATA_ULTIMA_MANUTENZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange SaDataUltimaManutenzione  { get; set; } = new DateRange();
@@ -106,8 +90,6 @@ public double? SaUsoMedioGiornaliero  { get; set; }
 
 [Display(Name = "Data Prossima Manutenzione", ShortName="", Description = "Data della prossima manutenzione prevista", Prompt="")]
 [ErpDogField("SA_DATA_PROSSIMA_MANUTENZIONE", SqlFieldNameExt="SA_DATA_PROSSIMA_MANUTENZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange SaDataProssimaManutenzione  { get; set; } = new DateRange();

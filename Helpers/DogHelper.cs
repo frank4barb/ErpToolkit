@@ -10,6 +10,11 @@ namespace ErpToolkit.Helpers
 {
     public static class DogHelper
     {
+
+        private const string DB_FORMAT_DATE = "yyyy/MM/dd"; //formato stringa di memorizzazione della data nel DB
+
+
+
         //configura NLog per la classe
         public static NLog.Config.LoggingConfiguration GetNLogConfig()
         {
@@ -141,17 +146,25 @@ namespace ErpToolkit.Helpers
                     string propertyName = property.Name; // Get property name and value
                     object propertyValue = property.GetValue(selModel); //sb.AppendLine($"Property: {propertyName}, Value: {propertyValue}");
                     if (propertyValue == null) continue;
+                    // >>> verifica List
                     if (typeof(IEnumerable<object>).IsAssignableFrom(propertyValue.GetType()))
                     {
                         IEnumerable<object> ienum = (IEnumerable<object>)propertyValue;
                         List<object> list = ienum.Where(item => item != null && !(item is string str && string.IsNullOrWhiteSpace(str))).ToList();  // elimina elementi null e strighe vuote
                         if (list.Count() == 0) continue;
-                        numPreCond++; //condizione prevista
                         if (list[0] is string) propertyValue = (List<string>)list.Select(i => i.ToString()).ToList();
                         else if (list[0] is sbyte || list[0] is byte || list[0] is short || list[0] is ushort || list[0] is int || list[0] is uint
                              || list[0] is long || list[0] is ulong) propertyValue = (List<long>)list.Select(i => Convert.ToInt64(i)).ToList();
                         else throw new ErpException("Tipo Lista non supportato (solo stinga e intero)");
                     }
+                    // >>> verifica DateRange
+                    if (propertyValue is DateRange dateRange)
+                    {
+                        if (dateRange.StartDate == default && dateRange.EndDate == default) continue; //entrambe le date sono null
+                    }
+                    //---
+                    numPreCond++; //condizione prevista
+                    //---
                     //if (typeof(IEnumerable<object>).IsAssignableFrom(propertyValue.GetType()) && ((IEnumerable<object>)propertyValue).Count == 0) == null) continue;
                     // esiste una condizione
                     var attributes = property.GetCustomAttributes(); // Get custom attributes for the property
@@ -170,6 +183,12 @@ namespace ErpToolkit.Helpers
                                         if (propertyValue is string str) sb.AppendLine($" {attrPropValue} LIKE '%{propertyValue}%' and ");
                                         else if (propertyValue is List<string> strList) sb.Append($" {attrPropValue} in (").Append(string.Join(", ", strList.Select(str => $"'{str.Trim()}'"))).AppendLine($") and");
                                         else if (propertyValue is List<long> lngList) sb.Append($" {attrPropValue} in (").Append(string.Join(", ", lngList)).AppendLine($") and");
+                                        else if (propertyValue is DateRange dateRng)
+                                        {
+                                            if (dateRng.StartDate == default) sb.AppendLine($" {attrPropValue} <= '{dateRng.EndDate.ToString(DB_FORMAT_DATE)}' and"); 
+                                            else if (dateRng.EndDate == default) sb.AppendLine($" {attrPropValue} >= '{dateRng.StartDate.ToString(DB_FORMAT_DATE)}' and");
+                                            else sb.AppendLine($" ({attrPropValue} BETWEEN '{dateRng.StartDate.ToString(DB_FORMAT_DATE)}' and '{dateRng.EndDate.ToString(DB_FORMAT_DATE)}') and");
+                                        }
                                         else continue;
                                         numCond++; //condizione applicata correttamente
                                     }

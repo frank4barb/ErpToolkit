@@ -62,6 +62,77 @@ public class Attivita {
 	public ErpToolkit.Models.SIO.Act.Attivita? AvIdGruppoObj  { get; set; }
 }
 ```
+**Display**: contiene il testo da visualizzare nelle _label_.<br>
+**ErpDogField**: contiene i riferimenti ai campi del DB.<br>
+**AutocompleteClient**: indica che in visualizzazione la textbox avrà funzionalità di _autocomplete_ acquisendo i valori dal controller _AttivitaController_.<br>
+
+#  Controller
+
+Funzioni condivise dal Controller
+
+```c#
+    public class AttivitaController : ControllerErp
+    {
+
+        ...
+
+        [HttpGet]
+        public JsonResult AutocompleteGetAll()
+        {
+            try
+            {
+                string sql = "select AV_CODICE + ' - ' + AV_DESCRIZIONE as label, AV__ICODE as value from ATTIVITA where AV__DELETED='N' ";
+                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+            }
+            catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetAll Attivita: " + ex.Message }); }
+        }
+        [HttpGet]
+        public JsonResult AutocompleteGetSelect(string term)
+        {
+            try
+            {
+                string sql = "select AV_CODICE + ' - ' + AV_DESCRIZIONE as label, AV__ICODE as value from ATTIVITA where AV__DELETED='N' and upper(AV_CODICE + ' - ' + AV_DESCRIZIONE) like '%" + term.ToUpper() + "%'";
+                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+            }
+            catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Attivita: " + ex.Message }); }
+        }
+        [HttpPost]
+        public JsonResult AutocompletePreLoad([FromBody] List<string> values)
+        {
+            try
+            {
+                string sql = "select AV_CODICE + ' - ' + AV_DESCRIZIONE as label, AV__ICODE as value from ATTIVITA where AV__DELETED='N' and AV__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
+                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+            }
+            catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Attivita: " + ex.Message }); }
+        }
+
+        ...
+
+        [Authorize(AuthenticationSchemes = "Cookies")]
+        [HttpGet]
+        public IActionResult Index(string returnUrl = null)
+        {
+            //carico eventuali parametri presenti in TempData
+            foreach (var item in TempData.Keys) ViewData[item] = TempData[item];
+            return View("~/Views/SIO/Act/Attivita/Index.cshtml", this);  //passo il Controller alla vista, come Model
+        }
+
+        [Authorize(AuthenticationSchemes = "Cookies")]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult Index()
+        {
+            return View("~/Views/SIO/Act/Attivita/Index.cshtml", this);
+        }
+
+        ...
+
+    }
+```
+
+**AutocompleteGetAll**, **AutocompleteGetSelect** e **AutocompletePreLoad**: sono funzioni a supporto del _**Componente Autocomplete**_ con valori in _Attivita_.<br>
+L'attrbuto **Authorize** indica che la pagina può essere visualizzata solo se è stata effettuata la _Login_.<br>
 
 #  View
 

@@ -32,22 +32,16 @@ public List<string> CpIdTipoCampione  { get; set; } = new List<string>();
 
 [Display(Name = "Descrizione", ShortName="", Description = "Descrizione del campione", Prompt="")]
 [ErpDogField("CP_DESCRIZIONE", SqlFieldNameExt="CP_DESCRIZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? CpDescrizione  { get; set; }
 
 [Display(Name = "Codice Univoco", ShortName="", Description = "Codice del campione definito dall'utente", Prompt="")]
 [ErpDogField("CP_CODICE_UNIVOCO", SqlFieldNameExt="CP_CODICE_UNIVOCO", SqlFieldProperties="prop() xref() xdup(CAMPIONE.CP__ICODE[CP__ICODE] {CP_CODICE_UNIVOCO=' '}) multbxref()")]
-[DefaultValue("")]
-[StringLength(15, ErrorMessage = "Inserire massimo 15 caratteri")]
 [DataType(DataType.Text)]
 public string? CpCodiceUnivoco  { get; set; }
 
 [Display(Name = "Data Prelievo", ShortName="", Description = "Data di raccolta", Prompt="")]
 [ErpDogField("CP_DATA_PRELIEVO", SqlFieldNameExt="CP_DATA_PRELIEVO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange CpDataPrelievo  { get; set; } = new DateRange();
@@ -62,8 +56,6 @@ public string? CpOraPrelievo  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note", Prompt="")]
 [ErpDogField("CP_NOTE", SqlFieldNameExt="CP_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? CpNote  { get; set; }
 
@@ -76,15 +68,11 @@ public List<string> CpIdEpisodio  { get; set; } = new List<string>();
 
 [Display(Name = "Id Paziente", ShortName="", Description = "Codice del paziente", Prompt="")]
 [ErpDogField("CP_ID_PAZIENTE", SqlFieldNameExt="CP_ID_PAZIENTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
-[StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? CpIdPaziente  { get; set; }
 
 [Display(Name = "Codice Assoluto", ShortName="", Description = "Codice esterno del campione (ad esempio, generato da strumenti)", Prompt="")]
 [ErpDogField("CP_CODICE_ASSOLUTO", SqlFieldNameExt="CP_CODICE_ASSOLUTO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
-[StringLength(36, ErrorMessage = "Inserire massimo 36 caratteri")]
 [DataType(DataType.Text)]
 public string? CpCodiceAssoluto  { get; set; }
 
@@ -104,29 +92,21 @@ public List<string> CpIdPosizioneAttuale  { get; set; } = new List<string>();
 
 [Display(Name = "Desc Posizione Attuale", ShortName="", Description = "Posizione attuale testuale del campione", Prompt="")]
 [ErpDogField("CP_DESC_POSIZIONE_ATTUALE", SqlFieldNameExt="CP_DESC_POSIZIONE_ATTUALE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(50, ErrorMessage = "Inserire massimo 50 caratteri")]
 [DataType(DataType.Text)]
 public string? CpDescPosizioneAttuale  { get; set; }
 
 [Display(Name = "Data Cambiamento Stato", ShortName="", Description = "Data dell'ultima modifica dello stato del campione", Prompt="")]
 [ErpDogField("CP_DATA_CAMBIAMENTO_STATO", SqlFieldNameExt="CP_DATA_CAMBIAMENTO_STATO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DataType(DataType.Text)]
 public string? CpDataCambiamentoStato  { get; set; }
 
 [Display(Name = "Ora Cambiamento Stato", ShortName="", Description = "Ora dell'ultima modifica dello stato del campione", Prompt="")]
 [ErpDogField("CP_ORA_CAMBIAMENTO_STATO", SqlFieldNameExt="CP_ORA_CAMBIAMENTO_STATO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Text)]
 public string? CpOraCambiamentoStato  { get; set; }
 
 [Display(Name = "Note Cambiamento Stato", ShortName="", Description = "Note sull'ultima modifica dello stato del campione", Prompt="")]
 [ErpDogField("CP_NOTE_CAMBIAMENTO_STATO", SqlFieldNameExt="CP_NOTE_CAMBIAMENTO_STATO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? CpNoteCambiamentoStato  { get; set; }
 }

@@ -525,18 +525,19 @@ namespace ErpToolkit.Helpers
 
     public class DateRangeAttribute : ValidationAttribute
     {
-        public string Options { get; set; } // future use: attualmente non implementato
+        public string Options { get; set; } = ""; // contiene le opzioni di verifica separate da spazio. eg: BoundedRange
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var dateRange = value as DateRange;
             if (dateRange != null)
             {
-                if (dateRange.StartDate == default || dateRange.EndDate == default)
+                // intervallo di date limitato
+                if (Options.Contains("BoundedRange") && (dateRange.StartDate == default || dateRange.EndDate == default))  
                 {
                     return new ValidationResult("Entrambe le date devono essere compilate.", new[] { validationContext.MemberName });
                 }
 
-                if (dateRange.StartDate >= dateRange.EndDate)
+                if (dateRange.StartDate != default && dateRange.EndDate != default && dateRange.StartDate >= dateRange.EndDate)
                 {
                     return new ValidationResult("La data d'inizio deve precedere la data di fine.", new[] { validationContext.MemberName });
                 }
@@ -576,8 +577,8 @@ namespace ErpToolkit.Helpers
                 string endDateLabel = $"{displayName}: Fine";
                 string format = options == "DateTime" ? "dd/MM/yyyy HH:mm" : "dd/MM/yyyy";  // future use: attualmente non implementato
 
-                string startDateId = $"{AspFor.Name}_StartDate";
-                string endDateId = $"{AspFor.Name}_EndDate";
+                string startDateId = $"{AspFor.Name}.StartDate";
+                string endDateId = $"{AspFor.Name}.EndDate";
 
                 string content = $@"
                 <div class='row'>

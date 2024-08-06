@@ -23,8 +23,6 @@ public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
 
 [Display(Name = "Cod Episodio", ShortName="", Description = "Identificativo del contatto nell'organizzazione sanitaria", Prompt="")]
 [ErpDogField("EP_COD_EPISODIO", SqlFieldNameExt="EP_COD_EPISODIO", SqlFieldProperties="prop() xref() xdup(EPISODIO.EP__ICODE[EP__ICODE] {EP_COD_EPISODIO=' '}) multbxref()")]
-[DefaultValue("")]
-[StringLength(16, ErrorMessage = "Inserire massimo 16 caratteri")]
 [DataType(DataType.Text)]
 public string? EpCodEpisodio  { get; set; }
 
@@ -72,8 +70,6 @@ public List<string> EpIdUnitaIngresso  { get; set; } = new List<string>();
 
 [Display(Name = "Data Inizio", ShortName="", Description = "Data di inizio del periodo di permanenza del contatto", Prompt="")]
 [ErpDogField("EP_DATA_INIZIO", SqlFieldNameExt="EP_DATA_INIZIO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange EpDataInizio  { get; set; } = new DateRange();
@@ -88,8 +84,6 @@ public string? EpOraInizio  { get; set; }
 
 [Display(Name = "Data Fine", ShortName="", Description = "Data di fine del periodo di permanenza del contatto", Prompt="")]
 [ErpDogField("EP_DATA_FINE", SqlFieldNameExt="EP_DATA_FINE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange EpDataFine  { get; set; } = new DateRange();
@@ -104,8 +98,6 @@ public string? EpOraFine  { get; set; }
 
 [Display(Name = "Cartella Ps", ShortName="", Description = "Identificativo del documento correlato dell'organizzazione di origine", Prompt="")]
 [ErpDogField("EP_CARTELLA_PS", SqlFieldNameExt="EP_CARTELLA_PS", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(20, ErrorMessage = "Inserire massimo 20 caratteri")]
 [DataType(DataType.Text)]
 public string? EpCartellaPs  { get; set; }
 
@@ -125,15 +117,11 @@ public List<string> EpIdReparto  { get; set; } = new List<string>();
 
 [Display(Name = "Letto", ShortName="", Description = "Letto assegnato al paziente", Prompt="")]
 [ErpDogField("EP_LETTO", SqlFieldNameExt="EP_LETTO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
-[StringLength(15, ErrorMessage = "Inserire massimo 15 caratteri")]
 [DataType(DataType.Text)]
 public string? EpLetto  { get; set; }
 
 [Display(Name = "Stanza", ShortName="", Description = "Stanza e altre strutture logistiche correlate al contatto", Prompt="")]
 [ErpDogField("EP_STANZA", SqlFieldNameExt="EP_STANZA", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? EpStanza  { get; set; }
 
@@ -153,8 +141,6 @@ public List<string> EpIdDiagnosiDimissione  { get; set; } = new List<string>();
 
 [Display(Name = "Note", ShortName="", Description = "Note aggiuntive generiche", Prompt="")]
 [ErpDogField("EP_NOTE", SqlFieldNameExt="EP_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? EpNote  { get; set; }
 
@@ -167,8 +153,6 @@ public List<string> EpIdAttoAmministrativo  { get; set; } = new List<string>();
 
 [Display(Name = "Data Inizio La", ShortName="", Description = "Data di inizio del periodo di lista d'attesa del contatto", Prompt="")]
 [ErpDogField("EP_DATA_INIZIO_LA", SqlFieldNameExt="EP_DATA_INIZIO_LA", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange EpDataInizioLa  { get; set; } = new DateRange();
@@ -190,8 +174,6 @@ public List<string> EpIdRepartoLa  { get; set; } = new List<string>();
 
 [Display(Name = "Data Inizio Preh", ShortName="", Description = "Data di inizio del periodo di preospedalizzazione del contatto", Prompt="")]
 [ErpDogField("EP_DATA_INIZIO_PREH", SqlFieldNameExt="EP_DATA_INIZIO_PREH", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange EpDataInizioPreh  { get; set; } = new DateRange();
@@ -213,8 +195,6 @@ public List<string> EpIdRepartoPreh  { get; set; } = new List<string>();
 
 [Display(Name = "Fase Episodio", ShortName="", Description = "Codice del tipo attuale (ultimo) fase del contatto (ad es. Lista d'attesa, Preospedalizzazione, In-staying, Home-care, Sospeso)", Prompt="")]
 [ErpDogField("EP_FASE_EPISODIO", SqlFieldNameExt="EP_FASE_EPISODIO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("I")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [DataType(DataType.Text)]
 public string? EpFaseEpisodio  { get; set; }
 }

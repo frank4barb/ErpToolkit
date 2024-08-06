@@ -27,22 +27,16 @@ public List<ErpToolkit.Models.SIO.Act.RelAttivitaUsa> RelAttivitaUsa4AuIdRisorsa
 
 [Display(Name = "Codice", ShortName="", Description = "Codice assegnato dall'utente", Prompt="")]
 [ErpDogField("MT_CODICE", SqlFieldNameExt="MT_CODICE", SqlFieldProperties="prop() xref() xdup(MATERIALE.MT__ICODE[MT__ICODE] {MT_CODICE=' '}) multbxref()")]
-[DefaultValue("")]
-[StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? MtCodice  { get; set; }
 
 [Display(Name = "Classe Risorsa", ShortName="", Description = "Classe di risorsa: M[aterial] (Materiale)", Prompt="")]
 [ErpDogField("MT_CLASSE_RISORSA", SqlFieldNameExt="MT_CLASSE_RISORSA", SqlFieldProperties="prop() xref() xdup(TIPO_RISORSA.TS_CLASSE_RISORSA[MATERIALE.MT_ID_TIPO_RISORSA]) multbxref()")]
-[DefaultValue("M")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [DataType(DataType.Text)]
 public string? MtClasseRisorsa  { get; set; }
 
 [Display(Name = "Descrizione", ShortName="", Description = "Descrizione estesa", Prompt="")]
 [ErpDogField("MT_DESCRIZIONE", SqlFieldNameExt="MT_DESCRIZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(50, ErrorMessage = "Inserire massimo 50 caratteri")]
 [DataType(DataType.Text)]
 public string? MtDescrizione  { get; set; }
 
@@ -60,29 +54,21 @@ public double? MtCostoUnitarioUso  { get; set; }
 
 [Display(Name = "Misura Unitaria Uso", ShortName="", Description = "Unità di misura per l'utilizzo", Prompt="")]
 [ErpDogField("MT_MISURA_UNITARIA_USO", SqlFieldNameExt="MT_MISURA_UNITARIA_USO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? MtMisuraUnitariaUso  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note", Prompt="")]
 [ErpDogField("MT_NOTE", SqlFieldNameExt="MT_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? MtNote  { get; set; }
 
 [Display(Name = "Disponibilita", ShortName="", Description = "Descrizione testuale dei criteri di disponibilità/consegna", Prompt="")]
 [ErpDogField("MT_DISPONIBILITA", SqlFieldNameExt="MT_DISPONIBILITA", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(20, ErrorMessage = "Inserire massimo 20 caratteri")]
 [DataType(DataType.Text)]
 public string? MtDisponibilita  { get; set; }
 
 [Display(Name = "Telefono Fornitore", ShortName="", Description = "Numero di telefono del fornitore", Prompt="")]
 [ErpDogField("MT_TELEFONO_FORNITORE", SqlFieldNameExt="MT_TELEFONO_FORNITORE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
-[StringLength(15, ErrorMessage = "Inserire massimo 15 caratteri")]
 [DataType(DataType.Text)]
 public string? MtTelefonoFornitore  { get; set; }
 
@@ -103,8 +89,6 @@ public double? MtUsoMedioGiornaliero  { get; set; }
 
 [Display(Name = "Data Ultimo Ordine", ShortName="", Description = "Data dell'ultimo ordine", Prompt="")]
 [ErpDogField("MT_DATA_ULTIMO_ORDINE", SqlFieldNameExt="MT_DATA_ULTIMO_ORDINE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange MtDataUltimoOrdine  { get; set; } = new DateRange();
@@ -116,8 +100,6 @@ public double? MtQuantitaUltimoOrdine  { get; set; }
 
 [Display(Name = "Data Prossimo Ordine", ShortName="", Description = "Data prevista per il prossimo ordine", Prompt="")]
 [ErpDogField("MT_DATA_PROSSIMO_ORDINE", SqlFieldNameExt="MT_DATA_PROSSIMO_ORDINE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange MtDataProssimoOrdine  { get; set; } = new DateRange();
@@ -129,8 +111,6 @@ public short? MtQuantitaMediaOrdine  { get; set; }
 
 [Display(Name = "Codice Nazionale", ShortName="", Description = "Codice nazionale", Prompt="")]
 [ErpDogField("MT_CODICE_NAZIONALE", SqlFieldNameExt="MT_CODICE_NAZIONALE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(20, ErrorMessage = "Inserire massimo 20 caratteri")]
 [DataType(DataType.Text)]
 public string? MtCodiceNazionale  { get; set; }
 }

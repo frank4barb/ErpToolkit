@@ -23,22 +23,16 @@ public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
 
 [Display(Name = "Codice", ShortName="", Description = "Codice assegnato dall'utente", Prompt="")]
 [ErpDogField("TC_CODICE", SqlFieldNameExt="TC_CODICE", SqlFieldProperties="prop() xref() xdup(TIPO_DATO_CLINICO.TC__ICODE[TC__ICODE] {TC_CODICE=' '}) multbxref()")]
-[DefaultValue("")]
-[StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? TcCodice  { get; set; }
 
 [Display(Name = "Descrizione", ShortName="", Description = "Descrizione estesa", Prompt="")]
 [ErpDogField("TC_DESCRIZIONE", SqlFieldNameExt="TC_DESCRIZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(50, ErrorMessage = "Inserire massimo 50 caratteri")]
 [DataType(DataType.Text)]
 public string? TcDescrizione  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note", Prompt="")]
 [ErpDogField("TC_NOTE", SqlFieldNameExt="TC_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? TcNote  { get; set; }
 
@@ -51,8 +45,6 @@ public List<string> TcIdCategoriaDatoClinico  { get; set; } = new List<string>()
 
 [Display(Name = "Unita Di Misura", ShortName="", Description = "Unità di misura", Prompt="")]
 [ErpDogField("TC_UNITA_DI_MISURA", SqlFieldNameExt="TC_UNITA_DI_MISURA", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? TcUnitaDiMisura  { get; set; }
 
@@ -70,15 +62,11 @@ public short? TcSequenza  { get; set; }
 
 [Display(Name = "Attributi1", ShortName="", Description = "Flag operativi, gestiti dall'applicazione", Prompt="")]
 [ErpDogField("TC_ATTRIBUTI1", SqlFieldNameExt="TC_ATTRIBUTI1", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(240, ErrorMessage = "Inserire massimo 240 caratteri")]
 [DataType(DataType.Text)]
 public string? TcAttributi1  { get; set; }
 
 [Display(Name = "Attributi2", ShortName="", Description = "Ulteriori flag operativi, gestiti dalle applicazioni", Prompt="")]
 [ErpDogField("TC_ATTRIBUTI2", SqlFieldNameExt="TC_ATTRIBUTI2", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(240, ErrorMessage = "Inserire massimo 240 caratteri")]
 [DataType(DataType.Text)]
 public string? TcAttributi2  { get; set; }
 }

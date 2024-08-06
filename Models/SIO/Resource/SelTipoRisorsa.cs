@@ -27,8 +27,6 @@ public List<ErpToolkit.Models.SIO.Act.RelAttivitaUsa> RelAttivitaUsa4AuIdTipoRis
 
 [Display(Name = "Codice", ShortName="", Description = "Codice assegnato dall'utente", Prompt="")]
 [ErpDogField("TS_CODICE", SqlFieldNameExt="TS_CODICE", SqlFieldProperties="prop() xref() xdup(TIPO_RISORSA.TS__ICODE[TS__ICODE] {TS_CODICE=' '}) multbxref()")]
-[DefaultValue("")]
-[StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? TsCodice  { get; set; }
 
@@ -48,22 +46,16 @@ public List<string> TsIdGruppo  { get; set; } = new List<string>();
 
 [Display(Name = "Descrizione", ShortName="", Description = "Descrizione estesa", Prompt="")]
 [ErpDogField("TS_DESCRIZIONE", SqlFieldNameExt="TS_DESCRIZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(50, ErrorMessage = "Inserire massimo 50 caratteri")]
 [DataType(DataType.Text)]
 public string? TsDescrizione  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note", Prompt="")]
 [ErpDogField("TS_NOTE", SqlFieldNameExt="TS_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? TsNote  { get; set; }
 
 [Display(Name = "Unita Di Misura", ShortName="", Description = "Unità di misura", Prompt="")]
 [ErpDogField("TS_UNITA_DI_MISURA", SqlFieldNameExt="TS_UNITA_DI_MISURA", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? TsUnitaDiMisura  { get; set; }
 }

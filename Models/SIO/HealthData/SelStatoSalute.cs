@@ -25,8 +25,6 @@ public List<ErpToolkit.Models.SIO.HealthData.RelPrestazioneDatoClinico> RelPrest
 
 [Display(Name = "Classe", ShortName="", Description = "Classe del dato sanitario: 3: condizioni di salute generiche", Prompt="")]
 [ErpDogField("SS_CLASSE", SqlFieldNameExt="SS_CLASSE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("3")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [DataType(DataType.Text)]
 public string? SsClasse  { get; set; }
 
@@ -70,36 +68,26 @@ public double? SsValoreMassimo  { get; set; }
 
 [Display(Name = "Valore Scelta", ShortName="", Description = "Valore carattere [se applicabile, in base al tipo di risultato]", Prompt="")]
 [ErpDogField("SS_VALORE_SCELTA", SqlFieldNameExt="SS_VALORE_SCELTA", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(80, ErrorMessage = "Inserire massimo 80 caratteri")]
 [DataType(DataType.Text)]
 public string? SsValoreScelta  { get; set; }
 
 [Display(Name = "Valore Testo", ShortName="", Description = "Valore testuale, se applicabile", Prompt="")]
 [ErpDogField("SS_VALORE_TESTO", SqlFieldNameExt="SS_VALORE_TESTO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(4000, ErrorMessage = "Inserire massimo 4000 caratteri")]
 [DataType(DataType.Text)]
 public string? SsValoreTesto  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note [se applicabile, in base al tipo di risultato]", Prompt="")]
 [ErpDogField("SS_NOTE", SqlFieldNameExt="SS_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(80, ErrorMessage = "Inserire massimo 80 caratteri")]
 [DataType(DataType.Text)]
 public string? SsNote  { get; set; }
 
 [Display(Name = "Codice Referto", ShortName="", Description = "Criterio di codifica/unità di misura adottato (se applicabile)", Prompt="")]
 [ErpDogField("SS_CODICE_REFERTO", SqlFieldNameExt="SS_CODICE_REFERTO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
-[StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? SsCodiceReferto  { get; set; }
 
 [Display(Name = "Data Acquisizione", ShortName="", Description = "Data di acquisizione del dato sanitario", Prompt="")]
 [ErpDogField("SS_DATA_ACQUISIZIONE", SqlFieldNameExt="SS_DATA_ACQUISIZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange SsDataAcquisizione  { get; set; } = new DateRange();
@@ -121,8 +109,6 @@ public string? SsStatoDatoClinico  { get; set; }
 
 [Display(Name = "Data Validazione", ShortName="", Description = "Data di convalida del dato sanitario", Prompt="")]
 [ErpDogField("SS_DATA_VALIDAZIONE", SqlFieldNameExt="SS_DATA_VALIDAZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange SsDataValidazione  { get; set; } = new DateRange();

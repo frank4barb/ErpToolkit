@@ -57,8 +57,6 @@ public List<string> PrIdGruppo  { get; set; } = new List<string>();
 
 [Display(Name = "In Evidenza", ShortName="", Description = "Evidenzia questo atto per scopi di ricerca o speciali Sì [Y] - No [N]", Prompt="")]
 [ErpDogField("PR_IN_EVIDENZA", SqlFieldNameExt="PR_IN_EVIDENZA", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("N")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [DataType(DataType.Text)]
 public string? PrInEvidenza  { get; set; }
 
@@ -120,8 +118,6 @@ public List<string> PrIdPostazioneRichiedente  { get; set; } = new List<string>(
 
 [Display(Name = "Data Richiesta", ShortName="", Description = "Data della richiesta", Prompt="")]
 [ErpDogField("PR_DATA_RICHIESTA", SqlFieldNameExt="PR_DATA_RICHIESTA", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange PrDataRichiesta  { get; set; } = new DateRange();
@@ -143,8 +139,6 @@ public List<string> PrIdRichiesta  { get; set; } = new List<string>();
 
 [Display(Name = "Data Proposta Esecuzione", ShortName="", Description = "Data inizialmente richiesta per l'esecuzione", Prompt="")]
 [ErpDogField("PR_DATA_PROPOSTA_ESECUZIONE", SqlFieldNameExt="PR_DATA_PROPOSTA_ESECUZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange PrDataPropostaEsecuzione  { get; set; } = new DateRange();
@@ -164,29 +158,21 @@ public short? PrDurataPrevista  { get; set; }
 
 [Display(Name = "Urgenza", ShortName="", Description = "Modalità adottata per l'inserimento/esecuzione dell'atto", Prompt="")]
 [ErpDogField("PR_URGENZA", SqlFieldNameExt="PR_URGENZA", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [DataType(DataType.Text)]
 public string? PrUrgenza  { get; set; }
 
 [Display(Name = "Note Richiesta", ShortName="", Description = "Commenti allegati alla richiesta", Prompt="")]
 [ErpDogField("PR_NOTE_RICHIESTA", SqlFieldNameExt="PR_NOTE_RICHIESTA", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(80, ErrorMessage = "Inserire massimo 80 caratteri")]
 [DataType(DataType.Text)]
 public string? PrNoteRichiesta  { get; set; }
 
 [Display(Name = "Routine", ShortName="", Description = "Pianificazione routinaria dell'atto Sì [Y] / No [N]", Prompt="")]
 [ErpDogField("PR_ROUTINE", SqlFieldNameExt="PR_ROUTINE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("N")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [DataType(DataType.Text)]
 public string? PrRoutine  { get; set; }
 
 [Display(Name = "Data Appuntamento", ShortName="", Description = "Data attualmente programmata per l'esecuzione", Prompt="")]
 [ErpDogField("PR_DATA_APPUNTAMENTO", SqlFieldNameExt="PR_DATA_APPUNTAMENTO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange PrDataAppuntamento  { get; set; } = new DateRange();
@@ -201,15 +187,11 @@ public string? PrOraAppuntamento  { get; set; }
 
 [Display(Name = "Note Pianificazione", ShortName="", Description = "Commento allegato alla pianificazione", Prompt="")]
 [ErpDogField("PR_NOTE_PIANIFICAZIONE", SqlFieldNameExt="PR_NOTE_PIANIFICAZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(40, ErrorMessage = "Inserire massimo 40 caratteri")]
 [DataType(DataType.Text)]
 public string? PrNotePianificazione  { get; set; }
 
 [Display(Name = "Data Inizio Esecuzione", ShortName="", Description = "Data di inizio dell'esecuzione", Prompt="")]
 [ErpDogField("PR_DATA_INIZIO_ESECUZIONE", SqlFieldNameExt="PR_DATA_INIZIO_ESECUZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange PrDataInizioEsecuzione  { get; set; } = new DateRange();
@@ -224,8 +206,6 @@ public string? PrOraInizioEsecuzione  { get; set; }
 
 [Display(Name = "Data Fine Esecuzione", ShortName="", Description = "Data di completamento dell'esecuzione o annullamento (se appropriato)", Prompt="")]
 [ErpDogField("PR_DATA_FINE_ESECUZIONE", SqlFieldNameExt="PR_DATA_FINE_ESECUZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange PrDataFineEsecuzione  { get; set; } = new DateRange();
@@ -240,8 +220,6 @@ public string? PrOraFineEsecuzione  { get; set; }
 
 [Display(Name = "Data Refertazione", ShortName="", Description = "Data di refertazione finale", Prompt="")]
 [ErpDogField("PR_DATA_REFERTAZIONE", SqlFieldNameExt="PR_DATA_REFERTAZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange PrDataRefertazione  { get; set; } = new DateRange();
@@ -287,8 +265,6 @@ public double? PrCostoPrestazione  { get; set; }
 
 [Display(Name = "Note Esecuzione", ShortName="", Description = "Breve nota relativa all'esecuzione, all'annullamento, alla sospensione, ecc. dell'atto", Prompt="")]
 [ErpDogField("PR_NOTE_ESECUZIONE", SqlFieldNameExt="PR_NOTE_ESECUZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(80, ErrorMessage = "Inserire massimo 80 caratteri")]
 [DataType(DataType.Text)]
 public string? PrNoteEsecuzione  { get; set; }
 
@@ -301,8 +277,6 @@ public List<string> PrIdOperatorePianificatore  { get; set; } = new List<string>
 
 [Display(Name = "Data Pianificazione", ShortName="", Description = "Data in cui l'atto è stato pianificato", Prompt="")]
 [ErpDogField("PR_DATA_PIANIFICAZIONE", SqlFieldNameExt="PR_DATA_PIANIFICAZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange PrDataPianificazione  { get; set; } = new DateRange();
@@ -317,15 +291,11 @@ public string? PrOraPianificazione  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note testuali generiche relative all'atto", Prompt="")]
 [ErpDogField("PR_NOTE", SqlFieldNameExt="PR_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(240, ErrorMessage = "Inserire massimo 240 caratteri")]
 [DataType(DataType.Text)]
 public string? PrNote  { get; set; }
 
 [Display(Name = "Mobilita", ShortName="", Description = "Mobilità del paziente (quando applicabile) vuoto: non applicabile - 1: autonomo - 2: sedia a rotelle - 3: a letto - 4: non mobile", Prompt="")]
 [ErpDogField("PR_MOBILITA", SqlFieldNameExt="PR_MOBILITA", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [DataType(DataType.Text)]
 public string? PrMobilita  { get; set; }
 }

@@ -25,8 +25,6 @@ public List<ErpToolkit.Models.SIO.HealthData.RelPrestazioneDatoClinico> RelPrest
 
 [Display(Name = "Classe", ShortName="", Description = "Classe del dato sanitario: 1 - Parametri vitali", Prompt="")]
 [ErpDogField("PV_CLASSE", SqlFieldNameExt="PV_CLASSE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("1")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [DataType(DataType.Text)]
 public string? PvClasse  { get; set; }
 
@@ -70,36 +68,26 @@ public double? PvValoreMassimo  { get; set; }
 
 [Display(Name = "Valore Scelta", ShortName="", Description = "Valore carattere (se applicabile, in base al tipo di risultato)", Prompt="")]
 [ErpDogField("PV_VALORE_SCELTA", SqlFieldNameExt="PV_VALORE_SCELTA", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(80, ErrorMessage = "Inserire massimo 80 caratteri")]
 [DataType(DataType.Text)]
 public string? PvValoreScelta  { get; set; }
 
 [Display(Name = "Valore Testo", ShortName="", Description = "Valore testuale, se applicabile in base al tipo di dato", Prompt="")]
 [ErpDogField("PV_VALORE_TESTO", SqlFieldNameExt="PV_VALORE_TESTO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(4000, ErrorMessage = "Inserire massimo 4000 caratteri")]
 [DataType(DataType.Text)]
 public string? PvValoreTesto  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note (se applicabile, in base al tipo di risultato)", Prompt="")]
 [ErpDogField("PV_NOTE", SqlFieldNameExt="PV_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(80, ErrorMessage = "Inserire massimo 80 caratteri")]
 [DataType(DataType.Text)]
 public string? PvNote  { get; set; }
 
 [Display(Name = "Codice Referto", ShortName="", Description = "Criterio di codifica/unità di misura adottato (se applicabile)", Prompt="")]
 [ErpDogField("PV_CODICE_REFERTO", SqlFieldNameExt="PV_CODICE_REFERTO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
-[StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? PvCodiceReferto  { get; set; }
 
 [Display(Name = "Data Acquisizione", ShortName="", Description = "Data di acquisizione del dato sanitario", Prompt="")]
 [ErpDogField("PV_DATA_ACQUISIZIONE", SqlFieldNameExt="PV_DATA_ACQUISIZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange PvDataAcquisizione  { get; set; } = new DateRange();
@@ -121,8 +109,6 @@ public string? PvStatoDatoClinico  { get; set; }
 
 [Display(Name = "Data Validazione", ShortName="", Description = "Data di convalida del dato sanitario", Prompt="")]
 [ErpDogField("PV_DATA_VALIDAZIONE", SqlFieldNameExt="PV_DATA_VALIDAZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange PvDataValidazione  { get; set; } = new DateRange();

@@ -25,8 +25,6 @@ public List<ErpToolkit.Models.SIO.HealthData.RelPrestazioneDatoClinico> RelPrest
 
 [Display(Name = "Classe", ShortName="", Description = "Classe del dato sanitario: 2: risultati degli esami", Prompt="")]
 [ErpDogField("RE_CLASSE", SqlFieldNameExt="RE_CLASSE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("2")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [DataType(DataType.Text)]
 public string? ReClasse  { get; set; }
 
@@ -70,36 +68,26 @@ public double? ReValoreMassimo  { get; set; }
 
 [Display(Name = "Valore Scelta", ShortName="", Description = "Valore carattere [se applicabile, in base al tipo di risultato]", Prompt="")]
 [ErpDogField("RE_VALORE_SCELTA", SqlFieldNameExt="RE_VALORE_SCELTA", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(80, ErrorMessage = "Inserire massimo 80 caratteri")]
 [DataType(DataType.Text)]
 public string? ReValoreScelta  { get; set; }
 
 [Display(Name = "Valore Testo", ShortName="", Description = "Valore testuale, se applicabile", Prompt="")]
 [ErpDogField("RE_VALORE_TESTO", SqlFieldNameExt="RE_VALORE_TESTO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(4000, ErrorMessage = "Inserire massimo 4000 caratteri")]
 [DataType(DataType.Text)]
 public string? ReValoreTesto  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note [se applicabile, in base al tipo di risultato]", Prompt="")]
 [ErpDogField("RE_NOTE", SqlFieldNameExt="RE_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(80, ErrorMessage = "Inserire massimo 80 caratteri")]
 [DataType(DataType.Text)]
 public string? ReNote  { get; set; }
 
 [Display(Name = "Codice Referto", ShortName="", Description = "Criterio di codifica/unità di misura adottato (se applicabile)", Prompt="")]
 [ErpDogField("RE_CODICE_REFERTO", SqlFieldNameExt="RE_CODICE_REFERTO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
-[StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? ReCodiceReferto  { get; set; }
 
 [Display(Name = "Data Acquisizione", ShortName="", Description = "Data di acquisizione del dato sanitario", Prompt="")]
 [ErpDogField("RE_DATA_ACQUISIZIONE", SqlFieldNameExt="RE_DATA_ACQUISIZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange ReDataAcquisizione  { get; set; } = new DateRange();
@@ -121,8 +109,6 @@ public string? ReStatoDatoClinico  { get; set; }
 
 [Display(Name = "Data Validazione", ShortName="", Description = "Data di convalida del dato sanitario", Prompt="")]
 [ErpDogField("RE_DATA_VALIDAZIONE", SqlFieldNameExt="RE_DATA_VALIDAZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange ReDataValidazione  { get; set; } = new DateRange();

@@ -51,8 +51,6 @@ public List<string> RiIdOperatoreRichiedente  { get; set; } = new List<string>()
 
 [Display(Name = "Data Richiesta", ShortName="", Description = "Data non prima della quale la comunicazione deve essere trasmessa / Data di completamento quando eseguita", Prompt="")]
 [ErpDogField("RI_DATA_RICHIESTA", SqlFieldNameExt="RI_DATA_RICHIESTA", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange RiDataRichiesta  { get; set; } = new DateRange();
@@ -67,15 +65,11 @@ public string? RiOraRichiesta  { get; set; }
 
 [Display(Name = "Urgenza", ShortName="", Description = "Livello di urgenza da 1 a 5 [1: il più alto]", Prompt="")]
 [ErpDogField("RI_URGENZA", SqlFieldNameExt="RI_URGENZA", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [DataType(DataType.Text)]
 public string? RiUrgenza  { get; set; }
 
 [Display(Name = "Oggetto", ShortName="", Description = "Oggetto della comunicazione", Prompt="")]
 [ErpDogField("RI_OGGETTO", SqlFieldNameExt="RI_OGGETTO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(50, ErrorMessage = "Inserire massimo 50 caratteri")]
 [DataType(DataType.Text)]
 public string? RiOggetto  { get; set; }
 

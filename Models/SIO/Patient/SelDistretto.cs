@@ -23,22 +23,16 @@ public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
 
 [Display(Name = "Codice", ShortName="", Description = "Codice utente del distretto (CAP)", Prompt="")]
 [ErpDogField("DI_CODICE", SqlFieldNameExt="DI_CODICE", SqlFieldProperties="prop() xref() xdup(DISTRETTO.DI__ICODE[DI__ICODE] {DI_CODICE=' '}) multbxref()")]
-[DefaultValue("")]
-[StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? DiCodice  { get; set; }
 
 [Display(Name = "Nome", ShortName="", Description = "Descrizione estesa del distretto", Prompt="")]
 [ErpDogField("DI_NOME", SqlFieldNameExt="DI_NOME", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(50, ErrorMessage = "Inserire massimo 50 caratteri")]
 [DataType(DataType.Text)]
 public string? DiNome  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note sul distretto", Prompt="")]
 [ErpDogField("DI_NOTE", SqlFieldNameExt="DI_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? DiNote  { get; set; }
 

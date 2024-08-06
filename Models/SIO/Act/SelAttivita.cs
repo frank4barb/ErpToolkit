@@ -35,29 +35,21 @@ public List<ErpToolkit.Models.SIO.Act.RelAttivitaContiene> RelAttivitaContiene4A
 
 [Display(Name = "Codice", ShortName="", Description = "Codice assegnato dall'utente", Prompt="")]
 [ErpDogField("AV_CODICE", SqlFieldNameExt="AV_CODICE", SqlFieldProperties="prop() xref() xdup(ATTIVITA.AV__ICODE[AV__ICODE] {AV_CODICE=' '}) multbxref()")]
-[DefaultValue("")]
-[StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? AvCodice  { get; set; }
 
 [Display(Name = "Descrizione", ShortName="", Description = "Descrizione estesa", Prompt="")]
 [ErpDogField("AV_DESCRIZIONE", SqlFieldNameExt="AV_DESCRIZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(50, ErrorMessage = "Inserire massimo 50 caratteri")]
 [DataType(DataType.Text)]
 public string? AvDescrizione  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note", Prompt="")]
 [ErpDogField("AV_NOTE", SqlFieldNameExt="AV_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? AvNote  { get; set; }
 
 [Display(Name = "Filtro Regime Erogazione", ShortName="", Description = "Maschera con le classi di contatti per cui l'attività può essere eseguita", Prompt="")]
 [ErpDogField("AV_FILTRO_REGIME_EROGAZIONE", SqlFieldNameExt="AV_FILTRO_REGIME_EROGAZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(4, ErrorMessage = "Inserire massimo 4 caratteri")]
 [DataType(DataType.Text)]
 public string? AvFiltroRegimeErogazione  { get; set; }
 
@@ -113,22 +105,16 @@ public string? AvRoutine  { get; set; }
 
 [Display(Name = "Note Estese", ShortName="", Description = "Nota estesa", Prompt="")]
 [ErpDogField("AV_NOTE_ESTESE", SqlFieldNameExt="AV_NOTE_ESTESE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(240, ErrorMessage = "Inserire massimo 240 caratteri")]
 [DataType(DataType.Text)]
 public string? AvNoteEstese  { get; set; }
 
 [Display(Name = "Attributi1", ShortName="", Description = "Flag per scopi operativi, gestiti autonomamente dalle applicazioni", Prompt="")]
 [ErpDogField("AV_ATTRIBUTI1", SqlFieldNameExt="AV_ATTRIBUTI1", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(240, ErrorMessage = "Inserire massimo 240 caratteri")]
 [DataType(DataType.Text)]
 public string? AvAttributi1  { get; set; }
 
 [Display(Name = "Attributi2", ShortName="", Description = "Ulteriore insieme di flag operativi, gestiti dalle applicazioni", Prompt="")]
 [ErpDogField("AV_ATTRIBUTI2", SqlFieldNameExt="AV_ATTRIBUTI2", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue(" ")]
-[StringLength(240, ErrorMessage = "Inserire massimo 240 caratteri")]
 [DataType(DataType.Text)]
 public string? AvAttributi2  { get; set; }
 }
