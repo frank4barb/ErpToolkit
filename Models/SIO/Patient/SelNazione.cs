@@ -22,22 +22,22 @@ public const string LIVEDESC = "D"; //Table type: Live or Description
 public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
 
 [Display(Name = "Codice", ShortName="", Description = "Codice ufficiale (esterno) del paese", Prompt="")]
-[ErpDogField("NZ_CODICE", SqlFieldNameExt="NZ_CODICE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("NZ_CODICE", SqlFieldNameExt="NZ_CODICE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
 public string? NzCodice  { get; set; }
 
 [Display(Name = "Nome", ShortName="", Description = "Nome esteso", Prompt="")]
-[ErpDogField("NZ_NOME", SqlFieldNameExt="NZ_NOME", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("NZ_NOME", SqlFieldNameExt="NZ_NOME", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
 public string? NzNome  { get; set; }
 
 [Display(Name = "Cod Istat", ShortName="", Description = "Codice statistico", Prompt="")]
-[ErpDogField("NZ_COD_ISTAT", SqlFieldNameExt="NZ_COD_ISTAT", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("NZ_COD_ISTAT", SqlFieldNameExt="NZ_COD_ISTAT", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
 public string? NzCodIstat  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note", Prompt="")]
-[ErpDogField("NZ_NOTE", SqlFieldNameExt="NZ_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("NZ_NOTE", SqlFieldNameExt="NZ_NOTE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
 public string? NzNote  { get; set; }
 }

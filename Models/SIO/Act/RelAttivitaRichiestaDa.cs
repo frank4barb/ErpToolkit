@@ -63,7 +63,7 @@ public string? Ar1Extatt { get; set; }
 
 
 [Display(Name = "Id Attivita", ShortName="", Description = "Codice dell'attività che può essere eseguita", Prompt="")]
-[ErpDogField("AR_ID_ATTIVITA", SqlFieldNameExt="AR_ID_ATTIVITA", SqlFieldProperties="prop() xref(ATTIVITA.AV__ICODE) xdup() multbxref()")]
+[ErpDogField("AR_ID_ATTIVITA", SqlFieldNameExt="AR_ID_ATTIVITA", SqlFieldOptions="", SqlFieldProperties="prop() xref(ATTIVITA.AV__ICODE) xdup() multbxref()")]
 [DefaultValue("")]
 [AutocompleteClient("Attivita", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
@@ -71,7 +71,7 @@ public string? ArIdAttivita  { get; set; }
 public ErpToolkit.Models.SIO.Act.Attivita? ArIdAttivitaObj  { get; set; }
 
 [Display(Name = "Id Istituto", ShortName="", Description = "Codice dell'organizzazione che può eseguire l'atto", Prompt="")]
-[ErpDogField("AR_ID_ISTITUTO", SqlFieldNameExt="AR_ID_ISTITUTO", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
+[ErpDogField("AR_ID_ISTITUTO", SqlFieldNameExt="AR_ID_ISTITUTO", SqlFieldOptions="", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
 [DefaultValue("")]
 [AutocompleteClient("Organizzazione", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
@@ -79,7 +79,7 @@ public string? ArIdIstituto  { get; set; }
 public ErpToolkit.Models.SIO.Common.Organizzazione? ArIdIstitutoObj  { get; set; }
 
 [Display(Name = "Id Unita", ShortName="", Description = "Codice dell'unità che può eseguire l'atto", Prompt="")]
-[ErpDogField("AR_ID_UNITA", SqlFieldNameExt="AR_ID_UNITA", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
+[ErpDogField("AR_ID_UNITA", SqlFieldNameExt="AR_ID_UNITA", SqlFieldOptions="", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
 [DefaultValue("")]
 [AutocompleteClient("Organizzazione", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
@@ -87,7 +87,7 @@ public string? ArIdUnita  { get; set; }
 public ErpToolkit.Models.SIO.Common.Organizzazione? ArIdUnitaObj  { get; set; }
 
 [Display(Name = "Id Postazione", ShortName="", Description = "Codice del punto di servizio (SP) che può eseguire l'atto", Prompt="")]
-[ErpDogField("AR_ID_POSTAZIONE", SqlFieldNameExt="AR_ID_POSTAZIONE", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
+[ErpDogField("AR_ID_POSTAZIONE", SqlFieldNameExt="AR_ID_POSTAZIONE", SqlFieldOptions="", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
 [DefaultValue("")]
 [AutocompleteClient("Organizzazione", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
@@ -95,7 +95,7 @@ public string? ArIdPostazione  { get; set; }
 public ErpToolkit.Models.SIO.Common.Organizzazione? ArIdPostazioneObj  { get; set; }
 
 [Display(Name = "Id Operatore", ShortName="", Description = "Codice dell'agente che può eseguire l'atto", Prompt="")]
-[ErpDogField("AR_ID_OPERATORE", SqlFieldNameExt="AR_ID_OPERATORE", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
+[ErpDogField("AR_ID_OPERATORE", SqlFieldNameExt="AR_ID_OPERATORE", SqlFieldOptions="", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
 [DefaultValue("")]
 [AutocompleteClient("Organizzazione", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
@@ -103,14 +103,14 @@ public string? ArIdOperatore  { get; set; }
 public ErpToolkit.Models.SIO.Common.Organizzazione? ArIdOperatoreObj  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note testuali", Prompt="")]
-[ErpDogField("AR_NOTE", SqlFieldNameExt="AR_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AR_NOTE", SqlFieldNameExt="AR_NOTE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? ArNote  { get; set; }
 
 [Display(Name = "Richiesta Frequente", ShortName="", Description = "Attività frequentemente richiesta (Sì/No)", Prompt="")]
-[ErpDogField("AR_RICHIESTA_FREQUENTE", SqlFieldNameExt="AR_RICHIESTA_FREQUENTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AR_RICHIESTA_FREQUENTE", SqlFieldNameExt="AR_RICHIESTA_FREQUENTE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("N")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [RegularExpression("Y|N", ErrorMessage = "Inserisci una delle seguenti opzioni: Y|N")]

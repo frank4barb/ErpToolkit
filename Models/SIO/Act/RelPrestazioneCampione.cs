@@ -63,7 +63,7 @@ public string? Pc1Extatt { get; set; }
 
 
 [Display(Name = "Id Campione", ShortName="", Description = "Codice del campione", Prompt="")]
-[ErpDogField("PC_ID_CAMPIONE", SqlFieldNameExt="PC_ID_CAMPIONE", SqlFieldProperties="prop() xref(CAMPIONE.CP__ICODE) xdup() multbxref()")]
+[ErpDogField("PC_ID_CAMPIONE", SqlFieldNameExt="PC_ID_CAMPIONE", SqlFieldOptions="", SqlFieldProperties="prop() xref(CAMPIONE.CP__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue("")]
 [AutocompleteServer("Campione", "AutocompleteGetSelect", "AutocompletePreLoad", 1)]
@@ -72,7 +72,7 @@ public string? PcIdCampione  { get; set; }
 public ErpToolkit.Models.SIO.Act.Campione? PcIdCampioneObj  { get; set; }
 
 [Display(Name = "Id Prestazione", ShortName="", Description = "Codice dell'atto", Prompt="")]
-[ErpDogField("PC_ID_PRESTAZIONE", SqlFieldNameExt="PC_ID_PRESTAZIONE", SqlFieldProperties="prop() xref(PRESTAZIONE.PR__ICODE) xdup() multbxref()")]
+[ErpDogField("PC_ID_PRESTAZIONE", SqlFieldNameExt="PC_ID_PRESTAZIONE", SqlFieldOptions="", SqlFieldProperties="prop() xref(PRESTAZIONE.PR__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue("")]
 [AutocompleteServer("Prestazione", "AutocompleteGetSelect", "AutocompletePreLoad", 1)]
@@ -81,21 +81,21 @@ public string? PcIdPrestazione  { get; set; }
 public ErpToolkit.Models.SIO.Act.Prestazione? PcIdPrestazioneObj  { get; set; }
 
 [Display(Name = "Tipo", ShortName="", Description = "Generato da / Necessario per l'esecuzione [G/E]", Prompt="")]
-[ErpDogField("PC_TIPO", SqlFieldNameExt="PC_TIPO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PC_TIPO", SqlFieldNameExt="PC_TIPO", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("E")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [RegularExpression("G|E", ErrorMessage = "Inserisci una delle seguenti opzioni: G|E")]
 public string? PcTipo  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note", Prompt="")]
-[ErpDogField("PC_NOTE", SqlFieldNameExt="PC_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PC_NOTE", SqlFieldNameExt="PC_NOTE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? PcNote  { get; set; }
 
 [Display(Name = "Id Tipo Campione", ShortName="", Description = "Tipo di campione", Prompt="")]
-[ErpDogField("PC_ID_TIPO_CAMPIONE", SqlFieldNameExt="PC_ID_TIPO_CAMPIONE", SqlFieldProperties="prop() xref(TIPO_CAMPIONE.TP__ICODE) xdup(CAMPIONE.CP_ID_TIPO_CAMPIONE[REL_PRESTAZIONE_CAMPIONE.PC_ID_CAMPIONE] {PC_ID_TIPO_CAMPIONE=' '}) multbxref()")]
+[ErpDogField("PC_ID_TIPO_CAMPIONE", SqlFieldNameExt="PC_ID_TIPO_CAMPIONE", SqlFieldOptions="", SqlFieldProperties="prop() xref(TIPO_CAMPIONE.TP__ICODE) xdup(CAMPIONE.CP_ID_TIPO_CAMPIONE[REL_PRESTAZIONE_CAMPIONE.PC_ID_CAMPIONE] {PC_ID_TIPO_CAMPIONE=' '}) multbxref()")]
 [DefaultValue("")]
 [AutocompleteClient("TipoCampione", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]

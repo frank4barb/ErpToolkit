@@ -22,22 +22,22 @@ public const string LIVEDESC = "D"; //Table type: Live or Description
 public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
 
 [Display(Name = "Codice", ShortName="", Description = "Codice utente del distretto (CAP)", Prompt="")]
-[ErpDogField("DI_CODICE", SqlFieldNameExt="DI_CODICE", SqlFieldProperties="prop() xref() xdup(DISTRETTO.DI__ICODE[DI__ICODE] {DI_CODICE=' '}) multbxref()")]
+[ErpDogField("DI_CODICE", SqlFieldNameExt="DI_CODICE", SqlFieldOptions="[UID]", SqlFieldProperties="prop() xref() xdup(DISTRETTO.DI__ICODE[DI__ICODE] {DI_CODICE=' '}) multbxref()")]
 [DataType(DataType.Text)]
 public string? DiCodice  { get; set; }
 
 [Display(Name = "Nome", ShortName="", Description = "Descrizione estesa del distretto", Prompt="")]
-[ErpDogField("DI_NOME", SqlFieldNameExt="DI_NOME", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("DI_NOME", SqlFieldNameExt="DI_NOME", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
 public string? DiNome  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note sul distretto", Prompt="")]
-[ErpDogField("DI_NOTE", SqlFieldNameExt="DI_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("DI_NOTE", SqlFieldNameExt="DI_NOTE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
 public string? DiNote  { get; set; }
 
 [Display(Name = "Id Comune", ShortName="", Description = "Città in cui si trova il distretto", Prompt="")]
-[ErpDogField("DI_ID_COMUNE", SqlFieldNameExt="DI_ID_COMUNE", SqlFieldProperties="prop() xref(COMUNE.CM__ICODE) xdup() multbxref()")]
+[ErpDogField("DI_ID_COMUNE", SqlFieldNameExt="DI_ID_COMUNE", SqlFieldOptions="", SqlFieldProperties="prop() xref(COMUNE.CM__ICODE) xdup() multbxref()")]
 [DefaultValue("")]
 [AutocompleteClient("Comune", "AutocompleteGetAll", 10)]
 [DataType(DataType.Text)]

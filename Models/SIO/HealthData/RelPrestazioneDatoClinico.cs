@@ -63,7 +63,7 @@ public string? Pd1Extatt { get; set; }
 
 
 [Display(Name = "Classe Dato Clinico", ShortName="", Description = "Partizione del singolo dato sanitario", Prompt="")]
-[ErpDogField("PD_CLASSE_DATO_CLINICO", SqlFieldNameExt="PD_CLASSE_DATO_CLINICO", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PD_CLASSE_DATO_CLINICO", SqlFieldNameExt="PD_CLASSE_DATO_CLINICO", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue(" ")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
@@ -71,36 +71,36 @@ public string? Pd1Extatt { get; set; }
 public string? PdClasseDatoClinico  { get; set; }
 
 [Display(Name = "Id Dato Clinico", ShortName="", Description = "Identificativo del singolo dato sanitario", Prompt="")]
-[ErpDogField("PD_ID_DATO_CLINICO_1", SqlFieldNameExt="PD_ID_DATO_CLINICO_1", SqlFieldProperties="prop() xref(PARAMETRO_VITALE.PV__ICODE{PD_CLASSE_DATO_CLINICO='1'} | RISULTATO_ESAME.RE__ICODE{PD_CLASSE_DATO_CLINICO='2'} | STATO_SALUTE.SS__ICODE{PD_CLASSE_DATO_CLINICO='3'} | DOCUMENTO_CLINICO.DC__ICODE{PD_CLASSE_DATO_CLINICO= '4'}) xdup() multbxref(PD_CLASSE_DATO_CLINICO)")]
+[ErpDogField("PD_ID_DATO_CLINICO_1", SqlFieldNameExt="PD_ID_DATO_CLINICO_1", SqlFieldOptions="", SqlFieldProperties="prop() xref(PARAMETRO_VITALE.PV__ICODE{PD_CLASSE_DATO_CLINICO='1'} | RISULTATO_ESAME.RE__ICODE{PD_CLASSE_DATO_CLINICO='2'} | STATO_SALUTE.SS__ICODE{PD_CLASSE_DATO_CLINICO='3'} | DOCUMENTO_CLINICO.DC__ICODE{PD_CLASSE_DATO_CLINICO= '4'}) xdup() multbxref(PD_CLASSE_DATO_CLINICO)")]
 [DataType(DataType.Text)]
 public string? PdIdDatoClinico1  { get; set; }
 public ErpToolkit.Models.SIO.HealthData.ParametroVitale? PdIdDatoClinico1Obj  { get; set; }
 
 [Display(Name = "Id Dato Clinico", ShortName="", Description = "Identificativo del singolo dato sanitario", Prompt="")]
-[ErpDogField("PD_ID_DATO_CLINICO_2", SqlFieldNameExt="PD_ID_DATO_CLINICO_2", SqlFieldProperties="prop() xref(PARAMETRO_VITALE.PV__ICODE{PD_CLASSE_DATO_CLINICO='1'} | RISULTATO_ESAME.RE__ICODE{PD_CLASSE_DATO_CLINICO='2'} | STATO_SALUTE.SS__ICODE{PD_CLASSE_DATO_CLINICO='3'} | DOCUMENTO_CLINICO.DC__ICODE{PD_CLASSE_DATO_CLINICO= '4'}) xdup() multbxref(PD_CLASSE_DATO_CLINICO)")]
+[ErpDogField("PD_ID_DATO_CLINICO_2", SqlFieldNameExt="PD_ID_DATO_CLINICO_2", SqlFieldOptions="", SqlFieldProperties="prop() xref(PARAMETRO_VITALE.PV__ICODE{PD_CLASSE_DATO_CLINICO='1'} | RISULTATO_ESAME.RE__ICODE{PD_CLASSE_DATO_CLINICO='2'} | STATO_SALUTE.SS__ICODE{PD_CLASSE_DATO_CLINICO='3'} | DOCUMENTO_CLINICO.DC__ICODE{PD_CLASSE_DATO_CLINICO= '4'}) xdup() multbxref(PD_CLASSE_DATO_CLINICO)")]
 [DataType(DataType.Text)]
 public string? PdIdDatoClinico2  { get; set; }
 public ErpToolkit.Models.SIO.HealthData.RisultatoEsame? PdIdDatoClinico2Obj  { get; set; }
 
 [Display(Name = "Id Dato Clinico", ShortName="", Description = "Identificativo del singolo dato sanitario", Prompt="")]
-[ErpDogField("PD_ID_DATO_CLINICO_3", SqlFieldNameExt="PD_ID_DATO_CLINICO_3", SqlFieldProperties="prop() xref(PARAMETRO_VITALE.PV__ICODE{PD_CLASSE_DATO_CLINICO='1'} | RISULTATO_ESAME.RE__ICODE{PD_CLASSE_DATO_CLINICO='2'} | STATO_SALUTE.SS__ICODE{PD_CLASSE_DATO_CLINICO='3'} | DOCUMENTO_CLINICO.DC__ICODE{PD_CLASSE_DATO_CLINICO= '4'}) xdup() multbxref(PD_CLASSE_DATO_CLINICO)")]
+[ErpDogField("PD_ID_DATO_CLINICO_3", SqlFieldNameExt="PD_ID_DATO_CLINICO_3", SqlFieldOptions="", SqlFieldProperties="prop() xref(PARAMETRO_VITALE.PV__ICODE{PD_CLASSE_DATO_CLINICO='1'} | RISULTATO_ESAME.RE__ICODE{PD_CLASSE_DATO_CLINICO='2'} | STATO_SALUTE.SS__ICODE{PD_CLASSE_DATO_CLINICO='3'} | DOCUMENTO_CLINICO.DC__ICODE{PD_CLASSE_DATO_CLINICO= '4'}) xdup() multbxref(PD_CLASSE_DATO_CLINICO)")]
 [DataType(DataType.Text)]
 public string? PdIdDatoClinico3  { get; set; }
 public ErpToolkit.Models.SIO.HealthData.StatoSalute? PdIdDatoClinico3Obj  { get; set; }
 
 [Display(Name = "Id Dato Clinico", ShortName="", Description = "Identificativo del singolo dato sanitario", Prompt="")]
-[ErpDogField("PD_ID_DATO_CLINICO_4", SqlFieldNameExt="PD_ID_DATO_CLINICO_4", SqlFieldProperties="prop() xref(PARAMETRO_VITALE.PV__ICODE{PD_CLASSE_DATO_CLINICO='1'} | RISULTATO_ESAME.RE__ICODE{PD_CLASSE_DATO_CLINICO='2'} | STATO_SALUTE.SS__ICODE{PD_CLASSE_DATO_CLINICO='3'} | DOCUMENTO_CLINICO.DC__ICODE{PD_CLASSE_DATO_CLINICO= '4'}) xdup() multbxref(PD_CLASSE_DATO_CLINICO)")]
+[ErpDogField("PD_ID_DATO_CLINICO_4", SqlFieldNameExt="PD_ID_DATO_CLINICO_4", SqlFieldOptions="", SqlFieldProperties="prop() xref(PARAMETRO_VITALE.PV__ICODE{PD_CLASSE_DATO_CLINICO='1'} | RISULTATO_ESAME.RE__ICODE{PD_CLASSE_DATO_CLINICO='2'} | STATO_SALUTE.SS__ICODE{PD_CLASSE_DATO_CLINICO='3'} | DOCUMENTO_CLINICO.DC__ICODE{PD_CLASSE_DATO_CLINICO= '4'}) xdup() multbxref(PD_CLASSE_DATO_CLINICO)")]
 [DataType(DataType.Text)]
 public string? PdIdDatoClinico4  { get; set; }
 public ErpToolkit.Models.SIO.HealthData.DocumentoClinico? PdIdDatoClinico4Obj  { get; set; }
 
 [Display(Name = "Id Dato Clinico", ShortName="", Description = "Identificativo del singolo dato sanitario", Prompt="")]
-[ErpDogField("PD_ID_DATO_CLINICO", SqlFieldNameExt="PD_ID_DATO_CLINICO", SqlFieldProperties="prop() xref(PARAMETRO_VITALE.PV__ICODE{PD_CLASSE_DATO_CLINICO='1'} | RISULTATO_ESAME.RE__ICODE{PD_CLASSE_DATO_CLINICO='2'} | STATO_SALUTE.SS__ICODE{PD_CLASSE_DATO_CLINICO='3'} | DOCUMENTO_CLINICO.DC__ICODE{PD_CLASSE_DATO_CLINICO= '4'}) xdup() multbxref(PD_CLASSE_DATO_CLINICO)")]
+[ErpDogField("PD_ID_DATO_CLINICO", SqlFieldNameExt="PD_ID_DATO_CLINICO", SqlFieldOptions="", SqlFieldProperties="prop() xref(PARAMETRO_VITALE.PV__ICODE{PD_CLASSE_DATO_CLINICO='1'} | RISULTATO_ESAME.RE__ICODE{PD_CLASSE_DATO_CLINICO='2'} | STATO_SALUTE.SS__ICODE{PD_CLASSE_DATO_CLINICO='3'} | DOCUMENTO_CLINICO.DC__ICODE{PD_CLASSE_DATO_CLINICO= '4'}) xdup() multbxref(PD_CLASSE_DATO_CLINICO)")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 public string? PdIdDatoClinico  { get; set; }
 
 [Display(Name = "Id Prestazione", ShortName="", Description = "Identificativo dell'atto", Prompt="")]
-[ErpDogField("PD_ID_PRESTAZIONE", SqlFieldNameExt="PD_ID_PRESTAZIONE", SqlFieldProperties="prop() xref(PRESTAZIONE.PR__ICODE) xdup() multbxref()")]
+[ErpDogField("PD_ID_PRESTAZIONE", SqlFieldNameExt="PD_ID_PRESTAZIONE", SqlFieldOptions="", SqlFieldProperties="prop() xref(PRESTAZIONE.PR__ICODE) xdup() multbxref()")]
 [DefaultValue("")]
 [AutocompleteServer("Prestazione", "AutocompleteGetSelect", "AutocompletePreLoad", 1)]
 [DataType(DataType.Text)]
@@ -108,14 +108,14 @@ public string? PdIdPrestazione  { get; set; }
 public ErpToolkit.Models.SIO.Act.Prestazione? PdIdPrestazioneObj  { get; set; }
 
 [Display(Name = "Tipo Relazione", ShortName="", Description = "Il Dato Sanitario è [G]enerato dall'atto - [R]ilevante per l'esecuzione", Prompt="")]
-[ErpDogField("PD_TIPO_RELAZIONE", SqlFieldNameExt="PD_TIPO_RELAZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PD_TIPO_RELAZIONE", SqlFieldNameExt="PD_TIPO_RELAZIONE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("R")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [RegularExpression("R|G", ErrorMessage = "Inserisci una delle seguenti opzioni: R|G")]
 public string? PdTipoRelazione  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Ulteriori note testuali, relative al collegamento specifico", Prompt="")]
-[ErpDogField("PD_NOTE", SqlFieldNameExt="PD_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PD_NOTE", SqlFieldNameExt="PD_NOTE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [StringLength(40, ErrorMessage = "Inserire massimo 40 caratteri")]
 [DataType(DataType.Text)]

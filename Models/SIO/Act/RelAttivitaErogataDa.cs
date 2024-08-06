@@ -63,7 +63,7 @@ public string? Ae1Extatt { get; set; }
 
 
 [Display(Name = "Id Attivita", ShortName="", Description = "Codice dell'attività", Prompt="")]
-[ErpDogField("AE_ID_ATTIVITA", SqlFieldNameExt="AE_ID_ATTIVITA", SqlFieldProperties="prop() xref(ATTIVITA.AV__ICODE) xdup() multbxref()")]
+[ErpDogField("AE_ID_ATTIVITA", SqlFieldNameExt="AE_ID_ATTIVITA", SqlFieldOptions="", SqlFieldProperties="prop() xref(ATTIVITA.AV__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue("")]
 [AutocompleteClient("Attivita", "AutocompleteGetAll", 1)]
@@ -72,7 +72,7 @@ public string? AeIdAttivita  { get; set; }
 public ErpToolkit.Models.SIO.Act.Attivita? AeIdAttivitaObj  { get; set; }
 
 [Display(Name = "Id Unita", ShortName="", Description = "Codice dell'agente autorizzato a eseguire l'attività", Prompt="")]
-[ErpDogField("AE_ID_UNITA", SqlFieldNameExt="AE_ID_UNITA", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
+[ErpDogField("AE_ID_UNITA", SqlFieldNameExt="AE_ID_UNITA", SqlFieldOptions="", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue("")]
 [AutocompleteClient("Organizzazione", "AutocompleteGetAll", 1)]
@@ -81,35 +81,35 @@ public string? AeIdUnita  { get; set; }
 public ErpToolkit.Models.SIO.Common.Organizzazione? AeIdUnitaObj  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note testuali", Prompt="")]
-[ErpDogField("AE_NOTE", SqlFieldNameExt="AE_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AE_NOTE", SqlFieldNameExt="AE_NOTE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [StringLength(40, ErrorMessage = "Inserire massimo 40 caratteri")]
 [DataType(DataType.Text)]
 public string? AeNote  { get; set; }
 
 [Display(Name = "Modalita Di Pianificazione", ShortName="", Description = "Modalità di pianificazione predefinita [P]ianificazione - [R]andom", Prompt="")]
-[ErpDogField("AE_MODALITA_DI_PIANIFICAZIONE", SqlFieldNameExt="AE_MODALITA_DI_PIANIFICAZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AE_MODALITA_DI_PIANIFICAZIONE", SqlFieldNameExt="AE_MODALITA_DI_PIANIFICAZIONE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("P")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [RegularExpression("P|R", ErrorMessage = "Inserisci una delle seguenti opzioni: P|R")]
 public string? AeModalitaDiPianificazione  { get; set; }
 
 [Display(Name = "Erogazione Frequente", ShortName="", Description = "Attività frequentemente richiesta (Sì - No)", Prompt="")]
-[ErpDogField("AE_EROGAZIONE_FREQUENTE", SqlFieldNameExt="AE_EROGAZIONE_FREQUENTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AE_EROGAZIONE_FREQUENTE", SqlFieldNameExt="AE_EROGAZIONE_FREQUENTE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("N")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [RegularExpression("Y|N", ErrorMessage = "Inserisci una delle seguenti opzioni: Y|N")]
 public string? AeErogazioneFrequente  { get; set; }
 
 [Display(Name = "Attributi", ShortName="", Description = "Flag operativi autonomamente gestiti dall'applicazione", Prompt="")]
-[ErpDogField("AE_ATTRIBUTI", SqlFieldNameExt="AE_ATTRIBUTI", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AE_ATTRIBUTI", SqlFieldNameExt="AE_ATTRIBUTI", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [StringLength(240, ErrorMessage = "Inserire massimo 240 caratteri")]
 [DataType(DataType.Text)]
 public string? AeAttributi  { get; set; }
 
 [Display(Name = "Filtro Regime Erogazione", ShortName="", Description = "Classi di contatti per cui viene svolta l'attività", Prompt="")]
-[ErpDogField("AE_FILTRO_REGIME_EROGAZIONE", SqlFieldNameExt="AE_FILTRO_REGIME_EROGAZIONE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AE_FILTRO_REGIME_EROGAZIONE", SqlFieldNameExt="AE_FILTRO_REGIME_EROGAZIONE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [StringLength(4, ErrorMessage = "Inserire massimo 4 caratteri")]
 [DataType(DataType.Text)]

@@ -63,7 +63,7 @@ public string? Cm1Extatt { get; set; }
 
 
 [Display(Name = "Codice", ShortName="", Description = "Codice nazionale della città", Prompt="")]
-[ErpDogField("CM_CODICE", SqlFieldNameExt="CM_CODICE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("CM_CODICE", SqlFieldNameExt="CM_CODICE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue("")]
 [StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
@@ -71,7 +71,7 @@ public string? Cm1Extatt { get; set; }
 public string? CmCodice  { get; set; }
 
 [Display(Name = "Nome", ShortName="", Description = "Nome esteso", Prompt="")]
-[ErpDogField("CM_NOME", SqlFieldNameExt="CM_NOME", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("CM_NOME", SqlFieldNameExt="CM_NOME", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue("")]
 [StringLength(50, ErrorMessage = "Inserire massimo 50 caratteri")]
@@ -79,14 +79,14 @@ public string? CmCodice  { get; set; }
 public string? CmNome  { get; set; }
 
 [Display(Name = "Cod Istat", ShortName="", Description = "Codice statistico per la città", Prompt="")]
-[ErpDogField("CM_COD_ISTAT", SqlFieldNameExt="CM_COD_ISTAT", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("CM_COD_ISTAT", SqlFieldNameExt="CM_COD_ISTAT", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? CmCodIstat  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note testuali", Prompt="")]
-[ErpDogField("CM_NOTE", SqlFieldNameExt="CM_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("CM_NOTE", SqlFieldNameExt="CM_NOTE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]

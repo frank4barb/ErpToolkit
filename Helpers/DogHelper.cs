@@ -1,8 +1,10 @@
 using ErpToolkit.Helpers.Db;
 using Microsoft.Extensions.Primitives;
+using NLog.LayoutRenderers.Wrappers;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -180,12 +182,18 @@ namespace ErpToolkit.Helpers
                                     var attrPropValue = attrProp.GetValue(attribute); //sb.AppendLine($"        {attrProp.Name}: {attrPropValue}");
                                     if (attribute.GetType().Name == "ErpDogFieldAttribute" && attrProp.Name == "SqlFieldNameExt" && !String.IsNullOrWhiteSpace(attrPropValue.ToString()))
                                     {
-                                        if (propertyValue is string str) sb.AppendLine($" {attrPropValue} LIKE '%{propertyValue}%' and ");
+                                        string fieldOptions = ((ErpDogFieldAttribute)attribute).SqlFieldOptions?.ToString() ?? "";
+                                        if (propertyValue is string str)
+                                        {
+                                            if (fieldOptions.Contains("[UID]")) sb.AppendLine($" {attrPropValue} = '{str.Trim()}' and ");
+                                            else if (fieldOptions.Contains("[XID]")) sb.AppendLine($" {attrPropValue} = '{str.Trim()}' and ");
+                                            else sb.AppendLine($" {attrPropValue} LIKE '%{str}%' and ");
+                                        }
                                         else if (propertyValue is List<string> strList) sb.Append($" {attrPropValue} in (").Append(string.Join(", ", strList.Select(str => $"'{str.Trim()}'"))).AppendLine($") and");
                                         else if (propertyValue is List<long> lngList) sb.Append($" {attrPropValue} in (").Append(string.Join(", ", lngList)).AppendLine($") and");
                                         else if (propertyValue is DateRange dateRng)
                                         {
-                                            if (dateRng.StartDate == default) sb.AppendLine($" {attrPropValue} <= '{dateRng.EndDate.ToString(DB_FORMAT_DATE)}' and"); 
+                                            if (dateRng.StartDate == default) sb.AppendLine($" {attrPropValue} <= '{dateRng.EndDate.ToString(DB_FORMAT_DATE)}' and");
                                             else if (dateRng.EndDate == default) sb.AppendLine($" {attrPropValue} >= '{dateRng.StartDate.ToString(DB_FORMAT_DATE)}' and");
                                             else sb.AppendLine($" ({attrPropValue} BETWEEN '{dateRng.StartDate.ToString(DB_FORMAT_DATE)}' and '{dateRng.EndDate.ToString(DB_FORMAT_DATE)}') and");
                                         }

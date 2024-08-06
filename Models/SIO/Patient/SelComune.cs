@@ -22,22 +22,22 @@ public const string LIVEDESC = "D"; //Table type: Live or Description
 public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
 
 [Display(Name = "Codice", ShortName="", Description = "Codice nazionale della città", Prompt="")]
-[ErpDogField("CM_CODICE", SqlFieldNameExt="CM_CODICE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("CM_CODICE", SqlFieldNameExt="CM_CODICE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
 public string? CmCodice  { get; set; }
 
 [Display(Name = "Nome", ShortName="", Description = "Nome esteso", Prompt="")]
-[ErpDogField("CM_NOME", SqlFieldNameExt="CM_NOME", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("CM_NOME", SqlFieldNameExt="CM_NOME", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
 public string? CmNome  { get; set; }
 
 [Display(Name = "Cod Istat", ShortName="", Description = "Codice statistico per la città", Prompt="")]
-[ErpDogField("CM_COD_ISTAT", SqlFieldNameExt="CM_COD_ISTAT", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("CM_COD_ISTAT", SqlFieldNameExt="CM_COD_ISTAT", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
 public string? CmCodIstat  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note testuali", Prompt="")]
-[ErpDogField("CM_NOTE", SqlFieldNameExt="CM_NOTE", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("CM_NOTE", SqlFieldNameExt="CM_NOTE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
 public string? CmNote  { get; set; }
 }
