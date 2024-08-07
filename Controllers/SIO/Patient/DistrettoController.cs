@@ -34,7 +34,7 @@ namespace ErpToolkit.Controllers.SIO.Patient
         {
             try
             {
-                string sql = "select DI_CODICE + ' - ' + DI_NOME as label, DI__ICODE as value from DISTRETTO where DI__DELETED='N' and upper(DI_CODICE + ' - ' + DI_NOME) like '%" + term.ToUpper() + "%'";
+                string sql = "select DI_CODICE + ' - ' + DI_NOME as label, DI__ICODE as value from DISTRETTO where DI__DELETED='N' and upper(' ' + DI_CODICE + ' - ' + DI_NOME + ' ') like '%" + term.ToUpper() + "%'";
                 return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Distretto: " + ex.Message }); }
@@ -50,22 +50,20 @@ namespace ErpToolkit.Controllers.SIO.Patient
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Distretto: " + ex.Message }); }
         }
         [BindProperty]
-        public SelDistretto Select { get; set; }  = new SelDistretto();
+        public SelDistretto Select { get; set; }
         [BindProperty]
-        public List<Distretto> List { get {
-                List<Distretto> list = new List<Distretto>();
-                try { list = DogHelper.List<Distretto>(DbConnectionString, Select); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
-                return list;
-            }
-        }
+        public List<Distretto> List { get; set; }
         [BindProperty]
         public Distretto Row { get; set; }
+        [TempData]
+        public string StatusMessage { get; set; }
 
         [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpGet]
         public IActionResult Index(string returnUrl = null)
         {
+            this.Select = new SelDistretto();
+            this.List = new List<Distretto>();
             //carico eventuali parametri presenti in TempData
             foreach (var item in TempData.Keys) ViewData[item] = TempData[item];
             return View("~/Views/SIO/Patient/Distretto/Index.cshtml", this);  //passo il Controller alla vista, come Model
@@ -76,6 +74,21 @@ namespace ErpToolkit.Controllers.SIO.Patient
         [HttpPost]
         public ActionResult Index()
         {
+            ModelState.Clear(); //FORZA RICONVALIDA MODELLO
+            if (!TryValidateModel(this.Select))
+            {
+                ModelState.AddModelError(string.Empty, "Verifica valore dei campi.");
+                return View("~/Views/SIO/Patient/Distretto/Index.cshtml", this);
+            }
+            //string errMsg = this.Select.ValidateIntErrMsg();
+            //if (errMsg != "") {
+            //    ModelState.AddModelError(string.Empty, errMsg);
+            //    return View("~/Views/SIO/Patient/Distretto/Index.cshtml", this);
+            //}
+            //carica lista
+            try { this.List = DogHelper.List<Distretto>(DbConnectionString, this.Select); }
+            catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
+            this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/Patient/Distretto/Index.cshtml", this);
         }
 

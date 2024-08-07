@@ -34,7 +34,7 @@ namespace ErpToolkit.Controllers.SIO.Costs
         {
             try
             {
-                string sql = "select DG_CODICE + ' - ' + DG_DESCRIZIONE as label, DG__ICODE as value from DIAGNOSI where DG__DELETED='N' and upper(DG_CODICE + ' - ' + DG_DESCRIZIONE) like '%" + term.ToUpper() + "%'";
+                string sql = "select DG_CODICE + ' - ' + DG_DESCRIZIONE as label, DG__ICODE as value from DIAGNOSI where DG__DELETED='N' and upper(' ' + DG_CODICE + ' - ' + DG_DESCRIZIONE + ' ') like '%" + term.ToUpper() + "%'";
                 return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Diagnosi: " + ex.Message }); }
@@ -50,22 +50,20 @@ namespace ErpToolkit.Controllers.SIO.Costs
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Diagnosi: " + ex.Message }); }
         }
         [BindProperty]
-        public SelDiagnosi Select { get; set; }  = new SelDiagnosi();
+        public SelDiagnosi Select { get; set; }
         [BindProperty]
-        public List<Diagnosi> List { get {
-                List<Diagnosi> list = new List<Diagnosi>();
-                try { list = DogHelper.List<Diagnosi>(DbConnectionString, Select); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
-                return list;
-            }
-        }
+        public List<Diagnosi> List { get; set; }
         [BindProperty]
         public Diagnosi Row { get; set; }
+        [TempData]
+        public string StatusMessage { get; set; }
 
         [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpGet]
         public IActionResult Index(string returnUrl = null)
         {
+            this.Select = new SelDiagnosi();
+            this.List = new List<Diagnosi>();
             //carico eventuali parametri presenti in TempData
             foreach (var item in TempData.Keys) ViewData[item] = TempData[item];
             return View("~/Views/SIO/Costs/Diagnosi/Index.cshtml", this);  //passo il Controller alla vista, come Model
@@ -76,6 +74,21 @@ namespace ErpToolkit.Controllers.SIO.Costs
         [HttpPost]
         public ActionResult Index()
         {
+            ModelState.Clear(); //FORZA RICONVALIDA MODELLO
+            if (!TryValidateModel(this.Select))
+            {
+                ModelState.AddModelError(string.Empty, "Verifica valore dei campi.");
+                return View("~/Views/SIO/Costs/Diagnosi/Index.cshtml", this);
+            }
+            //string errMsg = this.Select.ValidateIntErrMsg();
+            //if (errMsg != "") {
+            //    ModelState.AddModelError(string.Empty, errMsg);
+            //    return View("~/Views/SIO/Costs/Diagnosi/Index.cshtml", this);
+            //}
+            //carica lista
+            try { this.List = DogHelper.List<Diagnosi>(DbConnectionString, this.Select); }
+            catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
+            this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/Costs/Diagnosi/Index.cshtml", this);
         }
 

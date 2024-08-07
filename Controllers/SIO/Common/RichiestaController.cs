@@ -24,7 +24,7 @@ namespace ErpToolkit.Controllers.SIO.Common
         {
             try
             {
-                string sql = "select RI__ICODE + ' - ' + RI_OGGETTO as label, RI__ICODE as value from RICHIESTA where RI__DELETED='N' and upper(RI__ICODE + ' - ' + RI_OGGETTO) like '%" + term.ToUpper() + "%'";
+                string sql = "select RI__ICODE + ' - ' + RI_OGGETTO as label, RI__ICODE as value from RICHIESTA where RI__DELETED='N' and upper(' ' + RI__ICODE + ' - ' + RI_OGGETTO + ' ') like '%" + term.ToUpper() + "%'";
                 return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Richiesta: " + ex.Message }); }
@@ -40,22 +40,20 @@ namespace ErpToolkit.Controllers.SIO.Common
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Richiesta: " + ex.Message }); }
         }
         [BindProperty]
-        public SelRichiesta Select { get; set; }  = new SelRichiesta();
+        public SelRichiesta Select { get; set; }
         [BindProperty]
-        public List<Richiesta> List { get {
-                List<Richiesta> list = new List<Richiesta>();
-                try { list = DogHelper.List<Richiesta>(DbConnectionString, Select); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
-                return list;
-            }
-        }
+        public List<Richiesta> List { get; set; }
         [BindProperty]
         public Richiesta Row { get; set; }
+        [TempData]
+        public string StatusMessage { get; set; }
 
         [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpGet]
         public IActionResult Index(string returnUrl = null)
         {
+            this.Select = new SelRichiesta();
+            this.List = new List<Richiesta>();
             //carico eventuali parametri presenti in TempData
             foreach (var item in TempData.Keys) ViewData[item] = TempData[item];
             return View("~/Views/SIO/Common/Richiesta/Index.cshtml", this);  //passo il Controller alla vista, come Model
@@ -66,6 +64,21 @@ namespace ErpToolkit.Controllers.SIO.Common
         [HttpPost]
         public ActionResult Index()
         {
+            ModelState.Clear(); //FORZA RICONVALIDA MODELLO
+            if (!TryValidateModel(this.Select))
+            {
+                ModelState.AddModelError(string.Empty, "Verifica valore dei campi.");
+                return View("~/Views/SIO/Common/Richiesta/Index.cshtml", this);
+            }
+            //string errMsg = this.Select.ValidateIntErrMsg();
+            //if (errMsg != "") {
+            //    ModelState.AddModelError(string.Empty, errMsg);
+            //    return View("~/Views/SIO/Common/Richiesta/Index.cshtml", this);
+            //}
+            //carica lista
+            try { this.List = DogHelper.List<Richiesta>(DbConnectionString, this.Select); }
+            catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
+            this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/Common/Richiesta/Index.cshtml", this);
         }
 

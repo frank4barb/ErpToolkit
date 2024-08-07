@@ -24,7 +24,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         {
             try
             {
-                string sql = "select SS__ICODE + ' - ' + SS_NOTE as label, SS__ICODE as value from STATO_SALUTE where SS__DELETED='N' and upper(SS__ICODE + ' - ' + SS_NOTE) like '%" + term.ToUpper() + "%'";
+                string sql = "select SS__ICODE + ' - ' + SS_NOTE as label, SS__ICODE as value from STATO_SALUTE where SS__DELETED='N' and upper(' ' + SS__ICODE + ' - ' + SS_NOTE + ' ') like '%" + term.ToUpper() + "%'";
                 return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect StatoSalute: " + ex.Message }); }
@@ -40,22 +40,20 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad StatoSalute: " + ex.Message }); }
         }
         [BindProperty]
-        public SelStatoSalute Select { get; set; }  = new SelStatoSalute();
+        public SelStatoSalute Select { get; set; }
         [BindProperty]
-        public List<StatoSalute> List { get {
-                List<StatoSalute> list = new List<StatoSalute>();
-                try { list = DogHelper.List<StatoSalute>(DbConnectionString, Select); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
-                return list;
-            }
-        }
+        public List<StatoSalute> List { get; set; }
         [BindProperty]
         public StatoSalute Row { get; set; }
+        [TempData]
+        public string StatusMessage { get; set; }
 
         [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpGet]
         public IActionResult Index(string returnUrl = null)
         {
+            this.Select = new SelStatoSalute();
+            this.List = new List<StatoSalute>();
             //carico eventuali parametri presenti in TempData
             foreach (var item in TempData.Keys) ViewData[item] = TempData[item];
             return View("~/Views/SIO/HealthData/StatoSalute/Index.cshtml", this);  //passo il Controller alla vista, come Model
@@ -66,6 +64,21 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         [HttpPost]
         public ActionResult Index()
         {
+            ModelState.Clear(); //FORZA RICONVALIDA MODELLO
+            if (!TryValidateModel(this.Select))
+            {
+                ModelState.AddModelError(string.Empty, "Verifica valore dei campi.");
+                return View("~/Views/SIO/HealthData/StatoSalute/Index.cshtml", this);
+            }
+            //string errMsg = this.Select.ValidateIntErrMsg();
+            //if (errMsg != "") {
+            //    ModelState.AddModelError(string.Empty, errMsg);
+            //    return View("~/Views/SIO/HealthData/StatoSalute/Index.cshtml", this);
+            //}
+            //carica lista
+            try { this.List = DogHelper.List<StatoSalute>(DbConnectionString, this.Select); }
+            catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
+            this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/HealthData/StatoSalute/Index.cshtml", this);
         }
 

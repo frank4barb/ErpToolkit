@@ -24,7 +24,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         {
             try
             {
-                string sql = "select PV__ICODE + ' - ' + PV_NOTE as label, PV__ICODE as value from PARAMETRO_VITALE where PV__DELETED='N' and upper(PV__ICODE + ' - ' + PV_NOTE) like '%" + term.ToUpper() + "%'";
+                string sql = "select PV__ICODE + ' - ' + PV_NOTE as label, PV__ICODE as value from PARAMETRO_VITALE where PV__DELETED='N' and upper(' ' + PV__ICODE + ' - ' + PV_NOTE + ' ') like '%" + term.ToUpper() + "%'";
                 return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect ParametroVitale: " + ex.Message }); }
@@ -40,22 +40,20 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad ParametroVitale: " + ex.Message }); }
         }
         [BindProperty]
-        public SelParametroVitale Select { get; set; }  = new SelParametroVitale();
+        public SelParametroVitale Select { get; set; }
         [BindProperty]
-        public List<ParametroVitale> List { get {
-                List<ParametroVitale> list = new List<ParametroVitale>();
-                try { list = DogHelper.List<ParametroVitale>(DbConnectionString, Select); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
-                return list;
-            }
-        }
+        public List<ParametroVitale> List { get; set; }
         [BindProperty]
         public ParametroVitale Row { get; set; }
+        [TempData]
+        public string StatusMessage { get; set; }
 
         [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpGet]
         public IActionResult Index(string returnUrl = null)
         {
+            this.Select = new SelParametroVitale();
+            this.List = new List<ParametroVitale>();
             //carico eventuali parametri presenti in TempData
             foreach (var item in TempData.Keys) ViewData[item] = TempData[item];
             return View("~/Views/SIO/HealthData/ParametroVitale/Index.cshtml", this);  //passo il Controller alla vista, come Model
@@ -66,6 +64,21 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         [HttpPost]
         public ActionResult Index()
         {
+            ModelState.Clear(); //FORZA RICONVALIDA MODELLO
+            if (!TryValidateModel(this.Select))
+            {
+                ModelState.AddModelError(string.Empty, "Verifica valore dei campi.");
+                return View("~/Views/SIO/HealthData/ParametroVitale/Index.cshtml", this);
+            }
+            //string errMsg = this.Select.ValidateIntErrMsg();
+            //if (errMsg != "") {
+            //    ModelState.AddModelError(string.Empty, errMsg);
+            //    return View("~/Views/SIO/HealthData/ParametroVitale/Index.cshtml", this);
+            //}
+            //carica lista
+            try { this.List = DogHelper.List<ParametroVitale>(DbConnectionString, this.Select); }
+            catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
+            this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/HealthData/ParametroVitale/Index.cshtml", this);
         }
 

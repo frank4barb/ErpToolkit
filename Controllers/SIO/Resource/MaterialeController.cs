@@ -34,7 +34,7 @@ namespace ErpToolkit.Controllers.SIO.Resource
         {
             try
             {
-                string sql = "select MT_CODICE + ' - ' + MT_DESCRIZIONE as label, MT__ICODE as value from MATERIALE where MT__DELETED='N' and upper(MT_CODICE + ' - ' + MT_DESCRIZIONE) like '%" + term.ToUpper() + "%'";
+                string sql = "select MT_CODICE + ' - ' + MT_DESCRIZIONE as label, MT__ICODE as value from MATERIALE where MT__DELETED='N' and upper(' ' + MT_CODICE + ' - ' + MT_DESCRIZIONE + ' ') like '%" + term.ToUpper() + "%'";
                 return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Materiale: " + ex.Message }); }
@@ -50,22 +50,20 @@ namespace ErpToolkit.Controllers.SIO.Resource
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Materiale: " + ex.Message }); }
         }
         [BindProperty]
-        public SelMateriale Select { get; set; }  = new SelMateriale();
+        public SelMateriale Select { get; set; }
         [BindProperty]
-        public List<Materiale> List { get {
-                List<Materiale> list = new List<Materiale>();
-                try { list = DogHelper.List<Materiale>(DbConnectionString, Select); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
-                return list;
-            }
-        }
+        public List<Materiale> List { get; set; }
         [BindProperty]
         public Materiale Row { get; set; }
+        [TempData]
+        public string StatusMessage { get; set; }
 
         [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpGet]
         public IActionResult Index(string returnUrl = null)
         {
+            this.Select = new SelMateriale();
+            this.List = new List<Materiale>();
             //carico eventuali parametri presenti in TempData
             foreach (var item in TempData.Keys) ViewData[item] = TempData[item];
             return View("~/Views/SIO/Resource/Materiale/Index.cshtml", this);  //passo il Controller alla vista, come Model
@@ -76,6 +74,21 @@ namespace ErpToolkit.Controllers.SIO.Resource
         [HttpPost]
         public ActionResult Index()
         {
+            ModelState.Clear(); //FORZA RICONVALIDA MODELLO
+            if (!TryValidateModel(this.Select))
+            {
+                ModelState.AddModelError(string.Empty, "Verifica valore dei campi.");
+                return View("~/Views/SIO/Resource/Materiale/Index.cshtml", this);
+            }
+            //string errMsg = this.Select.ValidateIntErrMsg();
+            //if (errMsg != "") {
+            //    ModelState.AddModelError(string.Empty, errMsg);
+            //    return View("~/Views/SIO/Resource/Materiale/Index.cshtml", this);
+            //}
+            //carica lista
+            try { this.List = DogHelper.List<Materiale>(DbConnectionString, this.Select); }
+            catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
+            this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/Resource/Materiale/Index.cshtml", this);
         }
 

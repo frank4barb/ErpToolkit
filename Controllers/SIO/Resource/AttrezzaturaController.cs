@@ -34,7 +34,7 @@ namespace ErpToolkit.Controllers.SIO.Resource
         {
             try
             {
-                string sql = "select AT_CODICE + ' - ' + AT_DESCRIZIONE as label, AT__ICODE as value from ATTREZZATURA where AT__DELETED='N' and upper(AT_CODICE + ' - ' + AT_DESCRIZIONE) like '%" + term.ToUpper() + "%'";
+                string sql = "select AT_CODICE + ' - ' + AT_DESCRIZIONE as label, AT__ICODE as value from ATTREZZATURA where AT__DELETED='N' and upper(' ' + AT_CODICE + ' - ' + AT_DESCRIZIONE + ' ') like '%" + term.ToUpper() + "%'";
                 return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Attrezzatura: " + ex.Message }); }
@@ -50,22 +50,20 @@ namespace ErpToolkit.Controllers.SIO.Resource
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Attrezzatura: " + ex.Message }); }
         }
         [BindProperty]
-        public SelAttrezzatura Select { get; set; }  = new SelAttrezzatura();
+        public SelAttrezzatura Select { get; set; }
         [BindProperty]
-        public List<Attrezzatura> List { get {
-                List<Attrezzatura> list = new List<Attrezzatura>();
-                try { list = DogHelper.List<Attrezzatura>(DbConnectionString, Select); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
-                return list;
-            }
-        }
+        public List<Attrezzatura> List { get; set; }
         [BindProperty]
         public Attrezzatura Row { get; set; }
+        [TempData]
+        public string StatusMessage { get; set; }
 
         [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpGet]
         public IActionResult Index(string returnUrl = null)
         {
+            this.Select = new SelAttrezzatura();
+            this.List = new List<Attrezzatura>();
             //carico eventuali parametri presenti in TempData
             foreach (var item in TempData.Keys) ViewData[item] = TempData[item];
             return View("~/Views/SIO/Resource/Attrezzatura/Index.cshtml", this);  //passo il Controller alla vista, come Model
@@ -76,6 +74,21 @@ namespace ErpToolkit.Controllers.SIO.Resource
         [HttpPost]
         public ActionResult Index()
         {
+            ModelState.Clear(); //FORZA RICONVALIDA MODELLO
+            if (!TryValidateModel(this.Select))
+            {
+                ModelState.AddModelError(string.Empty, "Verifica valore dei campi.");
+                return View("~/Views/SIO/Resource/Attrezzatura/Index.cshtml", this);
+            }
+            //string errMsg = this.Select.ValidateIntErrMsg();
+            //if (errMsg != "") {
+            //    ModelState.AddModelError(string.Empty, errMsg);
+            //    return View("~/Views/SIO/Resource/Attrezzatura/Index.cshtml", this);
+            //}
+            //carica lista
+            try { this.List = DogHelper.List<Attrezzatura>(DbConnectionString, this.Select); }
+            catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
+            this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/Resource/Attrezzatura/Index.cshtml", this);
         }
 

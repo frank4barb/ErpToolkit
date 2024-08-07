@@ -287,11 +287,11 @@ $(document).ready(function () {
         });
 
         input.on('input', function () {
-            var term = $(this).val().toLowerCase();
+            var term = $(this).val().toUpperCase();
             resultsDiv.empty();
             if (term.length >= minChars) {
                 if (mode === 'autocompleteClient') {
-                    var filtered = allChoices.filter(c => c.label.toLowerCase().includes(term));
+                    var filtered = allChoices.filter(c => (' ' + c.label.toUpperCase() + ' ').includes(term));
                     showResults(filtered);
                 } else if (mode === 'autocompleteServer') {
                     if (cache[term]) {

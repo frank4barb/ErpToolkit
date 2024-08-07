@@ -34,7 +34,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         {
             try
             {
-                string sql = "select TC_CODICE + ' - ' + TC_DESCRIZIONE as label, TC__ICODE as value from TIPO_DATO_CLINICO where TC__DELETED='N' and upper(TC_CODICE + ' - ' + TC_DESCRIZIONE) like '%" + term.ToUpper() + "%'";
+                string sql = "select TC_CODICE + ' - ' + TC_DESCRIZIONE as label, TC__ICODE as value from TIPO_DATO_CLINICO where TC__DELETED='N' and upper(' ' + TC_CODICE + ' - ' + TC_DESCRIZIONE + ' ') like '%" + term.ToUpper() + "%'";
                 return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect TipoDatoClinico: " + ex.Message }); }
@@ -50,22 +50,20 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad TipoDatoClinico: " + ex.Message }); }
         }
         [BindProperty]
-        public SelTipoDatoClinico Select { get; set; }  = new SelTipoDatoClinico();
+        public SelTipoDatoClinico Select { get; set; }
         [BindProperty]
-        public List<TipoDatoClinico> List { get {
-                List<TipoDatoClinico> list = new List<TipoDatoClinico>();
-                try { list = DogHelper.List<TipoDatoClinico>(DbConnectionString, Select); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
-                return list;
-            }
-        }
+        public List<TipoDatoClinico> List { get; set; }
         [BindProperty]
         public TipoDatoClinico Row { get; set; }
+        [TempData]
+        public string StatusMessage { get; set; }
 
         [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpGet]
         public IActionResult Index(string returnUrl = null)
         {
+            this.Select = new SelTipoDatoClinico();
+            this.List = new List<TipoDatoClinico>();
             //carico eventuali parametri presenti in TempData
             foreach (var item in TempData.Keys) ViewData[item] = TempData[item];
             return View("~/Views/SIO/HealthData/TipoDatoClinico/Index.cshtml", this);  //passo il Controller alla vista, come Model
@@ -76,6 +74,21 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         [HttpPost]
         public ActionResult Index()
         {
+            ModelState.Clear(); //FORZA RICONVALIDA MODELLO
+            if (!TryValidateModel(this.Select))
+            {
+                ModelState.AddModelError(string.Empty, "Verifica valore dei campi.");
+                return View("~/Views/SIO/HealthData/TipoDatoClinico/Index.cshtml", this);
+            }
+            //string errMsg = this.Select.ValidateIntErrMsg();
+            //if (errMsg != "") {
+            //    ModelState.AddModelError(string.Empty, errMsg);
+            //    return View("~/Views/SIO/HealthData/TipoDatoClinico/Index.cshtml", this);
+            //}
+            //carica lista
+            try { this.List = DogHelper.List<TipoDatoClinico>(DbConnectionString, this.Select); }
+            catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
+            this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/HealthData/TipoDatoClinico/Index.cshtml", this);
         }
 
