@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -113,5 +114,33 @@ public short? MtQuantitaMediaOrdine  { get; set; }
 [ErpDogField("MT_CODICE_NAZIONALE", SqlFieldNameExt="MT_CODICE_NAZIONALE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
 public string? MtCodiceNazionale  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        // verifica se almeno un campo indicizzato è valorizzato (test per validazioni complesse del modello) 
+        bool found = false; 
+        foreach (var idx in ListIndexes()) { 
+            string fldLst = idx.Split("|")[2]; 
+            foreach (var fld in fldLst.Split(",")) { 
+                if (DogHelper.getPropertyValue(this, fld.Trim()) != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + "[0]") != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + ".StartDate") != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + ".EndDate") != null) found = true; 
+            } 
+        } 
+        if (!found) { isValidate = false;  modelState.AddModelError(string.Empty, "Deve essere compilato almeno un campo indicizzato."); } 
+        //-- 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioMt1Icode|K|Mt1Icode","sioMt1RecDate|N|Mt1Mdate,Mt1Cdate"
+        ,"sioMtIdTipoRisorsa|N|MtIdTipoRisorsa"
+        ,"sioMtTelefonoFornitore|N|MtTelefonoFornitore"
+        ,"sioMt1VersionMt1Deleted|U|Mt1Version,Mt1Deleted"
+        ,"sioMtCodiceMt1VersionMt1Deleted|U|MtCodice,Mt1Version,Mt1Deleted"
+    };
+}
 }
 }

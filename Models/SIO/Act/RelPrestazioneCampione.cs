@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -101,5 +102,21 @@ public string? PcNote  { get; set; }
 [DataType(DataType.Text)]
 public string? PcIdTipoCampione  { get; set; }
 public ErpToolkit.Models.SIO.Act.TipoCampione? PcIdTipoCampioneObj  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioPc1Icode|K|Pc1Icode","sioPc1RecDate|N|Pc1Mdate,Pc1Cdate"
+        ,"sioPcIdPrestazionePcIdCampionePcTipoPc1VersionPc1Deleted|U|PcIdPrestazione,PcIdCampione,PcTipo,Pc1Version,Pc1Deleted"
+        ,"sioPcIdPrestazionePcTipo|N|PcIdPrestazione,PcTipo"
+        ,"sioPcIdTipoCampione|N|PcIdTipoCampione"
+        ,"sioPcIdCampione|N|PcIdCampione"
+        ,"sioPcIdTipoCampionePcIdPrestazionePcTipo|N|PcIdTipoCampione,PcIdPrestazione,PcTipo"
+    };
+}
 }
 }

@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -175,5 +176,21 @@ public string? CpOraCambiamentoStato  { get; set; }
 [StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? CpNoteCambiamentoStato  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioCp1Icode|K|Cp1Icode","sioCp1RecDate|N|Cp1Mdate,Cp1Cdate"
+        ,"sioCpCodiceAssoluto|U|CpCodiceAssoluto"
+        ,"sioCpIdEpisodio|N|CpIdEpisodio"
+        ,"sioCpIdPosizioneAttuale|N|CpIdPosizioneAttuale"
+        ,"sioCpIdTipoCampioneCpIdPaziente|N|CpIdTipoCampione,CpIdPaziente"
+        ,"sioCpCodiceUnivocoCp1VersionCp1Deleted|U|CpCodiceUnivoco,Cp1Version,Cp1Deleted"
+    };
+}
 }
 }

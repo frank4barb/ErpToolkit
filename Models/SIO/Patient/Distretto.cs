@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -90,5 +91,19 @@ public string? DiNote  { get; set; }
 [DataType(DataType.Text)]
 public string? DiIdComune  { get; set; }
 public ErpToolkit.Models.SIO.Patient.Comune? DiIdComuneObj  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioDi1Icode|K|Di1Icode","sioDi1RecDate|N|Di1Mdate,Di1Cdate"
+        ,"sioDiIdComune|N|DiIdComune"
+        ,"sioDi1VersionDi1Deleted|U|Di1Version,Di1Deleted"
+        ,"sioDiCodiceDi1VersionDi1Deleted|U|DiCodice,Di1Version,Di1Deleted"
+    };
+}
 }
 }

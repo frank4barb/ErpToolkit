@@ -67,7 +67,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.MtCodice)
+                    @Html.ActionLink(item.MtCodice, "RedirectToNextPage", "Home", null, null, null, new { currentPage = "Materiale", Mt1Icode = item.Mt1Icode}, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.MtDescrizione)

@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -172,5 +173,21 @@ public string? AuDescrizioneRisorsaUsata  { get; set; }
 [DataType(DataType.Text)]
 public string? AuIdGruppo  { get; set; }
 public ErpToolkit.Models.SIO.Act.RelAttivitaUsa? AuIdGruppoObj  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioAu1Icode|K|Au1Icode","sioAu1RecDate|N|Au1Mdate,Au1Cdate"
+        ,"sioAuIdTipoRisorsaAuIdAttivita|N|AuIdTipoRisorsa,AuIdAttivita"
+        ,"sioAuIdAttivitaAuIdTipoRisorsaAuIdRisorsaAu1VersionAu1Deleted|U|AuIdAttivita,AuIdTipoRisorsa,AuIdRisorsa,Au1Version,Au1Deleted"
+        ,"sioAuIdRisorsaAuIdAttivita|N|AuIdRisorsa,AuIdAttivita"
+        ,"sioAuIdTipoRisorsa|N|AuIdTipoRisorsa"
+        ,"sioAuIdGruppo|N|AuIdGruppo"
+    };
+}
 }
 }

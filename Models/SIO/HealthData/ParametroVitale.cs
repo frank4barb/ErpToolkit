@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -186,5 +187,20 @@ public string? PvOraValidazione  { get; set; }
 [ErpDogField("PV_SEQUENZA", SqlFieldNameExt="PV_SEQUENZA", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("")]
 public short? PvSequenza  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioPv1Icode|K|Pv1Icode","sioPv1RecDate|N|Pv1Mdate,Pv1Cdate"
+        ,"sioPvIdEpisodioPvIdTipoDatoClinicoPvDataAcquisizione|N|PvIdEpisodio,PvIdTipoDatoClinico,PvDataAcquisizione"
+        ,"sioPvIdPazientePvDataAcquisizione|N|PvIdPaziente,PvDataAcquisizione"
+        ,"sioPvIdTipoDatoClinicoPvStatoDatoClinicoPvDataAcquisizione|N|PvIdTipoDatoClinico,PvStatoDatoClinico,PvDataAcquisizione"
+        ,"sioPvCodiceReferto|N|PvCodiceReferto"
+    };
+}
 }
 }

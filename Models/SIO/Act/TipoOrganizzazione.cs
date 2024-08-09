@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -95,5 +96,18 @@ public ErpToolkit.Models.SIO.Act.TipoOrganizzazione? TzGruppoObj  { get; set; }
 [ErpDogField("TZ_SEQUENZA", SqlFieldNameExt="TZ_SEQUENZA", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("")]
 public short? TzSequenza  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioTz1Icode|K|Tz1Icode","sioTz1RecDate|N|Tz1Mdate,Tz1Cdate"
+        ,"sioTz1VersionTz1Deleted|U|Tz1Version,Tz1Deleted"
+        ,"sioTzCodiceTz1VersionTz1Deleted|U|TzCodice,Tz1Version,Tz1Deleted"
+    };
+}
 }
 }

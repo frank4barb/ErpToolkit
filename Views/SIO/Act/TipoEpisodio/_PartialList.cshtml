@@ -31,7 +31,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TeCodice)
+                    @Html.ActionLink(item.TeCodice, "RedirectToNextPage", "Home", null, null, null, new { currentPage = "TipoEpisodio", Te1Icode = item.Te1Icode}, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.TeClasse)

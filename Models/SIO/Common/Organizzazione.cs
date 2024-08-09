@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -179,5 +180,23 @@ public string? OrAttivo  { get; set; }
 [StringLength(50, ErrorMessage = "Inserire massimo 50 caratteri")]
 [DataType(DataType.Text)]
 public string? OrIdentificativo  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioOr1Icode|K|Or1Icode","sioOr1RecDate|N|Or1Mdate,Or1Cdate"
+        ,"sioOrIdIstitutoOrIdUnitaOrIdPostazione|N|OrIdIstituto,OrIdUnita,OrIdPostazione"
+        ,"sioOrIdPostazione|N|OrIdPostazione"
+        ,"sioOrIdPersonale|N|OrIdPersonale"
+        ,"sioOrTipoAssistenza|N|OrTipoAssistenza"
+        ,"sioOrCodiceOr1VersionOr1Deleted|U|OrCodice,Or1Version,Or1Deleted"
+        ,"sioOrIdUnita|N|OrIdUnita"
+        ,"sioOr1Version|U|Or1Version"
+    };
+}
 }
 }

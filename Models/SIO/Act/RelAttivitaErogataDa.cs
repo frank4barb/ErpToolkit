@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -114,5 +115,18 @@ public string? AeAttributi  { get; set; }
 [StringLength(4, ErrorMessage = "Inserire massimo 4 caratteri")]
 [DataType(DataType.Text)]
 public string? AeFiltroRegimeErogazione  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioAe1Icode|K|Ae1Icode","sioAe1RecDate|N|Ae1Mdate,Ae1Cdate"
+        ,"sioAeIdAttivitaAeIdUnita|N|AeIdAttivita,AeIdUnita"
+        ,"sioAeIdUnitaAeIdAttivitaAe1VersionAe1Deleted|U|AeIdUnita,AeIdAttivita,Ae1Version,Ae1Deleted"
+    };
+}
 }
 }

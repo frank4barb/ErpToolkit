@@ -31,7 +31,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DiCodice)
+                    @Html.ActionLink(item.DiCodice, "RedirectToNextPage", "Home", null, null, null, new { currentPage = "Distretto", Di1Icode = item.Di1Icode}, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DiNome)

@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -89,5 +90,18 @@ public string? NzCodIstat  { get; set; }
 [StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? NzNote  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioNz1Icode|K|Nz1Icode","sioNz1RecDate|N|Nz1Mdate,Nz1Cdate"
+        ,"sioNzNomeNz1VersionNz1Deleted|U|NzNome,Nz1Version,Nz1Deleted"
+        ,"sioNzCodiceNz1VersionNz1Deleted|U|NzCodice,Nz1Version,Nz1Deleted"
+    };
+}
 }
 }

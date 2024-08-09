@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -177,5 +178,20 @@ public short? MtQuantitaMediaOrdine  { get; set; }
 [StringLength(20, ErrorMessage = "Inserire massimo 20 caratteri")]
 [DataType(DataType.Text)]
 public string? MtCodiceNazionale  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioMt1Icode|K|Mt1Icode","sioMt1RecDate|N|Mt1Mdate,Mt1Cdate"
+        ,"sioMtIdTipoRisorsa|N|MtIdTipoRisorsa"
+        ,"sioMtTelefonoFornitore|N|MtTelefonoFornitore"
+        ,"sioMt1VersionMt1Deleted|U|Mt1Version,Mt1Deleted"
+        ,"sioMtCodiceMt1VersionMt1Deleted|U|MtCodice,Mt1Version,Mt1Deleted"
+    };
+}
 }
 }

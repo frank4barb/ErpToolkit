@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -107,5 +108,19 @@ public string? TpContenitore  { get; set; }
 [StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? TpAttributi  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioTp1Icode|K|Tp1Icode","sioTp1RecDate|N|Tp1Mdate,Tp1Cdate"
+        ,"sioTpContesto|N|TpContesto"
+        ,"sioTp1VersionTp1Deleted|U|Tp1Version,Tp1Deleted"
+        ,"sioTpCodiceTp1VersionTp1Deleted|U|TpCodice,Tp1Version,Tp1Deleted"
+    };
+}
 }
 }

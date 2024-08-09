@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -90,5 +91,19 @@ public string? TdNote  { get; set; }
 [DataType(DataType.Text)]
 public string? TdIdGruppo  { get; set; }
 public ErpToolkit.Models.SIO.Costs.TipoDiagnosi? TdIdGruppoObj  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioTd1Icode|K|Td1Icode","sioTd1RecDate|N|Td1Mdate,Td1Cdate"
+        ,"sioTdIdGruppo|N|TdIdGruppo"
+        ,"sioTd1VersionTd1Deleted|U|Td1Version,Td1Deleted"
+        ,"sioTdCodiceTd1VersionTd1Deleted|U|TdCodice,Td1Version,Td1Deleted"
+    };
+}
 }
 }

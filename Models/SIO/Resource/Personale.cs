@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -165,5 +166,20 @@ public string? PeCodiceFiscale  { get; set; }
 [StringLength(40, ErrorMessage = "Inserire massimo 40 caratteri")]
 [DataType(DataType.Text)]
 public string? PeEmail  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioPe1Icode|K|Pe1Icode","sioPe1RecDate|N|Pe1Mdate,Pe1Cdate"
+        ,"sioPeCodiceFiscale|N|PeCodiceFiscale"
+        ,"sioPeCodicePe1Deleted|U|PeCodice,Pe1Deleted"
+        ,"sioPeIdTipoRisorsa|N|PeIdTipoRisorsa"
+        ,"sioPe1VersionPe1Deleted|U|Pe1Version,Pe1Deleted"
+    };
+}
 }
 }

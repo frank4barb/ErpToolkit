@@ -70,11 +70,9 @@ namespace ErpToolkit.Controllers.SIO.HealthData
                 ModelState.AddModelError(string.Empty, "Verifica valore dei campi.");
                 return View("~/Views/SIO/HealthData/DocumentoClinico/Index.cshtml", this);
             }
-            //string errMsg = this.Select.ValidateIntErrMsg();
-            //if (errMsg != "") {
-            //    ModelState.AddModelError(string.Empty, errMsg);
-            //    return View("~/Views/SIO/HealthData/DocumentoClinico/Index.cshtml", this);
-            //}
+            if (!this.Select.TryValidateInt(ModelState)) {
+                return View("~/Views/SIO/HealthData/DocumentoClinico/Index.cshtml", this);
+            }
             //carica lista
             try { this.List = DogHelper.List<DocumentoClinico>(DbConnectionString, this.Select); }
             catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
@@ -107,6 +105,10 @@ namespace ErpToolkit.Controllers.SIO.HealthData
                                               .ToArray()
                     )
                 );
+                return PartialView("~/Views/SIO/HealthData/DocumentoClinico/_PartialEdit.cshtml", obj);
+            }
+            if (!obj.TryValidateInt(ModelState))
+            {
                 return PartialView("~/Views/SIO/HealthData/DocumentoClinico/_PartialEdit.cshtml", obj);
             }
             // salva e ricarica la pagina

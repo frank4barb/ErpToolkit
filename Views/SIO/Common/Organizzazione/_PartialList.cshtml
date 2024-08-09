@@ -64,7 +64,7 @@
                     @Html.DisplayFor(modelItem => item.OrClasseAssistenza)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.OrCodice)
+                    @Html.ActionLink(item.OrCodice, "RedirectToNextPage", "Home", null, null, null, new { currentPage = "Organizzazione", Or1Icode = item.Or1Icode}, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.OrDescrizione)

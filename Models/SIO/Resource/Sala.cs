@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -155,5 +156,19 @@ public double? SaUsoMedioGiornaliero  { get; set; }
 [DataType(DataType.Date)]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public string? SaDataProssimaManutenzione  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioSa1Icode|K|Sa1Icode","sioSa1RecDate|N|Sa1Mdate,Sa1Cdate"
+        ,"sioSaIdTipoRisorsa|N|SaIdTipoRisorsa"
+        ,"sioSa1VersionSa1Deleted|U|Sa1Version,Sa1Deleted"
+        ,"sioSaCodiceSa1VersionSa1Deleted|U|SaCodice,Sa1Version,Sa1Deleted"
+    };
+}
 }
 }

@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -93,5 +94,18 @@ public string? OoRegolaDiInclusione  { get; set; }
 [StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? OoNote  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioOo1Icode|K|Oo1Icode","sioOo1RecDate|N|Oo1Mdate,Oo1Cdate"
+        ,"sioOoIdOrganizzazionePadreOoIdOrganizzazioneFiglioOoRegolaDiInclusione|N|OoIdOrganizzazionePadre,OoIdOrganizzazioneFiglio,OoRegolaDiInclusione"
+        ,"sioOoIdOrganizzazioneFiglioOoIdOrganizzazionePadre|N|OoIdOrganizzazioneFiglio,OoIdOrganizzazionePadre"
+    };
+}
 }
 }

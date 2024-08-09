@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -108,5 +109,32 @@ public double? AtUsoMedioGiornaliero  { get; set; }
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange AtDataProssimaManutenzione  { get; set; } = new DateRange();
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        // verifica se almeno un campo indicizzato è valorizzato (test per validazioni complesse del modello) 
+        bool found = false; 
+        foreach (var idx in ListIndexes()) { 
+            string fldLst = idx.Split("|")[2]; 
+            foreach (var fld in fldLst.Split(",")) { 
+                if (DogHelper.getPropertyValue(this, fld.Trim()) != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + "[0]") != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + ".StartDate") != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + ".EndDate") != null) found = true; 
+            } 
+        } 
+        if (!found) { isValidate = false;  modelState.AddModelError(string.Empty, "Deve essere compilato almeno un campo indicizzato."); } 
+        //-- 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioAt1Icode|K|At1Icode","sioAt1RecDate|N|At1Mdate,At1Cdate"
+        ,"sioAtIdTipoRisorsa|N|AtIdTipoRisorsa"
+        ,"sioAt1VersionAt1Deleted|U|At1Version,At1Deleted"
+        ,"sioAtCodiceAt1VersionAt1Deleted|U|AtCodice,At1Version,At1Deleted"
+    };
+}
 }
 }

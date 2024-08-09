@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -120,5 +121,19 @@ public string? PdTipoRelazione  { get; set; }
 [StringLength(40, ErrorMessage = "Inserire massimo 40 caratteri")]
 [DataType(DataType.Text)]
 public string? PdNote  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioPd1Icode|K|Pd1Icode","sioPd1RecDate|N|Pd1Mdate,Pd1Cdate"
+        ,"sioPdClasseDatoClinicoPdIdDatoClinicoPdIdPrestazionePd1VersionPd1Deleted|U|PdClasseDatoClinico,PdIdDatoClinico,PdIdPrestazione,Pd1Version,Pd1Deleted"
+        ,"sioPdIdPrestazionePdClasseDatoClinicoPdIdDatoClinico|N|PdIdPrestazione,PdClasseDatoClinico,PdIdDatoClinico"
+        ,"sioPdIdDatoClinico|N|PdIdDatoClinico"
+    };
+}
 }
 }

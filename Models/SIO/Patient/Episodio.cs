@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -271,5 +272,29 @@ public ErpToolkit.Models.SIO.Common.Organizzazione? EpIdRepartoPrehObj  { get; s
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [DataType(DataType.Text)]
 public string? EpFaseEpisodio  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioEp1Icode|K|Ep1Icode","sioEp1RecDate|N|Ep1Mdate,Ep1Cdate"
+        ,"sioEpLetto|N|EpLetto"
+        ,"sioEpDataFine|N|EpDataFine"
+        ,"sioEpIdCorsiaEpStatoEpisodio|N|EpIdCorsia,EpStatoEpisodio"
+        ,"sioEpIdTipoEpisodioEpDataInizio|N|EpIdTipoEpisodio,EpDataInizio"
+        ,"sioEpIdAttoAmministrativo|N|EpIdAttoAmministrativo"
+        ,"sioEpIdDiagnosiDimissione|N|EpIdDiagnosiDimissione"
+        ,"sioEpCartellaPs|N|EpCartellaPs"
+        ,"sioEpIdTipoEpisodio|N|EpIdTipoEpisodio"
+        ,"sioEpIdPaziente|N|EpIdPaziente"
+        ,"sioEpIdRepartoEpStatoEpisodio|N|EpIdReparto,EpStatoEpisodio"
+        ,"sioEpDataInizio|N|EpDataInizio"
+        ,"sioEpStatoEpisodioEpDataInizioEpDataFine|N|EpStatoEpisodio,EpDataInizio,EpDataFine"
+        ,"sioEpCodEpisodioEp1VersionEp1Deleted|U|EpCodEpisodio,Ep1Version,Ep1Deleted"
+    };
+}
 }
 }

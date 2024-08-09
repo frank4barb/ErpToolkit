@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -175,5 +176,20 @@ public string? AvAttributi1  { get; set; }
 [StringLength(240, ErrorMessage = "Inserire massimo 240 caratteri")]
 [DataType(DataType.Text)]
 public string? AvAttributi2  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioAv1Icode|K|Av1Icode","sioAv1RecDate|N|Av1Mdate,Av1Cdate"
+        ,"sioAvIdGruppo|N|AvIdGruppo"
+        ,"sioAvIdTipoAttivita|N|AvIdTipoAttivita"
+        ,"sioAv1VersionAv1Deleted|U|Av1Version,Av1Deleted"
+        ,"sioAvCodiceAv1VersionAv1Deleted|U|AvCodice,Av1Version,Av1Deleted"
+    };
+}
 }
 }

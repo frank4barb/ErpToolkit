@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -162,5 +163,24 @@ public ErpToolkit.Models.SIO.Patient.Paziente? RiIdPazienteObj  { get; set; }
 [DataType(DataType.Text)]
 public string? RiIdEpisodio  { get; set; }
 public ErpToolkit.Models.SIO.Patient.Episodio? RiIdEpisodioObj  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioRi1Icode|K|Ri1Icode","sioRi1RecDate|N|Ri1Mdate,Ri1Cdate"
+        ,"sioRiDataRichiesta|N|RiDataRichiesta"
+        ,"sioRiIdOperatoreRichiedente|N|RiIdOperatoreRichiedente"
+        ,"sioRiIdTipoRichiestaRiStatoRichiesta|N|RiIdTipoRichiesta,RiStatoRichiesta"
+        ,"sioRiIdEpisodio|N|RiIdEpisodio"
+        ,"sioRiIdPaziente|N|RiIdPaziente"
+        ,"sioRiIdIstitutoRichiedente|N|RiIdIstitutoRichiedente"
+        ,"sioRiIdPostazioneRichiedente|N|RiIdPostazioneRichiedente"
+        ,"sioRiIdUnitaRichiedente|N|RiIdUnitaRichiedente"
+    };
+}
 }
 }

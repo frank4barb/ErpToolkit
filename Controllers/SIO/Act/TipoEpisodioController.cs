@@ -80,11 +80,9 @@ namespace ErpToolkit.Controllers.SIO.Act
                 ModelState.AddModelError(string.Empty, "Verifica valore dei campi.");
                 return View("~/Views/SIO/Act/TipoEpisodio/Index.cshtml", this);
             }
-            //string errMsg = this.Select.ValidateIntErrMsg();
-            //if (errMsg != "") {
-            //    ModelState.AddModelError(string.Empty, errMsg);
-            //    return View("~/Views/SIO/Act/TipoEpisodio/Index.cshtml", this);
-            //}
+            if (!this.Select.TryValidateInt(ModelState)) {
+                return View("~/Views/SIO/Act/TipoEpisodio/Index.cshtml", this);
+            }
             //carica lista
             try { this.List = DogHelper.List<TipoEpisodio>(DbConnectionString, this.Select); }
             catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
@@ -117,6 +115,10 @@ namespace ErpToolkit.Controllers.SIO.Act
                                               .ToArray()
                     )
                 );
+                return PartialView("~/Views/SIO/Act/TipoEpisodio/_PartialEdit.cshtml", obj);
+            }
+            if (!obj.TryValidateInt(ModelState))
+            {
                 return PartialView("~/Views/SIO/Act/TipoEpisodio/_PartialEdit.cshtml", obj);
             }
             // salva e ricarica la pagina

@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -200,5 +201,19 @@ public string? FmDataInizioAutorizzazione  { get; set; }
 [DataType(DataType.Date)]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public string? FmDataFineAutorizzazione  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioFm1Icode|K|Fm1Icode","sioFm1RecDate|N|Fm1Mdate,Fm1Cdate"
+        ,"sioFmIdTipoRisorsa|N|FmIdTipoRisorsa"
+        ,"sioFm1VersionFm1Deleted|U|Fm1Version,Fm1Deleted"
+        ,"sioFmCodiceFm1VersionFm1Deleted|U|FmCodice,Fm1Version,Fm1Deleted"
+    };
+}
 }
 }

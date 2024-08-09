@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -42,5 +43,33 @@ public string? TaNote  { get; set; }
 [AutocompleteClient("TipoAttivita", "AutocompleteGetAll", 10)]
 [DataType(DataType.Text)]
 public List<string> TaIdGruppo  { get; set; } = new List<string>();
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        // verifica se almeno un campo indicizzato è valorizzato (test per validazioni complesse del modello) 
+        bool found = false; 
+        foreach (var idx in ListIndexes()) { 
+            string fldLst = idx.Split("|")[2]; 
+            foreach (var fld in fldLst.Split(",")) { 
+                if (DogHelper.getPropertyValue(this, fld.Trim()) != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + "[0]") != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + ".StartDate") != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + ".EndDate") != null) found = true; 
+            } 
+        } 
+        if (!found) { isValidate = false;  modelState.AddModelError(string.Empty, "Deve essere compilato almeno un campo indicizzato."); } 
+        //-- 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioTa1Icode|K|Ta1Icode","sioTa1RecDate|N|Ta1Mdate,Ta1Cdate"
+        ,"sioTaIdGruppo|N|TaIdGruppo"
+        ,"sioTa1VersionTa1Deleted|U|Ta1Version,Ta1Deleted"
+        ,"sioTaCodiceTa1VersionTa1Deleted|U|TaCodice,Ta1Version,Ta1Deleted"
+        ,"sioTa1Version|U|Ta1Version"
+    };
+}
 }
 }

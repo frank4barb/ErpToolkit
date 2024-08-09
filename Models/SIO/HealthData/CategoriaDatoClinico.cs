@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -90,5 +91,19 @@ public string? CcNote  { get; set; }
 [DataType(DataType.Text)]
 public string? CcIdGruppo  { get; set; }
 public ErpToolkit.Models.SIO.HealthData.CategoriaDatoClinico? CcIdGruppoObj  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioCc1Icode|K|Cc1Icode","sioCc1RecDate|N|Cc1Mdate,Cc1Cdate"
+        ,"sioCcIdGruppo|N|CcIdGruppo"
+        ,"sioCc1VersionCc1Deleted|U|Cc1Version,Cc1Deleted"
+        ,"sioCcCodiceCc1VersionCc1Deleted|U|CcCodice,Cc1Version,Cc1Deleted"
+    };
+}
 }
 }

@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -115,5 +116,21 @@ public string? ArNote  { get; set; }
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [RegularExpression("Y|N", ErrorMessage = "Inserisci una delle seguenti opzioni: Y|N")]
 public string? ArRichiestaFrequente  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioAr1Icode|K|Ar1Icode","sioAr1RecDate|N|Ar1Mdate,Ar1Cdate"
+        ,"sioArIdOperatore|N|ArIdOperatore"
+        ,"sioArIdAttivita|N|ArIdAttivita"
+        ,"sioArIdIstituto|N|ArIdIstituto"
+        ,"sioArIdPostazione|N|ArIdPostazione"
+        ,"sioArIdUnita|N|ArIdUnita"
+    };
+}
 }
 }

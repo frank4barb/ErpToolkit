@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -90,5 +91,20 @@ public string? TaNote  { get; set; }
 [DataType(DataType.Text)]
 public string? TaIdGruppo  { get; set; }
 public ErpToolkit.Models.SIO.Act.TipoAttivita? TaIdGruppoObj  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioTa1Icode|K|Ta1Icode","sioTa1RecDate|N|Ta1Mdate,Ta1Cdate"
+        ,"sioTaIdGruppo|N|TaIdGruppo"
+        ,"sioTa1VersionTa1Deleted|U|Ta1Version,Ta1Deleted"
+        ,"sioTaCodiceTa1VersionTa1Deleted|U|TaCodice,Ta1Version,Ta1Deleted"
+        ,"sioTa1Version|U|Ta1Version"
+    };
+}
 }
 }

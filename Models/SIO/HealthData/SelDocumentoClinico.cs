@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -125,5 +126,33 @@ public string? DcOraValidazione  { get; set; }
 [ErpDogField("DC_SEQUENZA", SqlFieldNameExt="DC_SEQUENZA", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("")]
 public short? DcSequenza  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        // verifica se almeno un campo indicizzato è valorizzato (test per validazioni complesse del modello) 
+        bool found = false; 
+        foreach (var idx in ListIndexes()) { 
+            string fldLst = idx.Split("|")[2]; 
+            foreach (var fld in fldLst.Split(",")) { 
+                if (DogHelper.getPropertyValue(this, fld.Trim()) != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + "[0]") != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + ".StartDate") != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + ".EndDate") != null) found = true; 
+            } 
+        } 
+        if (!found) { isValidate = false;  modelState.AddModelError(string.Empty, "Deve essere compilato almeno un campo indicizzato."); } 
+        //-- 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioDc1Icode|K|Dc1Icode","sioDc1RecDate|N|Dc1Mdate,Dc1Cdate"
+        ,"sioDcIdEpisodioDcIdTipoDatoClinicoDcDataAcquisizione|N|DcIdEpisodio,DcIdTipoDatoClinico,DcDataAcquisizione"
+        ,"sioDcIdPazienteDcDataAcquisizione|N|DcIdPaziente,DcDataAcquisizione"
+        ,"sioDcIdTipoDatoClinicoDcStatoDatoClinicoDcDataAcquisizione|N|DcIdTipoDatoClinico,DcStatoDatoClinico,DcDataAcquisizione"
+        ,"sioDcCodiceReferto|N|DcCodiceReferto"
+    };
+}
 }
 }

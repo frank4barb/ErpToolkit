@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -298,5 +299,45 @@ public string? PrNote  { get; set; }
 [ErpDogField("PR_MOBILITA", SqlFieldNameExt="PR_MOBILITA", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
 public string? PrMobilita  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        // verifica se almeno un campo indicizzato è valorizzato (test per validazioni complesse del modello) 
+        bool found = false; 
+        foreach (var idx in ListIndexes()) { 
+            string fldLst = idx.Split("|")[2]; 
+            foreach (var fld in fldLst.Split(",")) { 
+                if (DogHelper.getPropertyValue(this, fld.Trim()) != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + "[0]") != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + ".StartDate") != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + ".EndDate") != null) found = true; 
+            } 
+        } 
+        if (!found) { isValidate = false;  modelState.AddModelError(string.Empty, "Deve essere compilato almeno un campo indicizzato."); } 
+        //-- 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioPr1Icode|K|Pr1Icode","sioPr1RecDate|N|Pr1Mdate,Pr1Cdate"
+        ,"sioPrDataRichiesta|N|PrDataRichiesta"
+        ,"sioPrIdAttivitaEseguitaPrDataFineEsecuzione|N|PrIdAttivitaEseguita,PrDataFineEsecuzione"
+        ,"sioPrIdRichiesta|N|PrIdRichiesta"
+        ,"sioPrIdEpisodio|N|PrIdEpisodio"
+        ,"sioPrIdPazientePrIdEpisodioPrIdAttivitaEseguita|N|PrIdPaziente,PrIdEpisodio,PrIdAttivitaEseguita"
+        ,"sioPrIdAttivitaRichiesta|N|PrIdAttivitaRichiesta"
+        ,"sioPrIdUnitaRichiedentePrIdPostazioneRichiedente|N|PrIdUnitaRichiedente,PrIdPostazioneRichiedente"
+        ,"sioPrIdPostazioneEsecutrice|N|PrIdPostazioneEsecutrice"
+        ,"sioPrIdUnitaEsecutricePrDataFineEsecuzione|N|PrIdUnitaEsecutrice,PrDataFineEsecuzione"
+        ,"sioPrIdOperatorePianificatore|N|PrIdOperatorePianificatore"
+        ,"sioPrStatoPrestazione|N|PrStatoPrestazione"
+        ,"sioPrDataFineEsecuzionePrOraFineEsecuzione|N|PrDataFineEsecuzione,PrOraFineEsecuzione"
+        ,"sioPrDataRefertazione|N|PrDataRefertazione"
+        ,"sioPrDataRichiestaPrIdPaziente|N|PrDataRichiesta,PrIdPaziente"
+        ,"sioPrDataPropostaEsecuzione|N|PrDataPropostaEsecuzione"
+        ,"sioPrDataAppuntamento|N|PrDataAppuntamento"
+    };
+}
 }
 }

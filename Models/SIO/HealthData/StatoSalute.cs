@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -186,5 +187,20 @@ public string? SsOraValidazione  { get; set; }
 [ErpDogField("SS_SEQUENZA", SqlFieldNameExt="SS_SEQUENZA", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("")]
 public short? SsSequenza  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioSs1Icode|K|Ss1Icode","sioSs1RecDate|N|Ss1Mdate,Ss1Cdate"
+        ,"sioSsIdEpisodioSsIdTipoDatoClinicoSsDataAcquisizione|N|SsIdEpisodio,SsIdTipoDatoClinico,SsDataAcquisizione"
+        ,"sioSsIdPazienteSsDataAcquisizione|N|SsIdPaziente,SsDataAcquisizione"
+        ,"sioSsIdTipoDatoClinicoSsStatoDatoClinicoSsDataAcquisizione|N|SsIdTipoDatoClinico,SsStatoDatoClinico,SsDataAcquisizione"
+        ,"sioSsCodiceReferto|N|SsCodiceReferto"
+    };
+}
 }
 }

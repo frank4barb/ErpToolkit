@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -125,5 +126,33 @@ public string? ReOraValidazione  { get; set; }
 [ErpDogField("RE_SEQUENZA", SqlFieldNameExt="RE_SEQUENZA", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("")]
 public short? ReSequenza  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        // verifica se almeno un campo indicizzato è valorizzato (test per validazioni complesse del modello) 
+        bool found = false; 
+        foreach (var idx in ListIndexes()) { 
+            string fldLst = idx.Split("|")[2]; 
+            foreach (var fld in fldLst.Split(",")) { 
+                if (DogHelper.getPropertyValue(this, fld.Trim()) != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + "[0]") != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + ".StartDate") != null) found = true; 
+                if (DogHelper.getPropertyValue(this, fld.Trim() + ".EndDate") != null) found = true; 
+            } 
+        } 
+        if (!found) { isValidate = false;  modelState.AddModelError(string.Empty, "Deve essere compilato almeno un campo indicizzato."); } 
+        //-- 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioRe1Icode|K|Re1Icode","sioRe1RecDate|N|Re1Mdate,Re1Cdate"
+        ,"sioReIdTipoDatoClinicoReIdGruppoDatoClinicoReDataAcquisizione|N|ReIdTipoDatoClinico,ReIdGruppoDatoClinico,ReDataAcquisizione"
+        ,"sioReIdPazienteReDataAcquisizione|N|ReIdPaziente,ReDataAcquisizione"
+        ,"sioReIdGruppoDatoClinicoReStatoDatoClinicoReDataAcquisizione|N|ReIdGruppoDatoClinico,ReStatoDatoClinico,ReDataAcquisizione"
+        ,"sioReCodiceReferto|N|ReCodiceReferto"
+    };
+}
 }
 }

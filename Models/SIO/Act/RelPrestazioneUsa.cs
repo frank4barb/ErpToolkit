@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -219,5 +220,20 @@ public double? PuCostoRisorsa  { get; set; }
 [StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? PuDescrizioneRisorsaUsata  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioPu1Icode|K|Pu1Icode","sioPu1RecDate|N|Pu1Mdate,Pu1Cdate"
+        ,"sioPuIdTipoRisorsaPuIdPrestazionePuDataInizioUso|N|PuIdTipoRisorsa,PuIdPrestazione,PuDataInizioUso"
+        ,"sioPuIdPrestazionePuDataInizioUsoPuIdTipoRisorsaPuIdRisorsa|N|PuIdPrestazione,PuDataInizioUso,PuIdTipoRisorsa,PuIdRisorsa"
+        ,"sioPuIdRisorsaPuIdPrestazionePuDataInizioUso|N|PuIdRisorsa,PuIdPrestazione,PuDataInizioUso"
+        ,"sioPuDataInizioUso|N|PuDataInizioUso"
+    };
+}
 }
 }

@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -387,5 +388,32 @@ public string? PrNote  { get; set; }
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [DataType(DataType.Text)]
 public string? PrMobilita  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioPr1Icode|K|Pr1Icode","sioPr1RecDate|N|Pr1Mdate,Pr1Cdate"
+        ,"sioPrDataRichiesta|N|PrDataRichiesta"
+        ,"sioPrIdAttivitaEseguitaPrDataFineEsecuzione|N|PrIdAttivitaEseguita,PrDataFineEsecuzione"
+        ,"sioPrIdRichiesta|N|PrIdRichiesta"
+        ,"sioPrIdEpisodio|N|PrIdEpisodio"
+        ,"sioPrIdPazientePrIdEpisodioPrIdAttivitaEseguita|N|PrIdPaziente,PrIdEpisodio,PrIdAttivitaEseguita"
+        ,"sioPrIdAttivitaRichiesta|N|PrIdAttivitaRichiesta"
+        ,"sioPrIdUnitaRichiedentePrIdPostazioneRichiedente|N|PrIdUnitaRichiedente,PrIdPostazioneRichiedente"
+        ,"sioPrIdPostazioneEsecutrice|N|PrIdPostazioneEsecutrice"
+        ,"sioPrIdUnitaEsecutricePrDataFineEsecuzione|N|PrIdUnitaEsecutrice,PrDataFineEsecuzione"
+        ,"sioPrIdOperatorePianificatore|N|PrIdOperatorePianificatore"
+        ,"sioPrStatoPrestazione|N|PrStatoPrestazione"
+        ,"sioPrDataFineEsecuzionePrOraFineEsecuzione|N|PrDataFineEsecuzione,PrOraFineEsecuzione"
+        ,"sioPrDataRefertazione|N|PrDataRefertazione"
+        ,"sioPrDataRichiestaPrIdPaziente|N|PrDataRichiesta,PrIdPaziente"
+        ,"sioPrDataPropostaEsecuzione|N|PrDataPropostaEsecuzione"
+        ,"sioPrDataAppuntamento|N|PrDataAppuntamento"
+    };
+}
 }
 }

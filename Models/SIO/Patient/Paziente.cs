@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -272,5 +273,26 @@ public string? PaOraDecesso  { get; set; }
 [DataType(DataType.Text)]
 public string? PaIdNazioneRes  { get; set; }
 public ErpToolkit.Models.SIO.Patient.Nazione? PaIdNazioneResObj  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioPa1Icode|K|Pa1Icode","sioPa1RecDate|N|Pa1Mdate,Pa1Cdate"
+        ,"sioPaIdDistrettoRes|N|PaIdDistrettoRes"
+        ,"sioPaIdDistrettoDom|N|PaIdDistrettoDom"
+        ,"sioPaIdComuneNascita|N|PaIdComuneNascita"
+        ,"sioPaIdComuneRes|N|PaIdComuneRes"
+        ,"sioPaIdComuneDom|N|PaIdComuneDom"
+        ,"sioPaIdCittadinanza|N|PaIdCittadinanza"
+        ,"sioPaIdNazioneNascita|N|PaIdNazioneNascita"
+        ,"sioPaCodFiscalePa1VersionPa1Deleted|U|PaCodFiscale,Pa1Version,Pa1Deleted"
+        ,"sioPaCodSanitarioPa1VersionPa1Deleted|U|PaCodSanitario,Pa1Version,Pa1Deleted"
+        ,"sioPaCognomePaNome|N|PaCognome,PaNome"
+    };
+}
 }
 }

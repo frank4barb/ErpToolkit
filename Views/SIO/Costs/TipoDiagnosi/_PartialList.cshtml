@@ -31,7 +31,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TdCodice)
+                    @Html.ActionLink(item.TdCodice, "RedirectToNextPage", "Home", null, null, null, new { currentPage = "TipoDiagnosi", Td1Icode = item.Td1Icode}, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.TdDescrizione)

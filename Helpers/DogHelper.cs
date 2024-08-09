@@ -1,11 +1,15 @@
 using ErpToolkit.Helpers.Db;
+using Google.Protobuf.Reflection;
 using Microsoft.Extensions.Primitives;
 using NLog.LayoutRenderers.Wrappers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography.Xml;
 using System.Text;
 
 namespace ErpToolkit.Helpers
@@ -249,6 +253,115 @@ namespace ErpToolkit.Helpers
         }
 
         //******************************************************************************************************************
+
+        public static object? getPropertyValue(object selModel, string propName)
+        {
+            if (selModel == null) { throw new ArgumentNullException(nameof(selModel)); }
+            //ciclo sulle proprietà
+            Type type = selModel.GetType(); PropertyInfo[] properties = type.GetProperties();
+            foreach (var property in properties)
+            {
+                try
+                {
+                    string propertyName = property.Name; // Get property name and value
+                    object propertyValue = property.GetValue(selModel); //sb.AppendLine($"Property: {propertyName}, Value: {propertyValue}");
+                    if (propertyValue == null) continue;
+                    // >>> verifica List
+                    if (typeof(IEnumerable<object>).IsAssignableFrom(propertyValue.GetType()))
+                    {
+                        IEnumerable<object> ienum = (IEnumerable<object>)propertyValue;
+                        List<object> list = ienum.Where(item => item != null && !(item is string str && string.IsNullOrWhiteSpace(str))).ToList();  // elimina elementi null e strighe vuote
+                        if (list.Count() == 0) continue;
+                        if (list[0] is string) propertyValue = (List<string>)list.Select(i => i.ToString()).ToList();
+                        else if (list[0] is sbyte || list[0] is byte || list[0] is short || list[0] is ushort || list[0] is int || list[0] is uint
+                             || list[0] is long || list[0] is ulong) propertyValue = (List<long>)list.Select(i => Convert.ToInt64(i)).ToList();
+                        else throw new ErpException("Tipo Lista non supportato (solo stinga e intero)");
+                    }
+                    //---
+                    if (propertyValue is string str)
+                    {
+                        if (propName == propertyName) return str;
+                    }
+                    else if (propertyValue is List<string> strList)
+                    {
+                        for (int i = 0; i < strList.Count; i++)
+                            try
+                            {
+                                if (propName == propertyName+"["+i.ToString()+"]") return strList[i];
+                            }
+                            catch (Exception ex) { }  //skip exceptions
+                    }
+                    else if (propertyValue is List<long> lngList) {
+                        for (int i = 0; i < lngList.Count; i++)
+                            try
+                            {
+                                if (propName == propertyName + "[" + i.ToString() + "]") return lngList[i];
+                            }
+                            catch (Exception ex) { }  //skip exceptions
+                    }
+                    else if (propertyValue is DateRange dateRng)
+                    {
+                        if (propName == propertyName + ".StartDate" && dateRng.StartDate != default) return dateRng.StartDate;
+                        if (propName == propertyName + ".EndDate" && dateRng.EndDate != default) return dateRng.EndDate;
+                    }
+                    else continue;
+                }
+                catch (Exception ex) { }  //skip exceptions
+            }
+            return null;
+        }
+
+        public static bool setPropertyValue(object selModel, string propName, object? propValue)
+        {
+            if (selModel == null) { throw new ArgumentNullException(nameof(selModel)); }
+            try
+            {
+                //ciclo sulle proprietà
+                Type type = selModel.GetType(); PropertyInfo[] properties = type.GetProperties();
+                foreach (var property in properties)
+                {
+                    string propertyName = property.Name; // Get property name and value
+                    object propertyValue = property.GetValue(selModel); //sb.AppendLine($"Property: {propertyName}, Value: {propertyValue}");
+                    if (propertyValue == null) continue;
+                    // >>> verifica List
+                    if (typeof(IEnumerable<object>).IsAssignableFrom(propertyValue.GetType()))
+                    {
+                        IEnumerable<object> ienum = (IEnumerable<object>)propertyValue;
+                        List<object> list = ienum.Where(item => item != null && !(item is string str && string.IsNullOrWhiteSpace(str))).ToList();  // elimina elementi null e strighe vuote
+                        if (list.Count() == 0) continue;
+                        if (list[0] is string) propertyValue = (List<string>)list.Select(i => i.ToString()).ToList();
+                        else if (list[0] is sbyte || list[0] is byte || list[0] is short || list[0] is ushort || list[0] is int || list[0] is uint
+                             || list[0] is long || list[0] is ulong) propertyValue = (List<long>)list.Select(i => Convert.ToInt64(i)).ToList();
+                        else throw new ErpException("Tipo Lista non supportato (solo stinga e intero)");
+                    }
+                    //---
+                    if (propertyValue is string str)
+                    {
+                        if (propName == propertyName) { property.SetValue(selModel, propValue); return true; }
+                    }
+                    else if (propertyValue is List<string> strList)
+                    {
+                        if (propName.StartsWith(propertyName+"[")) { strList.Add((string)propValue); property.SetValue(selModel, strList); return true; }
+                    }
+                    else if (propertyValue is List<long> lngList)
+                    {
+                        if (propName.StartsWith(propertyName + "[")) { lngList.Add((long)propValue); property.SetValue(selModel, lngList); return true; }
+                    }
+                    else if (propertyValue is DateRange dateRng)
+                    {
+                        if (propValue == null) propValue = default;
+                        if (propName == propertyName + ".StartDate") { dateRng.StartDate = (DateTime)propValue; property.SetValue(selModel, dateRng); return true; };
+                        if (propName == propertyName + ".EndDate") { dateRng.EndDate = (DateTime)propValue; property.SetValue(selModel, dateRng); return true; };
+                    }
+                    else continue;
+                }
+            }
+            catch (Exception ex) { }  //skip exceptions
+            return false;
+        }
+
+
+
 
         //----------------------------------------------------------------------------------------------------------------------------------------
 

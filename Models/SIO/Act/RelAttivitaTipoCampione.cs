@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -114,5 +115,18 @@ public string? AcCampioneSpecifico  { get; set; }
 [StringLength(240, ErrorMessage = "Inserire massimo 240 caratteri")]
 [DataType(DataType.Text)]
 public string? AcRegoleCampionamento  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioAc1Icode|K|Ac1Icode","sioAc1RecDate|N|Ac1Mdate,Ac1Cdate"
+        ,"sioAcIdAttivitaAcTipo|N|AcIdAttivita,AcTipo"
+        ,"sioAcIdTipoCampione|N|AcIdTipoCampione"
+    };
+}
 }
 }

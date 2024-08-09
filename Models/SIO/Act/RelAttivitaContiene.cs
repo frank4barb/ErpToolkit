@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -89,5 +90,18 @@ public short? AaSequenza  { get; set; }
 [StringLength(80, ErrorMessage = "Inserire massimo 80 caratteri")]
 [DataType(DataType.Text)]
 public string? AaNote  { get; set; }
+
+public bool TryValidateInt(ModelStateDictionary modelState) 
+    { 
+        bool isValidate = true; 
+        return isValidate; 
+    } 
+
+public static List<string> ListIndexes() { 
+    return new List<string>() { "sioAa1Icode|K|Aa1Icode","sioAa1RecDate|N|Aa1Mdate,Aa1Cdate"
+        ,"sioAaIdAttivitaPadre|N|AaIdAttivitaPadre"
+        ,"sioAaIdAttivitaFiglio|N|AaIdAttivitaFiglio"
+    };
+}
 }
 }
