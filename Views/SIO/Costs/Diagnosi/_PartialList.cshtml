@@ -55,7 +55,7 @@
                     @Html.DisplayFor(modelItem => item.DgNote)
                 </td>
                 <td>
-                    @Html.ActionLink(item.DgCodice, "RedirectToNextPage", "Home", null, null, null, new { currentPage = "Diagnosi", Dg1Icode = item.Dg1Icode}, null)
+                    @Html.ActionLink(item.DgCodice, "RedirectToNextPage", "Home", null, null, null, new { provenienzaPagina = "Diagnosi", Dg1Icode = item.Dg1Icode}, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.DgIdGruppo)

@@ -68,6 +68,7 @@ namespace ErpToolkit.Helpers
         public string SqlFieldProperties { get; set; }  // eg: prop() xref() xdup(ATTIVITA.AV__ICODE[AV__ICODE] {AV_CODICE=' '}) multbxref()
         public string SqlFieldOptions { get; set; }  // [UID] [XID] codice univoco utente e esterno
         public string SqlFieldNameExt { get; set; }  // AY_CODE
+        public string Xref { get; set; } = "";  // external reference (if any) eg: Pa1Icode
 
         public ErpDogFieldAttribute(string sqlFieldName)
         {

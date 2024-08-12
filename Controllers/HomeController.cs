@@ -13,6 +13,7 @@ using System.Security.Cryptography.Xml;
 using NLog.Filters;
 using Google.Api;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Routing;
 
 
 namespace ErpToolkit.Controllers
@@ -22,7 +23,7 @@ namespace ErpToolkit.Controllers
     /// </summary>
     public class HomeController : ControllerErp
     {
-        
+
         //private static NLog.ILogger _logger; //private readonly ILogger<HomeController> _logger;
 
         public HomeController()
@@ -105,51 +106,53 @@ namespace ErpToolkit.Controllers
         //    </li>
         //</ul>
 
-
         //// Use HomeController's method to determine the next page
         //return RedirectToAction("RedirectToNextPage", "Home", new { currentPage = "Page1" });
 
-        //// Use HomeController's method to determine the next page
-        //return RedirectToAction("RedirectToNextPage", "Home", new { currentPage = "Page2" });
+        public static readonly Dictionary<string, List<string>> PercorsiMenu = new Dictionary<string, List<string>> {
+             { "Percorso1", new List<string> { "Paziente", "Episodio" } }
+            ,{ "Percorso2", new List<string> { "Page2", "Page1" } } 
+            };
 
-        //public static readonly List<string> Percorso1 = new List<string> { "Page1", "Page2" };
-        //public static readonly List<string> Percorso2 = new List<string> { "Page2", "Page1" };
-
-        public static readonly List<string> Percorso1 = new List<string> { "Paziente", "Episodio" };
-        public static readonly List<string> Percorso2 = new List<string> { "Page2", "Page1" };
 
         [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpGet]
-        public IActionResult Percorso1Start()
-        {
-            TempData["Sequence"] = "Percorso1";
-            return RedirectToAction("Index", Percorso1[0] );
-        }
+        public IActionResult Percorso1Start() { return RedirectToStartPage("Percorso1"); }
 
         [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpGet]
-        public IActionResult Percorso2Start()
+        public IActionResult Percorso2Start() { return RedirectToStartPage("Percorso2"); }
+
+
+        public IActionResult RedirectToStartPage(string nomePercorso)
         {
-            TempData["Sequence"] = "Percorso2";
-            return RedirectToAction("Index", Percorso2[0] );
+            TempData["NomeSequenzaPagine"] = nomePercorso;
+            return RedirectToAction("Index", PercorsiMenu[nomePercorso][0]);
         }
 
-        public IActionResult RedirectToNextPage(string currentPage)
+        public IActionResult RedirectToNextPage(string provenienzaPagina)
         {
-            string sequence = TempData["Sequence"] as string;
-            List<string> pageSequence = sequence == "Percorso2" ? Percorso2 : Percorso1;
-
-            int currentPageIndex = pageSequence.IndexOf(currentPage);
-            int nextPageIndex = currentPageIndex + 1;
-
-            if (nextPageIndex < pageSequence.Count)
+            try
             {
-                var nextPage = pageSequence[nextPageIndex];
-                return RedirectToAction("Index", nextPage );
-            }
+                RouteValueDictionary routeValuesDictionary = new RouteValueDictionary();
+                foreach (var key in Request.Query.Keys) routeValuesDictionary.Add(key, Request.Query[key]);
+                //routeValuesDictionary.Add("AnotherFixedParm", "true");
 
-            // If there are no more pages in the sequence, redirect to the first page
-            return RedirectToAction("Index", pageSequence[0] );
+                // calcolo prossima pagina in precorso
+                string nomePercorso = TempData["NomeSequenzaPagine"] as string;
+                List<string> sequenzaPagine = PercorsiMenu[nomePercorso];
+
+                int provenienzaPaginaIdx = sequenzaPagine.IndexOf(provenienzaPagina);
+                int successivaPaginaIdx = provenienzaPaginaIdx + 1;
+
+                if (successivaPaginaIdx < sequenzaPagine.Count)
+                {
+                    var nextPage = sequenzaPagine[successivaPaginaIdx];
+                    return RedirectToAction("Index", nextPage, routeValuesDictionary);
+                }
+                return RedirectToAction("Index", sequenzaPagine[0], routeValuesDictionary); // If there are no more pages in the sequence, redirect to the first page
+            } 
+            catch (Exception ex) { return RedirectToAction("Index", provenienzaPagina); }  // in caso di problemi rimango sulla stessa pagina
         }
 
         ////==========================================================================================================

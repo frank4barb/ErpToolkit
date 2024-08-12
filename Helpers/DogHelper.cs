@@ -5,7 +5,10 @@ using NLog.LayoutRenderers.Wrappers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -311,9 +314,11 @@ namespace ErpToolkit.Helpers
             return null;
         }
 
-        public static bool setPropertyValue(object selModel, string propName, object? propValue)
+        //Custom Model Binder
+        public static bool setPropertyValue(object selModel, string propName, string? propValue)
         {
             if (selModel == null) { throw new ArgumentNullException(nameof(selModel)); }
+            if (propName == null) { throw new ArgumentNullException(nameof(propName)); }
             try
             {
                 //ciclo sulle proprietà
@@ -321,37 +326,53 @@ namespace ErpToolkit.Helpers
                 foreach (var property in properties)
                 {
                     string propertyName = property.Name; // Get property name and value
-                    object propertyValue = property.GetValue(selModel); //sb.AppendLine($"Property: {propertyName}, Value: {propertyValue}");
-                    if (propertyValue == null) continue;
-                    // >>> verifica List
-                    if (typeof(IEnumerable<object>).IsAssignableFrom(propertyValue.GetType()))
+                    string attribXref = ((ErpDogFieldAttribute)(property.GetCustomAttribute(typeof(ErpDogFieldAttribute))))?.Xref ?? "";
+                    object? propertyValue = property.GetValue(selModel); //sb.AppendLine($"Property: {propertyName}, Value: {propertyValue}");
+                    if (propName.StartsWith(propertyName + "[") || propName.StartsWith(attribXref + "["))
                     {
-                        IEnumerable<object> ienum = (IEnumerable<object>)propertyValue;
-                        List<object> list = ienum.Where(item => item != null && !(item is string str && string.IsNullOrWhiteSpace(str))).ToList();  // elimina elementi null e strighe vuote
-                        if (list.Count() == 0) continue;
-                        if (list[0] is string) propertyValue = (List<string>)list.Select(i => i.ToString()).ToList();
-                        else if (list[0] is sbyte || list[0] is byte || list[0] is short || list[0] is ushort || list[0] is int || list[0] is uint
-                             || list[0] is long || list[0] is ulong) propertyValue = (List<long>)list.Select(i => Convert.ToInt64(i)).ToList();
-                        else throw new ErpException("Tipo Lista non supportato (solo stinga e intero)");
+                        if (propValue != null)
+                        {
+                            Type argumentType = propertyValue.GetType().GenericTypeArguments[0];
+                            TypeConverter typeConverter = TypeDescriptor.GetConverter(argumentType);
+                            object propValueObj = typeConverter.ConvertFromString(propValue);
+                            ((IList)propertyValue).Add(propValueObj); property.SetValue(selModel, propertyValue); return true;  //((ICollection<string>)propertyValue).Add(propValue); property.SetValue(selModel, propertyValue);
+                        }
                     }
-                    //---
-                    if (propertyValue is string str)
+                    else if (propName == propertyName + ".StartDate" || propName == propertyName + ".EndDate")
                     {
-                        if (propName == propertyName) { property.SetValue(selModel, propValue); return true; }
+                        TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(DateTime));
+                        object propValueObj = typeConverter.ConvertFromString(propValue);
+                        //---
+                        if (propValueObj == null) propValueObj = default;
+                        if (propName == propertyName + ".StartDate") ((DateRange)propertyValue).StartDate = (DateTime)propValueObj;
+                        if (propName == propertyName + ".EndDate") ((DateRange)propertyValue).EndDate = (DateTime)propValueObj;
+                        property.SetValue(selModel, (DateRange)propertyValue); return true;
                     }
-                    else if (propertyValue is List<string> strList)
+                    else if (propName == propertyName || propName == attribXref)
                     {
-                        if (propName.StartsWith(propertyName+"[")) { strList.Add((string)propValue); property.SetValue(selModel, strList); return true; }
-                    }
-                    else if (propertyValue is List<long> lngList)
-                    {
-                        if (propName.StartsWith(propertyName + "[")) { lngList.Add((long)propValue); property.SetValue(selModel, lngList); return true; }
-                    }
-                    else if (propertyValue is DateRange dateRng)
-                    {
-                        if (propValue == null) propValue = default;
-                        if (propName == propertyName + ".StartDate") { dateRng.StartDate = (DateTime)propValue; property.SetValue(selModel, dateRng); return true; };
-                        if (propName == propertyName + ".EndDate") { dateRng.EndDate = (DateTime)propValue; property.SetValue(selModel, dateRng); return true; };
+                        if (typeof(IEnumerable<object>).IsAssignableFrom(propertyValue.GetType()))
+                        {
+                            if (propValue != null)
+                            {
+                                Type argumentType = propertyValue.GetType().GenericTypeArguments[0];
+                                TypeConverter typeConverter = TypeDescriptor.GetConverter(argumentType);
+                                object propValueObj = typeConverter.ConvertFromString(propValue);
+                                ((IList)propertyValue).Add(propValueObj); property.SetValue(selModel, propertyValue); return true;  //((ICollection<string>)propertyValue).Add(propValue); property.SetValue(selModel, propertyValue);
+                            }
+                        }
+                        else
+                        {
+                            if (propValue != null)
+                            {
+                                TypeConverter typeConverter = TypeDescriptor.GetConverter(propertyValue.GetType());
+                                object propValueObj = typeConverter.ConvertFromString(propValue);
+                                property.SetValue(selModel, propValueObj); return true;
+                            }
+                            else
+                            {
+                                property.SetValue(selModel, null); return true;
+                            }
+                        }
                     }
                     else continue;
                 }

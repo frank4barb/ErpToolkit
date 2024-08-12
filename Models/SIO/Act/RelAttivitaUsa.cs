@@ -66,7 +66,7 @@ public string? Au1Extatt { get; set; }
 
 
 [Display(Name = "Id Attivita", ShortName="", Description = "Codice del tipo di attività", Prompt="")]
-[ErpDogField("AU_ID_ATTIVITA", SqlFieldNameExt="AU_ID_ATTIVITA", SqlFieldOptions="", SqlFieldProperties="prop() xref(ATTIVITA.AV__ICODE) xdup() multbxref()")]
+[ErpDogField("AU_ID_ATTIVITA", SqlFieldNameExt="AU_ID_ATTIVITA", SqlFieldOptions="", Xref="Av1Icode", SqlFieldProperties="prop() xref(ATTIVITA.AV__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue("")]
 [AutocompleteClient("Attivita", "AutocompleteGetAll", 1)]
@@ -75,7 +75,7 @@ public string? AuIdAttivita  { get; set; }
 public ErpToolkit.Models.SIO.Act.Attivita? AuIdAttivitaObj  { get; set; }
 
 [Display(Name = "Classe Risorsa", ShortName="", Description = "Classe di risorsa: E[quipments] (Attrezzature) - L[ocations] (Luoghi) - S[taff] (Personale) - M[aterial] (Materiali) - B[ed] (Letti)", Prompt="")]
-[ErpDogField("AU_CLASSE_RISORSA", SqlFieldNameExt="AU_CLASSE_RISORSA", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup(TIPO_RISORSA.TS_CLASSE_RISORSA[REL_ATTIVITA_USA.AU_ID_TIPO_RISORSA]) multbxref()")]
+[ErpDogField("AU_CLASSE_RISORSA", SqlFieldNameExt="AU_CLASSE_RISORSA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup(TIPO_RISORSA.TS_CLASSE_RISORSA[REL_ATTIVITA_USA.AU_ID_TIPO_RISORSA]) multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue(" ")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
@@ -83,7 +83,7 @@ public ErpToolkit.Models.SIO.Act.Attivita? AuIdAttivitaObj  { get; set; }
 public string? AuClasseRisorsa  { get; set; }
 
 [Display(Name = "Id Tipo Risorsa", ShortName="", Description = "Codice del tipo di risorsa", Prompt="")]
-[ErpDogField("AU_ID_TIPO_RISORSA", SqlFieldNameExt="AU_ID_TIPO_RISORSA", SqlFieldOptions="", SqlFieldProperties="prop() xref(TIPO_RISORSA.TS__ICODE) xdup() multbxref()")]
+[ErpDogField("AU_ID_TIPO_RISORSA", SqlFieldNameExt="AU_ID_TIPO_RISORSA", SqlFieldOptions="", Xref="Ts1Icode", SqlFieldProperties="prop() xref(TIPO_RISORSA.TS__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue("")]
 [AutocompleteClient("TipoRisorsa", "AutocompleteGetAll", 1)]
@@ -92,82 +92,82 @@ public string? AuIdTipoRisorsa  { get; set; }
 public ErpToolkit.Models.SIO.Resource.TipoRisorsa? AuIdTipoRisorsaObj  { get; set; }
 
 [Display(Name = "Id Risorsa", ShortName="", Description = "Codice della risorsa individuale", Prompt="")]
-[ErpDogField("AU_ID_RISORSA_S", SqlFieldNameExt="AU_ID_RISORSA_S", SqlFieldOptions="", SqlFieldProperties="prop() xref(PERSONALE.PE__ICODE{AU_CLASSE_RISORSA='S'} | MATERIALE.MT__ICODE{AU_CLASSE_RISORSA='M'} | ATTREZZATURA.AT__ICODE{AU_CLASSE_RISORSA='E'} | SALA.SA__ICODE{AU_CLASSE_RISORSA='L'} | FARMACO.FM__ICODE{AU_CLASSE_RISORSA='D'}) xdup() multbxref(AU_CLASSE_RISORSA)")]
+[ErpDogField("AU_ID_RISORSA_S", SqlFieldNameExt="AU_ID_RISORSA_S", SqlFieldOptions="", Xref="Pe1Icode", SqlFieldProperties="prop() xref(PERSONALE.PE__ICODE{AU_CLASSE_RISORSA='S'} | MATERIALE.MT__ICODE{AU_CLASSE_RISORSA='M'} | ATTREZZATURA.AT__ICODE{AU_CLASSE_RISORSA='E'} | SALA.SA__ICODE{AU_CLASSE_RISORSA='L'} | FARMACO.FM__ICODE{AU_CLASSE_RISORSA='D'}) xdup() multbxref(AU_CLASSE_RISORSA)")]
 [DataType(DataType.Text)]
 public string? AuIdRisorsaS  { get; set; }
 public ErpToolkit.Models.SIO.Resource.Personale? AuIdRisorsaSObj  { get; set; }
 
 [Display(Name = "Id Risorsa", ShortName="", Description = "Codice della risorsa individuale", Prompt="")]
-[ErpDogField("AU_ID_RISORSA_M", SqlFieldNameExt="AU_ID_RISORSA_M", SqlFieldOptions="", SqlFieldProperties="prop() xref(PERSONALE.PE__ICODE{AU_CLASSE_RISORSA='S'} | MATERIALE.MT__ICODE{AU_CLASSE_RISORSA='M'} | ATTREZZATURA.AT__ICODE{AU_CLASSE_RISORSA='E'} | SALA.SA__ICODE{AU_CLASSE_RISORSA='L'} | FARMACO.FM__ICODE{AU_CLASSE_RISORSA='D'}) xdup() multbxref(AU_CLASSE_RISORSA)")]
+[ErpDogField("AU_ID_RISORSA_M", SqlFieldNameExt="AU_ID_RISORSA_M", SqlFieldOptions="", Xref="Mt1Icode", SqlFieldProperties="prop() xref(PERSONALE.PE__ICODE{AU_CLASSE_RISORSA='S'} | MATERIALE.MT__ICODE{AU_CLASSE_RISORSA='M'} | ATTREZZATURA.AT__ICODE{AU_CLASSE_RISORSA='E'} | SALA.SA__ICODE{AU_CLASSE_RISORSA='L'} | FARMACO.FM__ICODE{AU_CLASSE_RISORSA='D'}) xdup() multbxref(AU_CLASSE_RISORSA)")]
 [DataType(DataType.Text)]
 public string? AuIdRisorsaM  { get; set; }
 public ErpToolkit.Models.SIO.Resource.Materiale? AuIdRisorsaMObj  { get; set; }
 
 [Display(Name = "Id Risorsa", ShortName="", Description = "Codice della risorsa individuale", Prompt="")]
-[ErpDogField("AU_ID_RISORSA_E", SqlFieldNameExt="AU_ID_RISORSA_E", SqlFieldOptions="", SqlFieldProperties="prop() xref(PERSONALE.PE__ICODE{AU_CLASSE_RISORSA='S'} | MATERIALE.MT__ICODE{AU_CLASSE_RISORSA='M'} | ATTREZZATURA.AT__ICODE{AU_CLASSE_RISORSA='E'} | SALA.SA__ICODE{AU_CLASSE_RISORSA='L'} | FARMACO.FM__ICODE{AU_CLASSE_RISORSA='D'}) xdup() multbxref(AU_CLASSE_RISORSA)")]
+[ErpDogField("AU_ID_RISORSA_E", SqlFieldNameExt="AU_ID_RISORSA_E", SqlFieldOptions="", Xref="At1Icode", SqlFieldProperties="prop() xref(PERSONALE.PE__ICODE{AU_CLASSE_RISORSA='S'} | MATERIALE.MT__ICODE{AU_CLASSE_RISORSA='M'} | ATTREZZATURA.AT__ICODE{AU_CLASSE_RISORSA='E'} | SALA.SA__ICODE{AU_CLASSE_RISORSA='L'} | FARMACO.FM__ICODE{AU_CLASSE_RISORSA='D'}) xdup() multbxref(AU_CLASSE_RISORSA)")]
 [DataType(DataType.Text)]
 public string? AuIdRisorsaE  { get; set; }
 public ErpToolkit.Models.SIO.Resource.Attrezzatura? AuIdRisorsaEObj  { get; set; }
 
 [Display(Name = "Id Risorsa", ShortName="", Description = "Codice della risorsa individuale", Prompt="")]
-[ErpDogField("AU_ID_RISORSA_L", SqlFieldNameExt="AU_ID_RISORSA_L", SqlFieldOptions="", SqlFieldProperties="prop() xref(PERSONALE.PE__ICODE{AU_CLASSE_RISORSA='S'} | MATERIALE.MT__ICODE{AU_CLASSE_RISORSA='M'} | ATTREZZATURA.AT__ICODE{AU_CLASSE_RISORSA='E'} | SALA.SA__ICODE{AU_CLASSE_RISORSA='L'} | FARMACO.FM__ICODE{AU_CLASSE_RISORSA='D'}) xdup() multbxref(AU_CLASSE_RISORSA)")]
+[ErpDogField("AU_ID_RISORSA_L", SqlFieldNameExt="AU_ID_RISORSA_L", SqlFieldOptions="", Xref="Sa1Icode", SqlFieldProperties="prop() xref(PERSONALE.PE__ICODE{AU_CLASSE_RISORSA='S'} | MATERIALE.MT__ICODE{AU_CLASSE_RISORSA='M'} | ATTREZZATURA.AT__ICODE{AU_CLASSE_RISORSA='E'} | SALA.SA__ICODE{AU_CLASSE_RISORSA='L'} | FARMACO.FM__ICODE{AU_CLASSE_RISORSA='D'}) xdup() multbxref(AU_CLASSE_RISORSA)")]
 [DataType(DataType.Text)]
 public string? AuIdRisorsaL  { get; set; }
 public ErpToolkit.Models.SIO.Resource.Sala? AuIdRisorsaLObj  { get; set; }
 
 [Display(Name = "Id Risorsa", ShortName="", Description = "Codice della risorsa individuale", Prompt="")]
-[ErpDogField("AU_ID_RISORSA_D", SqlFieldNameExt="AU_ID_RISORSA_D", SqlFieldOptions="", SqlFieldProperties="prop() xref(PERSONALE.PE__ICODE{AU_CLASSE_RISORSA='S'} | MATERIALE.MT__ICODE{AU_CLASSE_RISORSA='M'} | ATTREZZATURA.AT__ICODE{AU_CLASSE_RISORSA='E'} | SALA.SA__ICODE{AU_CLASSE_RISORSA='L'} | FARMACO.FM__ICODE{AU_CLASSE_RISORSA='D'}) xdup() multbxref(AU_CLASSE_RISORSA)")]
+[ErpDogField("AU_ID_RISORSA_D", SqlFieldNameExt="AU_ID_RISORSA_D", SqlFieldOptions="", Xref="Fm1Icode", SqlFieldProperties="prop() xref(PERSONALE.PE__ICODE{AU_CLASSE_RISORSA='S'} | MATERIALE.MT__ICODE{AU_CLASSE_RISORSA='M'} | ATTREZZATURA.AT__ICODE{AU_CLASSE_RISORSA='E'} | SALA.SA__ICODE{AU_CLASSE_RISORSA='L'} | FARMACO.FM__ICODE{AU_CLASSE_RISORSA='D'}) xdup() multbxref(AU_CLASSE_RISORSA)")]
 [DataType(DataType.Text)]
 public string? AuIdRisorsaD  { get; set; }
 public ErpToolkit.Models.SIO.Resource.Farmaco? AuIdRisorsaDObj  { get; set; }
 
 [Display(Name = "Id Risorsa", ShortName="", Description = "Codice della risorsa individuale", Prompt="")]
-[ErpDogField("AU_ID_RISORSA", SqlFieldNameExt="AU_ID_RISORSA", SqlFieldOptions="", SqlFieldProperties="prop() xref(PERSONALE.PE__ICODE{AU_CLASSE_RISORSA='S'} | MATERIALE.MT__ICODE{AU_CLASSE_RISORSA='M'} | ATTREZZATURA.AT__ICODE{AU_CLASSE_RISORSA='E'} | SALA.SA__ICODE{AU_CLASSE_RISORSA='L'} | FARMACO.FM__ICODE{AU_CLASSE_RISORSA='D'}) xdup() multbxref(AU_CLASSE_RISORSA)")]
+[ErpDogField("AU_ID_RISORSA", SqlFieldNameExt="AU_ID_RISORSA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref(PERSONALE.PE__ICODE{AU_CLASSE_RISORSA='S'} | MATERIALE.MT__ICODE{AU_CLASSE_RISORSA='M'} | ATTREZZATURA.AT__ICODE{AU_CLASSE_RISORSA='E'} | SALA.SA__ICODE{AU_CLASSE_RISORSA='L'} | FARMACO.FM__ICODE{AU_CLASSE_RISORSA='D'}) xdup() multbxref(AU_CLASSE_RISORSA)")]
 public string? AuIdRisorsa  { get; set; }
 
 [Display(Name = "Sequenza", ShortName="", Description = "Numero di sequenza della relazione", Prompt="")]
-[ErpDogField("AU_SEQUENZA", SqlFieldNameExt="AU_SEQUENZA", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AU_SEQUENZA", SqlFieldNameExt="AU_SEQUENZA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("")]
 public short? AuSequenza  { get; set; }
 
 [Display(Name = "Quantita Media Usata", ShortName="", Description = "Quantità media utilizzata", Prompt="")]
-[ErpDogField("AU_QUANTITA_MEDIA_USATA", SqlFieldNameExt="AU_QUANTITA_MEDIA_USATA", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AU_QUANTITA_MEDIA_USATA", SqlFieldNameExt="AU_QUANTITA_MEDIA_USATA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("")]
 public double? AuQuantitaMediaUsata  { get; set; }
 
 [Display(Name = "Quantita Extra", ShortName="", Description = "Quantità extra da considerare", Prompt="")]
-[ErpDogField("AU_QUANTITA_EXTRA", SqlFieldNameExt="AU_QUANTITA_EXTRA", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AU_QUANTITA_EXTRA", SqlFieldNameExt="AU_QUANTITA_EXTRA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("")]
 public double? AuQuantitaExtra  { get; set; }
 
 [Display(Name = "Unita Di Misura", ShortName="", Description = "Unità di misura", Prompt="")]
-[ErpDogField("AU_UNITA_DI_MISURA", SqlFieldNameExt="AU_UNITA_DI_MISURA", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AU_UNITA_DI_MISURA", SqlFieldNameExt="AU_UNITA_DI_MISURA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? AuUnitaDiMisura  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note brevi", Prompt="")]
-[ErpDogField("AU_NOTE", SqlFieldNameExt="AU_NOTE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AU_NOTE", SqlFieldNameExt="AU_NOTE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [StringLength(80, ErrorMessage = "Inserire massimo 80 caratteri")]
 [DataType(DataType.Text)]
 public string? AuNote  { get; set; }
 
 [Display(Name = "Costo Medio", ShortName="", Description = "Costo medio di tale utilizzo", Prompt="")]
-[ErpDogField("AU_COSTO_MEDIO", SqlFieldNameExt="AU_COSTO_MEDIO", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AU_COSTO_MEDIO", SqlFieldNameExt="AU_COSTO_MEDIO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("")]
 public double? AuCostoMedio  { get; set; }
 
 [Display(Name = "Descrizione Risorsa Usata", ShortName="", Description = "Descrizione testuale delle risorse utilizzate", Prompt="")]
-[ErpDogField("AU_DESCRIZIONE_RISORSA_USATA", SqlFieldNameExt="AU_DESCRIZIONE_RISORSA_USATA", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AU_DESCRIZIONE_RISORSA_USATA", SqlFieldNameExt="AU_DESCRIZIONE_RISORSA_USATA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? AuDescrizioneRisorsaUsata  { get; set; }
 
 [Display(Name = "Id Gruppo", ShortName="", Description = "Identificatore dell'istanza per la quale questa specifica rappresenta un'opzione (se applicabile)", Prompt="")]
-[ErpDogField("AU_ID_GRUPPO", SqlFieldNameExt="AU_ID_GRUPPO", SqlFieldOptions="", SqlFieldProperties="prop() xref(REL_ATTIVITA_USA.AU__ICODE) xdup() multbxref()")]
+[ErpDogField("AU_ID_GRUPPO", SqlFieldNameExt="AU_ID_GRUPPO", SqlFieldOptions="", Xref="Au1Icode", SqlFieldProperties="prop() xref(REL_ATTIVITA_USA.AU__ICODE) xdup() multbxref()")]
 [DefaultValue("")]
 [AutocompleteClient("RelAttivitaUsa", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]

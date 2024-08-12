@@ -76,7 +76,7 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink(item.FmCodice, "RedirectToNextPage", "Home", null, null, null, new { currentPage = "Farmaco", Fm1Icode = item.Fm1Icode}, null)
+                    @Html.ActionLink(item.FmCodice, "RedirectToNextPage", "Home", null, null, null, new { provenienzaPagina = "Farmaco", Fm1Icode = item.Fm1Icode}, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.FmDescrizione)

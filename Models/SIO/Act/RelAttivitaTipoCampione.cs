@@ -64,7 +64,7 @@ public string? Ac1Extatt { get; set; }
 
 
 [Display(Name = "Id Attivita", ShortName="", Description = "Codice del tipo di attività", Prompt="")]
-[ErpDogField("AC_ID_ATTIVITA", SqlFieldNameExt="AC_ID_ATTIVITA", SqlFieldOptions="", SqlFieldProperties="prop() xref(ATTIVITA.AV__ICODE) xdup() multbxref()")]
+[ErpDogField("AC_ID_ATTIVITA", SqlFieldNameExt="AC_ID_ATTIVITA", SqlFieldOptions="", Xref="Av1Icode", SqlFieldProperties="prop() xref(ATTIVITA.AV__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue("")]
 [AutocompleteClient("Attivita", "AutocompleteGetAll", 1)]
@@ -73,7 +73,7 @@ public string? AcIdAttivita  { get; set; }
 public ErpToolkit.Models.SIO.Act.Attivita? AcIdAttivitaObj  { get; set; }
 
 [Display(Name = "Id Tipo Campione", ShortName="", Description = "Codice del tipo di campione", Prompt="")]
-[ErpDogField("AC_ID_TIPO_CAMPIONE", SqlFieldNameExt="AC_ID_TIPO_CAMPIONE", SqlFieldOptions="", SqlFieldProperties="prop() xref(TIPO_CAMPIONE.TP__ICODE) xdup() multbxref()")]
+[ErpDogField("AC_ID_TIPO_CAMPIONE", SqlFieldNameExt="AC_ID_TIPO_CAMPIONE", SqlFieldOptions="", Xref="Tp1Icode", SqlFieldProperties="prop() xref(TIPO_CAMPIONE.TP__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue("")]
 [AutocompleteClient("TipoCampione", "AutocompleteGetAll", 1)]
@@ -82,35 +82,35 @@ public string? AcIdTipoCampione  { get; set; }
 public ErpToolkit.Models.SIO.Act.TipoCampione? AcIdTipoCampioneObj  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note", Prompt="")]
-[ErpDogField("AC_NOTE", SqlFieldNameExt="AC_NOTE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AC_NOTE", SqlFieldNameExt="AC_NOTE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]
 public string? AcNote  { get; set; }
 
 [Display(Name = "Tipo", ShortName="", Description = "Generato da / Necessario per l'esecuzione", Prompt="")]
-[ErpDogField("AC_TIPO", SqlFieldNameExt="AC_TIPO", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AC_TIPO", SqlFieldNameExt="AC_TIPO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("E")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [RegularExpression("G|E", ErrorMessage = "Inserisci una delle seguenti opzioni: G|E")]
 public string? AcTipo  { get; set; }
 
 [Display(Name = "Campione Preferenziale", ShortName="", Description = "Tipo di campione preferenziale (predefinito) per quel tipo di attività", Prompt="")]
-[ErpDogField("AC_CAMPIONE_PREFERENZIALE", SqlFieldNameExt="AC_CAMPIONE_PREFERENZIALE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AC_CAMPIONE_PREFERENZIALE", SqlFieldNameExt="AC_CAMPIONE_PREFERENZIALE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("N")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [RegularExpression("Y|N", ErrorMessage = "Inserisci una delle seguenti opzioni: Y|N")]
 public string? AcCampionePreferenziale  { get; set; }
 
 [Display(Name = "Campione Specifico", ShortName="", Description = "Se 'Y', è necessario un campione dedicato, e il campione non può essere condiviso tra diverse attività (predefinito N)", Prompt="")]
-[ErpDogField("AC_CAMPIONE_SPECIFICO", SqlFieldNameExt="AC_CAMPIONE_SPECIFICO", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AC_CAMPIONE_SPECIFICO", SqlFieldNameExt="AC_CAMPIONE_SPECIFICO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("N")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
 [RegularExpression("Y|N", ErrorMessage = "Inserisci una delle seguenti opzioni: Y|N")]
 public string? AcCampioneSpecifico  { get; set; }
 
 [Display(Name = "Regole Campionamento", ShortName="", Description = "Criteri da adottare quando si raccolgono più campioni (informazioni testuali, dedicate dall'utente)", Prompt="")]
-[ErpDogField("AC_REGOLE_CAMPIONAMENTO", SqlFieldNameExt="AC_REGOLE_CAMPIONAMENTO", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AC_REGOLE_CAMPIONAMENTO", SqlFieldNameExt="AC_REGOLE_CAMPIONAMENTO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [StringLength(240, ErrorMessage = "Inserire massimo 240 caratteri")]
 [DataType(DataType.Text)]

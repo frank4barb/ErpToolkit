@@ -106,7 +106,7 @@
                     @Html.DisplayFor(modelItem => item.PaCodFiscale)
                 </td>
                 <td>
-                    @Html.ActionLink(item.PaCodSanitario, "RedirectToNextPage", "Home", null, null, null, new { currentPage = "Paziente", Pa1Icode = item.Pa1Icode}, null)
+                    @Html.ActionLink(item.PaCodSanitario, "RedirectToNextPage", "Home", null, null, null, new { provenienzaPagina = "Paziente", Pa1Icode = item.Pa1Icode, Te1Icode="UCSC"}, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PaNome)

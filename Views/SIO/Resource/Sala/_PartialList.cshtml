@@ -55,7 +55,7 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink(item.SaCodice, "RedirectToNextPage", "Home", null, null, null, new { currentPage = "Sala", Sa1Icode = item.Sa1Icode}, null)
+                    @Html.ActionLink(item.SaCodice, "RedirectToNextPage", "Home", null, null, null, new { provenienzaPagina = "Sala", Sa1Icode = item.Sa1Icode}, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.SaIdTipoRisorsa)

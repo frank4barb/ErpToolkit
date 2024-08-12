@@ -64,7 +64,7 @@ public string? Oo1Extatt { get; set; }
 
 
 [Display(Name = "Id Organizzazione Padre", ShortName="", Description = "Codice del primo agente correlato all'altro", Prompt="")]
-[ErpDogField("OO_ID_ORGANIZZAZIONE_PADRE", SqlFieldNameExt="OO_ID_ORGANIZZAZIONE_PADRE", SqlFieldOptions="", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
+[ErpDogField("OO_ID_ORGANIZZAZIONE_PADRE", SqlFieldNameExt="OO_ID_ORGANIZZAZIONE_PADRE", SqlFieldOptions="", Xref="Or1Icode", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue("")]
 [AutocompleteClient("Organizzazione", "AutocompleteGetAll", 1)]
@@ -73,7 +73,7 @@ public string? OoIdOrganizzazionePadre  { get; set; }
 public ErpToolkit.Models.SIO.Common.Organizzazione? OoIdOrganizzazionePadreObj  { get; set; }
 
 [Display(Name = "Id Organizzazione Figlio", ShortName="", Description = "Codice del secondo agente correlato al primo", Prompt="")]
-[ErpDogField("OO_ID_ORGANIZZAZIONE_FIGLIO", SqlFieldNameExt="OO_ID_ORGANIZZAZIONE_FIGLIO", SqlFieldOptions="", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
+[ErpDogField("OO_ID_ORGANIZZAZIONE_FIGLIO", SqlFieldNameExt="OO_ID_ORGANIZZAZIONE_FIGLIO", SqlFieldOptions="", Xref="Or1Icode", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue("")]
 [AutocompleteClient("Organizzazione", "AutocompleteGetAll", 1)]
@@ -82,14 +82,14 @@ public string? OoIdOrganizzazioneFiglio  { get; set; }
 public ErpToolkit.Models.SIO.Common.Organizzazione? OoIdOrganizzazioneFiglioObj  { get; set; }
 
 [Display(Name = "Regola Di Inclusione", ShortName="", Description = "Ruolo della relazione tra i due agenti", Prompt="")]
-[ErpDogField("OO_REGOLA_DI_INCLUSIONE", SqlFieldNameExt="OO_REGOLA_DI_INCLUSIONE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("OO_REGOLA_DI_INCLUSIONE", SqlFieldNameExt="OO_REGOLA_DI_INCLUSIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [StringLength(12, ErrorMessage = "Inserire massimo 12 caratteri")]
 [DataType(DataType.Text)]
 public string? OoRegolaDiInclusione  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note opzionali riguardo alla relazione tra gli agenti", Prompt="")]
-[ErpDogField("OO_NOTE", SqlFieldNameExt="OO_NOTE", SqlFieldOptions="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("OO_NOTE", SqlFieldNameExt="OO_NOTE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [StringLength(120, ErrorMessage = "Inserire massimo 120 caratteri")]
 [DataType(DataType.Text)]

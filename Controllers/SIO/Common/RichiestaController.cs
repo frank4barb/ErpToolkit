@@ -53,6 +53,7 @@ namespace ErpToolkit.Controllers.SIO.Common
         public IActionResult Index(string returnUrl = null)
         {
             this.Select = new SelRichiesta();
+            foreach (var key in Request.Query.Keys) DogHelper.setPropertyValue(this.Select, key, Request.Query[key]); // carica parametri QueryString
             this.List = new List<Richiesta>();
             //carico eventuali parametri presenti in TempData
             foreach (var item in TempData.Keys) ViewData[item] = TempData[item];

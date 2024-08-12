@@ -434,7 +434,7 @@ namespace ErpToolkit.Helpers
                 var preSelectedValues = For.ModelExplorer.Model as List<string>;
                 var divId = $"{For.Name}SelectedItems";
 
-                var preSelectedValuesJson = preSelectedValues != null ? JsonConvert.SerializeObject(preSelectedValues) : "[]";
+                var preSelectedValuesJson = preSelectedValues != null ? "{ \"preSelected\": " + JsonConvert.SerializeObject(preSelectedValues) + " }" : "{ \"preSelected\": [] }";
 
                 var selectedItemsDiv = $@"<div id='{divId}' class='selected-items'></div>";
 
@@ -443,6 +443,7 @@ namespace ErpToolkit.Helpers
                 output.Attributes.SetAttribute("data-max-selections", attributeServer.MaxSelections);
                 output.Attributes.SetAttribute("data-controller", attributeServer.Controller);
                 output.Attributes.SetAttribute("data-action", attributeServer.Action);
+                output.Attributes.SetAttribute("data-preload-action", attributeServer.PreloadAction);
                 output.Attributes.SetAttribute("data-pre-selected", preSelectedValuesJson);
                 output.Attributes.SetAttribute("data-name", For.Name);
                 output.Attributes.SetAttribute("data-min-chars", MinChars);

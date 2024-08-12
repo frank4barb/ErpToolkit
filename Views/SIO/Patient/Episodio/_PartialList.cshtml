@@ -97,7 +97,7 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink(item.EpCodEpisodio, "RedirectToNextPage", "Home", null, null, null, new { currentPage = "Episodio", Ep1Icode = item.Ep1Icode}, null)
+                    @Html.ActionLink(item.EpCodEpisodio, "RedirectToNextPage", "Home", null, null, null, new { provenienzaPagina = "Episodio", Ep1Icode = item.Ep1Icode}, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EpIdPaziente)

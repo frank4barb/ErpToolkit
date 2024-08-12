@@ -64,7 +64,7 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink(item.AvCodice, "RedirectToNextPage", "Home", null, null, null, new { currentPage = "Attivita", Av1Icode = item.Av1Icode}, null)
+                    @Html.ActionLink(item.AvCodice, "RedirectToNextPage", "Home", null, null, null, new { provenienzaPagina = "Attivita", Av1Icode = item.Av1Icode}, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.AvDescrizione)
