@@ -69,6 +69,8 @@ namespace ErpToolkit.Helpers
         public string SqlFieldOptions { get; set; }  // [UID] [XID] codice univoco utente e esterno
         public string SqlFieldNameExt { get; set; }  // AY_CODE
         public string Xref { get; set; } = "";  // external reference (if any) eg: Pa1Icode
+        public bool Visible { get; set; } = true;  // Visible
+        public bool Readonly { get; set; } = false;  // Readonly
 
         public ErpDogFieldAttribute(string sqlFieldName)
         {

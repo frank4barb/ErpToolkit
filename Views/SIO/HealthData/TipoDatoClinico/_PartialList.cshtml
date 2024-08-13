@@ -46,7 +46,7 @@
         {
             <tr>
                 <td>
-                    @Html.ActionLink(item.TcCodice, "RedirectToNextPage", "Home", null, null, null, new { provenienzaPagina = "TipoDatoClinico", Tc1Icode = item.Tc1Icode}, null)
+                    @Html.ActionLink(item.TcCodice, "RedirectToNextPage", "Shared", null, null, null, new { provenienzaPagina = "TipoDatoClinico", Tc1Icode = item.Tc1Icode}, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.TcDescrizione)

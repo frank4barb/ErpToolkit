@@ -425,6 +425,7 @@ namespace ErpToolkit.Helpers
             var property = For.Metadata.ContainerType.GetProperty(For.Name);
             var attributeServer = property.GetCustomAttributes(typeof(AutocompleteServerAttribute), false).FirstOrDefault() as AutocompleteServerAttribute;
             var attributeClient = property.GetCustomAttributes(typeof(AutocompleteClientAttribute), false).FirstOrDefault() as AutocompleteClientAttribute;
+            var attributeErpDogField = property.GetCustomAttributes(typeof(ErpDogFieldAttribute), false).FirstOrDefault() as ErpDogFieldAttribute;
 
             if (attributeServer != null)
             {
@@ -448,6 +449,8 @@ namespace ErpToolkit.Helpers
                 output.Attributes.SetAttribute("data-name", For.Name);
                 output.Attributes.SetAttribute("data-min-chars", MinChars);
                 output.Attributes.SetAttribute("data-mode", "autocompleteServer");  // Modalità di autocomplete
+                output.Attributes.SetAttribute("data-readonly", attributeErpDogField?.Readonly ?? false);  // Readonly field value
+                output.Attributes.SetAttribute("data-visible", attributeErpDogField?.Visible ?? true);  // Visible field value
                 output.Attributes.SetAttribute("data-selected-items-div-id", divId); // Aggiungi l'ID del div degli elementi selezionati
                 output.Attributes.SetAttribute("value", ""); //pulisco valore campo
 
@@ -482,6 +485,8 @@ namespace ErpToolkit.Helpers
                 output.Attributes.SetAttribute("data-name", For.Name);
                 output.Attributes.SetAttribute("data-min-chars", MinChars);
                 output.Attributes.SetAttribute("data-mode", "autocompleteClient");  // Modalità di autocomplete
+                output.Attributes.SetAttribute("data-readonly", attributeErpDogField?.Readonly ?? false);  // Readonly field value
+                output.Attributes.SetAttribute("data-visible", attributeErpDogField?.Visible ?? true);  // Visible field value
                 output.Attributes.SetAttribute("data-selected-items-div-id", divId); // Aggiungi l'ID del div degli elementi selezionati
                 output.Attributes.SetAttribute("value", ""); //pulisco valore campo
 

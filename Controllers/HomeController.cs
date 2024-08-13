@@ -90,73 +90,7 @@ namespace ErpToolkit.Controllers
         }
 
 
-        ////==========================================================================================================
-        ////==========================================================================================================
 
-        //// GESTIONE MENU' PERCORSI
-        ////---------------------------------
-
-
-        //<ul class="navbar-nav mr-auto">
-        //    <li class="nav-item">
-        //        <a class="nav-link" asp-controller="Home" asp-action="Percorso1Start">Percorso 1</a>
-        //    </li>
-        //    <li class="nav-item">
-        //        <a class="nav-link" asp-controller="Home" asp-action="Percorso2Start">Percorso 2</a>
-        //    </li>
-        //</ul>
-
-        //// Use HomeController's method to determine the next page
-        //return RedirectToAction("RedirectToNextPage", "Home", new { currentPage = "Page1" });
-
-        public static readonly Dictionary<string, List<string>> PercorsiMenu = new Dictionary<string, List<string>> {
-             { "Percorso1", new List<string> { "Paziente", "Episodio" } }
-            ,{ "Percorso2", new List<string> { "Page2", "Page1" } } 
-            };
-
-
-        [Authorize(AuthenticationSchemes = "Cookies")]
-        [HttpGet]
-        public IActionResult Percorso1Start() { return RedirectToStartPage("Percorso1"); }
-
-        [Authorize(AuthenticationSchemes = "Cookies")]
-        [HttpGet]
-        public IActionResult Percorso2Start() { return RedirectToStartPage("Percorso2"); }
-
-
-        public IActionResult RedirectToStartPage(string nomePercorso)
-        {
-            TempData["NomeSequenzaPagine"] = nomePercorso;
-            return RedirectToAction("Index", PercorsiMenu[nomePercorso][0]);
-        }
-
-        public IActionResult RedirectToNextPage(string provenienzaPagina)
-        {
-            try
-            {
-                RouteValueDictionary routeValuesDictionary = new RouteValueDictionary();
-                foreach (var key in Request.Query.Keys) routeValuesDictionary.Add(key, Request.Query[key]);
-                //routeValuesDictionary.Add("AnotherFixedParm", "true");
-
-                // calcolo prossima pagina in precorso
-                string nomePercorso = TempData["NomeSequenzaPagine"] as string;
-                List<string> sequenzaPagine = PercorsiMenu[nomePercorso];
-
-                int provenienzaPaginaIdx = sequenzaPagine.IndexOf(provenienzaPagina);
-                int successivaPaginaIdx = provenienzaPaginaIdx + 1;
-
-                if (successivaPaginaIdx < sequenzaPagine.Count)
-                {
-                    var nextPage = sequenzaPagine[successivaPaginaIdx];
-                    return RedirectToAction("Index", nextPage, routeValuesDictionary);
-                }
-                return RedirectToAction("Index", sequenzaPagine[0], routeValuesDictionary); // If there are no more pages in the sequence, redirect to the first page
-            } 
-            catch (Exception ex) { return RedirectToAction("Index", provenienzaPagina); }  // in caso di problemi rimango sulla stessa pagina
-        }
-
-        ////==========================================================================================================
-        ////==========================================================================================================
 
 
 

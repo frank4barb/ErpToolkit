@@ -70,7 +70,7 @@
                     @Html.DisplayFor(modelItem => item.CpDescrizione)
                 </td>
                 <td>
-                    @Html.ActionLink(item.CpCodiceUnivoco, "RedirectToNextPage", "Home", null, null, null, new { provenienzaPagina = "Campione", Cp1Icode = item.Cp1Icode}, null)
+                    @Html.ActionLink(item.CpCodiceUnivoco, "RedirectToNextPage", "Shared", null, null, null, new { provenienzaPagina = "Campione", Cp1Icode = item.Cp1Icode}, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CpDataPrelievo)
@@ -88,7 +88,7 @@
                     @Html.DisplayFor(modelItem => item.CpIdPaziente)
                 </td>
                 <td>
-                    @Html.ActionLink(item.CpCodiceAssoluto, "RedirectToNextPage", "Home", null, null, null, new { provenienzaPagina = "Campione", Cp1Icode = item.Cp1Icode}, null)
+                    @Html.ActionLink(item.CpCodiceAssoluto, "RedirectToNextPage", "Shared", null, null, null, new { provenienzaPagina = "Campione", Cp1Icode = item.Cp1Icode}, null)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.CpStatoCampione)
