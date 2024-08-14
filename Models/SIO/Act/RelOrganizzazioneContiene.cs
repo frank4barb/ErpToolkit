@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
-public class RelOrganizzazioneContiene {
+public class RelOrganizzazioneContiene : ModelErp {
 public const string Description = "Relazioni generiche esistenti tra diverse strutture";
 public const string SqlTableName = "REL_ORGANIZZAZIONE_CONTIENE";
 public const string SqlTableNameExt = "REL_ORGANIZZAZIONE_CONTIENE";

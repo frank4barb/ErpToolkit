@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
-public class TipoAttivita {
+public class TipoAttivita : ModelErp {
 public const string Description = "Tassonomie e classe di tipi di attività";
 public const string SqlTableName = "TIPO_ATTIVITA";
 public const string SqlTableNameExt = "TIPO_ATTIVITA";

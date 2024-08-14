@@ -12,6 +12,7 @@ using System.Linq;
 using System.Security.Cryptography.Xml;
 using NLog.Filters;
 using Google.Api;
+using Quartz.Util;
 
 
 namespace ErpToolkit.Controllers
@@ -62,44 +63,30 @@ namespace ErpToolkit.Controllers
 
 
 
-        //-----------
-        //public static readonly Dictionary<string, List<string>> PercorsiMenu = new Dictionary<string, List<string>> {
-        //     { "Percorso1", new List<string> { "Paziente", "Episodio" } }
-        //    ,{ "Percorso2", new List<string> { "Page2", "Page1" } }
-        //    };
-        //--------
-
-
         //Impostazione campi da applicare al filtro selezione della pagina del percorso
         // 1) valore di default del campo
         // 2) campo readOnly: Y/N (default: N)
         // 3) campo visibile: Y/N (default: Y)
         //
-        // formato: <nome campo modello>__<Y/N readOnly><Y/N visibile>=<valore preimpostato del campo>
-        // nota: i nomi campo del modello non possono contenere '__' nel nome del campo
-        public class DefaultFieldValue
-        {
-            public string fieldName { get; set; } = "";
-            public string? fieldValue { get; set; } = null;
-            public bool fieldReadonly { get; set; } = false;
-            public bool fieldVisible { get; set; } = true;
-            public DefaultFieldValue(string name, string? value, bool readOnly, bool visible) { fieldName = name; fieldValue = value; fieldReadonly = readOnly; fieldVisible = visible; }
-        }
+        // formato: <nome campo modello>=<valore preimpostato del campo>
+        // formato: <nome campo modello>_Attr=<Y/N readOnly><Y/N visibile>
+        // nota: i nomi campo del modello non possono contenere '_' nel nome del campo
 
         //pagina del percorso
         public class Page
         {
             public string pageName { get; set; } = "";
-            public List<DefaultFieldValue> defaultField { get; set; } = new List<DefaultFieldValue>();
+            //public List<DefaultFieldValue> defaultFields { get; set; } = new List<DefaultFieldValue>();
+            public Dictionary<string, string?> defaultFields { get; set; } = new Dictionary<string, string?>();
             public Page(string name) { pageName = name; }
-            public Page AddDefault(string name, string? value, bool readOnly, bool visible) { defaultField.Add(new DefaultFieldValue(name, value, readOnly, visible)); return this; }
+            public Page AddDefault(string name, string? value) { defaultFields[name] = value; return this; }
         }
 
         //------------------------------------------------------------------------------------------------------------------------------------------
         //------------------------------------------------------------------------------------------------------------------------------------------
 
         public static readonly Dictionary<string, List<Page>> PathMenu = new Dictionary<string, List<Page>> {
-             { "Percorso1", new List<Page> { new Page("Paziente"), new Page("Episodio").AddDefault("Te1Icode", "UCSC", false, true) } }
+             { "Percorso1", new List<Page> { new Page("Paziente"), new Page("Episodio").AddDefault("Te1Icode", "UCSC").AddDefault("Te1Icode_Attr", DogHelper.FieldAttr.strAttr(true,true)) } }
             ,{ "Percorso2", new List<Page> { new Page("Page2"), new Page("Page1") } }
             };
 
@@ -130,19 +117,18 @@ namespace ErpToolkit.Controllers
                 foreach (var key in Request.Query.Keys) routeValuesDictionary.Add(key, Request.Query[key]);
                 //routeValuesDictionary.Add("AnotherFixedParm", "true");
 
-                // calcolo prossima pagina in precorso
+                // trovo percorso
                 string nomePercorso = TempData["NomeSequenzaPagine"] as string;
                 List<Page> sequenzaPagine = PathMenu[nomePercorso];
-
+                // calcolo prossima pagina in precorso
                 int provenienzaPaginaIdx = sequenzaPagine.FindIndex(page => page.pageName.Equals(provenienzaPagina, StringComparison.Ordinal));  //int provenienzaPaginaIdx = sequenzaPagine.IndexOf(provenienzaPagina);
                 int successivaPaginaIdx = provenienzaPaginaIdx + 1;
-
-                if (successivaPaginaIdx < sequenzaPagine.Count)
-                {
-                    var nextPage = sequenzaPagine[successivaPaginaIdx];
-                    return RedirectToAction("Index", nextPage.pageName, routeValuesDictionary);
-                }
-                return RedirectToAction("Index", sequenzaPagine[0].pageName, routeValuesDictionary); // If there are no more pages in the sequence, redirect to the first page
+                var nextPage = sequenzaPagine[0]; // pagina di default = prima pagina (If there are no more pages in the sequence, redirect to the first page)
+                if (successivaPaginaIdx < sequenzaPagine.Count) nextPage = sequenzaPagine[successivaPaginaIdx]; // trovata pagina successiva
+                //inserisco inpostazioni di default per i cxampi di selezione
+                foreach (var key in nextPage.defaultFields.Keys) routeValuesDictionary.Add(key, nextPage.defaultFields[key]);
+                //redirect
+                return RedirectToAction("Index", nextPage.pageName, routeValuesDictionary);
             }
             catch (Exception ex) { return RedirectToAction("Index", provenienzaPagina); }  // in caso di problemi rimango sulla stessa pagina
         }

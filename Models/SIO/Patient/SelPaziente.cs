@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Patient {
-public class SelPaziente {
+public class SelPaziente : ModelErp {
 public const string Description = "Pazienti rilevanti per l'organizzazione sanitaria";
 public const string SqlTableName = "PAZIENTE";
 public const string SqlTableNameExt = "PAZIENTE";

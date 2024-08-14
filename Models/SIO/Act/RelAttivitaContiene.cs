@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
-public class RelAttivitaContiene {
+public class RelAttivitaContiene : ModelErp {
 public const string Description = "Corrispondenze tra tassonomie di attività";
 public const string SqlTableName = "REL_ATTIVITA_CONTIENE";
 public const string SqlTableNameExt = "REL_ATTIVITA_CONTIENE";

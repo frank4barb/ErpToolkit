@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Patient {
-public class Comune {
+public class Comune : ModelErp {
 public const string Description = "Comuni";
 public const string SqlTableName = "COMUNE";
 public const string SqlTableNameExt = "COMUNE";

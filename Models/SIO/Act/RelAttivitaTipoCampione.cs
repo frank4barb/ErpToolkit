@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
-public class RelAttivitaTipoCampione {
+public class RelAttivitaTipoCampione : ModelErp {
 public const string Description = "Tipo di campione rilevante per un certo tipo di attività";
 public const string SqlTableName = "REL_ATTIVITA_TIPO_CAMPIONE";
 public const string SqlTableNameExt = "REL_ATTIVITA_TIPO_CAMPIONE";

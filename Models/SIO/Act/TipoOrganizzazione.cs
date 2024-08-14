@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
-public class TipoOrganizzazione {
+public class TipoOrganizzazione : ModelErp {
 public const string Description = "Classificazione delle strutture";
 public const string SqlTableName = "TIPO_ORGANIZZAZIONE";
 public const string SqlTableNameExt = "TIPO_ORGANIZZAZIONE";

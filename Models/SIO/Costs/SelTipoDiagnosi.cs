@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Costs {
-public class SelTipoDiagnosi {
+public class SelTipoDiagnosi : ModelErp {
 public const string Description = "Tipi generali di classificazioni diagnostiche.";
 public const string SqlTableName = "TIPO_DIAGNOSI";
 public const string SqlTableNameExt = "TIPO_DIAGNOSI";

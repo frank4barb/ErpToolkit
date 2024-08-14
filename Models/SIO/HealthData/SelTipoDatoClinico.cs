@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.HealthData {
-public class SelTipoDatoClinico {
+public class SelTipoDatoClinico : ModelErp {
 public const string Description = "Classificazioni generali dei tipi di dati sanitari";
 public const string SqlTableName = "TIPO_DATO_CLINICO";
 public const string SqlTableNameExt = "TIPO_DATO_CLINICO";

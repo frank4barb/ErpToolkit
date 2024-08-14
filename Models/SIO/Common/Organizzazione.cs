@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Common {
-public class Organizzazione {
+public class Organizzazione : ModelErp {
 public const string Description = "Struttura sanitaria: centro sanitario, unità organizzativa, individuo, componente software, ecc.";
 public const string SqlTableName = "ORGANIZZAZIONE";
 public const string SqlTableNameExt = "ORGANIZZAZIONE";

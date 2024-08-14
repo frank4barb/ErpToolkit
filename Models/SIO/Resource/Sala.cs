@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Resource {
-public class Sala {
+public class Sala : ModelErp {
 public const string Description = "Risorse: località";
 public const string SqlTableName = "SALA";
 public const string SqlTableNameExt = "SALA";

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.HealthData {
-public class RelPrestazioneDatoClinico {
+public class RelPrestazioneDatoClinico : ModelErp {
 public const string Description = "Dettaglio delle relazioni tra prestazioni e dati sanitari (generazione, utilizzo)";
 public const string SqlTableName = "REL_PRESTAZIONE_DATO_CLINICO";
 public const string SqlTableNameExt = "REL_PRESTAZIONE_DATO_CLINICO";

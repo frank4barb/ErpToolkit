@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
-public class RelPrestazioneUsa {
+public class RelPrestazioneUsa : ModelErp {
 public const string Description = "Risorse pianificate ed effettive utilizzate per l'esecuzione di una singola prestazione individuale";
 public const string SqlTableName = "REL_PRESTAZIONE_USA";
 public const string SqlTableNameExt = "REL_PRESTAZIONE_USA";

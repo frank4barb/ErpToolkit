@@ -11,7 +11,9 @@ using System.Data;
 using System.Diagnostics.Eventing.Reader;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
+using System.Reflection.Emit;
 using System.Security.Cryptography.Xml;
 using System.Text;
 
@@ -22,6 +24,30 @@ namespace ErpToolkit.Helpers
 
         private const string DB_FORMAT_DATE = "yyyy/MM/dd"; //formato stringa di memorizzazione della data nel DB
 
+        public class FieldAttr
+        {
+            public char Readonly { get; set; } = 'N';
+            public char Visible { get; set; } = 'Y';
+            public void setAttr(string attr)
+            {
+                char[] a = attr.ToCharArray();
+                for (int i = 0; i < a.Length; i++)
+                {
+                    switch (i)
+                    {
+                        case 0: Readonly = a[i]; break; // 0) ReadOnly
+                        case 1: Visible = a[i]; break; // 1) Visible
+                    }
+                }
+            }
+            public string getAttr()
+            {
+                return (new string (new char[] { Readonly, Visible }));
+            }
+            public FieldAttr(string attr) { setAttr(attr); }
+            public FieldAttr(bool readOnly, bool visible) { if(readOnly) Readonly = 'Y'; if (!visible) Visible = 'N'; }
+            public static string strAttr(bool readOnly, bool visible) { return new FieldAttr(readOnly, visible).getAttr();  }
+        }
 
 
         //configura NLog per la classe
@@ -153,6 +179,7 @@ namespace ErpToolkit.Helpers
                 try
                 {
                     string propertyName = property.Name; // Get property name and value
+                    if (propertyName == "AttrFields") continue;
                     object propertyValue = property.GetValue(selModel); //sb.AppendLine($"Property: {propertyName}, Value: {propertyValue}");
                     if (propertyValue == null) continue;
                     // >>> verifica List
@@ -374,6 +401,41 @@ namespace ErpToolkit.Helpers
                             }
                         }
                     }
+                    else if ((propName == propertyName + "_Attr" || propName == attribXref + "_Attr") && propValue != null)
+                    {
+                        PropertyInfo? propertyAttrFields = type.GetProperty("AttrFields");
+                        if (propertyAttrFields != null) {
+                            Dictionary<string, FieldAttr>? attrFields = (Dictionary<string, FieldAttr>?)propertyAttrFields.GetValue(selModel);
+                            if (attrFields != null) { 
+                                if (attrFields.ContainsKey(propertyName)) attrFields[propertyName].setAttr(propValue);
+                                else attrFields[propertyName] = new DogHelper.FieldAttr(propValue);
+                                propertyAttrFields.SetValue(selModel, attrFields); }
+                        }
+                    }
+                    //// imposta gli attributi dei campi  ===> NON FUNZIONA XCHE' GLI ATTRIBUTI POSSONO ESSERE SOLO LETTI
+                    //else if ( (propName == propertyName + "_Attr" || propName == attribXref + "_Attr") && propValue != null )
+                    //{
+                    //    Char[] attrVal = propValue.ToCharArray(); Attribute? attr = null;
+                    //    for (int i = 0; i < attrVal.Length; i++)
+                    //    {
+                    //        switch (i)
+                    //        {
+                    //            case 0: // 0) ReadOnly
+                    //                attr = ((ErpDogFieldAttribute)(property.GetCustomAttribute(typeof(ErpDogFieldAttribute), false)));
+                    //                if (attr != null && attrVal[i] == 'Y') ((ErpDogFieldAttribute)attr).Readonly = true;
+                    //                else if (attr != null && attrVal[i] == 'N') ((ErpDogFieldAttribute)attr).Readonly = false;
+                    //                break;
+                    //            case 1: // 1) Visible
+                    //                attr = ((ErpDogFieldAttribute)(property.GetCustomAttribute(typeof(ErpDogFieldAttribute), false)));
+                    //                if (attr != null && attrVal[i] == 'Y') ((ErpDogFieldAttribute)attr).Visible = true;
+                    //                else if (attr != null && attrVal[i] == 'N') ((ErpDogFieldAttribute)attr).Visible = false;
+                    //                break;
+                    //         }
+                    //    }
+                    //    PropertyInfo property2 = selModel.GetType().GetProperty("EpIdTipoEpisodio");
+                    //    bool testRes = ((ErpDogFieldAttribute)(property2.GetCustomAttribute(typeof(ErpDogFieldAttribute), false))).Readonly;
+                    //    return true;
+                    //}
                     else continue;
                 }
             }
@@ -383,68 +445,67 @@ namespace ErpToolkit.Helpers
 
 
 
+    //----------------------------------------------------------------------------------------------------------------------------------------
 
-        //----------------------------------------------------------------------------------------------------------------------------------------
+    ////carica oggetto con il contenuto del DB per l'icode 
+    //public static string Row(object objModel, string icode)
+    //{
+    //    //if (objModel == null) { throw new ArgumentNullException(nameof(objModel)); }
+    //    if (objModel == null) return "";
+    //    StringBuilder sb = new StringBuilder("select ");
+    //    //ciclo sulle proprietà
+    //    Type type = objModel.GetType(); PropertyInfo[] properties = type.GetProperties();
+    //    string tableName = "", icodeName = "";
+    //    foreach (var property in properties)
+    //    {
+    //        try
+    //        {
+    //            string propertyName = property.Name; // Get property name and value
+    //            object propertyValue = property.GetValue(objModel); //sb.AppendLine($"Property: {propertyName}, Value: {propertyValue}");
+    //            var attributes = property.GetCustomAttributes(); // Get custom attributes for the property
+    //            foreach (var attribute in attributes)
+    //            {
+    //                var attributeProperties = attribute.GetType().GetProperties();  // Get attribute properties and their values
 
-        ////carica oggetto con il contenuto del DB per l'icode 
-        //public static string Row(object objModel, string icode)
-        //{
-        //    //if (objModel == null) { throw new ArgumentNullException(nameof(objModel)); }
-        //    if (objModel == null) return "";
-        //    StringBuilder sb = new StringBuilder("select ");
-        //    //ciclo sulle proprietà
-        //    Type type = objModel.GetType(); PropertyInfo[] properties = type.GetProperties();
-        //    string tableName = "", icodeName = "";
-        //    foreach (var property in properties)
-        //    {
-        //        try
-        //        {
-        //            string propertyName = property.Name; // Get property name and value
-        //            object propertyValue = property.GetValue(objModel); //sb.AppendLine($"Property: {propertyName}, Value: {propertyValue}");
-        //            var attributes = property.GetCustomAttributes(); // Get custom attributes for the property
-        //            foreach (var attribute in attributes)
-        //            {
-        //                var attributeProperties = attribute.GetType().GetProperties();  // Get attribute properties and their values
+    //                foreach (var attrProp in attributeProperties) //sb.AppendLine($"    Attribute: {attribute.GetType().Name}");
+    //                {
+    //                    if (attrProp.CanRead && attrProp.GetIndexParameters().Length == 0) // Some properties of attributes might be methods or indexers, we skip those
+    //                    {
+    //                        try
+    //                        {
+    //                            var attrPropValue = attrProp.GetValue(attribute); //sb.AppendLine($"        {attrProp.Name}: {attrPropValue}");
+    //                            if (attribute.GetType().Name == "ErpDogFieldAttribute" && attrProp.Name == "SqlFieldNameExt" && !String.IsNullOrWhiteSpace(attrPropValue.ToString()))
+    //                            {
+    //                                sb.AppendLine($" {attrPropValue} as {propertyName},");
+    //                            }
+    //                        }
+    //                        catch (Exception ex) { }  //skip exceptions
+    //                    }
+    //                }
+    //            }
+    //        }
+    //        catch (Exception ex) { }  //skip exceptions
+    //    }
+    //    // Recupera tutte le costanti
+    //    FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+    //    foreach (var field in fields)
+    //    {
+    //        if (field.IsLiteral && !field.IsInitOnly)
+    //        {
 
-        //                foreach (var attrProp in attributeProperties) //sb.AppendLine($"    Attribute: {attribute.GetType().Name}");
-        //                {
-        //                    if (attrProp.CanRead && attrProp.GetIndexParameters().Length == 0) // Some properties of attributes might be methods or indexers, we skip those
-        //                    {
-        //                        try
-        //                        {
-        //                            var attrPropValue = attrProp.GetValue(attribute); //sb.AppendLine($"        {attrProp.Name}: {attrPropValue}");
-        //                            if (attribute.GetType().Name == "ErpDogFieldAttribute" && attrProp.Name == "SqlFieldNameExt" && !String.IsNullOrWhiteSpace(attrPropValue.ToString()))
-        //                            {
-        //                                sb.AppendLine($" {attrPropValue} as {propertyName},");
-        //                            }
-        //                        }
-        //                        catch (Exception ex) { }  //skip exceptions
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        catch (Exception ex) { }  //skip exceptions
-        //    }
-        //    // Recupera tutte le costanti
-        //    FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-        //    foreach (var field in fields)
-        //    {
-        //        if (field.IsLiteral && !field.IsInitOnly)
-        //        {
+    //            string constantName = field.Name; // Recupera il nome della costante e il valore
+    //            object constantValue = field.GetRawConstantValue(); //sb.AppendLine($"Constant: {constantName}, Value: {constantValue}");
+    //            if (constantName == "SqlTableNameExt") tableName = constantValue.ToString();
+    //            if (constantName == "SqlRowIdNameExt") icodeName = constantValue.ToString();
+    //        }
+    //    }
 
-        //            string constantName = field.Name; // Recupera il nome della costante e il valore
-        //            object constantValue = field.GetRawConstantValue(); //sb.AppendLine($"Constant: {constantName}, Value: {constantValue}");
-        //            if (constantName == "SqlTableNameExt") tableName = constantValue.ToString();
-        //            if (constantName == "SqlRowIdNameExt") icodeName = constantValue.ToString();
-        //        }
-        //    }
-
-        //    // terminatore di select
-        //    sb.AppendLine($" ' ' as ErpTerm from {tableName} where {icodeName}='{icode}' ");
+    //    // terminatore di select
+    //    sb.AppendLine($" ' ' as ErpTerm from {tableName} where {icodeName}='{icode}' ");
 
 
-        //    return sb.ToString();
-        //}
+    //    return sb.ToString();
+    //}
 
 
     }

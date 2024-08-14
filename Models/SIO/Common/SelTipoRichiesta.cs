@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Common {
-public class SelTipoRichiesta {
+public class SelTipoRichiesta : ModelErp {
 public const string Description = "Tipo di richieste";
 public const string SqlTableName = "TIPO_RICHIESTA";
 public const string SqlTableNameExt = "TIPO_RICHIESTA";

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
-public class RelAttivitaUsa {
+public class RelAttivitaUsa : ModelErp {
 public const string Description = "Tipi e/o risorse individuali generalmente necessari per l'esecuzione di un'attività";
 public const string SqlTableName = "REL_ATTIVITA_USA";
 public const string SqlTableNameExt = "REL_ATTIVITA_USA";

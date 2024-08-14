@@ -71,7 +71,8 @@ namespace ErpToolkit.Controllers.SIO.Patient
                 ModelState.AddModelError(string.Empty, "Verifica valore dei campi.");
                 return View("~/Views/SIO/Patient/Episodio/Index.cshtml", this);
             }
-            if (!this.Select.TryValidateInt(ModelState)) {
+            if (!this.Select.TryValidateInt(ModelState))
+            {
                 return View("~/Views/SIO/Patient/Episodio/Index.cshtml", this);
             }
             //carica lista
@@ -80,6 +81,50 @@ namespace ErpToolkit.Controllers.SIO.Patient
             this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/Patient/Episodio/Index.cshtml", this);
         }
+
+
+        //[Authorize(AuthenticationSchemes = "Cookies")]
+        //[HttpGet]
+        //public IActionResult Index(string returnUrl = null)
+        //{
+        //    return Index_int("GET", returnUrl);
+        //}
+
+        //[Authorize(AuthenticationSchemes = "Cookies")]
+        //[ValidateAntiForgeryToken]
+        //[HttpPost]
+        //public ActionResult Index()
+        //{
+        //    return Index_int("POST", null);
+        //}
+
+        //private ActionResult Index_int(string verb, string returnUrl = null)
+        //{
+        //    //carico la struttura Select con i parametri
+        //    this.Select = new SelEpisodio();
+        //    foreach (var key in Request.Query.Keys) DogHelper.setPropertyValue(this.Select, key, Request.Query[key]); // carica parametri QueryString
+        //    //verifico se i dati sono completi
+        //    ModelState.Clear(); //FORZA RICONVALIDA MODELLO
+        //    if (!TryValidateModel(this.Select))
+        //    {
+        //        ModelState.AddModelError(string.Empty, "Verifica valore dei campi.");
+        //        return View("~/Views/SIO/Patient/Episodio/Index.cshtml", this);
+        //    }
+        //    if (!this.Select.TryValidateInt(ModelState))
+        //    {
+        //        return View("~/Views/SIO/Patient/Episodio/Index.cshtml", this);
+        //    }
+        //    //carica lista
+        //    try { this.List = DogHelper.List<Episodio>(DbConnectionString, this.Select); }
+        //    catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
+        //    this.StatusMessage = "Lista caricata!";
+        //    //carico eventuali parametri presenti in TempData
+        //    foreach (var item in TempData.Keys) ViewData[item] = TempData[item];
+        //    return View("~/Views/SIO/Patient/Episodio/Index.cshtml", this);
+        //}
+
+
+
 
         [HttpPost]
         public IActionResult Edit([FromBody] ModalParams parms)  

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models.SIO.Act {
-public class SelTipoCampione {
+public class SelTipoCampione : ModelErp {
 public const string Description = "Tipo di campione";
 public const string SqlTableName = "TIPO_CAMPIONE";
 public const string SqlTableNameExt = "TIPO_CAMPIONE";
