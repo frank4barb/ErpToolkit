@@ -179,7 +179,7 @@ namespace ErpToolkit.Helpers
                 try
                 {
                     string propertyName = property.Name; // Get property name and value
-                    if (propertyName == "AttrFields") continue;
+                    //xx//if (propertyName == "AttrFields") continue; // SGANCIO DAL MODELLO IL CONCETTO DI VISIBILITA'
                     object propertyValue = property.GetValue(selModel); //sb.AppendLine($"Property: {propertyName}, Value: {propertyValue}");
                     if (propertyValue == null) continue;
                     // >>> verifica List
@@ -401,17 +401,18 @@ namespace ErpToolkit.Helpers
                             }
                         }
                     }
-                    else if ((propName == propertyName + "_Attr" || propName == attribXref + "_Attr") && propValue != null)
-                    {
-                        PropertyInfo? propertyAttrFields = type.GetProperty("AttrFields");
-                        if (propertyAttrFields != null) {
-                            Dictionary<string, FieldAttr>? attrFields = (Dictionary<string, FieldAttr>?)propertyAttrFields.GetValue(selModel);
-                            if (attrFields != null) { 
-                                if (attrFields.ContainsKey(propertyName)) attrFields[propertyName].setAttr(propValue);
-                                else attrFields[propertyName] = new DogHelper.FieldAttr(propValue);
-                                propertyAttrFields.SetValue(selModel, attrFields); }
-                        }
-                    }
+                    //xx// SGANCIO DAL MODELLO IL CONCETTO DI VISIBILITA'
+                    //xx//else if ((propName == propertyName + "_Attr" || propName == attribXref + "_Attr") && propValue != null)
+                    //xx//{
+                    //xx//    PropertyInfo? propertyAttrFields = type.GetProperty("AttrFields");
+                    //xx//    if (propertyAttrFields != null) {
+                    //xx//        Dictionary<string, FieldAttr>? attrFields = (Dictionary<string, FieldAttr>?)propertyAttrFields.GetValue(selModel);
+                    //xx//        if (attrFields != null) { 
+                    //xx//            if (attrFields.ContainsKey(propertyName)) attrFields[propertyName].setAttr(propValue);
+                    //xx//            else attrFields[propertyName] = new DogHelper.FieldAttr(propValue);
+                    //xx//            propertyAttrFields.SetValue(selModel, attrFields); }
+                    //xx//    }
+                    //xx//}
                     //// imposta gli attributi dei campi  ===> NON FUNZIONA XCHE' GLI ATTRIBUTI POSSONO ESSERE SOLO LETTI
                     //else if ( (propName == propertyName + "_Attr" || propName == attribXref + "_Attr") && propValue != null )
                     //{

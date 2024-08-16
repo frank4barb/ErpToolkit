@@ -457,6 +457,7 @@ function openModalWithContent(modalDialogId, modalAction, jsonParams) {
 $(document).ready(function () {
     $('.autocomplete-input').each(function () {
         var input = $(this);
+        var inputName = input.data('name');
         var resultsDivId = input.data('name') + 'AutocompleteResults';
         var selectedItemsDivId = input.data('selected-items-div-id');
         var resultsDiv = $('#' + resultsDivId);
@@ -498,6 +499,12 @@ $(document).ready(function () {
 
             // Gestione del parametro visible
             if (visible === 'N') {
+
+                //nasconde anche la label che è esterna al tag asp-for
+                var label = document.querySelector('label[for="' + inputName + '"]');
+                if (label) { label.style.display = 'none'; }
+                //---
+
                 input.hide();
                 resultsDiv.hide();
                 selectedItemsDiv.hide(); // Nasconde anche il div delle scelte selezionate

@@ -17,6 +17,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 using System.Text.Encodings.Web;
 using ErpToolkit.Models;
+using ErpToolkit.Controllers;
+using Quartz.Util;
+using static ErpToolkit.Helpers.DogHelper;
 
 
 // VALIDATE FIELD AT SERVER SIDE
@@ -430,9 +433,33 @@ namespace ErpToolkit.Helpers
             var property = For.Metadata.ContainerType.GetProperty(For.Name);
             var attributeServer = property.GetCustomAttributes(typeof(AutocompleteServerAttribute), false).FirstOrDefault() as AutocompleteServerAttribute;
             var attributeClient = property.GetCustomAttributes(typeof(AutocompleteClientAttribute), false).FirstOrDefault() as AutocompleteClientAttribute;
-            var model = ViewContext.ViewData.Model;  // Accedi al Model
-            var attrField = new DogHelper.FieldAttr("");
-            if (model != null) try { attrField = (model as ModelErp).AttrFields[For.Name]; } catch (Exception ex){ } // skip exeptions
+            var attributeErpDogField = property.GetCustomAttributes(typeof(ErpDogFieldAttribute), false).FirstOrDefault() as ErpDogFieldAttribute;
+            var attributeErpDogField_Xref = attributeErpDogField?.Xref ?? "";
+
+            //calcola restrizioni visibilità pagina
+            //-------------------------------------
+            //xx//var model = ViewContext.ViewData.Model;  // Accedi al Model
+            //xx//var attrField = new DogHelper.FieldAttr("");
+            //xx//if (model != null) try { attrField = (model as ModelErp).AttrFields[For.Name]; } catch (Exception ex) { } // skip exeptions
+            //---
+            FieldAttr attrField = new DogHelper.FieldAttr("");
+            try
+            {
+                string nomePercorso = ViewContext.TempData["NomeSequenzaPagine"] as string; ViewContext.TempData["NomeSequenzaPagine"] = nomePercorso;  //ricarico per mantenere in memoria
+                List<SharedController.Page> sequenzaPagine = SharedController.PathMenu[nomePercorso];
+                string nomePagina = ((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ControllerName;
+                int paginaIdx = sequenzaPagine.FindIndex(page => page.pageName.Equals(nomePagina, StringComparison.Ordinal));
+                if (sequenzaPagine[paginaIdx].defaultFields.ContainsKey(For.Name + "_Attr"))
+                {
+                    attrField = new DogHelper.FieldAttr(sequenzaPagine[paginaIdx].defaultFields[For.Name + "_Attr"] ?? "");
+                }
+                else if (sequenzaPagine[paginaIdx].defaultFields.ContainsKey(attributeErpDogField_Xref + "_Attr"))
+                {
+                    attrField = new DogHelper.FieldAttr(sequenzaPagine[paginaIdx].defaultFields[attributeErpDogField_Xref + "_Attr"] ?? "");
+                }
+            }
+            catch (Exception ex) { } // skip exeptions
+            //---
 
 
             if (attributeServer != null)
@@ -464,7 +491,7 @@ namespace ErpToolkit.Helpers
 
                 // Aggiungi il wrapper per l'input e l'icona
                 output.PreElement.AppendHtml("<div class='autocomplete-wrapper'>");
-                output.PostElement.AppendHtml("<span class='autocomplete-icon'><i class='bi bi-search' aria-hidden='true'></i></span></div>");
+                if (attrField.Readonly != 'Y' && attrField.Visible != 'N') output.PostElement.AppendHtml("<span class='autocomplete-icon'><i class='bi bi-search' aria-hidden='true'></i></span></div>");
                 //--
 
                 output.PostElement.AppendHtml(selectedItemsDiv);
@@ -500,11 +527,12 @@ namespace ErpToolkit.Helpers
 
                 // Aggiungi il wrapper per l'input e l'icona
                 output.PreElement.AppendHtml("<div class='autocomplete-wrapper'>");
-                output.PostElement.AppendHtml("<span class='autocomplete-icon'><i class='bi bi-search' aria-hidden='true'></i></span></div>");
+                if (attrField.Readonly != 'Y' && attrField.Visible != 'N') output.PostElement.AppendHtml("<span class='autocomplete-icon'><i class='bi bi-search' aria-hidden='true'></i></span></div>");
                 //--
 
                 output.PostElement.AppendHtml(selectedItemsDiv);
                 output.PostElement.AppendHtml($"<div id='{For.Name}AutocompleteResults' class='autocomplete-results' style='display: none;'></div>"); // Aggiungi l'ID del div dei risultati dell'autocomplete
+
             }
         }
 

@@ -1,12 +1,13 @@
 ﻿using ErpToolkit.Helpers;
+using System.ComponentModel.DataAnnotations;
 
 namespace ErpToolkit.Models {
     public class ModelErp {
 
-        //attributi di visualizzazione dei campi definiti a run-time
-        public Dictionary<string, DogHelper.FieldAttr> AttrFields { get; set; } = new Dictionary<string, DogHelper.FieldAttr>();
+        //xx// SGANCIO DAL MODELLO IL CONCETTO DI VISIBILITA'
+        //xx////attributi di visualizzazione dei campi definiti a run-time
+        //xx//public Dictionary<string, DogHelper.FieldAttr> AttrFields { get; set; } = new Dictionary<string, DogHelper.FieldAttr>();
 
- 
 
     }
 }

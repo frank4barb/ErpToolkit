@@ -48,6 +48,7 @@ namespace ErpToolkit.Controllers
         //// GESTIONE LOGIN SULLA PAGINA HOME
         ////---------------------------------
 
+        [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpGet]
         public async Task<IActionResult> Index(string returnUrl = null)
         {
@@ -56,9 +57,12 @@ namespace ErpToolkit.Controllers
                 ModelState.AddModelError(string.Empty, "E' necessario effettuare la login per accedere alla pagina!");
                 HttpContext.Session.SetString(SessionReturnUrl, returnUrl);
             }
-            return View();
+            //return View();
+            return View("~/Views/Home/Index.cshtml", this);  //passo il Controller alla vista, come Model
+
         }
 
+        [Authorize(AuthenticationSchemes = "Cookies")]
         [HttpPost]
         public async Task<IActionResult> Index(InputLogin Input)
         {
@@ -69,7 +73,8 @@ namespace ErpToolkit.Controllers
                 // logout
                 ErpContext.TermSessionAsync(HttpContext); //clean current session ErpContext and LOGOUT
                 if (HttpContext.User.Identity != null && HttpContext.User.Identity.IsAuthenticated) return LocalRedirect(Url.Content("~/"));  // <<<-- ricarica la pagina di login dopo LOGOUT
-                return View(); // <<<-- visualizza gli errori LOGIN
+                //return View(); // <<<-- visualizza gli errori LOGIN
+                return View("~/Views/Home/Index.cshtml", this);  //passo il Controller alla vista, come Model
             }
 
 
@@ -80,7 +85,8 @@ namespace ErpToolkit.Controllers
             {
                 //errore utente non abilitato
                 ModelState.AddModelError(string.Empty, "Matricola o Password non valide!");
-                return View(); // <<<-- visualizza gli errori
+                //return View(); // <<<-- visualizza gli errori
+                return View("~/Views/Home/Index.cshtml", this);  //passo il Controller alla vista, come Model
             }
 
             //redirect to ReturnUrl

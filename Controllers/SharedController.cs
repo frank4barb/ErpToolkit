@@ -13,6 +13,7 @@ using System.Security.Cryptography.Xml;
 using NLog.Filters;
 using Google.Api;
 using Quartz.Util;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 
 namespace ErpToolkit.Controllers
@@ -105,7 +106,7 @@ namespace ErpToolkit.Controllers
 
         public IActionResult RedirectToStartPage(string nomePercorso)
         {
-            TempData["NomeSequenzaPagine"] = nomePercorso;
+            TempData["NomeSequenzaPagine"] = nomePercorso; // Set data in TempData (i dati rimangono in memoria solo per la prossima request, poi sono cancellati dalla struttura
             return RedirectToAction("Index", PathMenu[nomePercorso][0].pageName);
         }
 
@@ -118,7 +119,7 @@ namespace ErpToolkit.Controllers
                 //routeValuesDictionary.Add("AnotherFixedParm", "true");
 
                 // trovo percorso
-                string nomePercorso = TempData["NomeSequenzaPagine"] as string;
+                string nomePercorso = TempData["NomeSequenzaPagine"] as string; TempData["NomeSequenzaPagine"] = nomePercorso; //ricarico per mantenere in memoria
                 List<Page> sequenzaPagine = PathMenu[nomePercorso];
                 // calcolo prossima pagina in precorso
                 int provenienzaPaginaIdx = sequenzaPagine.FindIndex(page => page.pageName.Equals(provenienzaPagina, StringComparison.Ordinal));  //int provenienzaPaginaIdx = sequenzaPagine.IndexOf(provenienzaPagina);
