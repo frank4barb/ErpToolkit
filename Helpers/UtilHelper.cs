@@ -1,5 +1,7 @@
+using ErpToolkit.Controllers;
 using Google.Api;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using NLog;
 using Quartz.Util;
 using System.Collections.Generic;
@@ -13,6 +15,7 @@ using System.Reflection.PortableExecutable;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
+using static ErpToolkit.Helpers.DogHelper;
 
 namespace ErpToolkit.Helpers
 {
@@ -186,6 +189,44 @@ namespace ErpToolkit.Helpers
         }
 
         //#############################################################################
+
+        //calcola restrizioni visibilità pagina
+        //-------------------------------------
+
+        public static FieldAttr fieldAttrTagHelper(string fieldName, string xrefFieldName, ViewContext viewContext)
+        {
+            FieldAttr attrField = new DogHelper.FieldAttr("");
+            try
+            {
+                string nomePercorso = viewContext.TempData["NomeSequenzaPagine"] as string; viewContext.TempData["NomeSequenzaPagine"] = nomePercorso;  //ricarico per mantenere in memoria
+                List<SharedController.Page> sequenzaPagine = SharedController.PathMenu[nomePercorso];
+                string nomePagina = ((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)viewContext.ActionDescriptor).ControllerName;
+                int paginaIdx = sequenzaPagine.FindIndex(page => page.pageName.Equals(nomePagina, StringComparison.Ordinal));
+                if (sequenzaPagine[paginaIdx].defaultFields.ContainsKey(fieldName + "_Attr"))
+                {
+                    attrField = new DogHelper.FieldAttr(sequenzaPagine[paginaIdx].defaultFields[fieldName + "_Attr"] ?? "");
+                }
+                else if (sequenzaPagine[paginaIdx].defaultFields.ContainsKey(xrefFieldName + "_Attr"))
+                {
+                    attrField = new DogHelper.FieldAttr(sequenzaPagine[paginaIdx].defaultFields[xrefFieldName + "_Attr"] ?? "");
+                }
+            }
+            catch (Exception ex) { } // skip exeptions
+
+            // Convert the plaintext stream to a string.
+            return attrField;
+        }
+
+
+
+        //#############################################################################
+
+
+
+
+
+
+
 
         //https://github.com/dotnet/efcore/issues/4675
         //convert: SqlDataReader to DbSet

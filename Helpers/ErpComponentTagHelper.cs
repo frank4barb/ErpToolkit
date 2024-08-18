@@ -438,27 +438,29 @@ namespace ErpToolkit.Helpers
 
             //calcola restrizioni visibilità pagina
             //-------------------------------------
+            FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
+
             //xx//var model = ViewContext.ViewData.Model;  // Accedi al Model
             //xx//var attrField = new DogHelper.FieldAttr("");
             //xx//if (model != null) try { attrField = (model as ModelErp).AttrFields[For.Name]; } catch (Exception ex) { } // skip exeptions
             //---
-            FieldAttr attrField = new DogHelper.FieldAttr("");
-            try
-            {
-                string nomePercorso = ViewContext.TempData["NomeSequenzaPagine"] as string; ViewContext.TempData["NomeSequenzaPagine"] = nomePercorso;  //ricarico per mantenere in memoria
-                List<SharedController.Page> sequenzaPagine = SharedController.PathMenu[nomePercorso];
-                string nomePagina = ((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ControllerName;
-                int paginaIdx = sequenzaPagine.FindIndex(page => page.pageName.Equals(nomePagina, StringComparison.Ordinal));
-                if (sequenzaPagine[paginaIdx].defaultFields.ContainsKey(For.Name + "_Attr"))
-                {
-                    attrField = new DogHelper.FieldAttr(sequenzaPagine[paginaIdx].defaultFields[For.Name + "_Attr"] ?? "");
-                }
-                else if (sequenzaPagine[paginaIdx].defaultFields.ContainsKey(attributeErpDogField_Xref + "_Attr"))
-                {
-                    attrField = new DogHelper.FieldAttr(sequenzaPagine[paginaIdx].defaultFields[attributeErpDogField_Xref + "_Attr"] ?? "");
-                }
-            }
-            catch (Exception ex) { } // skip exeptions
+            //FieldAttr attrField = new DogHelper.FieldAttr("");
+            //try
+            //{
+            //    string nomePercorso = ViewContext.TempData["NomeSequenzaPagine"] as string; ViewContext.TempData["NomeSequenzaPagine"] = nomePercorso;  //ricarico per mantenere in memoria
+            //    List<SharedController.Page> sequenzaPagine = SharedController.PathMenu[nomePercorso];
+            //    string nomePagina = ((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ControllerName;
+            //    int paginaIdx = sequenzaPagine.FindIndex(page => page.pageName.Equals(nomePagina, StringComparison.Ordinal));
+            //    if (sequenzaPagine[paginaIdx].defaultFields.ContainsKey(For.Name + "_Attr"))
+            //    {
+            //        attrField = new DogHelper.FieldAttr(sequenzaPagine[paginaIdx].defaultFields[For.Name + "_Attr"] ?? "");
+            //    }
+            //    else if (sequenzaPagine[paginaIdx].defaultFields.ContainsKey(attributeErpDogField_Xref + "_Attr"))
+            //    {
+            //        attrField = new DogHelper.FieldAttr(sequenzaPagine[paginaIdx].defaultFields[attributeErpDogField_Xref + "_Attr"] ?? "");
+            //    }
+            //}
+            //catch (Exception ex) { } // skip exeptions
             //---
 
 
@@ -602,50 +604,335 @@ namespace ErpToolkit.Helpers
         }
     }
 
+    //[HtmlTargetElement("input", Attributes = "asp-for")]
+    //public class DateRangeTagHelper : TagHelper
+    //{
+    //    [HtmlAttributeName("asp-for")]
+    //    public ModelExpression AspFor { get; set; }
+
+    //    public override void Process(TagHelperContext context, TagHelperOutput output)
+    //    {
+    //        if (AspFor.Metadata.ContainerType.GetProperty(AspFor.Name).GetCustomAttributes(typeof(DateRangeAttribute), false).Length > 0)
+    //        {
+    //            var daterangeAttribute = (DateRangeAttribute)AspFor.Metadata.ContainerType.GetProperty(AspFor.Name).GetCustomAttributes(typeof(DateRangeAttribute), false)[0];
+    //            string options = daterangeAttribute.Options;
+    //            string displayName = AspFor.Metadata.DisplayName ?? AspFor.Name;
+    //            string startDateLabel = $"{displayName}: Inizio";
+    //            string endDateLabel = $"{displayName}: Fine";
+    //            string format = options == "DateTime" ? "dd/MM/yyyy HH:mm" : "dd/MM/yyyy";  // future use: attualmente non implementato
+
+    //            string startDateId = $"{AspFor.Name}.StartDate";
+    //            string endDateId = $"{AspFor.Name}.EndDate";
+
+    //            string content = $@"
+    //            <div class='row'>
+    //                <div class='col-md-6'>
+    //                    <label for='{startDateId}'>{startDateLabel}</label>
+    //                    <input class='form-control' type='date' data-val='true' data-val-length='Inserire massimo 10 caratteri' data-val-length-max='10' 
+    //                                            id='{startDateId}' name='{startDateId}' value=''>
+    //                    <input name='__Invariant' type='hidden' value='{startDateId}'>
+    //                </div>
+    //                <div class='col-md-6'>
+    //                    <label for='{endDateId}'>{endDateLabel}</label>
+    //                    <input class='form-control' type='date' data-val='true' data-val-length='Inserire massimo 10 caratteri' data-val-length-max='10' 
+    //                                            id='{endDateId}' name='{endDateId}' value=''>
+    //                    <input name='__Invariant' type='hidden' value='{endDateId}'>
+    //                </div>
+    //            </div>";
+
+    //            output.Attributes.SetAttribute("type", "hidden");
+    //            output.Attributes.SetAttribute("value", "");
+    //            output.PostElement.AppendHtml(content);
+
+    //        }
+    //    }
+    //}
+
+
+
+
+
+
+
+
+
     [HtmlTargetElement("input", Attributes = "asp-for")]
     public class DateRangeTagHelper : TagHelper
     {
+        [ViewContext]
+        [HtmlAttributeNotBound]
+        public ViewContext ViewContext { get; set; }
+
         [HtmlAttributeName("asp-for")]
-        public ModelExpression AspFor { get; set; }
+        public ModelExpression For { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            if (AspFor.Metadata.ContainerType.GetProperty(AspFor.Name).GetCustomAttributes(typeof(DateRangeAttribute), false).Length > 0)
+            var property = For.Metadata.ContainerType.GetProperty(For.Name);
+            var attributeErpDogField = property.GetCustomAttributes(typeof(ErpDogFieldAttribute), false).FirstOrDefault() as ErpDogFieldAttribute;
+            var attributeErpDogField_Xref = attributeErpDogField?.Xref ?? "";
+
+            if (property.GetCustomAttributes(typeof(DateRangeAttribute), false).Length > 0)
             {
-                var daterangeAttribute = (DateRangeAttribute)AspFor.Metadata.ContainerType.GetProperty(AspFor.Name).GetCustomAttributes(typeof(DateRangeAttribute), false)[0];
+                var daterangeAttribute = (DateRangeAttribute)property.GetCustomAttributes(typeof(DateRangeAttribute), false)[0];
                 string options = daterangeAttribute.Options;
-                string displayName = AspFor.Metadata.DisplayName ?? AspFor.Name;
+                string displayName = For.Metadata.DisplayName ?? For.Name;
                 string startDateLabel = $"{displayName}: Inizio";
                 string endDateLabel = $"{displayName}: Fine";
                 string format = options == "DateTime" ? "dd/MM/yyyy HH:mm" : "dd/MM/yyyy";  // future use: attualmente non implementato
 
-                string startDateId = $"{AspFor.Name}.StartDate";
-                string endDateId = $"{AspFor.Name}.EndDate";
+                string startDateId = $"{For.Name}.StartDate";
+                string endDateId = $"{For.Name}.EndDate";
+
+
+                //calcola restrizioni visibilità pagina
+                //-------------------------------------
+                FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
+
 
                 string content = $@"
                 <div class='row'>
                     <div class='col-md-6'>
                         <label for='{startDateId}'>{startDateLabel}</label>
-                        <input class='form-control' type='date' data-val='true' data-val-length='Inserire massimo 10 caratteri' data-val-length-max='10' 
-                                                id='{startDateId}' name='{startDateId}' value=''>
+                        <input class='form-control' type='date' data-val='true' id='{startDateId}' name='{startDateId}' value='' {(attrField.Readonly == 'Y' ? "readonly" : "")}>
                         <input name='__Invariant' type='hidden' value='{startDateId}'>
                     </div>
                     <div class='col-md-6'>
                         <label for='{endDateId}'>{endDateLabel}</label>
-                        <input class='form-control' type='date' data-val='true' data-val-length='Inserire massimo 10 caratteri' data-val-length-max='10' 
-                                                id='{endDateId}' name='{endDateId}' value=''>
+                        <input class='form-control' type='date' data-val='true' id='{endDateId}' name='{endDateId}' value='' {(attrField.Readonly == 'Y' ? "readonly" : "")}>
                         <input name='__Invariant' type='hidden' value='{endDateId}'>
                     </div>
                 </div>";
 
-                output.Attributes.SetAttribute("type", "hidden");
-                output.Attributes.SetAttribute("value", "");
-                output.PostElement.AppendHtml(content);
 
+
+                if (attrField.Visible == 'N')
+                {
+                    // Se Visible è N, nascondiamo l'intero controllo
+                    output.SuppressOutput();
+                }
+                else
+                {
+                    output.Attributes.SetAttribute("type", "hidden");
+                    output.Attributes.SetAttribute("value", "");
+                    output.PostElement.AppendHtml(content);
+                }
             }
         }
     }
 
+
+    //*****************************************************************************************************************************************************
+    //
+    // SCELTA SINGOLA O MULTIPLA
+    //
+
+    // ?????????????????? da verificare ????????????????????????????????????????
+
+    [HtmlTargetElement("switch-group", Attributes = "asp-for")]
+    public class SwitchGroupTagHelper : TagHelper
+    {
+        [HtmlAttributeName("asp-for")]
+        public ModelExpression AspFor { get; set; }
+
+        public string Readonly { get; set; } = "N";
+        public string Visible { get; set; } = "Y";
+        public bool IsMultiple { get; set; } = false;
+
+        [HtmlAttributeName("choices")]
+        public string Choices { get; set; } // Le possibili scelte devono essere passate come stringa separata da virgole
+
+        [HtmlAttributeName("max-selections")]
+        public int MaxSelections { get; set; } = int.MaxValue; // Numero massimo di selezioni per scelta multipla
+
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            if (Visible == "N")
+            {
+                output.SuppressOutput();
+                return;
+            }
+
+            var choices = Choices?.Split(',') ?? Array.Empty<string>();
+            var name = AspFor.Name;
+            var readonlyAttr = Readonly == "Y" ? "disabled" : "";
+
+            // Determina i valori pre-selezionati
+            var selectedValues = new HashSet<string>();
+
+            if (IsMultiple && AspFor.Model is IEnumerable<string> modelList)
+            {
+                selectedValues = new HashSet<string>(modelList);
+            }
+            else if (AspFor.Model is string modelValue)
+            {
+                selectedValues.Add(modelValue);
+            }
+
+            // HTML per il gruppo di switch
+            var content = new StringBuilder();
+            content.AppendLine("<div class='switch-group'>");
+
+            for (int i = 0; i < choices.Length; i++)
+            {
+                if (i > 0 && i % 6 == 0)
+                {
+                    content.AppendLine("<div class='w-100'></div>"); // Line break after 6 items
+                }
+
+                string id = $"{name}_{i}";
+                string value = choices[i].Trim();
+                string inputType = IsMultiple ? "checkbox" : "radio";
+                string checkedAttr = selectedValues.Contains(value) ? "checked" : "";
+
+                content.AppendLine($@"
+                <div class='form-check form-switch d-inline-block mb-2'>
+                    <input class='form-check-input' type='{inputType}' name='{name}' id='{id}' value='{value}' {checkedAttr} {readonlyAttr} onchange='handleMaxSelections(this, {MaxSelections})'>
+                    <label class='form-check-label' for='{id}'>{value}</label>
+                </div>");
+            }
+
+            content.AppendLine("</div>");
+
+            // JavaScript per gestire il numero massimo di selezioni
+            if (IsMultiple && MaxSelections < int.MaxValue)
+            {
+                string script = $@"
+            <script>
+                function handleMaxSelections(checkbox, maxSelections) {{
+                    var group = document.querySelectorAll('input[name=""{name}""]');
+                    var checkedCount = 0;
+
+                    group.forEach(function(item) {{
+                        if (item.checked) {{
+                            checkedCount++;
+                        }}
+                    }});
+
+                    if (checkedCount >= maxSelections) {{
+                        group.forEach(function(item) {{
+                            if (!item.checked) {{
+                                item.disabled = true;
+                            }}
+                        }});
+                    }} else {{
+                        group.forEach(function(item) {{
+                            item.disabled = false;
+                        }});
+                    }}
+                }}
+
+                // Esegui il controllo iniziale per disabilitare eventuali elementi in eccesso già selezionati
+                document.addEventListener('DOMContentLoaded', function() {{
+                    handleMaxSelections(null, {MaxSelections});
+                }});
+            </script>";
+
+                content.AppendLine(script);
+            }
+
+            output.TagName = "div";
+            output.Attributes.SetAttribute("class", "switch-group-container");
+            output.Content.SetHtmlContent(content.ToString());
+        }
+    }
+
+
+
+    //*****************************************************************************************************************************************************
+    //
+    // PROPRIETA' CON DIFFERENTI ATTRIBUTI DataType
+    //
+    // TagHelper generico che si applica a tutti gli elementi input, indipendentemente dal tipo di DataType.
+    // Questo TagHelper può essere configurato per modificare l'output dell'elemento HTML in base ai valori di Visible e Readonly.
+
+    //usage
+    //DataType(DataType.Text)] , [DataType(DataType.Date)] , [DataType(DataType.Time)] , [DataType(DataType.EmailAddress)] , [DataType(DataType.PhoneNumber)] , [DataType(DataType.Text)] , [DataType(DataType.Currency)] , [DataType(DataType.Duration)] e [DataType(DataType.MultilineText)]
+    //[Required]
+    //public string? EpNote  { get; set; }
+
+
+    [HtmlTargetElement("input", Attributes = "asp-for")]
+    public class GenericDataTypeTagHelper : TagHelper
+    {
+        [ViewContext]
+        [HtmlAttributeNotBound]
+        public ViewContext ViewContext { get; set; }
+
+        [HtmlAttributeName("asp-for")]
+        public ModelExpression For { get; set; }
+
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            var property = For.Metadata.ContainerType.GetProperty(For.Name);
+            var attributeErpDogField = property.GetCustomAttributes(typeof(ErpDogFieldAttribute), false).FirstOrDefault() as ErpDogFieldAttribute;
+            var attributeErpDogField_Xref = attributeErpDogField?.Xref ?? "";
+
+            if (property != null)
+            {
+
+                //calcola restrizioni visibilità pagina
+                //-------------------------------------
+                FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
+
+                var dataTypeAttribute = property.GetCustomAttributes(typeof(DataTypeAttribute), false).FirstOrDefault() as DataTypeAttribute;
+
+                if (dataTypeAttribute != null)
+                {
+                    if (attrField.Visible == 'N')
+                    {
+                        // Nascondi il controllo se Visible è "N"
+                        output.SuppressOutput();
+
+                        // Aggiungi codice JavaScript per rimuovere la label associata
+                        string script = $@"
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {{
+                                        var label = document.querySelector('label[for=""{For.Name}""]');
+                                        if (label) {{
+                                            label.style.display = 'none';
+                                        }}
+                                    }});
+                                </script>";
+                        output.PostElement.AppendHtml(script);
+
+                    }
+                    else
+                    {
+                        // Imposta il tipo di input HTML in base a DataType
+                        string inputType = dataTypeAttribute.DataType switch
+                        {
+                            DataType.Text => "text",
+                            DataType.Date => "date",
+                            DataType.Time => "time",
+                            DataType.EmailAddress => "email",
+                            DataType.PhoneNumber => "tel",
+                            DataType.Currency => "text", // Non c'è un tipo specifico per la valuta in HTML5
+                            DataType.Duration => "text", // Puoi personalizzare questo a seconda delle esigenze
+                            DataType.MultilineText => "textarea", // Per i multiline, utilizzeremo un <textarea>
+                            _ => "text" // Default
+                        };
+
+                        output.Attributes.SetAttribute("type", inputType);
+
+                        if (attrField.Readonly == 'Y')
+                        {
+                            // Imposta l'attributo readonly se necessario
+                            output.Attributes.SetAttribute("readonly", "readonly");
+                        }
+
+                        // Gestione speciale per textarea (multiline text)
+                        if (inputType == "textarea")
+                        {
+                            output.TagName = "textarea";
+                            output.Content.SetContent(For.Model?.ToString() ?? "");
+                            output.Attributes.RemoveAll("type"); // Rimuove il tipo poiché non è necessario per <textarea>
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 
     //*****************************************************************************************************************************************************
