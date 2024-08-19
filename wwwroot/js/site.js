@@ -46,6 +46,40 @@ function openModalWithContent(modalDialogId, modalAction, jsonParams) {
         .catch(error => console.error('Errore:', error));
 }
 
+
+
+// ***********************************************************************************************
+// SCELTA SINGOLA O MULTIPLA
+
+// funzione richiamata da SwitchGroupTagHelper
+
+
+function handleMaxSelections(groupName, maxSelections) {
+    var group = document.querySelectorAll(`input[name="${groupName}"]`);
+    var checkedCount = 0;
+
+    group.forEach(function (item) {
+        if (item.checked) {
+            checkedCount++;
+        }
+    });
+
+    if (checkedCount >= maxSelections) {
+        group.forEach(function (item) {
+            if (!item.checked) {
+                item.disabled = true;
+            }
+        });
+    } else {
+        group.forEach(function (item) {
+            item.disabled = false;
+        });
+    }
+}
+
+
+
+
 // ***********************************************************************************************
 // AUTOCOMPLETE CLIENT E SERVER ...chiamate da AutocompleteTagHelper (ErpComponentTagHelper)
 

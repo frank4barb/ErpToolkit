@@ -729,111 +729,216 @@ namespace ErpToolkit.Helpers
 
     // ?????????????????? da verificare ????????????????????????????????????????
 
-    [HtmlTargetElement("switch-group", Attributes = "asp-for")]
-    public class SwitchGroupTagHelper : TagHelper
+
+
+    //public class YourViewModel
+    //{
+    //    [MultipleChoices(new[] { "A", "B", "C" }, maxSelections: 3, labelProviderAction: "GetLabels")]
+    //    public List<string> EpClasseEpisodioMultiplo { get; set; } = new List<string>();
+    //
+    //    [MultipleChoices(new[] { "Choice 1", "Choice 2", "Choice 3" }, MaxSelections = 1)]
+    //    public string EpClasseEpisodioSingolo { get; set; }
+    //}
+
+
+    //@model YourViewModel
+    //<form>
+    //    <switch-group asp-for="Model.EpClasseEpisodioMultiplo" readonly= "N" visible= "Y" >
+    //    </switch-group>
+
+    //    <button type = "submit" class="btn btn-primary">Submit</button>
+    //</form>
+
+
+    //1.Attributo Personalizzato
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    public class MultipleChoicesAttribute : Attribute
     {
+        public string[] Choices { get; }
+        public int MaxSelections { get; }
+        public string LabelProviderAction { get; }
+
+        public MultipleChoicesAttribute(string[] choices, int maxSelections = 1, string labelProviderAction = null)
+        {
+            Choices = choices;
+            MaxSelections = maxSelections;
+            LabelProviderAction = labelProviderAction;
+        }
+    }
+
+    [HtmlTargetElement("input", Attributes = "asp-for")]
+    public class SwitchGroupMultipleChoicesTagHelper : TagHelper
+    {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public SwitchGroupMultipleChoicesTagHelper(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        //----------------------------------
+
+        [ViewContext]
+        [HtmlAttributeNotBound]
+        public ViewContext ViewContext { get; set; }
+
         [HtmlAttributeName("asp-for")]
-        public ModelExpression AspFor { get; set; }
-
-        public string Readonly { get; set; } = "N";
-        public string Visible { get; set; } = "Y";
-        public bool IsMultiple { get; set; } = false;
-
-        [HtmlAttributeName("choices")]
-        public string Choices { get; set; } // Le possibili scelte devono essere passate come stringa separata da virgole
-
-        [HtmlAttributeName("max-selections")]
-        public int MaxSelections { get; set; } = int.MaxValue; // Numero massimo di selezioni per scelta multipla
+        public ModelExpression For { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            if (Visible == "N")
+            var property = For.ModelExplorer.Container.ModelType.GetProperty(For.Name);
+            var multipleChoicesAttribute = property.GetCustomAttributes(typeof(MultipleChoicesAttribute), false).FirstOrDefault() as MultipleChoicesAttribute;
+            var attributeErpDogField = property.GetCustomAttributes(typeof(ErpDogFieldAttribute), false).FirstOrDefault() as ErpDogFieldAttribute;
+            var attributeErpDogField_Xref = attributeErpDogField?.Xref ?? "";
+
+            if (multipleChoicesAttribute != null)
             {
-                output.SuppressOutput();
-                return;
-            }
 
-            var choices = Choices?.Split(',') ?? Array.Empty<string>();
-            var name = AspFor.Name;
-            var readonlyAttr = Readonly == "Y" ? "disabled" : "";
+                //calcola restrizioni visibilità pagina
+                //-------------------------------------
+                FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
+                //-------------------------------------
 
-            // Determina i valori pre-selezionati
-            var selectedValues = new HashSet<string>();
 
-            if (IsMultiple && AspFor.Model is IEnumerable<string> modelList)
-            {
-                selectedValues = new HashSet<string>(modelList);
-            }
-            else if (AspFor.Model is string modelValue)
-            {
-                selectedValues.Add(modelValue);
-            }
 
-            // HTML per il gruppo di switch
-            var content = new StringBuilder();
-            content.AppendLine("<div class='switch-group'>");
-
-            for (int i = 0; i < choices.Length; i++)
-            {
-                if (i > 0 && i % 6 == 0)
+                if (attrField.Visible == 'N')
                 {
-                    content.AppendLine("<div class='w-100'></div>"); // Line break after 6 items
+                    output.SuppressOutput();
+
+                    // Aggiungi codice JavaScript per rimuovere la label associata
+                    string script = $@"
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function() {{
+                                        var label = document.querySelector('label[for=""{For.Name}""]');
+                                        if (label) {{
+                                            label.style.display = 'none';
+                                        }}
+                                    }});
+                                </script>";
+                    output.PostElement.AppendHtml(script);
+
+                    return;
                 }
 
-                string id = $"{name}_{i}";
-                string value = choices[i].Trim();
-                string inputType = IsMultiple ? "checkbox" : "radio";
-                string checkedAttr = selectedValues.Contains(value) ? "checked" : "";
 
-                content.AppendLine($@"
-                <div class='form-check form-switch d-inline-block mb-2'>
-                    <input class='form-check-input' type='{inputType}' name='{name}' id='{id}' value='{value}' {checkedAttr} {readonlyAttr} onchange='handleMaxSelections(this, {MaxSelections})'>
-                    <label class='form-check-label' for='{id}'>{value}</label>
-                </div>");
+
+                var choices = multipleChoicesAttribute.Choices;
+                var maxSelections = multipleChoicesAttribute.MaxSelections;
+                var isMultiple = maxSelections > 1;
+                var name = For.Name;
+                var readonlyAttr = attrField.Readonly == 'Y' ? "disabled" : "";
+                var labels = choices;
+
+                // Se è specificata l'azione per ottenere le label, esegue la chiamata al controller
+                if (!string.IsNullOrEmpty(multipleChoicesAttribute.LabelProviderAction))
+                {
+                    var labelResponse = GetLabelsFromController("Shared", "GetLabels", multipleChoicesAttribute.LabelProviderAction);
+
+                    if (!string.IsNullOrEmpty(labelResponse.Item2))
+                    {
+                        // Gestione dell'errore
+                        output.Content.SetHtmlContent($"<div class='alert alert-danger'>Errore: {labelResponse.Item1}</div>");
+                        return;
+                    }
+                    var labelChoices = labelResponse.Item1;
+                    labels = choices
+                                .Select(choice => labelChoices.FirstOrDefault(item => item.value == choice)?.label)
+                                .ToArray() ?? choices;
+                }
+
+                // Determina i valori pre-selezionati
+                var selectedValues = new HashSet<string>();
+
+                if (isMultiple && For.Model is IEnumerable<string> modelList)
+                {
+                    selectedValues = new HashSet<string>(modelList);
+                }
+                else if (For.Model is string modelValue)
+                {
+                    selectedValues.Add(modelValue);
+                }
+
+                // HTML per il gruppo di switch
+                var content = new StringBuilder();
+                content.AppendLine("<div class='switch-group'>");
+
+                for (int i = 0; i < choices.Length; i++)
+                {
+                    if (i > 0 && i % 6 == 0)
+                    {
+                        content.AppendLine("<div class='w-100'></div>"); // Line break after 6 items
+                    }
+
+                    string id = $"{name}_{i}";
+                    string value = choices[i].Trim();
+                    string inputType = isMultiple ? "checkbox" : "radio";
+                    string checkedAttr = selectedValues.Contains(value) ? "checked" : "";
+
+                    content.AppendLine($@"
+                        <div class='form-check form-switch d-inline-block mb-2'>
+                            <input class='form-check-input' type='{inputType}' name='{name}' id='{id}' value='{value}' {checkedAttr} {readonlyAttr} onchange='handleMaxSelections(""{name}"", {maxSelections})'>
+                            <label class='form-check-label' for='{id}'>{value}</label>
+                        </div>");
+                }
+
+                content.AppendLine("</div>");
+
+                // JavaScript per gestire il numero massimo di selezioni
+                if (isMultiple && maxSelections < int.MaxValue)
+                {
+                    content.AppendLine($@"
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {{
+                                handleMaxSelections('{name}', {maxSelections});
+                            }});
+                        </script>");
+                }
+
+                output.TagName = "div";
+                output.Attributes.SetAttribute("class", "switch-group-container");
+                output.Content.SetHtmlContent(content.ToString());
             }
 
-            content.AppendLine("</div>");
+        }
 
-            // JavaScript per gestire il numero massimo di selezioni
-            if (IsMultiple && MaxSelections < int.MaxValue)
+        private Tuple<List<Choice>?, string?> GetLabelsFromController(string controllerName, string actionName, string labelType)
+        {
+            try
             {
-                string script = $@"
-            <script>
-                function handleMaxSelections(checkbox, maxSelections) {{
-                    var group = document.querySelectorAll('input[name=""{name}""]');
-                    var checkedCount = 0;
+                var httpContext = _httpContextAccessor.HttpContext;
+                var url = $"{httpContext.Request.Scheme}://{httpContext.Request.Host}/{controllerName}/{actionName}?labelType={labelType}";
 
-                    group.forEach(function(item) {{
-                        if (item.checked) {{
-                            checkedCount++;
-                        }}
-                    }});
+                using (var client = new HttpClient())
+                {
+                    var response = client.GetAsync(url).Result;
+                    response.EnsureSuccessStatusCode();
+                    var result = response.Content.ReadAsStringAsync().Result;
 
-                    if (checkedCount >= maxSelections) {{
-                        group.forEach(function(item) {{
-                            if (!item.checked) {{
-                                item.disabled = true;
-                            }}
-                        }});
-                    }} else {{
-                        group.forEach(function(item) {{
-                            item.disabled = false;
-                        }});
-                    }}
-                }}
+                    // Prova a deserializzare prima come un dizionario (per catturare eventuali errori)
+                    var errorData = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(result);
 
-                // Esegui il controllo iniziale per disabilitare eventuali elementi in eccesso già selezionati
-                document.addEventListener('DOMContentLoaded', function() {{
-                    handleMaxSelections(null, {MaxSelections});
-                }});
-            </script>";
+                    if (errorData != null && errorData.ContainsKey("error"))
+                    {
+                        // C'è un errore, restituisci il messaggio di errore
+                        return new Tuple<List<Choice>?, string?>(null, $"Errore nella chiamata a {actionName}: {errorData["error"]}");
+                    }
 
-                content.AppendLine(script);
+                    // Altrimenti, prova a deserializzare come una lista di scelte
+                    var responseData = System.Text.Json.JsonSerializer.Deserialize<List<Choice>>(result);
+
+                    if (responseData == null)
+                    {
+                        throw new Exception("La deserializzazione ha restituito un oggetto nullo.");
+                    }
+
+                    //var labels = responseData.Select(choice => choice.label).ToArray();
+                    return new Tuple<List<Choice>?, string?>(responseData, null);
+                }
             }
-
-            output.TagName = "div";
-            output.Attributes.SetAttribute("class", "switch-group-container");
-            output.Content.SetHtmlContent(content.ToString());
+            catch (Exception ex)
+            {
+                return new Tuple<List<Choice>?, string?>(null, $"Errore nella chiamata a {actionName}: {ex.Message}");
+            }
         }
     }
 
@@ -874,6 +979,7 @@ namespace ErpToolkit.Helpers
                 //calcola restrizioni visibilità pagina
                 //-------------------------------------
                 FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
+                //-------------------------------------
 
                 var dataTypeAttribute = property.GetCustomAttributes(typeof(DataTypeAttribute), false).FirstOrDefault() as DataTypeAttribute;
 

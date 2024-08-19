@@ -113,7 +113,8 @@ namespace ErpToolkit
                 });
                 //<<<manage session client
 
-
+                // Registra IHttpContextAccessor
+                builder.Services.AddHttpContextAccessor();
 
                 var app = builder.Build();
 
