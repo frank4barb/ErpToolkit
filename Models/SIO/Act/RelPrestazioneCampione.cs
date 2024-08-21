@@ -66,7 +66,6 @@ public string? Pc1Extatt { get; set; }
 [Display(Name = "Id Campione", ShortName="", Description = "Codice del campione", Prompt="")]
 [ErpDogField("PC_ID_CAMPIONE", SqlFieldNameExt="PC_ID_CAMPIONE", SqlFieldOptions="", Xref="Cp1Icode", SqlFieldProperties="prop() xref(CAMPIONE.CP__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
-[DefaultValue("")]
 [AutocompleteServer("Campione", "AutocompleteGetSelect", "AutocompletePreLoad", 1)]
 [DataType(DataType.Text)]
 public string? PcIdCampione  { get; set; }
@@ -75,7 +74,6 @@ public ErpToolkit.Models.SIO.Act.Campione? PcIdCampioneObj  { get; set; }
 [Display(Name = "Id Prestazione", ShortName="", Description = "Codice dell'atto", Prompt="")]
 [ErpDogField("PC_ID_PRESTAZIONE", SqlFieldNameExt="PC_ID_PRESTAZIONE", SqlFieldOptions="", Xref="Pr1Icode", SqlFieldProperties="prop() xref(PRESTAZIONE.PR__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
-[DefaultValue("")]
 [AutocompleteServer("Prestazione", "AutocompleteGetSelect", "AutocompletePreLoad", 1)]
 [DataType(DataType.Text)]
 public string? PcIdPrestazione  { get; set; }
@@ -85,7 +83,7 @@ public ErpToolkit.Models.SIO.Act.Prestazione? PcIdPrestazioneObj  { get; set; }
 [ErpDogField("PC_TIPO", SqlFieldNameExt="PC_TIPO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("E")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("G|E", ErrorMessage = "Inserisci una delle seguenti opzioni: G|E")]
+[MultipleChoices(new[] { "G", "E" }, MaxSelections=1, LabelClassName="")]
 public string? PcTipo  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note", Prompt="")]
@@ -97,7 +95,6 @@ public string? PcNote  { get; set; }
 
 [Display(Name = "Id Tipo Campione", ShortName="", Description = "Tipo di campione", Prompt="")]
 [ErpDogField("PC_ID_TIPO_CAMPIONE", SqlFieldNameExt="PC_ID_TIPO_CAMPIONE", SqlFieldOptions="", Xref="Tp1Icode", SqlFieldProperties="prop() xref(TIPO_CAMPIONE.TP__ICODE) xdup(CAMPIONE.CP_ID_TIPO_CAMPIONE[REL_PRESTAZIONE_CAMPIONE.PC_ID_CAMPIONE] {PC_ID_TIPO_CAMPIONE=' '}) multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("TipoCampione", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? PcIdTipoCampione  { get; set; }

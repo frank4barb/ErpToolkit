@@ -75,7 +75,7 @@ public string? TiCodice  { get; set; }
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue(" ")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("0|1|2|Z", ErrorMessage = "Inserisci una delle seguenti opzioni: 0|1|2|Z")]
+[MultipleChoices(new[] { "0", "1", "2", "Z" }, MaxSelections=1, LabelClassName="")]
 public string? TiGruppo  { get; set; }
 
 [Display(Name = "Descrizione", ShortName="", Description = "Descrizione", Prompt="")]

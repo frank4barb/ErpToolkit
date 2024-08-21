@@ -30,9 +30,9 @@ public string? TeCodice  { get; set; }
 [Display(Name = "Classe", ShortName="", Description = "Classe di contatto 1=Ricovero - 2=Day-hospital - 3=Ambulatorio", Prompt="")]
 [ErpDogField("TE_CLASSE", SqlFieldNameExt="TE_CLASSE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("0|1|2|3|4|5|6|7|8|9", ErrorMessage = "Inserisci una delle seguenti opzioni: 0|1|2|3|4|5|6|7|8|9")]
-public string? TeClasse  { get; set; }
+[MultipleChoices(new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" }, MaxSelections=-1, LabelClassName="")]
+[DataType(DataType.Text)]
+public List<string> TeClasse  { get; set; } = new List<string>();
 
 [Display(Name = "Descrizione", ShortName="", Description = "Descrizione estesa", Prompt="")]
 [ErpDogField("TE_DESCRIZIONE", SqlFieldNameExt="TE_DESCRIZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]

@@ -88,39 +88,37 @@ public string? DcNote  { get; set; }
 public string? DcCodiceReferto  { get; set; }
 
 [Display(Name = "Data Acquisizione", ShortName="", Description = "Data di acquisizione del dato sanitario", Prompt="")]
-[ErpDogField("DC_DATA_ACQUISIZIONE", SqlFieldNameExt="DC_DATA_ACQUISIZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("DC_DATA_ACQUISIZIONE", SqlFieldNameExt="DC_DATA_ACQUISIZIONE", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange DcDataAcquisizione  { get; set; } = new DateRange();
 
 [Display(Name = "Ora Acquisizione", ShortName="", Description = "Ora di acquisizione del dato sanitario", Prompt="")]
-[ErpDogField("DC_ORA_ACQUISIZIONE", SqlFieldNameExt="DC_ORA_ACQUISIZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("DC_ORA_ACQUISIZIONE", SqlFieldNameExt="DC_ORA_ACQUISIZIONE", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? DcOraAcquisizione  { get; set; }
+public TimeOnly? DcOraAcquisizione  { get; set; }
 
 [Display(Name = "Stato Dato Clinico", ShortName="", Description = "Stato del dato: P[reliminare] - C[onfermato] - A[nnullato]", Prompt="")]
 [ErpDogField("DC_STATO_DATO_CLINICO", SqlFieldNameExt="DC_STATO_DATO_CLINICO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("P")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("P|C|A", ErrorMessage = "Inserisci una delle seguenti opzioni: P|C|A")]
-public string? DcStatoDatoClinico  { get; set; }
+[MultipleChoices(new[] { "P", "C", "A" }, MaxSelections=-1, LabelClassName="")]
+[DataType(DataType.Text)]
+public List<string> DcStatoDatoClinico  { get; set; } = new List<string>();
 
 [Display(Name = "Data Validazione", ShortName="", Description = "Data di convalida del dato sanitario", Prompt="")]
-[ErpDogField("DC_DATA_VALIDAZIONE", SqlFieldNameExt="DC_DATA_VALIDAZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("DC_DATA_VALIDAZIONE", SqlFieldNameExt="DC_DATA_VALIDAZIONE", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange DcDataValidazione  { get; set; } = new DateRange();
 
 [Display(Name = "Ora Validazione", ShortName="", Description = "Ora di convalida del dato sanitario", Prompt="")]
-[ErpDogField("DC_ORA_VALIDAZIONE", SqlFieldNameExt="DC_ORA_VALIDAZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("DC_ORA_VALIDAZIONE", SqlFieldNameExt="DC_ORA_VALIDAZIONE", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? DcOraValidazione  { get; set; }
+public TimeOnly? DcOraValidazione  { get; set; }
 
 [Display(Name = "Sequenza", ShortName="", Description = "Numero di sequenza del dato nel report originale", Prompt="")]
 [ErpDogField("DC_SEQUENZA", SqlFieldNameExt="DC_SEQUENZA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]

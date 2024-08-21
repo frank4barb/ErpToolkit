@@ -3,6 +3,9 @@ using Microsoft.VisualBasic;
 using System.Data;
 using Microsoft.Data.SqlClient;
 using System.Data.Common;
+using System;
+using System.Security.Cryptography.Xml;
+using System.Globalization;
 
 
 
@@ -89,7 +92,8 @@ namespace ErpToolkit.Helpers.Db
                     return string.Format("{0:hhmmss}", obj);
                 return string.Format(@"{0:hh\.mm\.ss}", obj); // Return String.Format("{0:HH\:mm\:ss}", obj)
             }
-            return Strings.Trim((string)obj);
+            if (obj.GetType() == typeof(System.String)) return Strings.RTrim((string)obj);
+            return null;
         }
 
 
@@ -132,8 +136,29 @@ namespace ErpToolkit.Helpers.Db
                 {
                     if (pro.Name == column.ColumnName)
                     {
-                        if (pro.PropertyType == typeof(System.String)) pro.SetValue(obj, DBCast(dr, column.ColumnName, optCast), null);
-                        else if (pro.PropertyType == typeof(System.Double?)) { if (dr[column.ColumnName] == null) pro.SetValue(obj, null, null); else  pro.SetValue(obj, Convert.ToDouble(dr[column.ColumnName]), null); }
+                        string fieldOptions = pro?.GetCustomAttribute<ErpDogFieldAttribute>(false)?.SqlFieldOptions?.ToString() ?? "";
+                        string strVal = DBCast(dr, column.ColumnName, optCast);
+
+                        //if (dr[column.ColumnName] == null || Information.IsDBNull(dr[column.ColumnName])) pro.SetValue(obj, null, null);
+                        if (pro.PropertyType == typeof(System.String)) pro.SetValue(obj, strVal, null);
+                        else if (pro.PropertyType == typeof(System.DateTime?))
+                        {
+                            if (String.IsNullOrEmpty(strVal) || strVal.Trim() == "/  /" || strVal.Trim() == ":  :") pro.SetValue(obj, null, null);
+                            else if (fieldOptions.Contains("[DATE]")) pro.SetValue(obj, DateTime.ParseExact(strVal, "yyyy/MM/dd", CultureInfo.InvariantCulture), null);
+                            else if (fieldOptions.Contains("[TIME]")) pro.SetValue(obj, DateTime.ParseExact(strVal, "HH:mm:ss", CultureInfo.InvariantCulture), null);
+                            else if (fieldOptions.Contains("[DATETIME]")) pro.SetValue(obj, DateTime.ParseExact(strVal, "yyyy/MM/dd HH:mm:ss", CultureInfo.InvariantCulture), null);
+                        }
+                        else if (pro.PropertyType == typeof(System.DateOnly?))
+                        {
+                            if (String.IsNullOrEmpty(strVal) || strVal.Trim() == "/  /" || strVal.Trim() == ":  :") pro.SetValue(obj, null, null);
+                            else if (fieldOptions.Contains("[DATE]")) pro.SetValue(obj, DateOnly.ParseExact(strVal, "yyyy/MM/dd", CultureInfo.InvariantCulture), null);
+                        }
+                        else if (pro.PropertyType == typeof(System.TimeOnly?))
+                        {
+                            if (String.IsNullOrEmpty(strVal) || strVal.Trim() == "/  /" || strVal.Trim() == ":  :") pro.SetValue(obj, null, null);
+                            else if (fieldOptions.Contains("[TIME]")) pro.SetValue(obj, TimeOnly.ParseExact(strVal, "HH:mm:ss", CultureInfo.InvariantCulture), null);
+                        }
+                        else if (pro.PropertyType == typeof(System.Double?)) { if (dr[column.ColumnName] == null) pro.SetValue(obj, null, null); else pro.SetValue(obj, Convert.ToDouble(dr[column.ColumnName]), null); }
                         else pro.SetValue(obj, dr[column.ColumnName], null); 
                     }
                     else

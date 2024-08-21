@@ -65,7 +65,6 @@ public string? Dg1Extatt { get; set; }
 
 [Display(Name = "Tipo Diagnosi", ShortName="", Description = "Codice del tipo di classificazione a cui l'istanza appartiene", Prompt="")]
 [ErpDogField("DG_TIPO_DIAGNOSI", SqlFieldNameExt="DG_TIPO_DIAGNOSI", SqlFieldOptions="", Xref="Td1Icode", SqlFieldProperties="prop() xref(TIPO_DIAGNOSI.TD__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("TipoDiagnosi", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? DgTipoDiagnosi  { get; set; }
@@ -102,7 +101,6 @@ public string? DgCodice  { get; set; }
 
 [Display(Name = "Id Gruppo", ShortName="", Description = "Identificatore del codice di aggregazione nella gerarchia (se presente)", Prompt="")]
 [ErpDogField("DG_ID_GRUPPO", SqlFieldNameExt="DG_ID_GRUPPO", SqlFieldOptions="", Xref="Dg1Icode", SqlFieldProperties="prop() xref(DIAGNOSI.DG__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("Diagnosi", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? DgIdGruppo  { get; set; }
@@ -112,14 +110,14 @@ public ErpToolkit.Models.SIO.Costs.Diagnosi? DgIdGruppoObj  { get; set; }
 [ErpDogField("DG_TIPO_DRG", SqlFieldNameExt="DG_TIPO_DRG", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("M")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("M|S", ErrorMessage = "Inserisci una delle seguenti opzioni: M|S")]
+[MultipleChoices(new[] { "M", "S" }, MaxSelections=1, LabelClassName="")]
 public string? DgTipoDrg  { get; set; }
 
 [Display(Name = "Tipo Icd9", ShortName="", Description = "Tipo di ICD9-CM [D]iagnostico - [O]perativo (se applicabile)", Prompt="")]
 [ErpDogField("DG_TIPO_ICD9", SqlFieldNameExt="DG_TIPO_ICD9", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("D|O| ", ErrorMessage = "Inserisci una delle seguenti opzioni: D|O| ")]
+[MultipleChoices(new[] { "D", "O", " " }, MaxSelections=1, LabelClassName="")]
 public string? DgTipoIcd9  { get; set; }
 
 public bool TryValidateInt(ModelStateDictionary modelState) 

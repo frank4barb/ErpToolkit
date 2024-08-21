@@ -30,9 +30,9 @@ public string? TiCodice  { get; set; }
 [Display(Name = "Gruppo", ShortName="", Description = "Classe di comunicazione: 0 = Comunicazioni di sistema 1 = Messaggi utente - 2 = Relativi agli atti - Z = Utente-d", Prompt="")]
 [ErpDogField("TI_GRUPPO", SqlFieldNameExt="TI_GRUPPO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("0|1|2|Z", ErrorMessage = "Inserisci una delle seguenti opzioni: 0|1|2|Z")]
-public string? TiGruppo  { get; set; }
+[MultipleChoices(new[] { "0", "1", "2", "Z" }, MaxSelections=-1, LabelClassName="")]
+[DataType(DataType.Text)]
+public List<string> TiGruppo  { get; set; } = new List<string>();
 
 [Display(Name = "Descrizione", ShortName="", Description = "Descrizione", Prompt="")]
 [ErpDogField("TI_DESCRIZIONE", SqlFieldNameExt="TI_DESCRIZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]

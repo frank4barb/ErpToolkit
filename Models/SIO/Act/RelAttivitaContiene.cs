@@ -65,7 +65,6 @@ public string? Aa1Extatt { get; set; }
 
 [Display(Name = "Id Attivita Padre", ShortName="", Description = "Identificatore del tipo di attività della prima tassonomia (cioè quella che viene aggregata)", Prompt="")]
 [ErpDogField("AA_ID_ATTIVITA_PADRE", SqlFieldNameExt="AA_ID_ATTIVITA_PADRE", SqlFieldOptions="", Xref="Av1Icode", SqlFieldProperties="prop() xref(ATTIVITA.AV__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("Attivita", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? AaIdAttivitaPadre  { get; set; }
@@ -73,7 +72,6 @@ public ErpToolkit.Models.SIO.Act.Attivita? AaIdAttivitaPadreObj  { get; set; }
 
 [Display(Name = "Id Attivita Figlio", ShortName="", Description = "Identificatore del tipo di attività in cui la prima è stata aggregata", Prompt="")]
 [ErpDogField("AA_ID_ATTIVITA_FIGLIO", SqlFieldNameExt="AA_ID_ATTIVITA_FIGLIO", SqlFieldOptions="", Xref="Av1Icode", SqlFieldProperties="prop() xref(ATTIVITA.AV__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("Attivita", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? AaIdAttivitaFiglio  { get; set; }
@@ -81,7 +79,6 @@ public ErpToolkit.Models.SIO.Act.Attivita? AaIdAttivitaFiglioObj  { get; set; }
 
 [Display(Name = "Sequenza", ShortName="", Description = "Numero di sequenza di TOAY rispetto a FROMAY", Prompt="")]
 [ErpDogField("AA_SEQUENZA", SqlFieldNameExt="AA_SEQUENZA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public short? AaSequenza  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note testuali", Prompt="")]

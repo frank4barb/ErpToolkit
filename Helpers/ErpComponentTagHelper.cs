@@ -20,6 +20,11 @@ using ErpToolkit.Models;
 using ErpToolkit.Controllers;
 using Quartz.Util;
 using static ErpToolkit.Helpers.DogHelper;
+using NLog.Layouts;
+using Google.Rpc;
+using System.Reflection;
+using Google.Protobuf.WellKnownTypes;
+using Newtonsoft.Json.Linq;
 
 
 // VALIDATE FIELD AT SERVER SIDE
@@ -581,7 +586,7 @@ namespace ErpToolkit.Helpers
                     return new ValidationResult("Entrambe le date devono essere compilate.", new[] { validationContext.MemberName });
                 }
 
-                if (dateRange.StartDate != default && dateRange.EndDate != default && dateRange.StartDate >= dateRange.EndDate)
+                if (dateRange.StartDate != default && dateRange.EndDate != default && dateRange.StartDate > dateRange.EndDate)
                 {
                     return new ValidationResult("La data d'inizio deve precedere la data di fine.", new[] { validationContext.MemberName });
                 }
@@ -608,21 +613,21 @@ namespace ErpToolkit.Helpers
     //public class DateRangeTagHelper : TagHelper
     //{
     //    [HtmlAttributeName("asp-for")]
-    //    public ModelExpression AspFor { get; set; }
+    //    public ModelExpression For { get; set; }
 
     //    public override void Process(TagHelperContext context, TagHelperOutput output)
     //    {
-    //        if (AspFor.Metadata.ContainerType.GetProperty(AspFor.Name).GetCustomAttributes(typeof(DateRangeAttribute), false).Length > 0)
+    //        if (For.Metadata.ContainerType.GetProperty(For.Name).GetCustomAttributes(typeof(DateRangeAttribute), false).Length > 0)
     //        {
-    //            var daterangeAttribute = (DateRangeAttribute)AspFor.Metadata.ContainerType.GetProperty(AspFor.Name).GetCustomAttributes(typeof(DateRangeAttribute), false)[0];
+    //            var daterangeAttribute = (DateRangeAttribute)For.Metadata.ContainerType.GetProperty(For.Name).GetCustomAttributes(typeof(DateRangeAttribute), false)[0];
     //            string options = daterangeAttribute.Options;
-    //            string displayName = AspFor.Metadata.DisplayName ?? AspFor.Name;
+    //            string displayName = For.Metadata.DisplayName ?? For.Name;
     //            string startDateLabel = $"{displayName}: Inizio";
     //            string endDateLabel = $"{displayName}: Fine";
     //            string format = options == "DateTime" ? "dd/MM/yyyy HH:mm" : "dd/MM/yyyy";  // future use: attualmente non implementato
 
-    //            string startDateId = $"{AspFor.Name}.StartDate";
-    //            string endDateId = $"{AspFor.Name}.EndDate";
+    //            string startDateId = $"{For.Name}.StartDate";
+    //            string endDateId = $"{For.Name}.EndDate";
 
     //            string content = $@"
     //            <div class='row'>
@@ -679,10 +684,22 @@ namespace ErpToolkit.Helpers
                 string displayName = For.Metadata.DisplayName ?? For.Name;
                 string startDateLabel = $"{displayName}: Inizio";
                 string endDateLabel = $"{displayName}: Fine";
-                string format = options == "DateTime" ? "dd/MM/yyyy HH:mm" : "dd/MM/yyyy";  // future use: attualmente non implementato
+                //string format = options == "DateTime" ? "dd-MM-yyyy HH:mm" : "dd-MM-yyyy";  // future use: attualmente non implementato
+                string format = options == "DateTime" ? "yyyy-MM-ddTHH:mm" : "yyyy-MM-dd";  // Formato ISO 8601 ( i browser si aspettano automaticamente un formato ISO 8601 (yyyy-MM-dd) per gli input di tipo date)
 
                 string startDateId = $"{For.Name}.StartDate";
                 string endDateId = $"{For.Name}.EndDate";
+
+
+                // Recupera i valori dal modello
+                DateTime? startDateValue = For.Model?.GetType().GetProperty("StartDate")?.GetValue(For.Model) as DateTime?;
+                DateTime? endDateValue = For.Model?.GetType().GetProperty("EndDate")?.GetValue(For.Model) as DateTime?;
+                if (startDateValue != null && (DateTime)startDateValue == default) startDateValue = null;
+                if (endDateValue != null && (DateTime)endDateValue == default) endDateValue = null;
+
+                // Formatta i valori per il campo di input
+                string startDateFormatted = startDateValue?.ToString(format) ?? "";
+                string endDateFormatted = endDateValue?.ToString(format) ?? "";
 
 
                 //calcola restrizioni visibilità pagina
@@ -694,12 +711,12 @@ namespace ErpToolkit.Helpers
                 <div class='row'>
                     <div class='col-md-6'>
                         <label for='{startDateId}'>{startDateLabel}</label>
-                        <input class='form-control' type='date' data-val='true' id='{startDateId}' name='{startDateId}' value='' {(attrField.Readonly == 'Y' ? "readonly" : "")}>
+                        <input class='form-control' type='date' data-val='true' id='{startDateId}' name='{startDateId}' value='{startDateFormatted}' {(attrField.Readonly == 'Y' ? "readonly" : "")}>
                         <input name='__Invariant' type='hidden' value='{startDateId}'>
                     </div>
                     <div class='col-md-6'>
                         <label for='{endDateId}'>{endDateLabel}</label>
-                        <input class='form-control' type='date' data-val='true' id='{endDateId}' name='{endDateId}' value='' {(attrField.Readonly == 'Y' ? "readonly" : "")}>
+                        <input class='form-control' type='date' data-val='true' id='{endDateId}' name='{endDateId}' value='{endDateFormatted}' {(attrField.Readonly == 'Y' ? "readonly" : "")}>
                         <input name='__Invariant' type='hidden' value='{endDateId}'>
                     </div>
                 </div>";
@@ -727,9 +744,6 @@ namespace ErpToolkit.Helpers
     // SCELTA SINGOLA O MULTIPLA
     //
 
-    // ?????????????????? da verificare ????????????????????????????????????????
-
-
 
     //public class YourViewModel
     //{
@@ -755,14 +769,19 @@ namespace ErpToolkit.Helpers
     public class MultipleChoicesAttribute : Attribute
     {
         public string[] Choices { get; }
-        public int MaxSelections { get; }
-        public string LabelProviderAction { get; }
+        private int _maxSelections = 1;
+        public int MaxSelections { get { return _maxSelections; } set { if (value < 0) _maxSelections = int.MaxValue; } }
+        public string LabelContoller { get; set; }
+        public string LabelAction { get; set; }
+        public string LabelClassName { get; set; }
 
-        public MultipleChoicesAttribute(string[] choices, int maxSelections = 1, string labelProviderAction = null)
+        public MultipleChoicesAttribute(string[] choices, int maxSelections = 1, string labelContoller = "Shared", string labelAction = "GetLabels", string labelClassName = "")
         {
             Choices = choices;
-            MaxSelections = maxSelections;
-            LabelProviderAction = labelProviderAction;
+            MaxSelections = maxSelections; 
+            LabelContoller = labelContoller;
+            LabelAction = labelAction;
+            LabelClassName = labelClassName;
         }
     }
 
@@ -800,7 +819,6 @@ namespace ErpToolkit.Helpers
                 //-------------------------------------
 
 
-
                 if (attrField.Visible == 'N')
                 {
                     output.SuppressOutput();
@@ -830,9 +848,9 @@ namespace ErpToolkit.Helpers
                 var labels = choices;
 
                 // Se è specificata l'azione per ottenere le label, esegue la chiamata al controller
-                if (!string.IsNullOrEmpty(multipleChoicesAttribute.LabelProviderAction))
+                if (!string.IsNullOrEmpty(multipleChoicesAttribute.LabelClassName))
                 {
-                    var labelResponse = GetLabelsFromController("Shared", "GetLabels", multipleChoicesAttribute.LabelProviderAction);
+                    var labelResponse = GetLabelsFromController(multipleChoicesAttribute.LabelClassName, multipleChoicesAttribute.LabelAction, multipleChoicesAttribute.LabelClassName);
 
                     if (!string.IsNullOrEmpty(labelResponse.Item2))
                     {
@@ -877,7 +895,7 @@ namespace ErpToolkit.Helpers
                     content.AppendLine($@"
                         <div class='form-check form-switch d-inline-block mb-2'>
                             <input class='form-check-input' type='{inputType}' name='{name}' id='{id}' value='{value}' {checkedAttr} {readonlyAttr} onchange='handleMaxSelections(""{name}"", {maxSelections})'>
-                            <label class='form-check-label' for='{id}'>{value}</label>
+                            <label class='form-check-label' for='{id}'>{value}</label> &nbsp; &nbsp; 
                         </div>");
                 }
 
@@ -894,9 +912,9 @@ namespace ErpToolkit.Helpers
                         </script>");
                 }
 
-                output.TagName = "div";
-                output.Attributes.SetAttribute("class", "switch-group-container");
-                output.Content.SetHtmlContent(content.ToString());
+                output.SuppressOutput();  // elimino il tag input e sostituisco con tag radio o checkbox
+                output.PostElement.AppendHtml(content.ToString());
+
             }
 
         }
@@ -941,6 +959,134 @@ namespace ErpToolkit.Helpers
             }
         }
     }
+
+    //*****************************************************************************************************************************************************
+    //
+    // QUILL EDITOR
+    //
+
+    // ?????????????????? da verificare ????????????????????????????????????????
+
+
+    //Step 1: Aggiungere Quill al progetto
+    //Puoi includere Quill usando un CDN.Aggiungi questo nel tuo layout _Layout.cshtml:
+
+    //html
+    //Copia codice
+    //<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    //<script src = "https://cdn.quilljs.com/1.3.6/quill.min.js" ></ script >
+
+    //Step 2: Utilizzare il TagHelper nella Vista
+    //Ecco come puoi usare il TagHelper nella tua vista:
+
+    //html
+    //Copia codice
+    //<input asp-for="Descrizione" />
+    //<input asp-for="Commenti" />
+
+    //Step 3: Modello e Salvataggio
+    //(Nel modello, puoi definire la proprietà come string)
+    //
+    //public class YourViewModel
+    //{
+    //    [QuillEditor(Height = "500px", MaxLength = 5000, AllowImages = true, AllowCopyPaste = false)]
+    //    public string Descrizione { get; set; }
+    //
+    //    [QuillEditor(Height = "300px", MaxLength = 10000, AllowImages = false, AllowCopyPaste = true)]
+    //    public string Commenti { get; set; }
+    //}
+    //Quill salva il contenuto formattato come HTML, quindi puoi memorizzarlo direttamente in una stringa nel database.
+
+
+
+    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+    public sealed class QuillEditorAttribute : Attribute
+    {
+        public string Height { get; set; } = "300px";                           // Altezza predefinita
+        public int MaxLength { get; set; } = 10000;                             // Lunghezza massima predefinita
+        public bool AllowImages { get; set; } = true;                           // Possibilità di inserire immagini
+        public string[] ToolbarOptions { get; set; } = new string[]             // Opzioni di formattazione predefinite
+        {
+            "bold", "italic", "underline", "strike", "blockquote",
+            "code-block", "header", "list", "script", "indent", "direction",
+            "size", "color", "background", "font", "align", "link", "image", "video"
+        };
+        public bool AllowCopyPaste { get; set; } = true;                        // Opzione per abilitare/disabilitare copia-incolla
+
+        public QuillEditorAttribute() { }
+    }
+
+
+    [HtmlTargetElement("input", Attributes = "asp-for")]
+    public class QuillEditorTagHelper : TagHelper
+    {
+        [HtmlAttributeName("asp-for")]
+        public ModelExpression For { get; set; }
+
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            var propertyInfo = For.Metadata.ContainerType.GetProperty(For.Name);
+            var quillEditorAttr = propertyInfo?.GetCustomAttribute<QuillEditorAttribute>();
+
+            if (quillEditorAttr == null)
+            {
+                return;
+            }
+
+            var name = For.Name;
+            var uniqueEditorId = name.Replace(".", "_"); // Sostituisci i punti con underscore per creare un ID unico
+            var value = For.Model?.ToString() ?? string.Empty;
+            var height = quillEditorAttr.Height;
+            var maxLength = quillEditorAttr.MaxLength;
+            var allowImages = quillEditorAttr.AllowImages ? "true" : "false";
+            var toolbarOptions = string.Join(", ", quillEditorAttr.ToolbarOptions.Select(o => $"'{o}'"));
+            var allowCopyPaste = quillEditorAttr.AllowCopyPaste ? "true" : "false";
+
+            output.TagName = "div";
+            output.Attributes.SetAttribute("id", uniqueEditorId);
+            output.Attributes.SetAttribute("style", $"height: {height};");
+
+            output.PostElement.SetHtmlContent($@"
+            <script>
+                var quill_{uniqueEditorId} = new Quill('#{uniqueEditorId}', {{
+                    theme: 'snow',
+                    modules: {{
+                        toolbar: [{toolbarOptions}],
+                        imageDrop: {allowImages},
+                    }},
+                    readOnly: false
+                }});
+
+                quill_{uniqueEditorId}.on('text-change', function(delta, oldDelta, source) {{
+                    var text = quill_{uniqueEditorId}.getText();
+                    if (text.length > {maxLength}) {{
+                        quill_{uniqueEditorId}.deleteText({maxLength}, text.length);
+                    }}
+                    document.querySelector('input[name=""{name}""]').value = quill_{uniqueEditorId}.root.innerHTML;
+                }});
+
+                // Gestione del copia-incolla
+                if ({allowCopyPaste} === false) {{
+                    quill_{uniqueEditorId}.root.addEventListener('copy', function(e) {{
+                        e.preventDefault();
+                    }});
+                    quill_{uniqueEditorId}.root.addEventListener('paste', function(e) {{
+                        e.preventDefault();
+                    }});
+                    quill_{uniqueEditorId}.root.addEventListener('cut', function(e) {{
+                        e.preventDefault();
+                    }});
+                }}
+
+                quill_{uniqueEditorId}.root.innerHTML = `{value}`;
+            </script>
+            <input type='hidden' name='{name}' value='{value}' />
+        ");
+        }
+    }
+
+
+
 
 
 
@@ -1011,6 +1157,7 @@ namespace ErpToolkit.Helpers
                             DataType.Text => "text",
                             DataType.Date => "date",
                             DataType.Time => "time",
+                            DataType.DateTime => "date",
                             DataType.EmailAddress => "email",
                             DataType.PhoneNumber => "tel",
                             DataType.Currency => "text", // Non c'è un tipo specifico per la valuta in HTML5
@@ -1027,7 +1174,7 @@ namespace ErpToolkit.Helpers
                             output.Attributes.SetAttribute("readonly", "readonly");
                         }
 
-                        // Gestione speciale per textarea (multiline text)
+                        // Gestione speciale per textarea (multiline text), ecc..
                         if (inputType == "textarea")
                         {
                             output.TagName = "textarea";

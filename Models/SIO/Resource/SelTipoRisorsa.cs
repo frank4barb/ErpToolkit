@@ -34,9 +34,9 @@ public string? TsCodice  { get; set; }
 [Display(Name = "Classe Risorsa", ShortName="", Description = "Classe: E[quipments] - L[ocations] - S[taff] - M[aterial] - [G]eneric", Prompt="")]
 [ErpDogField("TS_CLASSE_RISORSA", SqlFieldNameExt="TS_CLASSE_RISORSA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("M")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("E|L|M|D|S|G", ErrorMessage = "Inserisci una delle seguenti opzioni: E|L|M|D|S|G")]
-public string? TsClasseRisorsa  { get; set; }
+[MultipleChoices(new[] { "E", "L", "M", "D", "S", "G" }, MaxSelections=-1, LabelClassName="")]
+[DataType(DataType.Text)]
+public List<string> TsClasseRisorsa  { get; set; } = new List<string>();
 
 [Display(Name = "Id Gruppo", ShortName="", Description = "Codice del super-tipo di risorsa (cioè l'aggregazione nella gerarchia), se presente", Prompt="")]
 [ErpDogField("TS_ID_GRUPPO", SqlFieldNameExt="TS_ID_GRUPPO", SqlFieldOptions="", Xref="Ts1Icode", SqlFieldProperties="prop() xref(TIPO_RISORSA.TS__ICODE) xdup() multbxref()")]

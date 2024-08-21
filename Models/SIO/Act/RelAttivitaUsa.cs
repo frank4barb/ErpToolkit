@@ -68,7 +68,6 @@ public string? Au1Extatt { get; set; }
 [Display(Name = "Id Attivita", ShortName="", Description = "Codice del tipo di attività", Prompt="")]
 [ErpDogField("AU_ID_ATTIVITA", SqlFieldNameExt="AU_ID_ATTIVITA", SqlFieldOptions="", Xref="Av1Icode", SqlFieldProperties="prop() xref(ATTIVITA.AV__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
-[DefaultValue("")]
 [AutocompleteClient("Attivita", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? AuIdAttivita  { get; set; }
@@ -79,13 +78,12 @@ public ErpToolkit.Models.SIO.Act.Attivita? AuIdAttivitaObj  { get; set; }
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue(" ")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("E|L|M|D|S", ErrorMessage = "Inserisci una delle seguenti opzioni: E|L|M|D|S")]
+[MultipleChoices(new[] { "E", "L", "M", "D", "S" }, MaxSelections=1, LabelClassName="")]
 public string? AuClasseRisorsa  { get; set; }
 
 [Display(Name = "Id Tipo Risorsa", ShortName="", Description = "Codice del tipo di risorsa", Prompt="")]
 [ErpDogField("AU_ID_TIPO_RISORSA", SqlFieldNameExt="AU_ID_TIPO_RISORSA", SqlFieldOptions="", Xref="Ts1Icode", SqlFieldProperties="prop() xref(TIPO_RISORSA.TS__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
-[DefaultValue("")]
 [AutocompleteClient("TipoRisorsa", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? AuIdTipoRisorsa  { get; set; }
@@ -127,17 +125,14 @@ public string? AuIdRisorsa  { get; set; }
 
 [Display(Name = "Sequenza", ShortName="", Description = "Numero di sequenza della relazione", Prompt="")]
 [ErpDogField("AU_SEQUENZA", SqlFieldNameExt="AU_SEQUENZA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public short? AuSequenza  { get; set; }
 
 [Display(Name = "Quantita Media Usata", ShortName="", Description = "Quantità media utilizzata", Prompt="")]
 [ErpDogField("AU_QUANTITA_MEDIA_USATA", SqlFieldNameExt="AU_QUANTITA_MEDIA_USATA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public double? AuQuantitaMediaUsata  { get; set; }
 
 [Display(Name = "Quantita Extra", ShortName="", Description = "Quantità extra da considerare", Prompt="")]
 [ErpDogField("AU_QUANTITA_EXTRA", SqlFieldNameExt="AU_QUANTITA_EXTRA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public double? AuQuantitaExtra  { get; set; }
 
 [Display(Name = "Unita Di Misura", ShortName="", Description = "Unità di misura", Prompt="")]
@@ -156,7 +151,6 @@ public string? AuNote  { get; set; }
 
 [Display(Name = "Costo Medio", ShortName="", Description = "Costo medio di tale utilizzo", Prompt="")]
 [ErpDogField("AU_COSTO_MEDIO", SqlFieldNameExt="AU_COSTO_MEDIO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public double? AuCostoMedio  { get; set; }
 
 [Display(Name = "Descrizione Risorsa Usata", ShortName="", Description = "Descrizione testuale delle risorse utilizzate", Prompt="")]
@@ -168,7 +162,6 @@ public string? AuDescrizioneRisorsaUsata  { get; set; }
 
 [Display(Name = "Id Gruppo", ShortName="", Description = "Identificatore dell'istanza per la quale questa specifica rappresenta un'opzione (se applicabile)", Prompt="")]
 [ErpDogField("AU_ID_GRUPPO", SqlFieldNameExt="AU_ID_GRUPPO", SqlFieldOptions="", Xref="Au1Icode", SqlFieldProperties="prop() xref(REL_ATTIVITA_USA.AU__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("RelAttivitaUsa", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? AuIdGruppo  { get; set; }

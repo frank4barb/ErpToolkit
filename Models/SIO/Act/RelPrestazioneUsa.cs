@@ -66,7 +66,6 @@ public string? Pu1Extatt { get; set; }
 [Display(Name = "Id Prestazione", ShortName="", Description = "Codice dell'atto", Prompt="")]
 [ErpDogField("PU_ID_PRESTAZIONE", SqlFieldNameExt="PU_ID_PRESTAZIONE", SqlFieldOptions="", Xref="Pr1Icode", SqlFieldProperties="prop() xref(PRESTAZIONE.PR__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
-[DefaultValue("")]
 [AutocompleteServer("Prestazione", "AutocompleteGetSelect", "AutocompletePreLoad", 1)]
 [DataType(DataType.Text)]
 public string? PuIdPrestazione  { get; set; }
@@ -76,13 +75,12 @@ public ErpToolkit.Models.SIO.Act.Prestazione? PuIdPrestazioneObj  { get; set; }
 [ErpDogField("PU_CLASSE_RISORSA", SqlFieldNameExt="PU_CLASSE_RISORSA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup(TIPO_RISORSA.TS_CLASSE_RISORSA[REL_PRESTAZIONE_USA.PU_ID_TIPO_RISORSA] {PU_CLASSE_RISORSA=' '}) multbxref()")]
 [DefaultValue(" ")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("E|L|M|D|S", ErrorMessage = "Inserisci una delle seguenti opzioni: E|L|M|D|S")]
+[MultipleChoices(new[] { "E", "L", "M", "D", "S" }, MaxSelections=1, LabelClassName="")]
 public string? PuClasseRisorsa  { get; set; }
 
 [Display(Name = "Id Tipo Risorsa", ShortName="", Description = "Codice del tipo di risorsa", Prompt="")]
 [ErpDogField("PU_ID_TIPO_RISORSA", SqlFieldNameExt="PU_ID_TIPO_RISORSA", SqlFieldOptions="", Xref="Ts1Icode", SqlFieldProperties="prop() xref(TIPO_RISORSA.TS__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
-[DefaultValue("")]
 [AutocompleteClient("TipoRisorsa", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? PuIdTipoRisorsa  { get; set; }
@@ -124,51 +122,45 @@ public string? PuIdRisorsa  { get; set; }
 
 [Display(Name = "Sequenza", ShortName="", Description = "Numero di sequenza della relazione", Prompt="")]
 [ErpDogField("PU_SEQUENZA", SqlFieldNameExt="PU_SEQUENZA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public short? PuSequenza  { get; set; }
 
 [Display(Name = "In Evidenza", ShortName="", Description = "Se impostato su \"Y\", evidenzia le risorse che potrebbero essere sostituite durante il processo di acquisizione", Prompt="")]
 [ErpDogField("PU_IN_EVIDENZA", SqlFieldNameExt="PU_IN_EVIDENZA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("Y|N| ", ErrorMessage = "Inserisci una delle seguenti opzioni: Y|N| ")]
+[MultipleChoices(new[] { "Y", "N", " " }, MaxSelections=1, LabelClassName="")]
 public string? PuInEvidenza  { get; set; }
 
 [Display(Name = "Data Inizio Uso", ShortName="", Description = "Data di inizio dell'utilizzo", Prompt="")]
-[ErpDogField("PU_DATA_INIZIO_USO", SqlFieldNameExt="PU_DATA_INIZIO_USO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PU_DATA_INIZIO_USO", SqlFieldNameExt="PU_DATA_INIZIO_USO", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DataType(DataType.Date)]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-public string? PuDataInizioUso  { get; set; }
+public DateOnly? PuDataInizioUso  { get; set; }
 
 [Display(Name = "Ora Inizio Uso", ShortName="", Description = "Ora di inizio dell'utilizzo", Prompt="")]
-[ErpDogField("PU_ORA_INIZIO_USO", SqlFieldNameExt="PU_ORA_INIZIO_USO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PU_ORA_INIZIO_USO", SqlFieldNameExt="PU_ORA_INIZIO_USO", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? PuOraInizioUso  { get; set; }
+public TimeOnly? PuOraInizioUso  { get; set; }
 
 [Display(Name = "Data Fine Uso", ShortName="", Description = "Data di fine dell'utilizzo", Prompt="")]
-[ErpDogField("PU_DATA_FINE_USO", SqlFieldNameExt="PU_DATA_FINE_USO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PU_DATA_FINE_USO", SqlFieldNameExt="PU_DATA_FINE_USO", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DataType(DataType.Date)]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-public string? PuDataFineUso  { get; set; }
+public DateOnly? PuDataFineUso  { get; set; }
 
 [Display(Name = "Ora Fine Uso", ShortName="", Description = "Ora di fine dell'utilizzo", Prompt="")]
-[ErpDogField("PU_ORA_FINE_USO", SqlFieldNameExt="PU_ORA_FINE_USO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PU_ORA_FINE_USO", SqlFieldNameExt="PU_ORA_FINE_USO", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? PuOraFineUso  { get; set; }
+public TimeOnly? PuOraFineUso  { get; set; }
 
 [Display(Name = "Quantita Prevista", ShortName="", Description = "Quantità pianificata da utilizzare", Prompt="")]
 [ErpDogField("PU_QUANTITA_PREVISTA", SqlFieldNameExt="PU_QUANTITA_PREVISTA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public double? PuQuantitaPrevista  { get; set; }
 
 [Display(Name = "Unita Di Misura Prevista", ShortName="", Description = "Unità di misura della quantità pianificata", Prompt="")]
@@ -180,7 +172,6 @@ public string? PuUnitaDiMisuraPrevista  { get; set; }
 
 [Display(Name = "Quantita Usata", ShortName="", Description = "Quantità effettiva utilizzata", Prompt="")]
 [ErpDogField("PU_QUANTITA_USATA", SqlFieldNameExt="PU_QUANTITA_USATA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public double? PuQuantitaUsata  { get; set; }
 
 [Display(Name = "Unita Di Misura Usata", ShortName="", Description = "Unità di misura della quantità utilizzata", Prompt="")]
@@ -192,7 +183,6 @@ public string? PuUnitaDiMisuraUsata  { get; set; }
 
 [Display(Name = "Quantita Restituita", ShortName="", Description = "Quantità eventualmente restituita al fornitore o al magazzino", Prompt="")]
 [ErpDogField("PU_QUANTITA_RESTITUITA", SqlFieldNameExt="PU_QUANTITA_RESTITUITA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public double? PuQuantitaRestituita  { get; set; }
 
 [Display(Name = "Unita Di Misura Restituita", ShortName="", Description = "Unità di misura della quantità restituita al fornitore o al magazzino", Prompt="")]
@@ -211,7 +201,6 @@ public string? PuNote  { get; set; }
 
 [Display(Name = "Costo Risorsa", ShortName="", Description = "Costo effettivo di tale utilizzo", Prompt="")]
 [ErpDogField("PU_COSTO_RISORSA", SqlFieldNameExt="PU_COSTO_RISORSA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public double? PuCostoRisorsa  { get; set; }
 
 [Display(Name = "Descrizione Risorsa Usata", ShortName="", Description = "Descrizione testuale delle risorse utilizzate", Prompt="")]

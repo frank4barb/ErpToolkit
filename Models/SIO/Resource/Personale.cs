@@ -93,7 +93,6 @@ public string? PeDescrizione  { get; set; }
 [Display(Name = "Id Tipo Risorsa", ShortName="", Description = "Codice del tipo di membro dello staff (classificazione operativa)", Prompt="")]
 [ErpDogField("PE_ID_TIPO_RISORSA", SqlFieldNameExt="PE_ID_TIPO_RISORSA", SqlFieldOptions="", Xref="Ts1Icode", SqlFieldProperties="prop() xref(TIPO_RISORSA.TS__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
-[DefaultValue("")]
 [AutocompleteClient("TipoRisorsa", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? PeIdTipoRisorsa  { get; set; }
@@ -101,7 +100,6 @@ public ErpToolkit.Models.SIO.Resource.TipoRisorsa? PeIdTipoRisorsaObj  { get; se
 
 [Display(Name = "Costo Unitario Uso", ShortName="", Description = "Costo unitario per l'utilizzo", Prompt="")]
 [ErpDogField("PE_COSTO_UNITARIO_USO", SqlFieldNameExt="PE_COSTO_UNITARIO_USO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public double? PeCostoUnitarioUso  { get; set; }
 
 [Display(Name = "Misura Unitaria Uso", ShortName="", Description = "Unità di misura per l'utilizzo", Prompt="")]

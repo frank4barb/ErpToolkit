@@ -66,7 +66,6 @@ public string? Ae1Extatt { get; set; }
 [Display(Name = "Id Attivita", ShortName="", Description = "Codice dell'attività", Prompt="")]
 [ErpDogField("AE_ID_ATTIVITA", SqlFieldNameExt="AE_ID_ATTIVITA", SqlFieldOptions="", Xref="Av1Icode", SqlFieldProperties="prop() xref(ATTIVITA.AV__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
-[DefaultValue("")]
 [AutocompleteClient("Attivita", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? AeIdAttivita  { get; set; }
@@ -75,7 +74,6 @@ public ErpToolkit.Models.SIO.Act.Attivita? AeIdAttivitaObj  { get; set; }
 [Display(Name = "Id Unita", ShortName="", Description = "Codice dell'agente autorizzato a eseguire l'attività", Prompt="")]
 [ErpDogField("AE_ID_UNITA", SqlFieldNameExt="AE_ID_UNITA", SqlFieldOptions="", Xref="Or1Icode", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
-[DefaultValue("")]
 [AutocompleteClient("Organizzazione", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? AeIdUnita  { get; set; }
@@ -92,14 +90,14 @@ public string? AeNote  { get; set; }
 [ErpDogField("AE_MODALITA_DI_PIANIFICAZIONE", SqlFieldNameExt="AE_MODALITA_DI_PIANIFICAZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("P")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("P|R", ErrorMessage = "Inserisci una delle seguenti opzioni: P|R")]
+[MultipleChoices(new[] { "P", "R" }, MaxSelections=1, LabelClassName="")]
 public string? AeModalitaDiPianificazione  { get; set; }
 
 [Display(Name = "Erogazione Frequente", ShortName="", Description = "Attività frequentemente richiesta (Sì - No)", Prompt="")]
 [ErpDogField("AE_EROGAZIONE_FREQUENTE", SqlFieldNameExt="AE_EROGAZIONE_FREQUENTE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("N")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("Y|N", ErrorMessage = "Inserisci una delle seguenti opzioni: Y|N")]
+[MultipleChoices(new[] { "Y", "N" }, MaxSelections=1, LabelClassName="")]
 public string? AeErogazioneFrequente  { get; set; }
 
 [Display(Name = "Attributi", ShortName="", Description = "Flag operativi autonomamente gestiti dall'applicazione", Prompt="")]

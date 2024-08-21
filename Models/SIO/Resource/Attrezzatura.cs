@@ -92,7 +92,6 @@ public string? AtDescrizione  { get; set; }
 [Display(Name = "Id Tipo Risorsa", ShortName="", Description = "Codice del tipo di attrezzatura", Prompt="")]
 [ErpDogField("AT_ID_TIPO_RISORSA", SqlFieldNameExt="AT_ID_TIPO_RISORSA", SqlFieldOptions="", Xref="Ts1Icode", SqlFieldProperties="prop() xref(TIPO_RISORSA.TS__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
-[DefaultValue("")]
 [AutocompleteClient("TipoRisorsa", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? AtIdTipoRisorsa  { get; set; }
@@ -100,7 +99,6 @@ public ErpToolkit.Models.SIO.Resource.TipoRisorsa? AtIdTipoRisorsaObj  { get; se
 
 [Display(Name = "Costo Unitario Uso", ShortName="", Description = "Costo unitario per l'utilizzo", Prompt="")]
 [ErpDogField("AT_COSTO_UNITARIO_USO", SqlFieldNameExt="AT_COSTO_UNITARIO_USO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public double? AtCostoUnitarioUso  { get; set; }
 
 [Display(Name = "Misura Unitaria Uso", ShortName="", Description = "Unità di misura per l'utilizzo", Prompt="")]
@@ -153,30 +151,26 @@ public string? AtRiferimentiAssistenza  { get; set; }
 public string? AtTelefonoAssistenza  { get; set; }
 
 [Display(Name = "Data Ultima Manutenzione", ShortName="", Description = "Data dell'ultimo intervento di manutenzione", Prompt="")]
-[ErpDogField("AT_DATA_ULTIMA_MANUTENZIONE", SqlFieldNameExt="AT_DATA_ULTIMA_MANUTENZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AT_DATA_ULTIMA_MANUTENZIONE", SqlFieldNameExt="AT_DATA_ULTIMA_MANUTENZIONE", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DataType(DataType.Date)]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-public string? AtDataUltimaManutenzione  { get; set; }
+public DateOnly? AtDataUltimaManutenzione  { get; set; }
 
 [Display(Name = "Frequenza Manutenzione", ShortName="", Description = "Frequenza della manutenzione periodica [numero di ore di funzionamento]", Prompt="")]
 [ErpDogField("AT_FREQUENZA_MANUTENZIONE", SqlFieldNameExt="AT_FREQUENZA_MANUTENZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public short? AtFrequenzaManutenzione  { get; set; }
 
 [Display(Name = "Uso Medio Giornaliero", ShortName="", Description = "Numero medio di ore effettive di lavoro al giorno", Prompt="")]
 [ErpDogField("AT_USO_MEDIO_GIORNALIERO", SqlFieldNameExt="AT_USO_MEDIO_GIORNALIERO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public double? AtUsoMedioGiornaliero  { get; set; }
 
 [Display(Name = "Data Prossima Manutenzione", ShortName="", Description = "Data della prossima manutenzione prevedibile", Prompt="")]
-[ErpDogField("AT_DATA_PROSSIMA_MANUTENZIONE", SqlFieldNameExt="AT_DATA_PROSSIMA_MANUTENZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("AT_DATA_PROSSIMA_MANUTENZIONE", SqlFieldNameExt="AT_DATA_PROSSIMA_MANUTENZIONE", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DataType(DataType.Date)]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-public string? AtDataProssimaManutenzione  { get; set; }
+public DateOnly? AtDataProssimaManutenzione  { get; set; }
 
 public bool TryValidateInt(ModelStateDictionary modelState) 
     { 

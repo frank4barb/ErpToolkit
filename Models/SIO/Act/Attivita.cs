@@ -105,12 +105,10 @@ public string? AvFiltroRegimeErogazione  { get; set; }
 
 [Display(Name = "Costo Medio", ShortName="", Description = "Costo totale (medio) per l'esecuzione", Prompt="")]
 [ErpDogField("AV_COSTO_MEDIO", SqlFieldNameExt="AV_COSTO_MEDIO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public double? AvCostoMedio  { get; set; }
 
 [Display(Name = "Id Gruppo", ShortName="", Description = "Codice dell'attività di cui questa è una sotto-attività", Prompt="")]
 [ErpDogField("AV_ID_GRUPPO", SqlFieldNameExt="AV_ID_GRUPPO", SqlFieldOptions="", Xref="Av1Icode", SqlFieldProperties="prop() xref(ATTIVITA.AV__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("Attivita", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? AvIdGruppo  { get; set; }
@@ -120,30 +118,27 @@ public ErpToolkit.Models.SIO.Act.Attivita? AvIdGruppoObj  { get; set; }
 [ErpDogField("AV_ATTIVITA_PREFERENZIALE", SqlFieldNameExt="AV_ATTIVITA_PREFERENZIALE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("N")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("Y|N", ErrorMessage = "Inserisci una delle seguenti opzioni: Y|N")]
+[MultipleChoices(new[] { "Y", "N" }, MaxSelections=1, LabelClassName="")]
 public string? AvAttivitaPreferenziale  { get; set; }
 
 [Display(Name = "Durata Validita", ShortName="", Description = "Livello clinico di validità (cioè il numero di ore durante le quali non ha senso clinico replicare l'attività)", Prompt="")]
 [ErpDogField("AV_DURATA_VALIDITA", SqlFieldNameExt="AV_DURATA_VALIDITA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public short? AvDurataValidita  { get; set; }
 
 [Display(Name = "Durata Media", ShortName="", Description = "Tempo medio del ciclo completo dell'attività [ore]", Prompt="")]
 [ErpDogField("AV_DURATA_MEDIA", SqlFieldNameExt="AV_DURATA_MEDIA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public short? AvDurataMedia  { get; set; }
 
 [Display(Name = "In Evidenza", ShortName="", Description = "Evidenziare gli atti effettivi per scopi di ricerca o speciali Sì [Y] - No [N]", Prompt="")]
 [ErpDogField("AV_IN_EVIDENZA", SqlFieldNameExt="AV_IN_EVIDENZA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("N")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("Y|N", ErrorMessage = "Inserisci una delle seguenti opzioni: Y|N")]
+[MultipleChoices(new[] { "Y", "N" }, MaxSelections=1, LabelClassName="")]
 public string? AvInEvidenza  { get; set; }
 
 [Display(Name = "Id Tipo Attivita", ShortName="", Description = "Codice della classe generale di attività predefinita", Prompt="")]
 [ErpDogField("AV_ID_TIPO_ATTIVITA", SqlFieldNameExt="AV_ID_TIPO_ATTIVITA", SqlFieldOptions="", Xref="Ta1Icode", SqlFieldProperties="prop() xref(TIPO_ATTIVITA.TA__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
-[DefaultValue("")]
 [AutocompleteClient("TipoAttivita", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? AvIdTipoAttivita  { get; set; }
@@ -153,7 +148,7 @@ public ErpToolkit.Models.SIO.Act.TipoAttivita? AvIdTipoAttivitaObj  { get; set; 
 [ErpDogField("AV_ROUTINE", SqlFieldNameExt="AV_ROUTINE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("Y")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("Y|N", ErrorMessage = "Inserisci una delle seguenti opzioni: Y|N")]
+[MultipleChoices(new[] { "Y", "N" }, MaxSelections=1, LabelClassName="")]
 public string? AvRoutine  { get; set; }
 
 [Display(Name = "Note Estese", ShortName="", Description = "Nota estesa", Prompt="")]

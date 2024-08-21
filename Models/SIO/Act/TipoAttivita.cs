@@ -86,7 +86,6 @@ public string? TaNote  { get; set; }
 
 [Display(Name = "Id Gruppo", ShortName="", Description = "Superclasse che raggruppa la classificazione corrente", Prompt="")]
 [ErpDogField("TA_ID_GRUPPO", SqlFieldNameExt="TA_ID_GRUPPO", SqlFieldOptions="", Xref="Ta1Icode", SqlFieldProperties="prop() xref(TIPO_ATTIVITA.TA__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("TipoAttivita", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? TaIdGruppo  { get; set; }

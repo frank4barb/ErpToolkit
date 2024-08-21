@@ -66,7 +66,6 @@ public string? Oo1Extatt { get; set; }
 [Display(Name = "Id Organizzazione Padre", ShortName="", Description = "Codice del primo agente correlato all'altro", Prompt="")]
 [ErpDogField("OO_ID_ORGANIZZAZIONE_PADRE", SqlFieldNameExt="OO_ID_ORGANIZZAZIONE_PADRE", SqlFieldOptions="", Xref="Or1Icode", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
-[DefaultValue("")]
 [AutocompleteClient("Organizzazione", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? OoIdOrganizzazionePadre  { get; set; }
@@ -75,7 +74,6 @@ public ErpToolkit.Models.SIO.Common.Organizzazione? OoIdOrganizzazionePadreObj  
 [Display(Name = "Id Organizzazione Figlio", ShortName="", Description = "Codice del secondo agente correlato al primo", Prompt="")]
 [ErpDogField("OO_ID_ORGANIZZAZIONE_FIGLIO", SqlFieldNameExt="OO_ID_ORGANIZZAZIONE_FIGLIO", SqlFieldOptions="", Xref="Or1Icode", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
 [Required(ErrorMessage = "Inserire un valore nel campo")]
-[DefaultValue("")]
 [AutocompleteClient("Organizzazione", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? OoIdOrganizzazioneFiglio  { get; set; }

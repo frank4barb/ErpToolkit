@@ -86,7 +86,6 @@ public string? DiNote  { get; set; }
 
 [Display(Name = "Id Comune", ShortName="", Description = "Città in cui si trova il distretto", Prompt="")]
 [ErpDogField("DI_ID_COMUNE", SqlFieldNameExt="DI_ID_COMUNE", SqlFieldOptions="", Xref="Cm1Icode", SqlFieldProperties="prop() xref(COMUNE.CM__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("Comune", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? DiIdComune  { get; set; }

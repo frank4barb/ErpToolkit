@@ -37,16 +37,16 @@ public List<string> EpIdPaziente  { get; set; } = new List<string>();
 [Display(Name = "Sesso", ShortName="", Description = "Sesso del paziente al momento dell'ammissione", Prompt="")]
 [ErpDogField("EP_SESSO", SqlFieldNameExt="EP_SESSO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup(PAZIENTE.PA_SESSO[EPISODIO.EP_ID_PAZIENTE] {EP_SESSO=' '}) multbxref()")]
 [DefaultValue(" ")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("M|F|N", ErrorMessage = "Inserisci una delle seguenti opzioni: M|F|N")]
-public string? EpSesso  { get; set; }
+[MultipleChoices(new[] { "M", "F", "N" }, MaxSelections=-1, LabelClassName="")]
+[DataType(DataType.Text)]
+public List<string> EpSesso  { get; set; } = new List<string>();
 
 [Display(Name = "Classe Episodio", ShortName="", Description = "Classe di contatto 1=Permanenza 2=Day-hospital 3=Ambulatoriale 4-=definito dall'utente", Prompt="")]
 [ErpDogField("EP_CLASSE_EPISODIO", SqlFieldNameExt="EP_CLASSE_EPISODIO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup(TIPO_EPISODIO.TE_CLASSE[EPISODIO.EP_ID_TIPO_EPISODIO]) multbxref()")]
 [DefaultValue("1")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("1|2|3|4|5|6|7|8|9|0", ErrorMessage = "Inserisci una delle seguenti opzioni: 1|2|3|4|5|6|7|8|9|0")]
-public string? EpClasseEpisodio  { get; set; }
+[MultipleChoices(new[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "0" }, MaxSelections=-1, LabelClassName="")]
+[DataType(DataType.Text)]
+public List<string> EpClasseEpisodio  { get; set; } = new List<string>();
 
 [Display(Name = "Id Tipo Episodio", ShortName="", Description = "Codice del tipo di contatto", Prompt="")]
 [ErpDogField("EP_ID_TIPO_EPISODIO", SqlFieldNameExt="EP_ID_TIPO_EPISODIO", SqlFieldOptions="", Xref="Te1Icode", SqlFieldProperties="prop() xref(TIPO_EPISODIO.TE__ICODE) xdup() multbxref()")]
@@ -58,9 +58,9 @@ public List<string> EpIdTipoEpisodio  { get; set; } = new List<string>();
 [Display(Name = "Stato Episodio", ShortName="", Description = "Stato del contatto F[oreseen] - A[ctual, in progress] - C[ompleted] - D[eleted] - S[uspended]", Prompt="")]
 [ErpDogField("EP_STATO_EPISODIO", SqlFieldNameExt="EP_STATO_EPISODIO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("F|A|C|D|S", ErrorMessage = "Inserisci una delle seguenti opzioni: F|A|C|D|S")]
-public string? EpStatoEpisodio  { get; set; }
+[MultipleChoices(new[] { "F", "A", "C", "D", "S" }, MaxSelections=-1, LabelClassName="")]
+[DataType(DataType.Text)]
+public List<string> EpStatoEpisodio  { get; set; } = new List<string>();
 
 [Display(Name = "Id Unita Ingresso", ShortName="", Description = "Identificativo dell'unità di assistenza che ha avviato il contatto", Prompt="")]
 [ErpDogField("EP_ID_UNITA_INGRESSO", SqlFieldNameExt="EP_ID_UNITA_INGRESSO", SqlFieldOptions="", Xref="Or1Icode", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
@@ -70,32 +70,30 @@ public string? EpStatoEpisodio  { get; set; }
 public List<string> EpIdUnitaIngresso  { get; set; } = new List<string>();
 
 [Display(Name = "Data Inizio", ShortName="", Description = "Data di inizio del periodo di permanenza del contatto", Prompt="")]
-[ErpDogField("EP_DATA_INIZIO", SqlFieldNameExt="EP_DATA_INIZIO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("EP_DATA_INIZIO", SqlFieldNameExt="EP_DATA_INIZIO", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange EpDataInizio  { get; set; } = new DateRange();
 
 [Display(Name = "Ora Inizio", ShortName="", Description = "Ora di inizio del periodo di permanenza del contatto", Prompt="")]
-[ErpDogField("EP_ORA_INIZIO", SqlFieldNameExt="EP_ORA_INIZIO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("EP_ORA_INIZIO", SqlFieldNameExt="EP_ORA_INIZIO", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? EpOraInizio  { get; set; }
+public TimeOnly? EpOraInizio  { get; set; }
 
 [Display(Name = "Data Fine", ShortName="", Description = "Data di fine del periodo di permanenza del contatto", Prompt="")]
-[ErpDogField("EP_DATA_FINE", SqlFieldNameExt="EP_DATA_FINE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("EP_DATA_FINE", SqlFieldNameExt="EP_DATA_FINE", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange EpDataFine  { get; set; } = new DateRange();
 
 [Display(Name = "Ora Fine", ShortName="", Description = "Ora di fine del periodo di permanenza del contatto", Prompt="")]
-[ErpDogField("EP_ORA_FINE", SqlFieldNameExt="EP_ORA_FINE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("EP_ORA_FINE", SqlFieldNameExt="EP_ORA_FINE", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? EpOraFine  { get; set; }
+public TimeOnly? EpOraFine  { get; set; }
 
 [Display(Name = "Cartella Ps", ShortName="", Description = "Identificativo del documento correlato dell'organizzazione di origine", Prompt="")]
 [ErpDogField("EP_CARTELLA_PS", SqlFieldNameExt="EP_CARTELLA_PS", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
@@ -153,18 +151,17 @@ public string? EpNote  { get; set; }
 public List<string> EpIdAttoAmministrativo  { get; set; } = new List<string>();
 
 [Display(Name = "Data Inizio La", ShortName="", Description = "Data di inizio del periodo di lista d'attesa del contatto", Prompt="")]
-[ErpDogField("EP_DATA_INIZIO_LA", SqlFieldNameExt="EP_DATA_INIZIO_LA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("EP_DATA_INIZIO_LA", SqlFieldNameExt="EP_DATA_INIZIO_LA", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange EpDataInizioLa  { get; set; } = new DateRange();
 
 [Display(Name = "Ora Inizio La", ShortName="", Description = "Ora di inizio del periodo di lista d'attesa del contatto", Prompt="")]
-[ErpDogField("EP_ORA_INIZIO_LA", SqlFieldNameExt="EP_ORA_INIZIO_LA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("EP_ORA_INIZIO_LA", SqlFieldNameExt="EP_ORA_INIZIO_LA", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? EpOraInizioLa  { get; set; }
+public TimeOnly? EpOraInizioLa  { get; set; }
 
 [Display(Name = "Id Reparto La", ShortName="", Description = "Identificativo dell'unità di assistenza responsabile del periodo di lista d'attesa", Prompt="")]
 [ErpDogField("EP_ID_REPARTO_LA", SqlFieldNameExt="EP_ID_REPARTO_LA", SqlFieldOptions="", Xref="Or1Icode", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
@@ -174,18 +171,17 @@ public string? EpOraInizioLa  { get; set; }
 public List<string> EpIdRepartoLa  { get; set; } = new List<string>();
 
 [Display(Name = "Data Inizio Preh", ShortName="", Description = "Data di inizio del periodo di preospedalizzazione del contatto", Prompt="")]
-[ErpDogField("EP_DATA_INIZIO_PREH", SqlFieldNameExt="EP_DATA_INIZIO_PREH", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("EP_DATA_INIZIO_PREH", SqlFieldNameExt="EP_DATA_INIZIO_PREH", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange EpDataInizioPreh  { get; set; } = new DateRange();
 
 [Display(Name = "Ora Inizio Preh", ShortName="", Description = "Ora di inizio del periodo di preospedalizzazione del contatto", Prompt="")]
-[ErpDogField("EP_ORA_INIZIO_PREH", SqlFieldNameExt="EP_ORA_INIZIO_PREH", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("EP_ORA_INIZIO_PREH", SqlFieldNameExt="EP_ORA_INIZIO_PREH", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? EpOraInizioPreh  { get; set; }
+public TimeOnly? EpOraInizioPreh  { get; set; }
 
 [Display(Name = "Id Reparto Preh", ShortName="", Description = "Identificativo dell'unità di assistenza responsabile del periodo di preospedalizzazione", Prompt="")]
 [ErpDogField("EP_ID_REPARTO_PREH", SqlFieldNameExt="EP_ID_REPARTO_PREH", SqlFieldOptions="", Xref="Or1Icode", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]

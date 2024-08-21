@@ -78,9 +78,9 @@ public List<string> PrIdEpisodio  { get; set; } = new List<string>();
 [Display(Name = "Classe Episodio", ShortName="", Description = "Classe di contatto 1=Ricovero - 2=Day-Hospital - 3=Ambulatorio", Prompt="")]
 [ErpDogField("PR_CLASSE_EPISODIO", SqlFieldNameExt="PR_CLASSE_EPISODIO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup(EPISODIO.EP_CLASSE_EPISODIO[PRESTAZIONE.PR_ID_EPISODIO]) multbxref()")]
 [DefaultValue(" ")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("1|2|3", ErrorMessage = "Inserisci una delle seguenti opzioni: 1|2|3")]
-public string? PrClasseEpisodio  { get; set; }
+[MultipleChoices(new[] { "1", "2", "3" }, MaxSelections=-1, LabelClassName="")]
+[DataType(DataType.Text)]
+public List<string> PrClasseEpisodio  { get; set; } = new List<string>();
 
 [Display(Name = "Tipo Episodio", ShortName="", Description = "Codice del tipo di contatto", Prompt="")]
 [ErpDogField("PR_TIPO_EPISODIO", SqlFieldNameExt="PR_TIPO_EPISODIO", SqlFieldOptions="", Xref="Te1Icode", SqlFieldProperties="prop() xref(TIPO_EPISODIO.TE__ICODE) xdup(EPISODIO.EP_ID_TIPO_EPISODIO[PRESTAZIONE.PR_ID_EPISODIO]) multbxref()")]
@@ -92,9 +92,9 @@ public List<string> PrTipoEpisodio  { get; set; } = new List<string>();
 [Display(Name = "Stato Prestazione", ShortName="", Description = "Stato dell'atto", Prompt="")]
 [ErpDogField("PR_STATO_PRESTAZIONE", SqlFieldNameExt="PR_STATO_PRESTAZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("0|1|2|3|4|5|6|7|8|9|A|B|C|D|E|F", ErrorMessage = "Inserisci una delle seguenti opzioni: 0|1|2|3|4|5|6|7|8|9|A|B|C|D|E|F")]
-public string? PrStatoPrestazione  { get; set; }
+[MultipleChoices(new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "A", "B", "C", "D", "E", "F" }, MaxSelections=-1, LabelClassName="")]
+[DataType(DataType.Text)]
+public List<string> PrStatoPrestazione  { get; set; } = new List<string>();
 
 [Display(Name = "Id Operatore Richiedente", ShortName="", Description = "Codice dell'agente che ha richiesto l'atto", Prompt="")]
 [ErpDogField("PR_ID_OPERATORE_RICHIEDENTE", SqlFieldNameExt="PR_ID_OPERATORE_RICHIEDENTE", SqlFieldOptions="", Xref="Or1Icode", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
@@ -118,18 +118,17 @@ public List<string> PrIdUnitaRichiedente  { get; set; } = new List<string>();
 public List<string> PrIdPostazioneRichiedente  { get; set; } = new List<string>();
 
 [Display(Name = "Data Richiesta", ShortName="", Description = "Data della richiesta", Prompt="")]
-[ErpDogField("PR_DATA_RICHIESTA", SqlFieldNameExt="PR_DATA_RICHIESTA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PR_DATA_RICHIESTA", SqlFieldNameExt="PR_DATA_RICHIESTA", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange PrDataRichiesta  { get; set; } = new DateRange();
 
 [Display(Name = "Ora Richiesta", ShortName="", Description = "Ora della richiesta", Prompt="")]
-[ErpDogField("PR_ORA_RICHIESTA", SqlFieldNameExt="PR_ORA_RICHIESTA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PR_ORA_RICHIESTA", SqlFieldNameExt="PR_ORA_RICHIESTA", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? PrOraRichiesta  { get; set; }
+public TimeOnly? PrOraRichiesta  { get; set; }
 
 [Display(Name = "Id Richiesta", ShortName="", Description = "Codice della comunicazione di richiesta (se presente)", Prompt="")]
 [ErpDogField("PR_ID_RICHIESTA", SqlFieldNameExt="PR_ID_RICHIESTA", SqlFieldOptions="", Xref="Ri1Icode", SqlFieldProperties="prop() xref(RICHIESTA.RI__ICODE) xdup() multbxref()")]
@@ -139,18 +138,17 @@ public string? PrOraRichiesta  { get; set; }
 public List<string> PrIdRichiesta  { get; set; } = new List<string>();
 
 [Display(Name = "Data Proposta Esecuzione", ShortName="", Description = "Data inizialmente richiesta per l'esecuzione", Prompt="")]
-[ErpDogField("PR_DATA_PROPOSTA_ESECUZIONE", SqlFieldNameExt="PR_DATA_PROPOSTA_ESECUZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PR_DATA_PROPOSTA_ESECUZIONE", SqlFieldNameExt="PR_DATA_PROPOSTA_ESECUZIONE", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange PrDataPropostaEsecuzione  { get; set; } = new DateRange();
 
 [Display(Name = "Ora Proposta Esecuzione", ShortName="", Description = "Ora inizialmente richiesta per l'esecuzione", Prompt="")]
-[ErpDogField("PR_ORA_PROPOSTA_ESECUZIONE", SqlFieldNameExt="PR_ORA_PROPOSTA_ESECUZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PR_ORA_PROPOSTA_ESECUZIONE", SqlFieldNameExt="PR_ORA_PROPOSTA_ESECUZIONE", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? PrOraPropostaEsecuzione  { get; set; }
+public TimeOnly? PrOraPropostaEsecuzione  { get; set; }
 
 [Display(Name = "Durata Prevista", ShortName="", Description = "Durata prevista dell'atto (peso)", Prompt="")]
 [ErpDogField("PR_DURATA_PREVISTA", SqlFieldNameExt="PR_DURATA_PREVISTA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
@@ -173,18 +171,17 @@ public string? PrNoteRichiesta  { get; set; }
 public string? PrRoutine  { get; set; }
 
 [Display(Name = "Data Appuntamento", ShortName="", Description = "Data attualmente programmata per l'esecuzione", Prompt="")]
-[ErpDogField("PR_DATA_APPUNTAMENTO", SqlFieldNameExt="PR_DATA_APPUNTAMENTO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PR_DATA_APPUNTAMENTO", SqlFieldNameExt="PR_DATA_APPUNTAMENTO", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange PrDataAppuntamento  { get; set; } = new DateRange();
 
 [Display(Name = "Ora Appuntamento", ShortName="", Description = "Ora attualmente programmata per l'esecuzione", Prompt="")]
-[ErpDogField("PR_ORA_APPUNTAMENTO", SqlFieldNameExt="PR_ORA_APPUNTAMENTO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PR_ORA_APPUNTAMENTO", SqlFieldNameExt="PR_ORA_APPUNTAMENTO", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? PrOraAppuntamento  { get; set; }
+public TimeOnly? PrOraAppuntamento  { get; set; }
 
 [Display(Name = "Note Pianificazione", ShortName="", Description = "Commento allegato alla pianificazione", Prompt="")]
 [ErpDogField("PR_NOTE_PIANIFICAZIONE", SqlFieldNameExt="PR_NOTE_PIANIFICAZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
@@ -192,46 +189,43 @@ public string? PrOraAppuntamento  { get; set; }
 public string? PrNotePianificazione  { get; set; }
 
 [Display(Name = "Data Inizio Esecuzione", ShortName="", Description = "Data di inizio dell'esecuzione", Prompt="")]
-[ErpDogField("PR_DATA_INIZIO_ESECUZIONE", SqlFieldNameExt="PR_DATA_INIZIO_ESECUZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PR_DATA_INIZIO_ESECUZIONE", SqlFieldNameExt="PR_DATA_INIZIO_ESECUZIONE", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange PrDataInizioEsecuzione  { get; set; } = new DateRange();
 
 [Display(Name = "Ora Inizio Esecuzione", ShortName="", Description = "Ora di inizio dell'esecuzione", Prompt="")]
-[ErpDogField("PR_ORA_INIZIO_ESECUZIONE", SqlFieldNameExt="PR_ORA_INIZIO_ESECUZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PR_ORA_INIZIO_ESECUZIONE", SqlFieldNameExt="PR_ORA_INIZIO_ESECUZIONE", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? PrOraInizioEsecuzione  { get; set; }
+public TimeOnly? PrOraInizioEsecuzione  { get; set; }
 
 [Display(Name = "Data Fine Esecuzione", ShortName="", Description = "Data di completamento dell'esecuzione o annullamento (se appropriato)", Prompt="")]
-[ErpDogField("PR_DATA_FINE_ESECUZIONE", SqlFieldNameExt="PR_DATA_FINE_ESECUZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PR_DATA_FINE_ESECUZIONE", SqlFieldNameExt="PR_DATA_FINE_ESECUZIONE", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange PrDataFineEsecuzione  { get; set; } = new DateRange();
 
 [Display(Name = "Ora Fine Esecuzione", ShortName="", Description = "Ora di completamento dell'esecuzione o annullamento (se appropriato)", Prompt="")]
-[ErpDogField("PR_ORA_FINE_ESECUZIONE", SqlFieldNameExt="PR_ORA_FINE_ESECUZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PR_ORA_FINE_ESECUZIONE", SqlFieldNameExt="PR_ORA_FINE_ESECUZIONE", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? PrOraFineEsecuzione  { get; set; }
+public TimeOnly? PrOraFineEsecuzione  { get; set; }
 
 [Display(Name = "Data Refertazione", ShortName="", Description = "Data di refertazione finale", Prompt="")]
-[ErpDogField("PR_DATA_REFERTAZIONE", SqlFieldNameExt="PR_DATA_REFERTAZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PR_DATA_REFERTAZIONE", SqlFieldNameExt="PR_DATA_REFERTAZIONE", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange PrDataRefertazione  { get; set; } = new DateRange();
 
 [Display(Name = "Ora Refertazione", ShortName="", Description = "Ora di refertazione finale", Prompt="")]
-[ErpDogField("PR_ORA_REFERTAZIONE", SqlFieldNameExt="PR_ORA_REFERTAZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PR_ORA_REFERTAZIONE", SqlFieldNameExt="PR_ORA_REFERTAZIONE", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? PrOraRefertazione  { get; set; }
+public TimeOnly? PrOraRefertazione  { get; set; }
 
 [Display(Name = "Id Operatore Esecutore", ShortName="", Description = "Codice dell'agente che ha annullato o eseguito l'atto (se appropriato)", Prompt="")]
 [ErpDogField("PR_ID_OPERATORE_ESECUTORE", SqlFieldNameExt="PR_ID_OPERATORE_ESECUTORE", SqlFieldOptions="", Xref="Or1Icode", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
@@ -277,18 +271,17 @@ public string? PrNoteEsecuzione  { get; set; }
 public List<string> PrIdOperatorePianificatore  { get; set; } = new List<string>();
 
 [Display(Name = "Data Pianificazione", ShortName="", Description = "Data in cui l'atto è stato pianificato", Prompt="")]
-[ErpDogField("PR_DATA_PIANIFICAZIONE", SqlFieldNameExt="PR_DATA_PIANIFICAZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PR_DATA_PIANIFICAZIONE", SqlFieldNameExt="PR_DATA_PIANIFICAZIONE", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange PrDataPianificazione  { get; set; } = new DateRange();
 
 [Display(Name = "Ora Pianificazione", ShortName="", Description = "Ora in cui l'atto è stato pianificato", Prompt="")]
-[ErpDogField("PR_ORA_PIANIFICAZIONE", SqlFieldNameExt="PR_ORA_PIANIFICAZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PR_ORA_PIANIFICAZIONE", SqlFieldNameExt="PR_ORA_PIANIFICAZIONE", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? PrOraPianificazione  { get; set; }
+public TimeOnly? PrOraPianificazione  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note testuali generiche relative all'atto", Prompt="")]
 [ErpDogField("PR_NOTE", SqlFieldNameExt="PR_NOTE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]

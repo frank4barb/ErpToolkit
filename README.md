@@ -28,6 +28,14 @@ Il modello tecnologico prevede l'uso di un servizio Windows o di un processo in 
 ![](./wwwroot/images/ERPtoolkit-Moduli-scalabili-collaborativi.png)
 
 
+# Librerie esterne usate
+
+
+- `DataTables`: Add advanced interaction controls to your HTML tables [https://datatables.net/].
+- `Mermaid`: Diagramming and charting tool [https://mermaid.js.org/].
+- `Quill`: Your powerful rich text editor [https://quilljs.com/].
+
+
 # Storyboard
 
 Per ogni oggetto del modello si prevede una vista standard composta da:

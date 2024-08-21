@@ -97,28 +97,25 @@ public string? PaCognome  { get; set; }
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue(" ")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("M|F|N", ErrorMessage = "Inserisci una delle seguenti opzioni: M|F|N")]
+[MultipleChoices(new[] { "M", "F", "N" }, MaxSelections=1, LabelClassName="")]
 public string? PaSesso  { get; set; }
 
 [Display(Name = "Data Nascita", ShortName="", Description = "Data di nascita", Prompt="")]
-[ErpDogField("PA_DATA_NASCITA", SqlFieldNameExt="PA_DATA_NASCITA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PA_DATA_NASCITA", SqlFieldNameExt="PA_DATA_NASCITA", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DataType(DataType.Date)]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-public string? PaDataNascita  { get; set; }
+public DateOnly? PaDataNascita  { get; set; }
 
 [Display(Name = "Ora Nascita", ShortName="", Description = "Ora di nascita", Prompt="")]
-[ErpDogField("PA_ORA_NASCITA", SqlFieldNameExt="PA_ORA_NASCITA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PA_ORA_NASCITA", SqlFieldNameExt="PA_ORA_NASCITA", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? PaOraNascita  { get; set; }
+public TimeOnly? PaOraNascita  { get; set; }
 
 [Display(Name = "Id Comune Nascita", ShortName="", Description = "Codice del comune di nascita", Prompt="")]
 [ErpDogField("PA_ID_COMUNE_NASCITA", SqlFieldNameExt="PA_ID_COMUNE_NASCITA", SqlFieldOptions="", Xref="Cm1Icode", SqlFieldProperties="prop() xref(COMUNE.CM__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("Comune", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? PaIdComuneNascita  { get; set; }
@@ -126,7 +123,6 @@ public ErpToolkit.Models.SIO.Patient.Comune? PaIdComuneNascitaObj  { get; set; }
 
 [Display(Name = "Id Nazione Nascita", ShortName="", Description = "Codice del paese di nascita", Prompt="")]
 [ErpDogField("PA_ID_NAZIONE_NASCITA", SqlFieldNameExt="PA_ID_NAZIONE_NASCITA", SqlFieldOptions="", Xref="Nz1Icode", SqlFieldProperties="prop() xref(NAZIONE.NZ__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("Nazione", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? PaIdNazioneNascita  { get; set; }
@@ -134,7 +130,6 @@ public ErpToolkit.Models.SIO.Patient.Nazione? PaIdNazioneNascitaObj  { get; set;
 
 [Display(Name = "Id Cittadinanza", ShortName="", Description = "Codice del paese di cittadinanza", Prompt="")]
 [ErpDogField("PA_ID_CITTADINANZA", SqlFieldNameExt="PA_ID_CITTADINANZA", SqlFieldOptions="", Xref="Nz1Icode", SqlFieldProperties="prop() xref(NAZIONE.NZ__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("Nazione", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? PaIdCittadinanza  { get; set; }
@@ -163,7 +158,6 @@ public string? PaCapRes  { get; set; }
 
 [Display(Name = "Id Comune Res", ShortName="", Description = "Indirizzo legale: codice del comune", Prompt="")]
 [ErpDogField("PA_ID_COMUNE_RES", SqlFieldNameExt="PA_ID_COMUNE_RES", SqlFieldOptions="", Xref="Cm1Icode", SqlFieldProperties="prop() xref(COMUNE.CM__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("Comune", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? PaIdComuneRes  { get; set; }
@@ -171,7 +165,6 @@ public ErpToolkit.Models.SIO.Patient.Comune? PaIdComuneResObj  { get; set; }
 
 [Display(Name = "Id Distretto Res", ShortName="", Description = "Indirizzo legale : Codice di distretto", Prompt="")]
 [ErpDogField("PA_ID_DISTRETTO_RES", SqlFieldNameExt="PA_ID_DISTRETTO_RES", SqlFieldOptions="", Xref="Di1Icode", SqlFieldProperties="prop() xref(DISTRETTO.DI__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("Distretto", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? PaIdDistrettoRes  { get; set; }
@@ -179,7 +172,6 @@ public ErpToolkit.Models.SIO.Patient.Distretto? PaIdDistrettoResObj  { get; set;
 
 [Display(Name = "Id Nazione Dom", ShortName="", Description = "Codice del paese in cui il paziente risiede", Prompt="")]
 [ErpDogField("PA_ID_NAZIONE_DOM", SqlFieldNameExt="PA_ID_NAZIONE_DOM", SqlFieldOptions="", Xref="Nz1Icode", SqlFieldProperties="prop() xref(NAZIONE.NZ__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("Nazione", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? PaIdNazioneDom  { get; set; }
@@ -215,7 +207,6 @@ public string? PaCapDom  { get; set; }
 
 [Display(Name = "Id Comune Dom", ShortName="", Description = "Indirizzo di residenza: codice del comune", Prompt="")]
 [ErpDogField("PA_ID_COMUNE_DOM", SqlFieldNameExt="PA_ID_COMUNE_DOM", SqlFieldOptions="", Xref="Cm1Icode", SqlFieldProperties="prop() xref(COMUNE.CM__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("Comune", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? PaIdComuneDom  { get; set; }
@@ -237,7 +228,6 @@ public string? PaCellulare  { get; set; }
 
 [Display(Name = "Id Distretto Dom", ShortName="", Description = "Indirizzo di residenza : Codice di distretto", Prompt="")]
 [ErpDogField("PA_ID_DISTRETTO_DOM", SqlFieldNameExt="PA_ID_DISTRETTO_DOM", SqlFieldOptions="", Xref="Di1Icode", SqlFieldProperties="prop() xref(DISTRETTO.DI__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("Distretto", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? PaIdDistrettoDom  { get; set; }
@@ -251,24 +241,21 @@ public ErpToolkit.Models.SIO.Patient.Distretto? PaIdDistrettoDomObj  { get; set;
 public string? PaNote  { get; set; }
 
 [Display(Name = "Data Decesso", ShortName="", Description = "Data di morte", Prompt="")]
-[ErpDogField("PA_DATA_DECESSO", SqlFieldNameExt="PA_DATA_DECESSO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PA_DATA_DECESSO", SqlFieldNameExt="PA_DATA_DECESSO", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("    /  /  ")]
-[StringLength(10, ErrorMessage = "Inserire massimo 10 caratteri")]
 [DataType(DataType.Date)]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-public string? PaDataDecesso  { get; set; }
+public DateOnly? PaDataDecesso  { get; set; }
 
 [Display(Name = "Ora Decesso", ShortName="", Description = "Ora di morte", Prompt="")]
-[ErpDogField("PA_ORA_DECESSO", SqlFieldNameExt="PA_ORA_DECESSO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("PA_ORA_DECESSO", SqlFieldNameExt="PA_ORA_DECESSO", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? PaOraDecesso  { get; set; }
+public TimeOnly? PaOraDecesso  { get; set; }
 
 [Display(Name = "Id Nazione Res", ShortName="", Description = "Codice del comune di residenza del paziente", Prompt="")]
 [ErpDogField("PA_ID_NAZIONE_RES", SqlFieldNameExt="PA_ID_NAZIONE_RES", SqlFieldOptions="", Xref="Nz1Icode", SqlFieldProperties="prop() xref(NAZIONE.NZ__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("Nazione", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? PaIdNazioneRes  { get; set; }

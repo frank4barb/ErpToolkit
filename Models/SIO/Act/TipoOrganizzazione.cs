@@ -86,7 +86,6 @@ public string? TzNote  { get; set; }
 
 [Display(Name = "Gruppo", ShortName="", Description = "Classe di aggregazione (se presente)", Prompt="")]
 [ErpDogField("TZ_GRUPPO", SqlFieldNameExt="TZ_GRUPPO", SqlFieldOptions="", Xref="Tz1Icode", SqlFieldProperties="prop() xref(TIPO_ORGANIZZAZIONE.TZ__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("TipoOrganizzazione", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? TzGruppo  { get; set; }
@@ -94,7 +93,6 @@ public ErpToolkit.Models.SIO.Act.TipoOrganizzazione? TzGruppoObj  { get; set; }
 
 [Display(Name = "Sequenza", ShortName="", Description = "Numero di sequenza nell'aggregazione (se presente)", Prompt="")]
 [ErpDogField("TZ_SEQUENZA", SqlFieldNameExt="TZ_SEQUENZA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public short? TzSequenza  { get; set; }
 
 public bool TryValidateInt(ModelStateDictionary modelState) 

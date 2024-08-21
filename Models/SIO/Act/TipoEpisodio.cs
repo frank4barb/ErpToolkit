@@ -75,7 +75,7 @@ public string? TeCodice  { get; set; }
 [Required(ErrorMessage = "Inserire un valore nel campo")]
 [DefaultValue(" ")]
 [StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("0|1|2|3|4|5|6|7|8|9", ErrorMessage = "Inserisci una delle seguenti opzioni: 0|1|2|3|4|5|6|7|8|9")]
+[MultipleChoices(new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" }, MaxSelections=1, LabelClassName="")]
 public string? TeClasse  { get; set; }
 
 [Display(Name = "Descrizione", ShortName="", Description = "Descrizione estesa", Prompt="")]

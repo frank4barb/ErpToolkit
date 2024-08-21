@@ -74,7 +74,7 @@ public string? SaDisponibilita  { get; set; }
 public string? SaTelefonoFornitore  { get; set; }
 
 [Display(Name = "Data Ultima Manutenzione", ShortName="", Description = "Data dell'ultima manutenzione", Prompt="")]
-[ErpDogField("SA_DATA_ULTIMA_MANUTENZIONE", SqlFieldNameExt="SA_DATA_ULTIMA_MANUTENZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("SA_DATA_ULTIMA_MANUTENZIONE", SqlFieldNameExt="SA_DATA_ULTIMA_MANUTENZIONE", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange SaDataUltimaManutenzione  { get; set; } = new DateRange();
@@ -90,7 +90,7 @@ public short? SaFrequenzaManutenzione  { get; set; }
 public double? SaUsoMedioGiornaliero  { get; set; }
 
 [Display(Name = "Data Prossima Manutenzione", ShortName="", Description = "Data della prossima manutenzione prevista", Prompt="")]
-[ErpDogField("SA_DATA_PROSSIMA_MANUTENZIONE", SqlFieldNameExt="SA_DATA_PROSSIMA_MANUTENZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("SA_DATA_PROSSIMA_MANUTENZIONE", SqlFieldNameExt="SA_DATA_PROSSIMA_MANUTENZIONE", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange SaDataProssimaManutenzione  { get; set; } = new DateRange();

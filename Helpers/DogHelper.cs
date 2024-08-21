@@ -219,9 +219,23 @@ namespace ErpToolkit.Helpers
                                         string fieldOptions = ((ErpDogFieldAttribute)attribute).SqlFieldOptions?.ToString() ?? "";
                                         if (propertyValue is string str)
                                         {
-                                            if (fieldOptions.Contains("[UID]")) sb.AppendLine($" {attrPropValue} = '{str.Trim()}' and ");
-                                            else if (fieldOptions.Contains("[XID]")) sb.AppendLine($" {attrPropValue} = '{str.Trim()}' and ");
+                                            if (fieldOptions.Contains("[UID]")) sb.AppendLine($" {attrPropValue} = '{str.TrimEnd()}' and ");
+                                            else if (fieldOptions.Contains("[XID]")) sb.AppendLine($" {attrPropValue} = '{str.TrimEnd()}' and ");
                                             else sb.AppendLine($" {attrPropValue} LIKE '%{str}%' and ");
+                                        }
+                                        else if (propertyValue is DateTime dattim)
+                                        {
+                                            if (fieldOptions.Contains("[DATE]")) sb.AppendLine($" {attrPropValue} = '{dattim.ToString("yyyy/MM/dd")}' and ");
+                                            else if (fieldOptions.Contains("[TIME]")) sb.AppendLine($" {attrPropValue} = '{dattim.ToString("HH:mm:ss")}' and ");
+                                            else if (fieldOptions.Contains("[DATETIME]")) sb.AppendLine($" {attrPropValue} = '{dattim.ToString("yyyy/MM/dd HH:mm:ss")}' and ");
+                                        }
+                                        else if (propertyValue is DateOnly dat)
+                                        {
+                                            if (fieldOptions.Contains("[DATE]")) sb.AppendLine($" {attrPropValue} = '{dat.ToString("yyyy/MM/dd")}' and ");
+                                        }
+                                        else if (propertyValue is TimeOnly tim)
+                                        {
+                                            if (fieldOptions.Contains("[TIME]")) sb.AppendLine($" {attrPropValue} = '{tim.ToString("HH:mm:ss")}' and ");
                                         }
                                         else if (propertyValue is List<string> strList) sb.Append($" {attrPropValue} in (").Append(string.Join(", ", strList.Select(str => $"'{str.Trim()}'"))).AppendLine($") and");
                                         else if (propertyValue is List<long> lngList) sb.Append($" {attrPropValue} in (").Append(string.Join(", ", lngList)).AppendLine($") and");

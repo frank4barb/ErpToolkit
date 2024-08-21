@@ -59,16 +59,16 @@ public List<string> DgIdGruppo  { get; set; } = new List<string>();
 [Display(Name = "Tipo Drg", ShortName="", Description = "Tipo di DRG [M]edico - [C]hirurgico", Prompt="")]
 [ErpDogField("DG_TIPO_DRG", SqlFieldNameExt="DG_TIPO_DRG", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("M")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("M|S", ErrorMessage = "Inserisci una delle seguenti opzioni: M|S")]
-public string? DgTipoDrg  { get; set; }
+[MultipleChoices(new[] { "M", "S" }, MaxSelections=-1, LabelClassName="")]
+[DataType(DataType.Text)]
+public List<string> DgTipoDrg  { get; set; } = new List<string>();
 
 [Display(Name = "Tipo Icd9", ShortName="", Description = "Tipo di ICD9-CM [D]iagnostico - [O]perativo (se applicabile)", Prompt="")]
 [ErpDogField("DG_TIPO_ICD9", SqlFieldNameExt="DG_TIPO_ICD9", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("D|O| ", ErrorMessage = "Inserisci una delle seguenti opzioni: D|O| ")]
-public string? DgTipoIcd9  { get; set; }
+[MultipleChoices(new[] { "D", "O", " " }, MaxSelections=-1, LabelClassName="")]
+[DataType(DataType.Text)]
+public List<string> DgTipoIcd9  { get; set; } = new List<string>();
 
 public bool TryValidateInt(ModelStateDictionary modelState) 
     { 

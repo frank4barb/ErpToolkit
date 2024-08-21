@@ -86,7 +86,6 @@ public string? TcNote  { get; set; }
 
 [Display(Name = "Id Categoria Dato Clinico", ShortName="", Description = "Codice della classe dell'elemento del record sanitario", Prompt="")]
 [ErpDogField("TC_ID_CATEGORIA_DATO_CLINICO", SqlFieldNameExt="TC_ID_CATEGORIA_DATO_CLINICO", SqlFieldOptions="", Xref="Cc1Icode", SqlFieldProperties="prop() xref(CATEGORIA_DATO_CLINICO.CC__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("CategoriaDatoClinico", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? TcIdCategoriaDatoClinico  { get; set; }
@@ -101,7 +100,6 @@ public string? TcUnitaDiMisura  { get; set; }
 
 [Display(Name = "Id Gruppo", ShortName="", Description = "Codice del tipo aggregato di HRI di cui questo elemento fa parte", Prompt="")]
 [ErpDogField("TC_ID_GRUPPO", SqlFieldNameExt="TC_ID_GRUPPO", SqlFieldOptions="", Xref="Tc1Icode", SqlFieldProperties="prop() xref(TIPO_DATO_CLINICO.TC__ICODE) xdup() multbxref()")]
-[DefaultValue("")]
 [AutocompleteClient("TipoDatoClinico", "AutocompleteGetAll", 1)]
 [DataType(DataType.Text)]
 public string? TcIdGruppo  { get; set; }
@@ -109,7 +107,6 @@ public ErpToolkit.Models.SIO.HealthData.TipoDatoClinico? TcIdGruppoObj  { get; s
 
 [Display(Name = "Sequenza", ShortName="", Description = "Ordine sequenziale degli HD aggregati (se presente)", Prompt="")]
 [ErpDogField("TC_SEQUENZA", SqlFieldNameExt="TC_SEQUENZA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
-[DefaultValue("")]
 public short? TcSequenza  { get; set; }
 
 [Display(Name = "Attributi1", ShortName="", Description = "Flag operativi, gestiti dall'applicazione", Prompt="")]

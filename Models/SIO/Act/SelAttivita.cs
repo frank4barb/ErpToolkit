@@ -69,9 +69,9 @@ public List<string> AvIdGruppo  { get; set; } = new List<string>();
 [Display(Name = "Attivita Preferenziale", ShortName="", Description = "Attività preferenziale eseguita quando il servizio viene richiesto Sì [Y] / No [N]", Prompt="")]
 [ErpDogField("AV_ATTIVITA_PREFERENZIALE", SqlFieldNameExt="AV_ATTIVITA_PREFERENZIALE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("N")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("Y|N", ErrorMessage = "Inserisci una delle seguenti opzioni: Y|N")]
-public string? AvAttivitaPreferenziale  { get; set; }
+[MultipleChoices(new[] { "Y", "N" }, MaxSelections=-1, LabelClassName="")]
+[DataType(DataType.Text)]
+public List<string> AvAttivitaPreferenziale  { get; set; } = new List<string>();
 
 [Display(Name = "Durata Validita", ShortName="", Description = "Livello clinico di validità (cioè il numero di ore durante le quali non ha senso clinico replicare l'attività)", Prompt="")]
 [ErpDogField("AV_DURATA_VALIDITA", SqlFieldNameExt="AV_DURATA_VALIDITA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
@@ -86,9 +86,9 @@ public short? AvDurataMedia  { get; set; }
 [Display(Name = "In Evidenza", ShortName="", Description = "Evidenziare gli atti effettivi per scopi di ricerca o speciali Sì [Y] - No [N]", Prompt="")]
 [ErpDogField("AV_IN_EVIDENZA", SqlFieldNameExt="AV_IN_EVIDENZA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("N")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("Y|N", ErrorMessage = "Inserisci una delle seguenti opzioni: Y|N")]
-public string? AvInEvidenza  { get; set; }
+[MultipleChoices(new[] { "Y", "N" }, MaxSelections=-1, LabelClassName="")]
+[DataType(DataType.Text)]
+public List<string> AvInEvidenza  { get; set; } = new List<string>();
 
 [Display(Name = "Id Tipo Attivita", ShortName="", Description = "Codice della classe generale di attività predefinita", Prompt="")]
 [ErpDogField("AV_ID_TIPO_ATTIVITA", SqlFieldNameExt="AV_ID_TIPO_ATTIVITA", SqlFieldOptions="", Xref="Ta1Icode", SqlFieldProperties="prop() xref(TIPO_ATTIVITA.TA__ICODE) xdup() multbxref()")]
@@ -100,9 +100,9 @@ public List<string> AvIdTipoAttivita  { get; set; } = new List<string>();
 [Display(Name = "Routine", ShortName="", Description = "Pianificazione routinaria (cioè automatica) Sì [Y] - No [N]", Prompt="")]
 [ErpDogField("AV_ROUTINE", SqlFieldNameExt="AV_ROUTINE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("Y")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("Y|N", ErrorMessage = "Inserisci una delle seguenti opzioni: Y|N")]
-public string? AvRoutine  { get; set; }
+[MultipleChoices(new[] { "Y", "N" }, MaxSelections=-1, LabelClassName="")]
+[DataType(DataType.Text)]
+public List<string> AvRoutine  { get; set; } = new List<string>();
 
 [Display(Name = "Note Estese", ShortName="", Description = "Nota estesa", Prompt="")]
 [ErpDogField("AV_NOTE_ESTESE", SqlFieldNameExt="AV_NOTE_ESTESE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]

@@ -42,18 +42,17 @@ public string? CpDescrizione  { get; set; }
 public string? CpCodiceUnivoco  { get; set; }
 
 [Display(Name = "Data Prelievo", ShortName="", Description = "Data di raccolta", Prompt="")]
-[ErpDogField("CP_DATA_PRELIEVO", SqlFieldNameExt="CP_DATA_PRELIEVO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("CP_DATA_PRELIEVO", SqlFieldNameExt="CP_DATA_PRELIEVO", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange CpDataPrelievo  { get; set; } = new DateRange();
 
 [Display(Name = "Ora Prelievo", ShortName="", Description = "Ora di raccolta", Prompt="")]
-[ErpDogField("CP_ORA_PRELIEVO", SqlFieldNameExt="CP_ORA_PRELIEVO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
+[ErpDogField("CP_ORA_PRELIEVO", SqlFieldNameExt="CP_ORA_PRELIEVO", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 [DataType(DataType.Time)]
 [DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
-public string? CpOraPrelievo  { get; set; }
+public TimeOnly? CpOraPrelievo  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note", Prompt="")]
 [ErpDogField("CP_NOTE", SqlFieldNameExt="CP_NOTE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
@@ -80,9 +79,9 @@ public string? CpCodiceAssoluto  { get; set; }
 [Display(Name = "Stato Campione", ShortName="", Description = "Stato del campione durante il suo ciclo di vita", Prompt="")]
 [ErpDogField("CP_STATO_CAMPIONE", SqlFieldNameExt="CP_STATO_CAMPIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("0")]
-[StringLength(1, ErrorMessage = "Inserire massimo 1 caratteri")]
-[RegularExpression("0|1|2|3|4|5|6|7|8|9", ErrorMessage = "Inserisci una delle seguenti opzioni: 0|1|2|3|4|5|6|7|8|9")]
-public string? CpStatoCampione  { get; set; }
+[MultipleChoices(new[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9" }, MaxSelections=-1, LabelClassName="")]
+[DataType(DataType.Text)]
+public List<string> CpStatoCampione  { get; set; } = new List<string>();
 
 [Display(Name = "Id Posizione Attuale", ShortName="", Description = "Posizione del campione nell'organizzazione", Prompt="")]
 [ErpDogField("CP_ID_POSIZIONE_ATTUALE", SqlFieldNameExt="CP_ID_POSIZIONE_ATTUALE", SqlFieldOptions="", Xref="Or1Icode", SqlFieldProperties="prop() xref(ORGANIZZAZIONE.OR__ICODE) xdup() multbxref()")]
