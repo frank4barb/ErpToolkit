@@ -23,6 +23,9 @@ namespace ErpToolkit.Helpers
     {
 
         private const string DB_FORMAT_DATE = "yyyy/MM/dd"; //formato stringa di memorizzazione della data nel DB
+        private const string DB_FORMAT_TIME = "HH:mm:ss"; //formato stringa di memorizzazione dell'ora nel DB
+        private const string DB_FORMAT_DATETIME = "yyyy/MM/dd HH:mm:ss"; //formato stringa di memorizzazione di data e ora nel DB
+
 
         public class FieldAttr
         {
@@ -225,17 +228,17 @@ namespace ErpToolkit.Helpers
                                         }
                                         else if (propertyValue is DateTime dattim)
                                         {
-                                            if (fieldOptions.Contains("[DATE]")) sb.AppendLine($" {attrPropValue} = '{dattim.ToString("yyyy/MM/dd")}' and ");
-                                            else if (fieldOptions.Contains("[TIME]")) sb.AppendLine($" {attrPropValue} = '{dattim.ToString("HH:mm:ss")}' and ");
-                                            else if (fieldOptions.Contains("[DATETIME]")) sb.AppendLine($" {attrPropValue} = '{dattim.ToString("yyyy/MM/dd HH:mm:ss")}' and ");
+                                            if (fieldOptions.Contains("[DATE]")) sb.AppendLine($" {attrPropValue} = '{dattim.ToString(DB_FORMAT_DATE)}' and ");
+                                            else if (fieldOptions.Contains("[TIME]")) sb.AppendLine($" {attrPropValue} = '{dattim.ToString(DB_FORMAT_TIME)}' and ");
+                                            else if (fieldOptions.Contains("[DATETIME]")) sb.AppendLine($" {attrPropValue} = '{dattim.ToString(DB_FORMAT_DATETIME)}' and ");
                                         }
                                         else if (propertyValue is DateOnly dat)
                                         {
-                                            if (fieldOptions.Contains("[DATE]")) sb.AppendLine($" {attrPropValue} = '{dat.ToString("yyyy/MM/dd")}' and ");
+                                            if (fieldOptions.Contains("[DATE]")) sb.AppendLine($" {attrPropValue} = '{dat.ToString(DB_FORMAT_DATE)}' and ");
                                         }
                                         else if (propertyValue is TimeOnly tim)
                                         {
-                                            if (fieldOptions.Contains("[TIME]")) sb.AppendLine($" {attrPropValue} = '{tim.ToString("HH:mm:ss")}' and ");
+                                            if (fieldOptions.Contains("[TIME]")) sb.AppendLine($" {attrPropValue} = '{tim.ToString(DB_FORMAT_TIME)}' and ");
                                         }
                                         else if (propertyValue is List<string> strList) sb.Append($" {attrPropValue} in (").Append(string.Join(", ", strList.Select(str => $"'{str.Trim()}'"))).AppendLine($") and");
                                         else if (propertyValue is List<long> lngList) sb.Append($" {attrPropValue} in (").Append(string.Join(", ", lngList)).AppendLine($") and");
@@ -296,6 +299,7 @@ namespace ErpToolkit.Helpers
             return $"where {icodeName}='{icode}' ";
         }
 
+        //******************************************************************************************************************
         //******************************************************************************************************************
 
         public static object? getPropertyValue(object selModel, string propName)
@@ -415,42 +419,6 @@ namespace ErpToolkit.Helpers
                             }
                         }
                     }
-                    //xx// SGANCIO DAL MODELLO IL CONCETTO DI VISIBILITA'
-                    //xx//else if ((propName == propertyName + "_Attr" || propName == attribXref + "_Attr") && propValue != null)
-                    //xx//{
-                    //xx//    PropertyInfo? propertyAttrFields = type.GetProperty("AttrFields");
-                    //xx//    if (propertyAttrFields != null) {
-                    //xx//        Dictionary<string, FieldAttr>? attrFields = (Dictionary<string, FieldAttr>?)propertyAttrFields.GetValue(selModel);
-                    //xx//        if (attrFields != null) { 
-                    //xx//            if (attrFields.ContainsKey(propertyName)) attrFields[propertyName].setAttr(propValue);
-                    //xx//            else attrFields[propertyName] = new DogHelper.FieldAttr(propValue);
-                    //xx//            propertyAttrFields.SetValue(selModel, attrFields); }
-                    //xx//    }
-                    //xx//}
-                    //// imposta gli attributi dei campi  ===> NON FUNZIONA XCHE' GLI ATTRIBUTI POSSONO ESSERE SOLO LETTI
-                    //else if ( (propName == propertyName + "_Attr" || propName == attribXref + "_Attr") && propValue != null )
-                    //{
-                    //    Char[] attrVal = propValue.ToCharArray(); Attribute? attr = null;
-                    //    for (int i = 0; i < attrVal.Length; i++)
-                    //    {
-                    //        switch (i)
-                    //        {
-                    //            case 0: // 0) ReadOnly
-                    //                attr = ((ErpDogFieldAttribute)(property.GetCustomAttribute(typeof(ErpDogFieldAttribute), false)));
-                    //                if (attr != null && attrVal[i] == 'Y') ((ErpDogFieldAttribute)attr).Readonly = true;
-                    //                else if (attr != null && attrVal[i] == 'N') ((ErpDogFieldAttribute)attr).Readonly = false;
-                    //                break;
-                    //            case 1: // 1) Visible
-                    //                attr = ((ErpDogFieldAttribute)(property.GetCustomAttribute(typeof(ErpDogFieldAttribute), false)));
-                    //                if (attr != null && attrVal[i] == 'Y') ((ErpDogFieldAttribute)attr).Visible = true;
-                    //                else if (attr != null && attrVal[i] == 'N') ((ErpDogFieldAttribute)attr).Visible = false;
-                    //                break;
-                    //         }
-                    //    }
-                    //    PropertyInfo property2 = selModel.GetType().GetProperty("EpIdTipoEpisodio");
-                    //    bool testRes = ((ErpDogFieldAttribute)(property2.GetCustomAttribute(typeof(ErpDogFieldAttribute), false))).Readonly;
-                    //    return true;
-                    //}
                     else continue;
                 }
             }

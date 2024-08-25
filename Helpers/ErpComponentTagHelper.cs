@@ -769,11 +769,10 @@ namespace ErpToolkit.Helpers
     public class MultipleChoicesAttribute : Attribute
     {
         public string[] Choices { get; }
-        private int _maxSelections = 1;
-        public int MaxSelections { get { return _maxSelections; } set { if (value < 0) _maxSelections = int.MaxValue; } }
-        public string LabelContoller { get; set; }
-        public string LabelAction { get; set; }
-        public string LabelClassName { get; set; }
+        public int MaxSelections { get; set; } = 1;  // disable controll if MaxSelections < 1
+        public string LabelContoller { get; set; } = "Shared";
+        public string LabelAction { get; set; } = "GetLabels";
+        public string LabelClassName { get; set; } = "";
 
         public MultipleChoicesAttribute(string[] choices, int maxSelections = 1, string labelContoller = "Shared", string labelAction = "GetLabels", string labelClassName = "")
         {
@@ -841,8 +840,8 @@ namespace ErpToolkit.Helpers
 
 
                 var choices = multipleChoicesAttribute.Choices;
-                var maxSelections = multipleChoicesAttribute.MaxSelections;
-                var isMultiple = maxSelections > 1;
+                var maxSelections = multipleChoicesAttribute.MaxSelections; // disable controll if maxSelections < 1 
+                var isMultiple = maxSelections != 1;
                 var name = For.Name;
                 var readonlyAttr = attrField.Readonly == 'Y' ? "disabled" : "";
                 var labels = choices;
@@ -882,10 +881,10 @@ namespace ErpToolkit.Helpers
 
                 for (int i = 0; i < choices.Length; i++)
                 {
-                    if (i > 0 && i % 6 == 0)
-                    {
-                        content.AppendLine("<div class='w-100'></div>"); // Line break after 6 items
-                    }
+                    //if (i > 0 && i % 6 == 0)
+                    //{
+                    //    content.AppendLine("<div class='w-100'></div>"); // Line break after 6 items
+                    //}
 
                     string id = $"{name}_{i}";
                     string value = choices[i].Trim();
@@ -902,7 +901,7 @@ namespace ErpToolkit.Helpers
                 content.AppendLine("</div>");
 
                 // JavaScript per gestire il numero massimo di selezioni
-                if (isMultiple && maxSelections < int.MaxValue)
+                if (isMultiple && maxSelections > 1)
                 {
                     content.AppendLine($@"
                         <script>

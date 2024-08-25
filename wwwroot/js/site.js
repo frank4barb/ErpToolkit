@@ -55,6 +55,7 @@ function openModalWithContent(modalDialogId, modalAction, jsonParams) {
 
 
 function handleMaxSelections(groupName, maxSelections) {
+    if (maxSelections <= 1) return;
     var group = document.querySelectorAll(`input[name="${groupName}"]`);
     var checkedCount = 0;
 
