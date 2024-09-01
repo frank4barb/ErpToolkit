@@ -5,6 +5,10 @@ namespace ErpToolkit.Helpers
 
         public const int SUCCESS = 0; // Nessun errore
 
+        public const int ERR_NO_INPUT = -107; // Input obbligatorio non inserito
+        public const int ERR_BAD_IDEN = -205; // Identificativo univoco vuoto o ambiguo
+
+        public const int ERR_DB_TRANSACTION = -367; // Errore DB nell'esecuzione transazione
         public const int ERR_DB_DOMAIN = -366; // Il valore del campo è fuori dal dominio previsto
         public const int ERR_DB_DEADLOCK = -362; // Deadlock tra processi
         public const int ERR_DB_BLOB_ERR = -360; //Errore nella gestione dei BLOB

@@ -1,34 +1,33 @@
-
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using static ErpToolkit.Helpers.ErpError;
 
 namespace ErpToolkit.Helpers.Db
 {
-    public class SqlServerDatabase : IDatabase
+    public class SQLiteDatabase : IDatabase
     {
         private string _connectionString;
-        private SqlTransaction _transaction = null;
+        private SQLiteTransaction _transaction = null;
         private static readonly object _lock = new object();
 
-        public SqlServerDatabase(string connectionString)
+        public SQLiteDatabase(string connectionString)
         {
             _connectionString = connectionString;
         }
 
         //Gestione connessione
-        private SqlConnection OpenConnection()
+        private SQLiteConnection OpenConnection()
         {
-            SqlConnection connection = null;
+            SQLiteConnection connection = null;
             lock (_lock)
             {
-                connection = new SqlConnection(_connectionString);
+                connection = new SQLiteConnection(_connectionString);
                 connection.Open();
                 return connection;
             }
         }
-        private void CloseConnection(SqlConnection connection)
+        private void CloseConnection(SQLiteConnection connection)
         {
             lock (_lock)
             {
@@ -51,16 +50,16 @@ namespace ErpToolkit.Helpers.Db
         public void ReleaseConnection(IDbConnection connection)
         {
             //return (IDbConnection)new SqlConnection(_connectionString);
-            if (_transaction == null) CloseConnection((SqlConnection)connection);
+            if (_transaction == null) CloseConnection((SQLiteConnection)connection);
         }
 
         public IDbCommand NewCommand(string sql, IDbConnection connection)
         {
-            return (IDbCommand)new SqlCommand(sql, (SqlConnection)connection, _transaction);
+            return (IDbCommand)new SQLiteCommand(sql, (SQLiteConnection)connection, _transaction);
         }
         public DataTable QueryReader(IDbCommand command, int maxRecords)
         {
-            using (SqlDataAdapter adapter = new SqlDataAdapter((SqlCommand)command))
+            using (SQLiteDataAdapter adapter = new SQLiteDataAdapter((SQLiteCommand)command))
             {
                 DataTable result = new DataTable();
                 adapter.Fill(0, maxRecords, result); // restituisce maxRecords righe  //adapter.Fill(result);  
@@ -73,10 +72,10 @@ namespace ErpToolkit.Helpers.Db
         // Gestione transazioni
         public void BeginTransaction(string transactionName)
         {
-            SqlConnection connection = OpenConnection();
+            SQLiteConnection connection = OpenConnection();
             try
             {
-                _transaction = connection.BeginTransaction(transactionName);
+                _transaction = connection.BeginTransaction();
                 if (_transaction == null) throw new DatabaseException(ERR_DB_TRANSACTION, "BeginTransaction attempted for the wrong transaction ({transactionName}).");
             }
             finally
@@ -101,14 +100,14 @@ namespace ErpToolkit.Helpers.Db
         public void CommitTransaction(string transactionName)
         {
             if (_transaction == null) throw new DatabaseException(ERR_DB_TRANSACTION, "CommitTransaction attempted for the wrong transaction ({transactionName}).");
-            SqlConnection connection = _transaction.Connection;
+            SQLiteConnection connection = _transaction.Connection;
             try { _transaction.Commit(); _transaction.Dispose(); _transaction = null; }
             finally { CloseConnection(connection); }
         }
         public void RollbackTransaction(string transactionName)
         {
             if (_transaction == null) throw new DatabaseException(ERR_DB_TRANSACTION, "RollbackTransaction attempted for the wrong transaction ({transactionName}).");
-            SqlConnection connection = _transaction.Connection;
+            SQLiteConnection connection = _transaction.Connection;
             try { _transaction.Rollback(); _transaction.Dispose(); _transaction = null; }
             finally { CloseConnection(connection); }
         }
@@ -118,9 +117,15 @@ namespace ErpToolkit.Helpers.Db
         //errori per cui conviene fare un retry
         public bool IsTransient(Exception ex)
         {
-            if (ex is SqlException sqlEx)
+            if (ex is SQLiteException sqliteEx)  //?????????????????????????????????
             {
-                return sqlEx.Number == -2 || sqlEx.Number == 1205; // Timeout or Deadlock
+                //return sqliteEx.ErrorCode == -2 || sqliteEx.ErrorCode == 1205; // Timeout or Deadlock
+                switch (sqliteEx.ErrorCode)
+                {
+                    case (int)SQLiteErrorCode.Busy: // Database busy
+                    case (int)SQLiteErrorCode.Locked: // Database locked
+                        return true;
+                }
             }
             return false;
         }
@@ -128,21 +133,25 @@ namespace ErpToolkit.Helpers.Db
         // decodifica errore per sqlserver
         public bool HandleException(Exception ex)
         {
-            if (ex is SqlException sqlEx)
+            if (ex is SQLiteException sqliteEx)
             {
-                switch (sqlEx.Number)
+                switch (sqliteEx.ErrorCode) //?????????????????????????????????
                 {
-                    case 2601:
-                    case 2627:
-                        throw new DatabaseException(ERR_DB_DUPLICATION, "Unique constraint violated.", ex);
-                    case 547:
-                        throw new DatabaseException(ERR_DB_DEPENDENCY, "Cannot delete or update due to foreign key constraint.", ex);
-                    case 1205:
-                        throw new DatabaseException(ERR_DB_DEADLOCK, "Deadlock encountered.", ex);
-                    case 208:
-                        throw new DatabaseException(ERR_DB_UNKNOWN, "Invalid object name.", ex);
-                    case -2:
-                        throw new DatabaseException(ERR_DB_TIMEOUT, "Timeout expired.", ex);
+                    case (int)SQLiteErrorCode.Error: // Generic error
+                        throw new DatabaseException(ERR_DB_UNKNOWN, "SQLite generic error.", ex);
+                    case (int)SQLiteErrorCode.IoErr: // IO error
+                        throw new DatabaseException(ERR_DB_ERROR, "SQLite IO error.", ex);
+                    //case 2601:
+                    //case 2627:
+                    //    throw new DatabaseException(ERR_DB_DUPLICATION, "Unique constraint violated.", ex);
+                    //case 547:
+                    //    throw new DatabaseException(ERR_DB_DEPENDENCY, "Cannot delete or update due to foreign key constraint.", ex);
+                    //case 1205:
+                    //    throw new DatabaseException(ERR_DB_DEADLOCK, "Deadlock encountered.", ex);
+                    //case 208:
+                    //    throw new DatabaseException(ERR_DB_UNKNOWN, "Invalid object name.", ex);
+                    //case -2:
+                    //    throw new DatabaseException(ERR_DB_TIMEOUT, "Timeout expired.", ex);
                     default:
                         throw new DatabaseException(ERR_DB_ERROR, "An SQL error occurred.", ex);
                 }
@@ -156,36 +165,10 @@ namespace ErpToolkit.Helpers.Db
 
         public void BulkInsertDataTable(string tableName, DataTable dataTable)
         {
-            if (_transaction != null)
-            {
-                using (SqlBulkCopy bulkCopy = new SqlBulkCopy(_transaction.Connection, SqlBulkCopyOptions.Default, _transaction))
-                {
-                    bulkCopy.DestinationTableName = tableName;
-                    bulkCopy.BatchSize = dataTable.Rows.Count;
-                    foreach (DataColumn column in dataTable.Columns) bulkCopy.ColumnMappings.Add(column.ColumnName, column.ColumnName);
-                    bulkCopy.WriteToServer(dataTable);
-                }
-            }
-            else
-            {
-                SqlConnection connection = OpenConnection();
-                try
-                {
-                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, null))
-                    {
-                        bulkCopy.DestinationTableName = tableName;
-                        bulkCopy.BatchSize = dataTable.Rows.Count;
-                        foreach (DataColumn column in dataTable.Columns) bulkCopy.ColumnMappings.Add(column.ColumnName, column.ColumnName);
-                        bulkCopy.WriteToServer(dataTable);
-                    }
-                }
-                finally
-                {
-                    CloseConnection(connection);
-                }
-            }
+            throw new DatabaseException(ERR_DB_DUPLICATION, "BulkInsertDataTable non supportato.", null);
         }
 
 
     }
 }
+

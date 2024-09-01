@@ -1,34 +1,34 @@
 
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
+using InterSystems.Data.IRISClient;
 using static ErpToolkit.Helpers.ErpError;
 
 namespace ErpToolkit.Helpers.Db
 {
-    public class SqlServerDatabase : IDatabase
+    public class IRISDatabase : IDatabase
     {
         private string _connectionString;
-        private SqlTransaction _transaction = null;
+        private IRISTransaction _transaction = null;
         private static readonly object _lock = new object();
 
-        public SqlServerDatabase(string connectionString)
+        public IRISDatabase(string connectionString)
         {
             _connectionString = connectionString;
         }
 
         //Gestione connessione
-        private SqlConnection OpenConnection()
+        private IRISConnection OpenConnection()
         {
-            SqlConnection connection = null;
+            IRISConnection connection = null;
             lock (_lock)
             {
-                connection = new SqlConnection(_connectionString);
+                connection = new IRISConnection(_connectionString);
                 connection.Open();
                 return connection;
             }
         }
-        private void CloseConnection(SqlConnection connection)
+        private void CloseConnection(IRISConnection connection)
         {
             lock (_lock)
             {
@@ -51,16 +51,16 @@ namespace ErpToolkit.Helpers.Db
         public void ReleaseConnection(IDbConnection connection)
         {
             //return (IDbConnection)new SqlConnection(_connectionString);
-            if (_transaction == null) CloseConnection((SqlConnection)connection);
+            if (_transaction == null) CloseConnection((IRISConnection)connection);
         }
 
         public IDbCommand NewCommand(string sql, IDbConnection connection)
         {
-            return (IDbCommand)new SqlCommand(sql, (SqlConnection)connection, _transaction);
+            return (IDbCommand)new IRISCommand(sql, (IRISConnection)connection, _transaction);
         }
         public DataTable QueryReader(IDbCommand command, int maxRecords)
         {
-            using (SqlDataAdapter adapter = new SqlDataAdapter((SqlCommand)command))
+            using (IRISDataAdapter adapter = new IRISDataAdapter((IRISCommand)command))
             {
                 DataTable result = new DataTable();
                 adapter.Fill(0, maxRecords, result); // restituisce maxRecords righe  //adapter.Fill(result);  
@@ -73,10 +73,10 @@ namespace ErpToolkit.Helpers.Db
         // Gestione transazioni
         public void BeginTransaction(string transactionName)
         {
-            SqlConnection connection = OpenConnection();
+            IRISConnection connection = OpenConnection();
             try
             {
-                _transaction = connection.BeginTransaction(transactionName);
+                _transaction = connection.BeginTransaction();
                 if (_transaction == null) throw new DatabaseException(ERR_DB_TRANSACTION, "BeginTransaction attempted for the wrong transaction ({transactionName}).");
             }
             finally
@@ -101,14 +101,14 @@ namespace ErpToolkit.Helpers.Db
         public void CommitTransaction(string transactionName)
         {
             if (_transaction == null) throw new DatabaseException(ERR_DB_TRANSACTION, "CommitTransaction attempted for the wrong transaction ({transactionName}).");
-            SqlConnection connection = _transaction.Connection;
+            IRISConnection connection = (IRISConnection)_transaction.Connection;
             try { _transaction.Commit(); _transaction.Dispose(); _transaction = null; }
             finally { CloseConnection(connection); }
         }
         public void RollbackTransaction(string transactionName)
         {
             if (_transaction == null) throw new DatabaseException(ERR_DB_TRANSACTION, "RollbackTransaction attempted for the wrong transaction ({transactionName}).");
-            SqlConnection connection = _transaction.Connection;
+            IRISConnection connection = (IRISConnection)_transaction.Connection;
             try { _transaction.Rollback(); _transaction.Dispose(); _transaction = null; }
             finally { CloseConnection(connection); }
         }
@@ -118,31 +118,38 @@ namespace ErpToolkit.Helpers.Db
         //errori per cui conviene fare un retry
         public bool IsTransient(Exception ex)
         {
-            if (ex is SqlException sqlEx)
+            if (ex is IRISException irisEx) //??????????????????????????????
             {
-                return sqlEx.Number == -2 || sqlEx.Number == 1205; // Timeout or Deadlock
+                //return irisEx.ErrorCode == -2 || irisEx.ErrorCode == 1205; // Timeout or Deadlock
+                //case 4001: // Deadlock
+                //case 1105: // Timeout
+                return irisEx.ErrorCode == 1105 || irisEx.ErrorCode == 4001; // Timeout or Deadlock
             }
             return false;
         }
 
-        // decodifica errore per sqlserver
+        // decodifica errore per IRIS
         public bool HandleException(Exception ex)
         {
-            if (ex is SqlException sqlEx)
+            if (ex is IRISException irisEx)
             {
-                switch (sqlEx.Number)
+                switch (irisEx.ErrorCode)  //??????????????????????????????
                 {
-                    case 2601:
-                    case 2627:
-                        throw new DatabaseException(ERR_DB_DUPLICATION, "Unique constraint violated.", ex);
-                    case 547:
-                        throw new DatabaseException(ERR_DB_DEPENDENCY, "Cannot delete or update due to foreign key constraint.", ex);
-                    case 1205:
-                        throw new DatabaseException(ERR_DB_DEADLOCK, "Deadlock encountered.", ex);
-                    case 208:
+                    case 101: // Invalid object name
                         throw new DatabaseException(ERR_DB_UNKNOWN, "Invalid object name.", ex);
-                    case -2:
+                    case -2:  // Timeout expired
                         throw new DatabaseException(ERR_DB_TIMEOUT, "Timeout expired.", ex);
+                    //case 2601:
+                    //case 2627:
+                    //    throw new DatabaseException(ERR_DB_DUPLICATION, "Unique constraint violated.", ex);
+                    //case 547:
+                    //    throw new DatabaseException(ERR_DB_DEPENDENCY, "Cannot delete or update due to foreign key constraint.", ex);
+                    //case 1205:
+                    //    throw new DatabaseException(ERR_DB_DEADLOCK, "Deadlock encountered.", ex);
+                    //case 208:
+                    //    throw new DatabaseException(ERR_DB_UNKNOWN, "Invalid object name.", ex);
+                    //case -2:
+                    //    throw new DatabaseException(ERR_DB_TIMEOUT, "Timeout expired.", ex);
                     default:
                         throw new DatabaseException(ERR_DB_ERROR, "An SQL error occurred.", ex);
                 }
@@ -156,36 +163,12 @@ namespace ErpToolkit.Helpers.Db
 
         public void BulkInsertDataTable(string tableName, DataTable dataTable)
         {
-            if (_transaction != null)
-            {
-                using (SqlBulkCopy bulkCopy = new SqlBulkCopy(_transaction.Connection, SqlBulkCopyOptions.Default, _transaction))
-                {
-                    bulkCopy.DestinationTableName = tableName;
-                    bulkCopy.BatchSize = dataTable.Rows.Count;
-                    foreach (DataColumn column in dataTable.Columns) bulkCopy.ColumnMappings.Add(column.ColumnName, column.ColumnName);
-                    bulkCopy.WriteToServer(dataTable);
-                }
-            }
-            else
-            {
-                SqlConnection connection = OpenConnection();
-                try
-                {
-                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, null))
-                    {
-                        bulkCopy.DestinationTableName = tableName;
-                        bulkCopy.BatchSize = dataTable.Rows.Count;
-                        foreach (DataColumn column in dataTable.Columns) bulkCopy.ColumnMappings.Add(column.ColumnName, column.ColumnName);
-                        bulkCopy.WriteToServer(dataTable);
-                    }
-                }
-                finally
-                {
-                    CloseConnection(connection);
-                }
-            }
+            throw new DatabaseException(ERR_DB_DUPLICATION, "BulkInsertDataTable non supportato.", null);
         }
 
 
     }
 }
+
+
+

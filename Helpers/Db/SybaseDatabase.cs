@@ -1,34 +1,34 @@
 
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
+using AdoNetCore.AseClient;
 using static ErpToolkit.Helpers.ErpError;
 
 namespace ErpToolkit.Helpers.Db
 {
-    public class SqlServerDatabase : IDatabase
+    public class SybaseDatabase : IDatabase
     {
         private string _connectionString;
-        private SqlTransaction _transaction = null;
+        private AseTransaction _transaction = null;
         private static readonly object _lock = new object();
 
-        public SqlServerDatabase(string connectionString)
+        public SybaseDatabase(string connectionString)
         {
             _connectionString = connectionString;
         }
 
         //Gestione connessione
-        private SqlConnection OpenConnection()
+        private AseConnection OpenConnection()
         {
-            SqlConnection connection = null;
+            AseConnection connection = null;
             lock (_lock)
             {
-                connection = new SqlConnection(_connectionString);
+                connection = new AseConnection(_connectionString);
                 connection.Open();
                 return connection;
             }
         }
-        private void CloseConnection(SqlConnection connection)
+        private void CloseConnection(AseConnection connection)
         {
             lock (_lock)
             {
@@ -51,21 +51,29 @@ namespace ErpToolkit.Helpers.Db
         public void ReleaseConnection(IDbConnection connection)
         {
             //return (IDbConnection)new SqlConnection(_connectionString);
-            if (_transaction == null) CloseConnection((SqlConnection)connection);
+            if (_transaction == null) CloseConnection((AseConnection)connection);
         }
 
         public IDbCommand NewCommand(string sql, IDbConnection connection)
         {
-            return (IDbCommand)new SqlCommand(sql, (SqlConnection)connection, _transaction);
+            return (IDbCommand)new AseCommand(sql, (AseConnection)connection, _transaction);
         }
         public DataTable QueryReader(IDbCommand command, int maxRecords)
         {
-            using (SqlDataAdapter adapter = new SqlDataAdapter((SqlCommand)command))
+            //using (SqlDataAdapter adapter = new SqlDataAdapter((AseCommand)command))
+            //{
+            //    DataTable result = new DataTable();
+            //    adapter.Fill(0, maxRecords, result); // restituisce maxRecords righe  //adapter.Fill(result);  
+            //    return result;
+            //}
+
+            using (var reader = command.ExecuteReader())
             {
-                DataTable result = new DataTable();
-                adapter.Fill(0, maxRecords, result); // restituisce maxRecords righe  //adapter.Fill(result);  
-                return result;
+                var dataTable = new DataTable();
+                dataTable.Load(reader);  //?????????????? manca filtro maxRecords
+                return dataTable;
             }
+
         }
 
         //*******************************************************************************************************
@@ -73,10 +81,10 @@ namespace ErpToolkit.Helpers.Db
         // Gestione transazioni
         public void BeginTransaction(string transactionName)
         {
-            SqlConnection connection = OpenConnection();
+            AseConnection connection = OpenConnection();
             try
             {
-                _transaction = connection.BeginTransaction(transactionName);
+                _transaction = connection.BeginTransaction();
                 if (_transaction == null) throw new DatabaseException(ERR_DB_TRANSACTION, "BeginTransaction attempted for the wrong transaction ({transactionName}).");
             }
             finally
@@ -101,14 +109,14 @@ namespace ErpToolkit.Helpers.Db
         public void CommitTransaction(string transactionName)
         {
             if (_transaction == null) throw new DatabaseException(ERR_DB_TRANSACTION, "CommitTransaction attempted for the wrong transaction ({transactionName}).");
-            SqlConnection connection = _transaction.Connection;
+            AseConnection connection = _transaction.Connection;
             try { _transaction.Commit(); _transaction.Dispose(); _transaction = null; }
             finally { CloseConnection(connection); }
         }
         public void RollbackTransaction(string transactionName)
         {
             if (_transaction == null) throw new DatabaseException(ERR_DB_TRANSACTION, "RollbackTransaction attempted for the wrong transaction ({transactionName}).");
-            SqlConnection connection = _transaction.Connection;
+            AseConnection connection = _transaction.Connection;
             try { _transaction.Rollback(); _transaction.Dispose(); _transaction = null; }
             finally { CloseConnection(connection); }
         }
@@ -118,9 +126,9 @@ namespace ErpToolkit.Helpers.Db
         //errori per cui conviene fare un retry
         public bool IsTransient(Exception ex)
         {
-            if (ex is SqlException sqlEx)
+            if (ex is AseException aseEx)  //uguali a sqlserver
             {
-                return sqlEx.Number == -2 || sqlEx.Number == 1205; // Timeout or Deadlock
+                return aseEx.HResult == -2 || aseEx.HResult == 1205; // Timeout or Deadlock
             }
             return false;
         }
@@ -128,9 +136,9 @@ namespace ErpToolkit.Helpers.Db
         // decodifica errore per sqlserver
         public bool HandleException(Exception ex)
         {
-            if (ex is SqlException sqlEx)
+            if (ex is AseException aseEx)
             {
-                switch (sqlEx.Number)
+                switch (aseEx.HResult)  //uguali a sqlserver
                 {
                     case 2601:
                     case 2627:
@@ -156,34 +164,7 @@ namespace ErpToolkit.Helpers.Db
 
         public void BulkInsertDataTable(string tableName, DataTable dataTable)
         {
-            if (_transaction != null)
-            {
-                using (SqlBulkCopy bulkCopy = new SqlBulkCopy(_transaction.Connection, SqlBulkCopyOptions.Default, _transaction))
-                {
-                    bulkCopy.DestinationTableName = tableName;
-                    bulkCopy.BatchSize = dataTable.Rows.Count;
-                    foreach (DataColumn column in dataTable.Columns) bulkCopy.ColumnMappings.Add(column.ColumnName, column.ColumnName);
-                    bulkCopy.WriteToServer(dataTable);
-                }
-            }
-            else
-            {
-                SqlConnection connection = OpenConnection();
-                try
-                {
-                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, null))
-                    {
-                        bulkCopy.DestinationTableName = tableName;
-                        bulkCopy.BatchSize = dataTable.Rows.Count;
-                        foreach (DataColumn column in dataTable.Columns) bulkCopy.ColumnMappings.Add(column.ColumnName, column.ColumnName);
-                        bulkCopy.WriteToServer(dataTable);
-                    }
-                }
-                finally
-                {
-                    CloseConnection(connection);
-                }
-            }
+            throw new DatabaseException(ERR_DB_DUPLICATION, "BulkInsertDataTable non supportato.", null);
         }
 
 
