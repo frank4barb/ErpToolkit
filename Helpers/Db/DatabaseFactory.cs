@@ -12,7 +12,7 @@ namespace ErpToolkit.Helpers.Db
         }
 
 
-        public IDatabase GetDatabase(string dbType, string connectionStringName)
+        public IDatabase GetDatabase(string dbType, string connectionStringName, string databaseName = "")
         {
             string key = dbType + connectionStringName;
             IDatabase db = null; if (_itemsDB.ContainsKey(key)) db = _itemsDB[key];
@@ -39,6 +39,12 @@ namespace ErpToolkit.Helpers.Db
                         break;
                     case "Oracle":
                         db = new OracleDatabase(connectionString);
+                        break;
+                    case "IRIS":
+                        db = new IRISDatabase(connectionString);
+                        break;
+                    case "MongoDb":
+                        db = new MongoDbDatabase(connectionString, databaseName);
                         break;
                     // Aggiungi altri DBMS qui
                     default:
