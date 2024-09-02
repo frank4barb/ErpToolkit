@@ -5,6 +5,12 @@ using System.Data;
 using System.Globalization;
 using System.Data.Common;
 using static ErpToolkit.Helpers.ErpError;
+using Mysqlx.Crud;
+using MongoDB.Driver;
+using System.Transactions;
+using MySqlX.XDevAPI.Relational;
+using System.Text;
+using System;
 
 namespace ErpToolkit.Helpers.Db
 {
@@ -180,7 +186,7 @@ namespace ErpToolkit.Helpers.Db
         }
 
         //ExecuteQuery
-        public DataTable ExecuteQuery(string sql, IDictionary<string, object> parameters, string transactionId = null, int maxRecords = 10000)
+        public DataTable ExecuteQuery(string sql, IDictionary<string, object> parameters, int maxRecords = 10000, string transactionId = null)
         {
             if (_transactionId != transactionId) RollBackDefaulTransaction("ExecuteQuery");
             IDbConnection connection = _database.NewConnection();
@@ -197,42 +203,7 @@ namespace ErpToolkit.Helpers.Db
         }
 
         //ExecNonQuery
-        public void InsertOrUpdateRecord(IDictionary<string, object> fields, string tableName, string keyField, string timestampField, bool isInsert, string transactionId = null)
-        {
-            if (_transactionId != transactionId) RollBackDefaulTransaction("InsertOrUpdateRecord");
-            string sql;
-            var parameters = new Dictionary<string, object>();
-
-            if (!fields.ContainsKey(keyField)) throw new DatabaseException(ERR_NO_INPUT, "Identificativo univoco non presente.", null);
-            if (String.IsNullOrEmpty((string)fields[keyField])) throw new DatabaseException(ERR_BAD_IDEN, "Identificativo univoco vuoto.", null);
-
-            if (isInsert)
-            {
-                sql = $"INSERT INTO {tableName} ({string.Join(", ", fields.Keys)}) VALUES ({string.Join(", ", fields.Keys.Select(k => "@" + k))})";
-            }
-            else
-            {
-                if (!fields.ContainsKey(timestampField)) throw new DatabaseException(ERR_NO_INPUT, "Timestamp non presente.", null);
-
-                sql = $"UPDATE {tableName} SET {string.Join(", ", fields.Where(f => f.Key != keyField).Select(f => $"{f.Key} = @{f.Key}"))} WHERE {keyField} = @{keyField} and {timestampField} = @oldTimestamp";
-                byte[] oldTimestamp = (byte[])fields[timestampField];  // salvo valore vecchi timestamp
-                fields[timestampField] = GenerateTimestamp(); // genero valore nuovo timestamp
-                parameters[$"oldTimestamp"] = oldTimestamp;  // aggiungo il parametro relativo al vecchio timestamp
-            }
-
-            foreach (var field in fields)
-            {
-                parameters[field.Key] = EncodeSpecialFields(field.Value);
-            }
-
-            int affectedRows = ExecuteNonQuery(sql, parameters, transactionId);
-            if (affectedRows != 1)
-            {
-                if (isInsert) throw new DatabaseException(ERR_DB_ERROR, "Record non inserito.", null);
-                else throw new DatabaseException(ERR_DB_TIMESTAMP, "Timestamp non valido.", null);
-            }
-        }
-        public void DeleteRecord(string tableName, IDictionary<string, object> fields, string keyField, string transactionId = null)
+        public void DeleteRecord(string tableName, string keyField, IDictionary<string, object> fields, string transactionId = null)
         {
             if (_transactionId != transactionId) RollBackDefaulTransaction("DeleteRecord");
             string sql = $"DELETE FROM {tableName} WHERE {keyField} = @keyField";
@@ -241,18 +212,6 @@ namespace ErpToolkit.Helpers.Db
                         { keyField, fields[keyField] }
                     };
             int affectedRows = ExecuteNonQuery(sql, parameters, transactionId);
-        }
-        public void BulkInsertDataTable(string tableName, DataTable dataTable, string transactionId = null)
-        {
-            if (_transactionId != transactionId) RollBackDefaulTransaction("BulkInsertDataTable");
-            try
-            {
-                _database.BulkInsertDataTable(tableName, dataTable);
-            }
-            catch (Exception ex)
-            {
-                HandleException(ex, ERR_DB_BADDATA, "Failed to bulk insert data.");
-            }
         }
 
         //private
@@ -361,7 +320,7 @@ namespace ErpToolkit.Helpers.Db
             while (hasMoreData)
             {
                 string sql = $"SELECT * FROM {tableName} {(string.IsNullOrEmpty(whereClause) ? "" : "WHERE " + whereClause)} ORDER BY (SELECT NULL) OFFSET {offset} ROWS FETCH NEXT {chunkSize} ROWS ONLY";
-                var dataTable = ExecuteQuery(sql, new Dictionary<string, object>(), null, chunkSize);
+                var dataTable = ExecuteQuery(sql, new Dictionary<string, object>(), chunkSize, null);
                 string currentFilePath = fileCount == 1 ? filePath : $"{baseFilePath}_{fileCount}.csv";
 
                 WriteDataTableToCsv(dataTable, currentFilePath);
@@ -388,7 +347,7 @@ namespace ErpToolkit.Helpers.Db
 
                 while (dataTable.Rows.Count > 0)
                 {
-                    BulkInsertDataTable(tableName, dataTable, null);
+                    BulkInsertDataTable(tableName, dataTable);
                     moreFilesToProcess = LoadCsvChunkIntoDataTable(currentFilePath, ref dataTable);
                 }
 
@@ -400,6 +359,27 @@ namespace ErpToolkit.Helpers.Db
         }
 
         //private
+
+        private void BulkInsertDataTable(string tableName, DataTable dataTable)
+        {
+            try
+            {
+                string[] columnNames = dataTable.Columns.Cast<DataColumn>().Select(column => column.ColumnName).ToArray();
+                string insertCols = $"INSERT INTO {tableName} ({string.Join(", ", columnNames)}) ";
+                StringBuilder sql = new StringBuilder();
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    string insertValues = $" VALUES ({string.Join(",", row.ItemArray)}); \n";
+                    sql.Append(insertCols).Append(insertValues);
+                }
+                int affectedRows = ExecuteNonQuery(sql.ToString(), new Dictionary<string, object>(), null);
+                if (affectedRows != dataTable.Rows.Count) throw new DatabaseException(ERR_DB_ERROR, " {dataTable.Rows-affectedRows} records non inseriti.", null);
+            }
+            catch (Exception ex)
+            {
+                HandleException(ex, ERR_DB_BADDATA, "Failed to bulk insert data.");
+            }
+        }
 
         private bool LoadCsvChunkIntoDataTable(string filePath, ref DataTable dataTable)
         {
@@ -479,6 +459,83 @@ namespace ErpToolkit.Helpers.Db
             // Aggiungere altre conversioni speciali qui se necessario
             return value;
         }
+
+
+        //***************************************************************************************************************************************************
+        //*** MANTAIN
+        //***************************************************************************************************************************************************
+
+
+        public void MantainRecord(char action, string tableName, string keyField, string timestampField, string deleteField, IDictionary<string, object> fields, string options, string transactionId = null)
+        {
+            int recNum = 1;
+            if (_transactionId != transactionId) RollBackDefaulTransaction("InsertOrUpdateRecord");
+            string sql = SqlMantain(recNum, action, tableName, keyField, timestampField, deleteField, ref fields, options);
+            var parameters = ParametersMantain(recNum, fields, options);
+
+            int affectedRows = ExecuteNonQuery(sql, parameters, transactionId);
+            //if (affectedRows != recNum) throw new DatabaseException(ERR_DB_TIMESTAMP, "Timestamp non valido o errore in insert/update.", null);
+            if (affectedRows != 1)
+            {
+                if (action == 'A') throw new DatabaseException(ERR_DB_ERROR, "Record non inserito.", null);
+                else throw new DatabaseException(ERR_DB_TIMESTAMP, "Timestamp non valido.", null);
+            }
+        }
+        private string SqlMantain(int recNum, char action, string tableName, string keyField, string timestampField, string deleteField, ref IDictionary<string, object> fields, string options)
+        {
+            string sql;
+
+            if (!("AMD").Contains(action)) throw new DatabaseException(ERR_BAD_INPUT, "Valore azione errato.", null);
+            if (string.IsNullOrEmpty(tableName)) throw new DatabaseException(ERR_NO_INPUT, "Nome tabella non presente.", null);
+            if (!fields.ContainsKey(keyField)) throw new DatabaseException(ERR_NO_INPUT, "Identificativo univoco non presente.", null);
+            if (String.IsNullOrEmpty((string)fields[keyField])) throw new DatabaseException(ERR_BAD_IDEN, "Identificativo univoco vuoto.", null);
+
+            if (action == 'A')  //Add
+            {
+                sql = $"INSERT INTO {tableName} ({string.Join(", ", fields.Keys)}) VALUES ({string.Join(", ", fields.Keys.Select(k => "@{k}__{recNum}"))})";
+            }
+            else if (action == 'M')  //Modify
+            {
+                if (!fields.ContainsKey(timestampField)) throw new DatabaseException(ERR_NO_INPUT, "Timestamp non presente.", null);
+                if (fields.ContainsKey($"OldTimestamp")) throw new DatabaseException(ERR_BAD_INPUT, "Il campo OldTimestamp non è consentito.", null);
+
+                sql = $"UPDATE {tableName} SET {string.Join(", ", fields.Where(f => f.Key != keyField).Select(f => $"{f.Key} = @{f.Key}__{recNum}"))} WHERE {keyField} = @{keyField}__{recNum} and {timestampField} = @OldTimestamp__{recNum}";
+                byte[] oldTimestamp = (byte[])fields[timestampField];  // salvo valore vecchi timestamp
+                fields[timestampField] = GenerateTimestamp(); // genero valore nuovo timestamp
+                fields[$"OldTimestamp"] = oldTimestamp;  // aggiungo il parametro relativo al vecchio timestamp
+            }
+            else if (action == 'D')  //Delete ==> Delete logico non fisico.
+                                     //La cancellazione logica consente di replicare in modo asincrono l'azione su altri DB.
+                                     //Per non vincolare l'integrità referenziale devo cancellare dal record tutte le chiavi esterne.  Assumo che queste cancellazioni siano passate nei fields 
+            {
+                if (!fields.ContainsKey(deleteField)) throw new DatabaseException(ERR_NO_INPUT, "Timestamp non presente.", null);
+                if (fields.ContainsKey($"OldTimestamp")) throw new DatabaseException(ERR_BAD_INPUT, "Il campo OldTimestamp non è consentito.", null);
+
+                sql = $"UPDATE {tableName} SET {deleteField} = 'Y', {string.Join(", ", fields.Where(f => f.Key != keyField && f.Key != deleteField).Select(f => $"{f.Key} = @{f.Key}__{recNum}"))} WHERE {keyField} = @{keyField}__{recNum} and {timestampField} = @OldTimestamp__{recNum}";
+                byte[] oldTimestamp = (byte[])fields[timestampField];  // salvo valore vecchi timestamp
+                fields[timestampField] = GenerateTimestamp(); // genero valore nuovo timestamp
+                fields[$"OldTimestamp"] = oldTimestamp;  // aggiungo il parametro relativo al vecchio timestamp
+            }
+            else throw new DatabaseException(ERR_BAD_INPUT, "Azione non presente.", null);
+            return sql;
+        }
+        private Dictionary<string, object> ParametersMantain(int recNum, IDictionary<string, object> fields, string options)
+        {
+            var parameters = new Dictionary<string, object>();
+
+            foreach (var field in fields)
+            {
+                parameters[$"@{field.Key}__{recNum}"] = EncodeSpecialFields(field.Value);
+            }
+            return parameters;
+        }
+
+
+
+
+
+
+
 
 
     }

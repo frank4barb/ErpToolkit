@@ -63,7 +63,8 @@ namespace ErpToolkit.Helpers.Db
             using (SqlDataAdapter adapter = new SqlDataAdapter((SqlCommand)command))
             {
                 DataTable result = new DataTable();
-                adapter.Fill(0, maxRecords, result); // restituisce maxRecords righe  //adapter.Fill(result);  
+                if (maxRecords < 0) adapter.Fill(result);
+                else adapter.Fill(0, maxRecords, result); // restituisce maxRecords righe  
                 return result;
             }
         }
@@ -152,39 +153,6 @@ namespace ErpToolkit.Helpers.Db
 
 
         //*******************************************************************************************************
-
-
-        public void BulkInsertDataTable(string tableName, DataTable dataTable)
-        {
-            if (_transaction != null)
-            {
-                using (SqlBulkCopy bulkCopy = new SqlBulkCopy(_transaction.Connection, SqlBulkCopyOptions.Default, _transaction))
-                {
-                    bulkCopy.DestinationTableName = tableName;
-                    bulkCopy.BatchSize = dataTable.Rows.Count;
-                    foreach (DataColumn column in dataTable.Columns) bulkCopy.ColumnMappings.Add(column.ColumnName, column.ColumnName);
-                    bulkCopy.WriteToServer(dataTable);
-                }
-            }
-            else
-            {
-                SqlConnection connection = OpenConnection();
-                try
-                {
-                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.Default, null))
-                    {
-                        bulkCopy.DestinationTableName = tableName;
-                        bulkCopy.BatchSize = dataTable.Rows.Count;
-                        foreach (DataColumn column in dataTable.Columns) bulkCopy.ColumnMappings.Add(column.ColumnName, column.ColumnName);
-                        bulkCopy.WriteToServer(dataTable);
-                    }
-                }
-                finally
-                {
-                    CloseConnection(connection);
-                }
-            }
-        }
 
 
     }

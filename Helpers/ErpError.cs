@@ -6,6 +6,7 @@ namespace ErpToolkit.Helpers
         public const int SUCCESS = 0; // Nessun errore
 
         public const int ERR_NO_INPUT = -107; // Input obbligatorio non inserito
+        public const int ERR_BAD_INPUT = -204; // Input inserito, non valido
         public const int ERR_BAD_IDEN = -205; // Identificativo univoco vuoto o ambiguo
 
         public const int ERR_DB_TRANSACTION = -367; // Errore DB nell'esecuzione transazione

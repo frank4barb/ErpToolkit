@@ -11,7 +11,6 @@ namespace ErpToolkit.Helpers.Db
         void ReleaseConnection(IDbConnection connection);
         IDbCommand NewCommand(string sql, IDbConnection connection);
         DataTable QueryReader(IDbCommand command, int maxRecords);
-        void BulkInsertDataTable(string tableName, DataTable dataTable);
         // Gestione transazioni
         void BeginTransaction(string transactionName);
         void SavePointTransaction(string savePointName);

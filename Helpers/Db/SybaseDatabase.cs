@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.Common;
 using AdoNetCore.AseClient;
+using MySqlX.XDevAPI.Common;
 using static ErpToolkit.Helpers.ErpError;
 
 namespace ErpToolkit.Helpers.Db
@@ -60,20 +61,32 @@ namespace ErpToolkit.Helpers.Db
         }
         public DataTable QueryReader(IDbCommand command, int maxRecords)
         {
-            //using (SqlDataAdapter adapter = new SqlDataAdapter((AseCommand)command))
-            //{
-            //    DataTable result = new DataTable();
-            //    adapter.Fill(0, maxRecords, result); // restituisce maxRecords righe  //adapter.Fill(result);  
-            //    return result;
-            //}
-
             using (var reader = command.ExecuteReader())
             {
+                //var dataTable = new DataTable();
+                //dataTable.Load(reader);  //?????????????? manca filtro maxRecords
+                //return dataTable;
+
                 var dataTable = new DataTable();
-                dataTable.Load(reader);  //?????????????? manca filtro maxRecords
+                if (maxRecords < 0) { 
+                    dataTable.Load(reader); 
+                }
+                else
+                {
+                    // Costruisci le colonne del DataTable
+                    for (int i = 0; i < reader.FieldCount; i++) dataTable.Columns.Add(reader.GetName(i), reader.GetFieldType(i));
+                    // Leggi il contenuto riga per riga
+                    int recordCount = 0;
+                    while (reader.Read() && recordCount < maxRecords)
+                    {
+                        var row = dataTable.NewRow();
+                        foreach (DataColumn column in dataTable.Columns) row[column.ColumnName] = reader[column.ColumnName];
+                        dataTable.Rows.Add(row);
+                        recordCount++;
+                    }
+                }
                 return dataTable;
             }
-
         }
 
         //*******************************************************************************************************
@@ -160,12 +173,6 @@ namespace ErpToolkit.Helpers.Db
 
 
         //*******************************************************************************************************
-
-
-        public void BulkInsertDataTable(string tableName, DataTable dataTable)
-        {
-            throw new DatabaseException(ERR_DB_DUPLICATION, "BulkInsertDataTable non supportato.", null);
-        }
 
 
     }

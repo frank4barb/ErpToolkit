@@ -64,7 +64,8 @@ namespace ErpToolkit.Helpers.Db
             using (OracleDataAdapter adapter = new OracleDataAdapter((OracleCommand)command))
             {
                 DataTable result = new DataTable();
-                adapter.Fill(0, maxRecords, result); // restituisce maxRecords righe  //adapter.Fill(result);  
+                if (maxRecords < 0) adapter.Fill(result);
+                else adapter.Fill(0, maxRecords, result); // restituisce maxRecords righe  
                 return result;
             }
         }
@@ -164,11 +165,6 @@ namespace ErpToolkit.Helpers.Db
 
         //*******************************************************************************************************
 
-
-        public void BulkInsertDataTable(string tableName, DataTable dataTable)
-        {
-            throw new DatabaseException(ERR_DB_DUPLICATION, "BulkInsertDataTable non supportato.", null);
-        }
 
 
     }
