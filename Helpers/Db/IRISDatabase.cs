@@ -6,7 +6,7 @@ using static ErpToolkit.Helpers.ErpError;
 
 namespace ErpToolkit.Helpers.Db
 {
-    public class IRISDatabase : IDatabase
+    public class IRISDatabase : IDatabase, IDisposable
     {
         private string _connectionString;
         private IRISTransaction _transaction = null;
@@ -15,6 +15,15 @@ namespace ErpToolkit.Helpers.Db
         public IRISDatabase(string connectionString)
         {
             _connectionString = connectionString;
+        }
+        ~IRISDatabase()
+        {
+            Dispose();
+        }
+        public void Dispose()
+        {
+            try { RollbackTransaction("Dispose"); } catch (Exception ex) { /*skip*/ }
+            GC.SuppressFinalize(this);
         }
 
         //Gestione connessione
@@ -119,40 +128,62 @@ namespace ErpToolkit.Helpers.Db
         //errori per cui conviene fare un retry
         public bool IsTransient(Exception ex)
         {
-            if (ex is IRISException irisEx) //??????????????????????????????
+            if (ex is IRISException irisEx) 
             {
-                //return irisEx.ErrorCode == -2 || irisEx.ErrorCode == 1205; // Timeout or Deadlock
-                //case 4001: // Deadlock
-                //case 1105: // Timeout
-                return irisEx.ErrorCode == 1105 || irisEx.ErrorCode == 4001; // Timeout or Deadlock
+                return irisEx.ErrorCode == -140 || irisEx.ErrorCode == -121; // Timeout or Deadlock
             }
             return false;
         }
 
         // decodifica errore per IRIS
+        //public bool HandleException(Exception ex)
+        //{
+        //    if (ex is IRISException irisEx)
+        //    {
+        //        switch (irisEx.ErrorCode)  //??????????????????????????????
+        //        {
+        //            case 101: // Invalid object name
+        //                throw new DatabaseException(ERR_DB_UNKNOWN, "Invalid object name.", ex);
+        //            case -2:  // Timeout expired
+        //                throw new DatabaseException(ERR_DB_TIMEOUT, "Timeout expired.", ex);
+        //            //case 2601:
+        //            //case 2627:
+        //            //    throw new DatabaseException(ERR_DB_DUPLICATION, "Unique constraint violated.", ex);
+        //            //case 547:
+        //            //    throw new DatabaseException(ERR_DB_DEPENDENCY, "Cannot delete or update due to foreign key constraint.", ex);
+        //            //case 1205:
+        //            //    throw new DatabaseException(ERR_DB_DEADLOCK, "Deadlock encountered.", ex);
+        //            //case 208:
+        //            //    throw new DatabaseException(ERR_DB_UNKNOWN, "Invalid object name.", ex);
+        //            //case -2:
+        //            //    throw new DatabaseException(ERR_DB_TIMEOUT, "Timeout expired.", ex);
+        //            default:
+        //                throw new DatabaseException(ERR_DB_BADCOLUMN, "An SQL error occurred.", ex);
+        //        }
+        //    }
+        //    else return false;
+        //}
         public bool HandleException(Exception ex)
         {
             if (ex is IRISException irisEx)
             {
-                switch (irisEx.ErrorCode)  //??????????????????????????????
+                // IRIS di InterSystems - personalizzazione necessaria per SQLCODE specifici.
+                switch (irisEx.ErrorCode) //switch (irisEx.Sqlcode)
                 {
-                    case 101: // Invalid object name
-                        throw new DatabaseException(ERR_DB_UNKNOWN, "Invalid object name.", ex);
-                    case -2:  // Timeout expired
-                        throw new DatabaseException(ERR_DB_TIMEOUT, "Timeout expired.", ex);
-                    //case 2601:
-                    //case 2627:
-                    //    throw new DatabaseException(ERR_DB_DUPLICATION, "Unique constraint violated.", ex);
-                    //case 547:
-                    //    throw new DatabaseException(ERR_DB_DEPENDENCY, "Cannot delete or update due to foreign key constraint.", ex);
-                    //case 1205:
-                    //    throw new DatabaseException(ERR_DB_DEADLOCK, "Deadlock encountered.", ex);
-                    //case 208:
-                    //    throw new DatabaseException(ERR_DB_UNKNOWN, "Invalid object name.", ex);
-                    //case -2:
-                    //    throw new DatabaseException(ERR_DB_TIMEOUT, "Timeout expired.", ex);
+                    case -119:
+                        throw new DatabaseException(ERR_DB_DUPLICATION, "Violazione del vincolo univoco.", ex);
+                    case -120:
+                        throw new DatabaseException(ERR_DB_DEPENDENCY, "Violazione del vincolo di chiave esterna.", ex);
+                    case -121:
+                        throw new DatabaseException(ERR_DB_DEADLOCK, "Deadlock.", ex);
+                    case -100:
+                        throw new DatabaseException(ERR_DB_UNKNOWN, "Tabella non esistente.", ex);
+                    case -138:
+                        throw new DatabaseException(ERR_DB_BADCOLUMN, "Colonna non esistente.", ex); // Nome campo inesistente
+                    case -140:
+                        throw new DatabaseException(ERR_DB_TIMEOUT, "Timeout.", ex);
                     default:
-                        throw new DatabaseException(ERR_DB_ERROR, "An SQL error occurred.", ex);
+                        throw new DatabaseException(ERR_DB_ERROR, "Errore IRIS.", ex);
                 }
             }
             else return false;

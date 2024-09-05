@@ -5,7 +5,7 @@ using static ErpToolkit.Helpers.ErpError;
 
 namespace ErpToolkit.Helpers.Db
 {
-    public class SQLiteDatabase : IDatabase
+    public class SQLiteDatabase : IDatabase, IDisposable
     {
         private string _connectionString;
         private SQLiteTransaction _transaction = null;
@@ -14,6 +14,15 @@ namespace ErpToolkit.Helpers.Db
         public SQLiteDatabase(string connectionString)
         {
             _connectionString = connectionString;
+        }
+        ~SQLiteDatabase()
+        {
+            Dispose();
+        }
+        public void Dispose()
+        {
+            try { RollbackTransaction("Dispose"); } catch (Exception ex) { /*skip*/ }
+            GC.SuppressFinalize(this);
         }
 
         //Gestione connessione
@@ -125,6 +134,7 @@ namespace ErpToolkit.Helpers.Db
                 {
                     case (int)SQLiteErrorCode.Busy: // Database busy
                     case (int)SQLiteErrorCode.Locked: // Database locked
+                    case (int)SQLiteErrorCode.IoErr: // timeout
                         return true;
                 }
             }
@@ -136,25 +146,28 @@ namespace ErpToolkit.Helpers.Db
         {
             if (ex is SQLiteException sqliteEx)
             {
-                switch (sqliteEx.ErrorCode) //?????????????????????????????????
+                switch (sqliteEx.ResultCode)
                 {
-                    case (int)SQLiteErrorCode.Error: // Generic error
-                        throw new DatabaseException(ERR_DB_UNKNOWN, "SQLite generic error.", ex);
-                    case (int)SQLiteErrorCode.IoErr: // IO error
-                        throw new DatabaseException(ERR_DB_ERROR, "SQLite IO error.", ex);
-                    //case 2601:
-                    //case 2627:
-                    //    throw new DatabaseException(ERR_DB_DUPLICATION, "Unique constraint violated.", ex);
-                    //case 547:
-                    //    throw new DatabaseException(ERR_DB_DEPENDENCY, "Cannot delete or update due to foreign key constraint.", ex);
-                    //case 1205:
-                    //    throw new DatabaseException(ERR_DB_DEADLOCK, "Deadlock encountered.", ex);
-                    //case 208:
-                    //    throw new DatabaseException(ERR_DB_UNKNOWN, "Invalid object name.", ex);
-                    //case -2:
-                    //    throw new DatabaseException(ERR_DB_TIMEOUT, "Timeout expired.", ex);
+                    case SQLiteErrorCode.Constraint_Unique:
+                        throw new DatabaseException(ERR_DB_DUPLICATION, "Violazione del vincolo univoco.", ex);
+                    case SQLiteErrorCode.Constraint_ForeignKey:
+                        throw new DatabaseException(ERR_DB_DEPENDENCY, "Violazione del vincolo di chiave esterna.", ex);
+                    case SQLiteErrorCode.Busy:
+                        throw new DatabaseException(ERR_DB_DEADLOCK, "Deadlock.", ex);
+                    case SQLiteErrorCode.IoErr:
+                        throw new DatabaseException(ERR_DB_TIMEOUT, "Timeout", ex);
+                    case SQLiteErrorCode.Error:
+                        if (sqliteEx.Message.Contains("no such table"))
+                        {
+                            throw new DatabaseException(ERR_DB_UNKNOWN, "Tabella non esistente.", ex); // Nome campo inesistente
+                        }
+                        if (sqliteEx.Message.Contains("no such column"))
+                        {
+                            throw new DatabaseException(ERR_DB_BADCOLUMN, "Colonna non esistente.", ex); // Nome campo inesistente
+                        }
+                        throw new DatabaseException(ERR_DB_ERROR, "Errore SQLite.", ex);
                     default:
-                        throw new DatabaseException(ERR_DB_ERROR, "An SQL error occurred.", ex);
+                        throw new DatabaseException(ERR_DB_ERROR, "rrore SQLite.", ex);
                 }
             }
             else return false;

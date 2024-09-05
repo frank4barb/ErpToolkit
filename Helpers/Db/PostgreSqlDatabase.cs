@@ -6,7 +6,7 @@ using static ErpToolkit.Helpers.ErpError;
 
 namespace ErpToolkit.Helpers.Db
 {
-    public class PostgreSqlDatabase : IDatabase
+    public class PostgreSqlDatabase : IDatabase, IDisposable
     {
         private string _connectionString;
         private NpgsqlTransaction _transaction = null;
@@ -15,6 +15,15 @@ namespace ErpToolkit.Helpers.Db
         public PostgreSqlDatabase(string connectionString)
         {
             _connectionString = connectionString;
+        }
+        ~PostgreSqlDatabase()
+        {
+            Dispose();
+        }
+        public void Dispose()
+        {
+            try { RollbackTransaction("Dispose"); } catch (Exception ex) { /*skip*/ }
+            GC.SuppressFinalize(this);
         }
 
         //Gestione connessione
@@ -125,9 +134,10 @@ namespace ErpToolkit.Helpers.Db
 
                 //case "40001": // Serialization failure
                 //case "40P01": // Deadlock detected
-                return npgsqlEx.SqlState == "40001" || npgsqlEx.SqlState == "40P01";
-                }
-                return false;
+                //return npgsqlEx.SqlState == "40001" || npgsqlEx.SqlState == "40P01";
+                return npgsqlEx.SqlState == "40001" || npgsqlEx.SqlState == "57014" || npgsqlEx.SqlState == "40P01";
+            }
+            return false;
         }
 
         // decodifica errore per sqlserver
@@ -137,23 +147,20 @@ namespace ErpToolkit.Helpers.Db
             {
                 switch (npgsqlEx.SqlState)
                 {
-                    case "42P01": // Undefined table
-                        throw new DatabaseException(ERR_DB_UNKNOWN, "Undefined table.", ex);
-                    case "57014": // Query canceled
-                        throw new DatabaseException(ERR_DB_TIMEOUT, "Query canceled by user.", ex);
-                    //case 2601:
-                    //case 2627:
-                    //    throw new DatabaseException(ERR_DB_DUPLICATION, "Unique constraint violated.", ex);
-                    //case 547:
-                    //    throw new DatabaseException(ERR_DB_DEPENDENCY, "Cannot delete or update due to foreign key constraint.", ex);
-                    //case 1205:
-                    //    throw new DatabaseException(ERR_DB_DEADLOCK, "Deadlock encountered.", ex);
-                    //case 208:
-                    //    throw new DatabaseException(ERR_DB_UNKNOWN, "Invalid object name.", ex);
-                    //case -2:
-                    //    throw new DatabaseException(ERR_DB_TIMEOUT, "Timeout expired.", ex);
+                    case "23505":
+                        throw new DatabaseException(ERR_DB_DUPLICATION, "Violazione del vincolo univoco.", ex);
+                    case "23503":
+                        throw new DatabaseException(ERR_DB_DEPENDENCY, "Violazione del vincolo di chiave esterna.", ex);
+                    case "40P01":
+                        throw new DatabaseException(ERR_DB_DEADLOCK, "Deadlock.", ex);
+                    case "42P01":
+                        throw new DatabaseException(ERR_DB_UNKNOWN, "Tabella non esistente.", ex);
+                    case "42703":
+                        throw new DatabaseException(ERR_DB_BADCOLUMN, "Colonna non esistente.", ex); // Nome campo inesistente
+                    case "57014":
+                        throw new DatabaseException(ERR_DB_TIMEOUT, "Timeout.", ex);
                     default:
-                        throw new DatabaseException(ERR_DB_ERROR, "An SQL error occurred.", ex);
+                        throw new DatabaseException(ERR_DB_ERROR, "Errore PostgreSQL.", ex);
                 }
             }
             else return false;

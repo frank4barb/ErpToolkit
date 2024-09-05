@@ -7,7 +7,7 @@ using static ErpToolkit.Helpers.ErpError;
 
 namespace ErpToolkit.Helpers.Db
 {
-    public class SybaseDatabase : IDatabase
+    public class SybaseDatabase : IDatabase, IDisposable
     {
         private string _connectionString;
         private AseTransaction _transaction = null;
@@ -16,6 +16,15 @@ namespace ErpToolkit.Helpers.Db
         public SybaseDatabase(string connectionString)
         {
             _connectionString = connectionString;
+        }
+        ~SybaseDatabase()
+        {
+            Dispose();
+        }
+        public void Dispose()
+        {
+            try { RollbackTransaction("Dispose"); } catch (Exception ex) { /*skip*/ }
+            GC.SuppressFinalize(this);
         }
 
         //Gestione connessione
@@ -155,17 +164,19 @@ namespace ErpToolkit.Helpers.Db
                 {
                     case 2601:
                     case 2627:
-                        throw new DatabaseException(ERR_DB_DUPLICATION, "Unique constraint violated.", ex);
+                        throw new DatabaseException(ERR_DB_DUPLICATION, "Violazione del vincolo univoco.", ex);
                     case 547:
-                        throw new DatabaseException(ERR_DB_DEPENDENCY, "Cannot delete or update due to foreign key constraint.", ex);
+                        throw new DatabaseException(ERR_DB_DEPENDENCY, "Violazione del vincolo di chiave esterna.", ex);
                     case 1205:
-                        throw new DatabaseException(ERR_DB_DEADLOCK, "Deadlock encountered.", ex);
+                        throw new DatabaseException(ERR_DB_DEADLOCK, "Deadlock.", ex);
                     case 208:
-                        throw new DatabaseException(ERR_DB_UNKNOWN, "Invalid object name.", ex);
+                        throw new DatabaseException(ERR_DB_UNKNOWN, "Tabella non esistente.", ex);
+                    case 207:
+                        throw new DatabaseException(ERR_DB_BADCOLUMN, "Colonna non esistente.", ex); // Nome campo inesistente
                     case -2:
-                        throw new DatabaseException(ERR_DB_TIMEOUT, "Timeout expired.", ex);
+                        throw new DatabaseException(ERR_DB_TIMEOUT, "Timeout.", ex);
                     default:
-                        throw new DatabaseException(ERR_DB_ERROR, "An SQL error occurred.", ex);
+                        throw new DatabaseException(ERR_DB_ERROR, "Errore Sybase.", ex);
                 }
             }
             else return false;

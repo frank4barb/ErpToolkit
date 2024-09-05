@@ -1,59 +1,79 @@
 
+using K4os.Compression.LZ4.Internal;
+using System.Data.Entity;
+using System.Reflection.Metadata;
+
 namespace ErpToolkit.Helpers.Db
 {
     // Funzioni di gestione accesso al Database, indipendentemente dal DBMS
-    public class DatabaseFactory
+    public class DatabaseFactory : IDisposable
     {
 
-        private IDictionary<string, IDatabase> _itemsDB = new Dictionary<string, IDatabase>();  //
+        private IDictionary<string, DatabaseManager> _itemsDB = new Dictionary<string, DatabaseManager>();  //
 
         public DatabaseFactory()
         {
         }
-
-
-        public IDatabase GetDatabase(string dbType, string connectionStringName, string databaseName = "")
+        ~DatabaseFactory()
         {
-            string key = dbType + connectionStringName;
-            IDatabase db = null; if (_itemsDB.ContainsKey(key)) db = _itemsDB[key];
+            Dispose();
+        }
+        public void Dispose()
+        {
+            // Rilascia risorse non gestite
+            if (_itemsDB != null)
+            {
+                foreach (var key in _itemsDB.Keys) { _itemsDB[key].Dispose(); _itemsDB.Remove(key); }
+                _itemsDB.Clear(); _itemsDB = null;
+            }
+            //.........
+            GC.SuppressFinalize(this);
+        }
+
+
+        public DatabaseManager GetDatabase(string dbType, string connectionStringName, string databaseName = "")
+        {
+            string key = dbType + "***" + connectionStringName;
+            DatabaseManager db = null; if (_itemsDB.ContainsKey(key)) db = _itemsDB[key];
             if (db == null)
             {
+                IDatabase idb = null;
                 string connectionString = ErpContext.Instance.GetString(connectionStringName); 
                 if (connectionString == "") throw new ArgumentException("Errore: connectionString vuota (" + connectionStringName + ") ");
                 switch (dbType)
                 {
                     case "SqlServer":
-                        db = new SqlServerDatabase(connectionString);
+                        idb = new SqlServerDatabase(connectionString);
                         break;
                     case "Sybase":
-                        db = new SybaseDatabase(connectionString);
+                        idb = new SybaseDatabase(connectionString);
                         break;
                     case "MySql":
-                        db = new MySqlDatabase(connectionString);
+                        idb = new MySqlDatabase(connectionString);
                         break;
                     case "PostgreSql":
-                        db = new PostgreSqlDatabase(connectionString);
+                        idb = new PostgreSqlDatabase(connectionString);
                         break;
                     case "SQLite":
-                        db = new SQLiteDatabase(connectionString);
+                        idb = new SQLiteDatabase(connectionString);
                         break;
                     case "Oracle":
-                        db = new OracleDatabase(connectionString);
+                        idb = new OracleDatabase(connectionString);
                         break;
                     case "IRIS":
-                        db = new IRISDatabase(connectionString);
+                        idb = new IRISDatabase(connectionString);
                         break;
                     case "MongoDb":
-                        db = new MongoDbDatabase(connectionString, databaseName);
+                        idb = new MongoDbDatabase(connectionString, databaseName);
                         break;
                     // Aggiungi altri DBMS qui
                     default:
-                        throw new ArgumentException("Tipo di database non supportato");
+                        throw new ArgumentException("Tipo di database {dbType} non supportato");
                 }
-                if (db == null) throw new ArgumentException("Errore: impossibile creare db (" + connectionStringName + ") ");
-                _itemsDB[key] = db;
+                if (idb == null) throw new ArgumentException("Errore: impossibile creare db {dbType} {databaseName}  ({connectionString}) ");
+                _itemsDB[key] = new DatabaseManager(dbType, idb) ;
             }
-            return db;
+            return _itemsDB[key];
         }
 
     }

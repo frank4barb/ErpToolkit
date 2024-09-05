@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authentication;
 using System.Security.Claims;
 
 using MemoryPack;
+using System.Data;
 
 
 namespace ErpToolkit.Helpers
@@ -38,12 +39,16 @@ namespace ErpToolkit.Helpers
         //propietà pubbliche
         public string CurrentDirectory = Environment.CurrentDirectory;
         public string PathIniFile = Environment.CurrentDirectory + "\\" + "ERPdesktop.ini";
+        public string PathDogFile = Environment.CurrentDirectory + "\\" + "ERPdatamodel.cfg";
         public DateTime StartTime = DateTime.Now;
         public DateTime LastUpdateTime = DateTime.Now;
         //--
         public string UserId = "";
         public string UnitId = "";
         //--
+
+        //propietà pubbliche gestore DB
+        public DatabaseFactory DbFactory = new DatabaseFactory();
 
         // PROCESSO SCHEDULATO CHE CANCELLA LE SESSIONI SCADUTE
         private void ScheduledCleanSessionJob()
@@ -78,6 +83,47 @@ namespace ErpToolkit.Helpers
         private ErpContext()
         {
         }
+        ~ErpContext()
+        {
+            Dispose();
+        }
+        public static void Init()
+        {
+            if (_instance == null)
+            {
+                _instance = new ErpContext();
+                // check INI file
+                if (!File.Exists(_instance.PathIniFile)) { _instance.PathIniFile = Environment.CurrentDirectory + "\\..\\" + "ERPdesktop.ini"; }
+                if (!File.Exists(_instance.PathIniFile)) { throw new ErpException("Impossibile caricare il file di inizializzazione: " + _instance.PathIniFile); }
+                //Load Context
+                _instance._itemsString = readIniFile(_instance.PathIniFile, _instance._itemsString);  //load DHEdesktop.ini
+                                                                                                      //_instanceCLONE = UtilHelper.DeepCopy<ErpContext>(_instance); // crea una copia da assegnare alla sessione
+
+                //Load DOG Layer
+                if (!File.Exists(_instance.PathDogFile)) { _instance.PathDogFile = Environment.CurrentDirectory + "\\..\\" + "ERPdatamodel.cfg"; }
+                if (!File.Exists(_instance.PathDogFile)) { throw new ErpException("Impossibile caricare il file DOG di configurazione: " + _instance.PathDogFile); }
+                DogManager.Init(_instance.PathDogFile, "SqlServer", "#connectionString_SQLSLocal");
+
+                _sessions = new Dictionary<string, ErpContext>();    //inizializza sessioni del server
+                _instance.ScheduledCleanSessionJob();   // attiva la schedulazione del task di cancellazione delle sessioni scadute
+            }
+        }
+        public void Dispose()
+        {
+            // Rilascia risorse non gestite
+            if (DbFactory != null) { DbFactory.Dispose(); DbFactory = null; }
+            if (_itemsObject != null)
+            {
+                foreach (var key in _itemsObject.Keys) { if (_itemsObject[key] is IDisposable disposable) { disposable.Dispose(); } _itemsObject.Remove(key); }
+                _itemsObject.Clear(); _itemsObject = null;
+            }
+            if (_itemsLong != null) { _itemsLong.Clear(); _itemsLong = null; }
+            if (_itemsString != null) { _itemsString.Clear(); _itemsString = null; }
+            // .........
+            GC.SuppressFinalize(this);
+        }
+
+
         private ErpContext(ErpContext fromObj)
         {
             UserId = fromObj.UserId;
@@ -90,19 +136,7 @@ namespace ErpToolkit.Helpers
         {
             get
             {
-                if (_instance == null)
-                {
-                    _instance = new ErpContext();
-                    // check INI file
-                    if (!File.Exists(_instance.PathIniFile)) { _instance.PathIniFile = Environment.CurrentDirectory + "\\..\\" + "ERPdesktop.ini"; }
-                    if (!File.Exists(_instance.PathIniFile)) { throw new ErpException("Impossibile caricare il file di inizializzazione: " + _instance.PathIniFile); }
-                    //Load Context
-                    _instance._itemsString = readIniFile(_instance.PathIniFile, _instance._itemsString);  //load DHEdesktop.ini
-                    //_instanceCLONE = UtilHelper.DeepCopy<ErpContext>(_instance); // crea una copia da assegnare alla sessione
-
-                    _sessions = new Dictionary<string, ErpContext>();    //inizializza sessioni del server
-                    _instance.ScheduledCleanSessionJob();   // attiva la schedulazione del task di cancellazione delle sessioni scadute
-                }
+                Init();  // inizializza solo la prima volta
                 return _instance;
             }
         }

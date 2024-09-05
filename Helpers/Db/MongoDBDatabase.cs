@@ -6,7 +6,7 @@ using static ErpToolkit.Helpers.ErpError;
 
 namespace ErpToolkit.Helpers.Db
 {
-    public class MongoDbDatabase : IDatabase
+    public class MongoDbDatabase : IDatabase, IDisposable
     {
         //private MongoClient _connection;
         //private IMongoDatabase _database;
@@ -24,6 +24,15 @@ namespace ErpToolkit.Helpers.Db
             _databaseName = databaseName;
             var client = new MongoClient(_connectionString);
             _database = client.GetDatabase(_databaseName);
+        }
+        ~MongoDbDatabase()
+        {
+            Dispose();
+        }
+        public void Dispose()
+        {
+            try { /* LIBERA MEMORIA ALLOCATA */ } catch (Exception ex) { /*skip*/ }
+            GC.SuppressFinalize(this);
         }
 
         // Gestione connessione (MongoDB mantiene la connessione aperta attraverso MongoClient)

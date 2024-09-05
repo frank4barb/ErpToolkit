@@ -5,19 +5,14 @@ using System.Data;
 using System.Globalization;
 using System.Data.Common;
 using static ErpToolkit.Helpers.ErpError;
-using Mysqlx.Crud;
-using MongoDB.Driver;
-using System.Transactions;
-using MySqlX.XDevAPI.Relational;
 using System.Text;
-using System;
 
 namespace ErpToolkit.Helpers.Db
 {
     // Funzioni di gestione accesso al Database, indipendentemente dal DBMS
-    public class DatabaseManager
+    public class DatabaseManager : IDisposable
     {
-        private readonly string _databaseType;
+        private readonly string _databaseType = "";
         private readonly IDatabase _database;
         private static NLog.ILogger _logger;
 
@@ -27,6 +22,7 @@ namespace ErpToolkit.Helpers.Db
 
 
         // Proprietà configurabili
+        public string DatabaseType { get { return _databaseType; } }  
         public int PageSize { get; set; } = 1000;  //ReadBlob, WriteBlob
         public int MaxRetries { get; set; } = 3;
         public int DelayBetweenRetriesMs { get; set; } = 1000;
@@ -44,6 +40,15 @@ namespace ErpToolkit.Helpers.Db
             //set database
             _databaseType = databaseType;
             _database = database;
+        }
+        ~DatabaseManager()
+        {
+            Dispose();
+        }
+        public void Dispose()
+        {
+            _database.Dispose(); CleanupTransaction();
+            GC.SuppressFinalize(this);
         }
 
         //***************************************************************************************************************************************************
@@ -305,7 +310,7 @@ namespace ErpToolkit.Helpers.Db
 
 
         //***************************************************************************************************************************************************
-        //*** INPORT-EXPORT CSV
+        //*** IMPORT-EXPORT CSV
         //***************************************************************************************************************************************************
 
         //public
@@ -469,7 +474,7 @@ namespace ErpToolkit.Helpers.Db
         public void MantainRecord(char action, string tableName, string keyField, string timestampField, string deleteField, IDictionary<string, object> fields, string options, string transactionId = null)
         {
             int recNum = 1;
-            if (_transactionId != transactionId) RollBackDefaulTransaction("InsertOrUpdateRecord");
+            VerifyTransactionId("MantainRecord", transactionId) ;
             string sql = SqlMantain(recNum, action, tableName, keyField, timestampField, deleteField, ref fields, options);
             var parameters = ParametersMantain(recNum, fields, options);
 
@@ -480,6 +485,10 @@ namespace ErpToolkit.Helpers.Db
                 if (action == 'A') throw new DatabaseException(ERR_DB_ERROR, "Record non inserito.", null);
                 else throw new DatabaseException(ERR_DB_TIMESTAMP, "Timestamp non valido.", null);
             }
+        }
+        private void VerifyTransactionId(string funcName, string transactionId)
+        {
+            if (_transactionId != transactionId) RollBackDefaulTransaction(funcName);
         }
         private string SqlMantain(int recNum, char action, string tableName, string keyField, string timestampField, string deleteField, ref IDictionary<string, object> fields, string options)
         {

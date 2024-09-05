@@ -7,6 +7,7 @@ namespace ErpToolkit.Helpers.Db
     public interface IDatabase
     {
         //Gestione connessione comando reader e bulk
+        void Dispose();
         IDbConnection NewConnection();
         void ReleaseConnection(IDbConnection connection);
         IDbCommand NewCommand(string sql, IDbConnection connection);

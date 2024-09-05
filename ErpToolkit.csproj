@@ -37,6 +37,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="ERPdatamodel.cfg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="ERPdesktop.ini.sample">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
