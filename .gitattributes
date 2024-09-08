@@ -63,6 +63,6 @@
 #*.RTF   diff=astextplain
 
 # riconoscimento linguaggio
-*.cs linguaggio=C#
-*.java linguaggio=Java
-*.py linguaggio=Python
+*.cs language=C#
+*.java language=Java
+*.py language=Python
