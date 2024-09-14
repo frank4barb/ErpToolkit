@@ -370,14 +370,36 @@ namespace ErpToolkit.Helpers.Db
             try
             {
                 string[] columnNames = dataTable.Columns.Cast<DataColumn>().Select(column => column.ColumnName).ToArray();
-                string insertCols = $"INSERT INTO {tableName} ({string.Join(", ", columnNames)}) ";
+                string insertCols = $"INSERT INTO {tableName} ({string.Join(", ", columnNames)}) VALUES ";
                 StringBuilder sql = new StringBuilder();
-                foreach (DataRow row in dataTable.Rows)
+                var parameters = new Dictionary<string, object>();
+                if (1 == 0)   // eseguo n comandi di insert
                 {
-                    string insertValues = $" VALUES ({string.Join(",", row.ItemArray)}); \n";
-                    sql.Append(insertCols).Append(insertValues);
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        string insertValues = $"({string.Join(",", row.ItemArray)})";
+                        sql.Append(insertCols).Append(insertValues).Append("; \n");
+                    }
                 }
-                int affectedRows = ExecuteNonQuery(sql.ToString(), new Dictionary<string, object>(), null);
+                else       // eseguo un solo comando di insert eg: INSERT INTO items (embedding) VALUES ('[1,2,3]'), ('[4,5,6]');
+                {
+                    sql.Append(insertCols); 
+                    for(int r=0; r<dataTable.Rows.Count; r++)
+                    {
+                        var row = dataTable.Rows[r];
+                        if (r != 0) sql.Append(',');
+                        sql.Append('(');
+                        for (int c = 0; c < columnNames.Length; c++)
+                        {
+                            if (c != 0) sql.Append(',');
+                            sql.Append($"@{columnNames[c]}__{r+1}");
+                            parameters[$"@{columnNames[c]}__{r+1}"] = EncodeSpecialFields(row[columnNames[c]]);
+                        }
+                        sql.Append(')');
+                    }
+                    sql.Append("; \n");
+                }
+                int affectedRows = ExecuteNonQuery(sql.ToString(), parameters, null);
                 if (affectedRows != dataTable.Rows.Count) throw new DatabaseException(ERR_DB_ERROR, " {dataTable.Rows-affectedRows} records non inseriti.", null);
             }
             catch (Exception ex)
