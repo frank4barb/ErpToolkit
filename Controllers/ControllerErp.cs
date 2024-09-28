@@ -113,36 +113,36 @@ namespace ErpToolkit.Controllers
         //}
 
 
-        [HttpPost]
-        public async Task<IActionResult> Login(InputLogin Input)
-        {
+        //[HttpPost]
+        //public async Task<IActionResult> Login(InputLogin Input)
+        //{
 
 
-            ModelState.Clear(); //ModelState.ClearValidationState("CompanyName"); //FORZA RICONVALIDA MODELLO >>> https://learn.microsoft.com/it-it/aspnet/core/mvc/models/validation?view=aspnetcore-8.0
-            if (!TryValidateModel(Input))
-            {
-                // logout
-                ErpContext.TermSessionAsync(HttpContext); //clean current session ErpContext and LOGOUT
-                if (HttpContext.User.Identity != null && HttpContext.User.Identity.IsAuthenticated) return LocalRedirect(Url.Content("~/"));  // <<<-- ricarica la pagina di login dopo LOGOUT
-                return View(); // <<<-- visualizza gli errori LOGIN
-            }
+        //    ModelState.Clear(); //ModelState.ClearValidationState("CompanyName"); //FORZA RICONVALIDA MODELLO >>> https://learn.microsoft.com/it-it/aspnet/core/mvc/models/validation?view=aspnetcore-8.0
+        //    if (!TryValidateModel(Input))
+        //    {
+        //        // logout
+        //        ErpContext.TermSessionAsync(HttpContext); //clean current session ErpContext and LOGOUT
+        //        if (HttpContext.User.Identity != null && HttpContext.User.Identity.IsAuthenticated) return LocalRedirect(Url.Content("~/"));  // <<<-- ricarica la pagina di login dopo LOGOUT
+        //        return View(); // <<<-- visualizza gli errori LOGIN
+        //    }
 
 
 
-            // login and new session
-            bool login = await ErpContext.InitSessionAsync(HttpContext, Input.Matricola, Input.Password, "");
-            if (!login)
-            {
-                //errore utente non abilitato
-                ModelState.AddModelError(string.Empty, "Matricola o Password non valide!");
-                return View(); // <<<-- visualizza gli errori
-            }
+        //    // login and new session
+        //    bool login = await ErpContext.InitSessionAsync(HttpContext, Input.Matricola, Input.Password, "");
+        //    if (!login)
+        //    {
+        //        //errore utente non abilitato
+        //        ModelState.AddModelError(string.Empty, "Matricola o Password non valide!");
+        //        return View(); // <<<-- visualizza gli errori
+        //    }
 
-            //redirect to ReturnUrl
-            string? returnUrl = HttpContext.Session.GetString(SessionReturnUrl); HttpContext.Session.Remove(SessionReturnUrl); //scarico il ReturnUrl
-            returnUrl ??= Url.Content("~/"); //default
-            return LocalRedirect(returnUrl);
-        }
+        //    //redirect to ReturnUrl
+        //    string? returnUrl = HttpContext.Session.GetString(SessionReturnUrl); HttpContext.Session.Remove(SessionReturnUrl); //scarico il ReturnUrl
+        //    returnUrl ??= Url.Content("~/"); //default
+        //    return LocalRedirect(returnUrl);
+        //}
 
 
         //==========================================================================================================

@@ -147,9 +147,17 @@ namespace ErpToolkit.Helpers
             if (httpContext == null || httpContext.Session == null) return null;
             string? sessionUserId = httpContext.Session.GetString(SessionUserId);
             ErpContext? clientSession = _sessions[httpContext.Session.Id];
-            if (sessionUserId == null || clientSession == null || sessionUserId != clientSession.UserId) { ErpContext.TermSessionAsync(httpContext);  return null; }
+            if (sessionUserId == null || clientSession == null || sessionUserId != clientSession.UserId) 
+            {
+                ErpContext.TermSessionAsync(httpContext); return null;
+                //ErpContext.TermSession(httpContext); return null;
+            }
             return clientSession;
         }
+
+
+
+        //InitSessionAsync -- TermSessionAsync
 
         public static async Task<bool> InitSessionAsync(HttpContext httpContext, string userId, string userPwd, string unitId = "")
         {
@@ -158,7 +166,7 @@ namespace ErpToolkit.Helpers
             //check LDAP  
             string ldap_server = ErpContext.Instance.GetString("#ldapServerAddress");
             if (ldap_server == "" && userPwd == "testLdap") ; // skip LDAP for test
-            else if (!UtilHelper.LoginLdap(ldap_server,userId,userPwd)) return false; // Matricola o Password non valide!
+            else if (!UtilHelper.LoginLdap(ldap_server, userId, userPwd)) return false; // Matricola o Password non valide!
 
             // LOGIN
             var claims = new List<Claim>
@@ -192,7 +200,7 @@ namespace ErpToolkit.Helpers
             _sessions[httpContext.Session.Id] = clientSession;
             return true;
         }
-        public static async void TermSessionAsync(HttpContext httpContext)
+        public static async Task TermSessionAsync(HttpContext httpContext)
         {
             if (httpContext != null)
             {
@@ -205,6 +213,68 @@ namespace ErpToolkit.Helpers
                 }
             }
         }
+
+        //InitSession -- TermSession
+
+        //public static bool InitSession(HttpContext httpContext, string userId, string userPwd, string unitId = "")
+        //{
+        //    //check for allowed user
+        //    if (!ErpContext.Instance.GetString("#usersAllowedList").Contains(userId)) return false; // Matricola o Password non valide!
+        //    //check LDAP  
+        //    string ldap_server = ErpContext.Instance.GetString("#ldapServerAddress");
+        //    if (ldap_server == "" && userPwd == "testLdap") ; // skip LDAP for test
+        //    else if (!UtilHelper.LoginLdap(ldap_server, userId, userPwd)) return false; // Matricola o Password non valide!
+
+        //    // LOGIN
+        //    var claims = new List<Claim>
+        //        {
+        //            new Claim(ClaimTypes.NameIdentifier, userId),
+        //            new Claim(ClaimTypes.Name, userId),   // << consente di recuperare la matricola di login tramite:  User.Identity?.Name
+        //            new Claim("UserDefined", "whatever"),
+        //        };
+
+        //    var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        //    var principal = new ClaimsPrincipal(identity);
+
+        //    httpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,        // LOGIN
+        //            principal,
+        //            new AuthenticationProperties { IsPersistent = true });
+
+        //    //save session ErpContext
+
+        //    //ErpContext clientSession = UtilHelper.DeepCopy<ErpContext>(ErpContext.Instance); // crea una copia da assegnare alla sessione
+        //    //ErpContext clientSession = UtilHelper.DeepCopy<ErpContext>(_instanceCLONE); // crea una copia da assegnare alla sessione
+
+        //    //ErpContext clientSession = new ErpContext(); // crea una copia da assegnare alla sessione (rilegendo il file .ini)  ???????????????
+        //    ErpContext clientSession = new ErpContext(ErpContext.Instance); // crea una copia CLONE da assegnare alla sessione 
+
+
+        //    clientSession.UserId = userId;
+        //    clientSession.UnitId = unitId;
+        //    clientSession.StartTime = DateTime.Now;
+        //    clientSession.LastUpdateTime = DateTime.Now;
+        //    httpContext.Session.SetString(SessionUserId, userId);
+        //    _sessions[httpContext.Session.Id] = clientSession;
+        //    return true;
+        //}
+        //public static void TermSession(HttpContext httpContext)
+        //{
+        //    if (httpContext != null)
+        //    {
+        //        httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);  // LOGOUT
+        //        if (httpContext.Session != null)
+        //        {
+        //            _sessions.Remove(httpContext.Session.Id);
+        //            httpContext.Session.Remove(SessionUserId); httpContext.Session.Clear();
+
+        //        }
+        //    }
+        //}
+
+
+
+
+
 
         //RILEGGI FILE INI
         public void ReloadIniFile()

@@ -445,29 +445,6 @@ namespace ErpToolkit.Helpers
             //-------------------------------------
             FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
 
-            //xx//var model = ViewContext.ViewData.Model;  // Accedi al Model
-            //xx//var attrField = new DogHelper.FieldAttr("");
-            //xx//if (model != null) try { attrField = (model as ModelErp).AttrFields[For.Name]; } catch (Exception ex) { } // skip exeptions
-            //---
-            //FieldAttr attrField = new DogHelper.FieldAttr("");
-            //try
-            //{
-            //    string nomePercorso = ViewContext.TempData["NomeSequenzaPagine"] as string; ViewContext.TempData["NomeSequenzaPagine"] = nomePercorso;  //ricarico per mantenere in memoria
-            //    List<SharedController.Page> sequenzaPagine = SharedController.PathMenu[nomePercorso];
-            //    string nomePagina = ((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ControllerName;
-            //    int paginaIdx = sequenzaPagine.FindIndex(page => page.pageName.Equals(nomePagina, StringComparison.Ordinal));
-            //    if (sequenzaPagine[paginaIdx].defaultFields.ContainsKey(For.Name + "_Attr"))
-            //    {
-            //        attrField = new DogHelper.FieldAttr(sequenzaPagine[paginaIdx].defaultFields[For.Name + "_Attr"] ?? "");
-            //    }
-            //    else if (sequenzaPagine[paginaIdx].defaultFields.ContainsKey(attributeErpDogField_Xref + "_Attr"))
-            //    {
-            //        attrField = new DogHelper.FieldAttr(sequenzaPagine[paginaIdx].defaultFields[attributeErpDogField_Xref + "_Attr"] ?? "");
-            //    }
-            //}
-            //catch (Exception ex) { } // skip exeptions
-            //---
-
 
             if (attributeServer != null)
             {
@@ -770,11 +747,11 @@ namespace ErpToolkit.Helpers
     {
         public string[] Choices { get; }
         public int MaxSelections { get; set; } = 1;  // disable controll if MaxSelections < 1
-        public string LabelContoller { get; set; } = "Shared";
+        public string LabelContoller { get; set; } = "Home";
         public string LabelAction { get; set; } = "GetLabels";
         public string LabelClassName { get; set; } = "";
 
-        public MultipleChoicesAttribute(string[] choices, int maxSelections = 1, string labelContoller = "Shared", string labelAction = "GetLabels", string labelClassName = "")
+        public MultipleChoicesAttribute(string[] choices, int maxSelections = 1, string labelContoller = "Home", string labelAction = "GetLabels", string labelClassName = "")
         {
             Choices = choices;
             MaxSelections = maxSelections; 

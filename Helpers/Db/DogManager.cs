@@ -1,5 +1,10 @@
 
+using Amazon.Runtime.Internal.Transform;
+using Google.Protobuf.Reflection;
+using Npgsql;
 using System.Data;
+using System.Reflection;
+using System.Text;
 using static ErpToolkit.Helpers.ErpError;
 
 namespace ErpToolkit.Helpers.Db
@@ -33,6 +38,56 @@ namespace ErpToolkit.Helpers.Db
         //*** INIT
         //***************************************************************************************************************************************************
 
+
+        public const string BASE_MODEL = "ErpToolkit.Models";
+
+        public class DogTable
+        {
+            public string tableName;
+            public Type tableTpy;
+            public List<DogField> fields = new List<DogField>();
+            //--
+            public string Description ;
+            public string SqlTableName ;
+            public string SqlTableNameExt;
+            public string SqlRowIdName;
+            public string SqlRowIdNameExt;
+            public string SqlPrefix;
+            public string SqlPrefixExt;
+            public string SqlXdataTableName;
+            public string SqlXdataTableNameExt;
+            public string DATAMODEL; //Data Model Name of the Class
+            public int INTCODE; //Internal Table Code
+            public string TBAREA; //Table Area
+            public string PREFIX; //Table Prefix
+            public string LIVEDESC; //Table type: Live or Description
+            public string IS_RELTABLE; //Is Relation Table: Yes or No
+        }
+        public class DogField
+        {
+            public string fieldName;
+            public Type fieldTyp;
+            public DogTable table;
+            //--
+            public string SqlFieldName;  // eg: AV_CODICE
+            public string SqlFieldProperties; // eg: prop() xref() xdup(ATTIVITA.AV__ICODE[AV__ICODE] {AV_CODICE=' '}) multbxref()
+            public string SqlFieldOptions;  // [UID] [XID] codice univoco utente e esterno
+            public string SqlFieldNameExt;  // AY_CODE
+            public string Xref;  // external reference (if any) eg: Pa1Icode
+            //--
+            public bool optUID = false;
+            public bool optXID = false;
+            public bool optDATE = false;
+            public bool optTIME = false;
+            public bool optDATETIME = false;
+        }
+
+        public static Dictionary<string, DogTable> tables = new Dictionary<string, DogTable>();
+        public static Dictionary<string, DogTable> prefixes = new Dictionary<string, DogTable>();
+        public static Dictionary<int, DogTable> intcodes = new Dictionary<int, DogTable>();
+        public static Dictionary<string, DogField> fields = new Dictionary<string, DogField>();
+
+
         public static void Init(string initFileName, string dbType, string connectionStringName)
         {
             //SetUpNLog();
@@ -40,9 +95,73 @@ namespace ErpToolkit.Helpers.Db
             _logger = NLog.LogManager.GetCurrentClassLogger();
 
             _dbType = dbType; _connectionStringName = connectionStringName;
-            
+
+            string modelName = "SIO";
+
+            //-----------------------
             //Load Default Data Model
+            //-----------------------
+            Type modelType = Type.GetType(BASE_MODEL + "." + modelName + ".BaseModel");
+            object objModel = Activator.CreateInstance(modelType); // create an instance of that type
+            List<Type> Tabelle = (List<Type>)modelType.GetProperty("Tabelle").GetValue(objModel);
+            foreach (var tabellaType in Tabelle)
+            {
+                DogTable tab = new DogTable();
+                tab.tableName = tabellaType.Name;
+                tab.tableTpy = tabellaType;
+                //--
+                tab.Description = tabellaType.GetField("Description")?.GetRawConstantValue()?.ToString() ?? "";
+                tab.SqlTableName = tabellaType.GetField("SqlTableName")?.GetRawConstantValue()?.ToString() ?? "";
+                tab.SqlTableNameExt = tabellaType.GetField("SqlTableNameExt")?.GetRawConstantValue()?.ToString() ?? "";
+                tab.SqlRowIdName = tabellaType.GetField("SqlRowIdName")?.GetRawConstantValue()?.ToString() ?? "";
+                tab.SqlRowIdNameExt = tabellaType.GetField("SqlRowIdNameExt")?.GetRawConstantValue()?.ToString() ?? "";
+                tab.SqlPrefix = tabellaType.GetField("SqlPrefix")?.GetRawConstantValue()?.ToString() ?? "";
+                tab.SqlPrefixExt = tabellaType.GetField("SqlPrefixExt")?.GetRawConstantValue()?.ToString() ?? "";
+                tab.SqlXdataTableName = tabellaType.GetField("SqlXdataTableName")?.GetRawConstantValue()?.ToString() ?? "";
+                tab.SqlXdataTableNameExt = tabellaType.GetField("SqlXdataTableNameExt")?.GetRawConstantValue()?.ToString() ?? "";
+                tab.DATAMODEL = tabellaType.GetField("DATAMODEL")?.GetRawConstantValue()?.ToString() ?? ""; 
+                tab.INTCODE = Convert.ToInt32(tabellaType.GetField("INTCODE")?.GetRawConstantValue()); 
+                tab.TBAREA = tabellaType.GetField("TBAREA")?.GetRawConstantValue()?.ToString() ?? ""; 
+                tab.PREFIX = tabellaType.GetField("PREFIX")?.GetRawConstantValue()?.ToString() ?? ""; 
+                tab.LIVEDESC = tabellaType.GetField("LIVEDESC")?.GetRawConstantValue()?.ToString() ?? ""; 
+                tab.IS_RELTABLE = tabellaType.GetField("IS_RELTABLE")?.GetRawConstantValue()?.ToString() ?? ""; 
+                //---------
+                foreach (var property in tabellaType.GetProperties())
+                {
+                    ErpDogFieldAttribute? erpDogFieldAttribute = property.GetCustomAttribute(typeof(ErpDogFieldAttribute)) as ErpDogFieldAttribute;
+                    if (erpDogFieldAttribute != null)
+                    {
+                        //---------
+                        DogField fld = new DogField();
+                        fld.fieldName = property.Name;
+                        fld.fieldTyp = property.PropertyType;
+                        fld.table = tab;
+                        //--
+                        fld.SqlFieldName = erpDogFieldAttribute.SqlFieldName?.ToString() ?? "";
+                        fld.SqlFieldProperties = erpDogFieldAttribute.SqlFieldProperties?.ToString() ?? "";
+                        fld.SqlFieldOptions = erpDogFieldAttribute.SqlFieldOptions?.ToString() ?? "";
+                        fld.SqlFieldNameExt = erpDogFieldAttribute.SqlFieldNameExt?.ToString() ?? "";
+                        fld.Xref = erpDogFieldAttribute.Xref?.ToString() ?? "";
+                        //---------
+                        fld.optUID = fld.SqlFieldOptions.Contains("[UID]");
+                        fld.optXID = fld.SqlFieldOptions.Contains("[XID]");
+                        fld.optDATE = fld.SqlFieldOptions.Contains("[DATE]");
+                        fld.optTIME = fld.SqlFieldOptions.Contains("[TIME]");
+                        fld.optDATETIME = fld.SqlFieldOptions.Contains("[DATETIME]");
+                        //---------
+                        tab.fields.Add(fld);
+                        fields.Add(fld.SqlFieldName, fld);
+                    }
+                }
+                //-------
+                tables.Add(tab.SqlTableName, tab);
+                prefixes.Add(tab.SqlPrefix, tab);
+                intcodes.Add(tab.INTCODE, tab);
+            }
         }
+
+
+
 
 
         //***************************************************************************************************************************************************

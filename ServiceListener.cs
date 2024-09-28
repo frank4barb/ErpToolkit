@@ -59,8 +59,8 @@ namespace ErpToolkit
                 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                                 .AddCookie("Cookies", options =>
                                 {
-                                    options.LoginPath = "/Home";                        // se non è stata effettuata la Login ridireziono su Home Page
-                                    options.LogoutPath = "/Home";
+                                    options.LoginPath = "/Home/Index";                        // se non è stata effettuata la Login ridireziono su Home Page
+                                    options.LogoutPath = "/Home/Index";
                                     options.AccessDeniedPath = "/Account/AccessDenied";
                                     options.ReturnUrlParameter = "ReturnUrl";
                                 });
@@ -151,11 +151,17 @@ namespace ErpToolkit
                 app.UseSession();
                 //<<<manage session client
 
+                //>>>Aggiungi il tuo middleware per loggare le richieste
+                app.UseMiddleware<RequestLogging>();
+                //<<<Aggiungi il tuo middleware per loggare le richieste
 
 
+                //>>>pagina di default
                 app.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=DefaultPage}/{id?}");
+                //<<<
+
 
                 app.Run();
 
@@ -176,4 +182,28 @@ namespace ErpToolkit
         }
 
     }
+
+    public class RequestLogging
+    {
+        private readonly RequestDelegate _next;
+        public RequestLogging(RequestDelegate next)
+        {
+            _next = next;
+        }
+        public async Task InvokeAsync(HttpContext context)
+        {
+            // Logga le informazioni sulla richiesta
+            Console.WriteLine($"Incoming Request: {context.Request.Method} {context.Request.Path}");
+
+            // Logga altre informazioni utili, se necessario
+            Console.WriteLine($"Headers: {string.Join(", ", context.Request.Headers.Select(h => $"{h.Key}: {h.Value}"))}");
+
+            // Chiamata al middleware successivo
+            await _next(context);
+
+            // Logga le informazioni sulla risposta
+            Console.WriteLine($"Response Status Code: {context.Response.StatusCode}");
+        }
+    }
+
 }

@@ -199,7 +199,7 @@ namespace ErpToolkit.Helpers
             try
             {
                 string nomePercorso = viewContext.TempData["NomeSequenzaPagine"] as string; viewContext.TempData["NomeSequenzaPagine"] = nomePercorso;  //ricarico per mantenere in memoria
-                List<SharedController.Page> sequenzaPagine = SharedController.PathMenu[nomePercorso];
+                List<HomeController.Page> sequenzaPagine = HomeController.PathMenu[nomePercorso];
                 string nomePagina = ((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)viewContext.ActionDescriptor).ControllerName;
                 int paginaIdx = sequenzaPagine.FindIndex(page => page.pageName.Equals(nomePagina, StringComparison.Ordinal));
                 if (sequenzaPagine[paginaIdx].defaultFields.ContainsKey(fieldName + "_Attr"))
