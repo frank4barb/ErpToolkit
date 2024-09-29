@@ -109,6 +109,7 @@ namespace ErpToolkit.Helpers
         {
             // Rilascia risorse non gestite
             if (DbFactory != null) { DbFactory.Dispose(); DbFactory = null; }
+            if (DogFactory != null) { DogFactory.Dispose(); DogFactory = null; }
             if (_itemsObject != null)
             {
                 foreach (var key in _itemsObject.Keys) { if (_itemsObject[key] is IDisposable disposable) { disposable.Dispose(); } _itemsObject.Remove(key); }
