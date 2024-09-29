@@ -1,7 +1,12 @@
 
+using Google.Protobuf.Reflection;
+using Microsoft.Extensions.Options;
+using Microsoft.VisualBasic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Globalization;
+using System.IO;
 using System.Reflection;
 using static ErpToolkit.Helpers.ErpError;
 
@@ -226,9 +231,13 @@ namespace ErpToolkit.Helpers.Db
         }
 
         //ExecuteQuery
-        public DataTable ExecuteQuery(string sql, IDictionary<string, object> parameters, int maxRecords = 10000, string transactionId = null)
+        public DataTable ExecuteQuery(string sql, IDictionary<string, object> parameters, string options = "", int maxRecords = 10000, string transactionId = null)
         {
-            return _getDbMg().ExecuteQuery(sql, parameters, maxRecords, transactionId);
+            return DecodeSpecialTable(_getDbMg().ExecuteQuery(sql, EncodeSpecialFields(parameters, options), maxRecords, transactionId), options);
+        }
+        public List<T> ExecuteQuery<T>(string sql, IDictionary<string, object> parameters, string options = "", int maxRecords = 10000, string transactionId = null)
+        {
+            return DecodeSpecialTable<T>(_getDbMg().ExecuteQuery(sql, EncodeSpecialFields(parameters, options), maxRecords, transactionId), options);
         }
 
         //ExecNonQuery
@@ -258,15 +267,127 @@ namespace ErpToolkit.Helpers.Db
         //***************************************************************************************************************************************************
 
 
-        public void MantainRecord(char action, string tableName, string keyField, string timestampField, string deleteField, IDictionary<string, object> fields, string options, string transactionId = null)
+        public void MantainRecord(char action, string tableName, string keyField, string timestampField, string deleteField, IDictionary<string, object> parameters, string options, string transactionId = null)
         {
-            _getDbMg().MantainRecord(action, tableName, keyField, timestampField, deleteField, fields, options, transactionId);
+            _getDbMg().MantainRecord(action, tableName, keyField, timestampField, deleteField, EncodeSpecialFields(parameters, options), options, transactionId);
+        }
+
+
+        //***************************************************************************************************************************************************
+        //*** ENCODE-DECODE
+        //***************************************************************************************************************************************************
+
+        private Dictionary<string, object> EncodeSpecialFields(IDictionary<string, object> fields, string options="")
+        {
+            var parameters = new Dictionary<string, object>();
+            foreach (var field in fields) { parameters[field.Key] = EncodeSpecialField(field.Value, options); }
+            return parameters;
+        }
+        private DataTable DecodeSpecialTable(DataTable dataTable, string options = "")  //DecodeSpecialFields
+        {
+            foreach (DataRow row in dataTable.Rows)
+            {
+                foreach (DataColumn column in row.Table.Columns)
+                {
+                    row[column] = DecodeSpecialField(null, column.ColumnName, row[column], options);
+                }
+            }
+            return dataTable;
+        }
+
+        public List<T> DecodeSpecialTable<T>(DataTable dt, string options = "")
+        {
+            List<T> data = new List<T>();
+            foreach (DataRow row in dt.Rows)
+            {
+                T item = DecodeSpecialRow<T>(row, options);
+                data.Add(item);
+            }
+            return data;
+        }
+        public T DecodeSpecialRow<T>(DataRow dr, string options = "")
+        {
+            Type temp = typeof(T);
+            //decode in object array
+            if (temp == typeof(System.Object[]))
+            {
+                object[] objArr = new object[dr.Table.Columns.Count];
+                //foreach (DataColumn column in dr.Table.Columns)
+                for (int i = 0; i < dr.Table.Columns.Count; i++)
+                {
+                    DataColumn column = dr.Table.Columns[i];
+                    objArr[i] = DecodeSpecialField(null, column.ColumnName, dr[column.ColumnName], options);
+                }
+                return (T)(Object)objArr;
+            }
+            //decode in object model
+            T obj = Activator.CreateInstance<T>();
+            for (int i = 0; i < dr.Table.Columns.Count; i++)
+            {
+                DataColumn column = dr.Table.Columns[i];
+                foreach (PropertyInfo pro in temp.GetProperties())
+                {
+                    if (pro.Name == column.ColumnName)
+                    {
+                        pro.SetValue(obj, DecodeSpecialField(pro.PropertyType, column.ColumnName, dr[column.ColumnName], options), null);
+                    }
+                }
+            }
+            return obj;
         }
 
 
 
 
 
+
+
+
+
+
+
+        //-----------------------------------
+        private object EncodeSpecialField(object value, string options = "")
+        {
+            if (value is DateOnly date)
+                return date.ToString("yyyy/MM/dd");
+            if (value is TimeOnly time)
+                return time.ToString("HH:mm:ss");
+            if (value is DateTime datetime)
+                return datetime.ToString("yyyy/MM/dd HH:mm:ss");
+            // Aggiungere altre conversioni speciali qui se necessario
+            return value;
+        }
+        private object DecodeSpecialField(Type type, string colName, object value, string options = "")
+        {
+            if (value == null) return null;
+            if (value.GetType() == typeof(string))
+            {
+                string strVal = ((string)value).Trim();  
+                if (type == typeof(DateOnly?) || this.fields[colName]?.optDATE == true)
+                {
+                    if (strVal == "" || strVal == "/  /") return DateOnly.MinValue;
+                    if (strVal == "9999/99/99") return DateOnly.MaxValue;
+                    if (DateOnly.TryParseExact((string)value, "yyyy/MM/dd", null, DateTimeStyles.None, out DateOnly date)) return date;
+                }
+                if (type == typeof(TimeOnly?) || this.fields[colName]?.optTIME == true)
+                {
+                    if (strVal == "" || strVal == ":  :") return null;
+                    if (TimeOnly.TryParseExact(value.ToString(), "HH:mm:ss", null, DateTimeStyles.None, out TimeOnly time)) return time;
+                }
+                if (type == typeof(DateTime?) || this.fields[colName]?.optDATETIME == true)
+                {
+                    if (strVal == "" || strVal == "/  /" || strVal == "/  /     :  :") return DateTime.MinValue;
+                    if (this.fields[colName]?.optDATE == true && DateTime.TryParseExact(value.ToString(), "yyyy/MM/dd", null, DateTimeStyles.None, out DateTime datetimeDate)) return datetimeDate;
+                    else if (this.fields[colName]?.optTIME == true && DateTime.TryParseExact(value.ToString(), "HH:mm:ss", null, DateTimeStyles.None, out DateTime datetimeTime)) return datetimeTime;
+                    else if (DateTime.TryParseExact(value.ToString(), "yyyy/MM/dd HH:mm:ss", null, DateTimeStyles.None, out DateTime datetime)) return datetime;
+                }
+            }
+            if (type == typeof(System.Double?)) { return Convert.ToDouble(value); }
+
+            // Aggiungere altre conversioni speciali qui se necessario
+            return value;
+        }
 
 
 

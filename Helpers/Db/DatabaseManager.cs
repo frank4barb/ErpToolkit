@@ -393,7 +393,7 @@ namespace ErpToolkit.Helpers.Db
                         {
                             if (c != 0) sql.Append(',');
                             sql.Append($"@{columnNames[c]}__{r+1}");
-                            parameters[$"@{columnNames[c]}__{r+1}"] = EncodeSpecialFields(row[columnNames[c]]);
+                            parameters[$"@{columnNames[c]}__{r + 1}"] = row[columnNames[c]];  //parameters[$"@{columnNames[c]}__{r+1}"] = EncodeSpecialFields(row[columnNames[c]]);
                         }
                         sql.Append(')');
                     }
@@ -463,29 +463,6 @@ namespace ErpToolkit.Helpers.Db
             }
         }
 
-        //***************************************************************************************************************************************************
-        //*** ENCODE-DECODE
-        //***************************************************************************************************************************************************
-
-        private object EncodeSpecialFields(object value)
-        {
-            if (value is DateOnly date)
-                return date.ToString("yyyy/MM/dd");
-            if (value is TimeOnly time)
-                return time.ToString("HH:mm:ss");
-            // Aggiungere altre conversioni speciali qui se necessario
-            return value;
-        }
-
-        private object DecodeSpecialFields(Type type, object value)
-        {
-            if (type == typeof(DateOnly) && DateOnly.TryParseExact(value.ToString(), "yyyy/MM/dd", null, DateTimeStyles.None, out DateOnly date))
-                return date;
-            if (type == typeof(TimeOnly) && TimeOnly.TryParseExact(value.ToString(), "HH:mm:ss", null, DateTimeStyles.None, out TimeOnly time))
-                return time;
-            // Aggiungere altre conversioni speciali qui se necessario
-            return value;
-        }
 
 
         //***************************************************************************************************************************************************
@@ -556,7 +533,7 @@ namespace ErpToolkit.Helpers.Db
 
             foreach (var field in fields)
             {
-                parameters[$"@{field.Key}__{recNum}"] = EncodeSpecialFields(field.Value);
+                parameters[$"@{field.Key}__{recNum}"] = field.Value;    // parameters[$"@{field.Key}__{recNum}"] = EncodeSpecialFields(field.Value);
             }
             return parameters;
         }
