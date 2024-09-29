@@ -1,33 +1,35 @@
 
-using Amazon.Runtime.Internal.Transform;
-using Google.Protobuf.Reflection;
-using Npgsql;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Reflection;
-using System.Text;
 using static ErpToolkit.Helpers.ErpError;
 
 namespace ErpToolkit.Helpers.Db
 {
+    //------------------- 
+    //Data Object Gateway
+    //-------------------
     // Funzioni di gestione accesso al Database, con il supporto del Data Model 
-    public static class DogManager
+    public class DogManager
     {
-        private static string _dbType; // = "SqlServer";
-        private static string _connectionStringName; // = "#connectionString_SQLSLocal";
-        private static NLog.ILogger _logger;
+        private string _modelName; // = "SIO";
+        private string _databaseType; // = "SqlServer";
+        private string _connectionStringName; // = "#connectionString_SQLSLocal";
+        private NLog.ILogger _logger;
 
-        private static DatabaseManager _getDbMg() { return ErpContext.Instance.DbFactory.GetDatabase(_dbType, _connectionStringName); }
+        private DatabaseManager _getDbMg() { return ErpContext.Instance.DbFactory.GetDatabase(_databaseType, _connectionStringName); }
 
         // Proprietà configurabili
-        public static string DatabaseType { get { return _getDbMg().DatabaseType; } }
-        public static int PageSize { get { return _getDbMg().PageSize; } set { _getDbMg().PageSize = value; } }  
-        public static int MaxRetries { get { return _getDbMg().MaxRetries; } set { _getDbMg().MaxRetries = value; } }
-        public static int DelayBetweenRetriesMs { get { return _getDbMg().DelayBetweenRetriesMs; } set { _getDbMg().DelayBetweenRetriesMs = value; } }
-        public static int TimeoutSeconds { get { return _getDbMg().TimeoutSeconds; } set { _getDbMg().TimeoutSeconds = value; } }
-        public static int TransactionTimeoutSeconds { get { return _getDbMg().TransactionTimeoutSeconds; } set { _getDbMg().TransactionTimeoutSeconds = value; } }
-        public static int MaxRecords { get { return _getDbMg().MaxRecords; } set { _getDbMg().MaxRecords = value; } }
-        public static bool EnableTrace { get { return _getDbMg().EnableTrace; } set { _getDbMg().EnableTrace = value; } }
-        public static int MaxFileLengthBytes { get { return _getDbMg().MaxFileLengthBytes; } set { _getDbMg().MaxFileLengthBytes = value; } }
+        public string DatabaseType { get { return _getDbMg().DatabaseType; } }
+        public int PageSize { get { return _getDbMg().PageSize; } set { _getDbMg().PageSize = value; } }  
+        public int MaxRetries { get { return _getDbMg().MaxRetries; } set { _getDbMg().MaxRetries = value; } }
+        public int DelayBetweenRetriesMs { get { return _getDbMg().DelayBetweenRetriesMs; } set { _getDbMg().DelayBetweenRetriesMs = value; } }
+        public int TimeoutSeconds { get { return _getDbMg().TimeoutSeconds; } set { _getDbMg().TimeoutSeconds = value; } }
+        public int TransactionTimeoutSeconds { get { return _getDbMg().TransactionTimeoutSeconds; } set { _getDbMg().TransactionTimeoutSeconds = value; } }
+        public int MaxRecords { get { return _getDbMg().MaxRecords; } set { _getDbMg().MaxRecords = value; } }
+        public bool EnableTrace { get { return _getDbMg().EnableTrace; } set { _getDbMg().EnableTrace = value; } }
+        public int MaxFileLengthBytes { get { return _getDbMg().MaxFileLengthBytes; } set { _getDbMg().MaxFileLengthBytes = value; } }
 
         //private DogManager()
         //{
@@ -38,65 +40,67 @@ namespace ErpToolkit.Helpers.Db
         //*** INIT
         //***************************************************************************************************************************************************
 
-
-        public const string BASE_MODEL = "ErpToolkit.Models";
+        public readonly Dictionary<string, DogTable> tables = new Dictionary<string, DogTable>();
+        public readonly Dictionary<string, DogTable> prefixes = new Dictionary<string, DogTable>();
+        public readonly Dictionary<int, DogTable> intcodes = new Dictionary<int, DogTable>();
+        public readonly Dictionary<string, DogField> fields = new Dictionary<string, DogField>();
 
         public class DogTable
         {
-            public string tableName;
+            public string tableName = "";
             public Type tableTpy;
             public List<DogField> fields = new List<DogField>();
             //--
-            public string Description ;
-            public string SqlTableName ;
-            public string SqlTableNameExt;
-            public string SqlRowIdName;
-            public string SqlRowIdNameExt;
-            public string SqlPrefix;
-            public string SqlPrefixExt;
-            public string SqlXdataTableName;
-            public string SqlXdataTableNameExt;
-            public string DATAMODEL; //Data Model Name of the Class
-            public int INTCODE; //Internal Table Code
-            public string TBAREA; //Table Area
-            public string PREFIX; //Table Prefix
-            public string LIVEDESC; //Table type: Live or Description
-            public string IS_RELTABLE; //Is Relation Table: Yes or No
+            public string Description = "";
+            public string SqlTableName = "";
+            public string SqlTableNameExt = "";
+            public string SqlRowIdName = "";
+            public string SqlRowIdNameExt = "";
+            public string SqlPrefix = "";
+            public string SqlPrefixExt = "";
+            public string SqlXdataTableName = "";
+            public string SqlXdataTableNameExt = "";
+            public string DATAMODEL = ""; //Data Model Name of the Class
+            public int INTCODE = 0; //Internal Table Code
+            public string TBAREA = ""; //Table Area
+            public string PREFIX = ""; //Table Prefix
+            public string LIVEDESC = ""; //Table type: Live or Description
+            public string IS_RELTABLE = ""; //Is Relation Table: Yes or No
         }
         public class DogField
         {
-            public string fieldName;
+            public string fieldName = "";
             public Type fieldTyp;
             public DogTable table;
             //--
-            public string SqlFieldName;  // eg: AV_CODICE
-            public string SqlFieldProperties; // eg: prop() xref() xdup(ATTIVITA.AV__ICODE[AV__ICODE] {AV_CODICE=' '}) multbxref()
-            public string SqlFieldOptions;  // [UID] [XID] codice univoco utente e esterno
-            public string SqlFieldNameExt;  // AY_CODE
-            public string Xref;  // external reference (if any) eg: Pa1Icode
+            public string SqlFieldName = "";  // eg: AV_CODICE
+            public string SqlFieldProperties = ""; // eg: prop() xref() xdup(ATTIVITA.AV__ICODE[AV__ICODE] {AV_CODICE=' '}) multbxref()
+            public string SqlFieldOptions = "";  // [UID] [XID] codice univoco utente e esterno
+            public string SqlFieldNameExt = "";  // AY_CODE
+            public string Xref = "";  // external reference (if any) eg: Pa1Icode
             //--
             public bool optUID = false;
             public bool optXID = false;
             public bool optDATE = false;
             public bool optTIME = false;
             public bool optDATETIME = false;
+            //--
+            public string Description;  
+            public object? DefaultValue = null;  
+            public int? StringLength = null;
         }
 
-        public static Dictionary<string, DogTable> tables = new Dictionary<string, DogTable>();
-        public static Dictionary<string, DogTable> prefixes = new Dictionary<string, DogTable>();
-        public static Dictionary<int, DogTable> intcodes = new Dictionary<int, DogTable>();
-        public static Dictionary<string, DogField> fields = new Dictionary<string, DogField>();
+        private const string BASE_MODEL = "ErpToolkit.Models";
 
-
-        public static void Init(string initFileName, string dbType, string connectionStringName)
+        internal DogManager(string modelName, string databaseType, string connectionStringName)
         {
             //SetUpNLog();
             NLog.LogManager.Configuration = UtilHelper.GetNLogConfig(); // Apply config
             _logger = NLog.LogManager.GetCurrentClassLogger();
-
-            _dbType = dbType; _connectionStringName = connectionStringName;
-
-            string modelName = "SIO";
+            //set dog
+            _modelName = databaseType;
+            _databaseType = databaseType;
+            _connectionStringName = connectionStringName;
 
             //-----------------------
             //Load Default Data Model
@@ -119,12 +123,12 @@ namespace ErpToolkit.Helpers.Db
                 tab.SqlPrefixExt = tabellaType.GetField("SqlPrefixExt")?.GetRawConstantValue()?.ToString() ?? "";
                 tab.SqlXdataTableName = tabellaType.GetField("SqlXdataTableName")?.GetRawConstantValue()?.ToString() ?? "";
                 tab.SqlXdataTableNameExt = tabellaType.GetField("SqlXdataTableNameExt")?.GetRawConstantValue()?.ToString() ?? "";
-                tab.DATAMODEL = tabellaType.GetField("DATAMODEL")?.GetRawConstantValue()?.ToString() ?? ""; 
-                tab.INTCODE = Convert.ToInt32(tabellaType.GetField("INTCODE")?.GetRawConstantValue()); 
-                tab.TBAREA = tabellaType.GetField("TBAREA")?.GetRawConstantValue()?.ToString() ?? ""; 
-                tab.PREFIX = tabellaType.GetField("PREFIX")?.GetRawConstantValue()?.ToString() ?? ""; 
-                tab.LIVEDESC = tabellaType.GetField("LIVEDESC")?.GetRawConstantValue()?.ToString() ?? ""; 
-                tab.IS_RELTABLE = tabellaType.GetField("IS_RELTABLE")?.GetRawConstantValue()?.ToString() ?? ""; 
+                tab.DATAMODEL = tabellaType.GetField("DATAMODEL")?.GetRawConstantValue()?.ToString() ?? "";
+                tab.INTCODE = Convert.ToInt32(tabellaType.GetField("INTCODE")?.GetRawConstantValue());
+                tab.TBAREA = tabellaType.GetField("TBAREA")?.GetRawConstantValue()?.ToString() ?? "";
+                tab.PREFIX = tabellaType.GetField("PREFIX")?.GetRawConstantValue()?.ToString() ?? "";
+                tab.LIVEDESC = tabellaType.GetField("LIVEDESC")?.GetRawConstantValue()?.ToString() ?? "";
+                tab.IS_RELTABLE = tabellaType.GetField("IS_RELTABLE")?.GetRawConstantValue()?.ToString() ?? "";
                 //---------
                 foreach (var property in tabellaType.GetProperties())
                 {
@@ -149,6 +153,22 @@ namespace ErpToolkit.Helpers.Db
                         fld.optTIME = fld.SqlFieldOptions.Contains("[TIME]");
                         fld.optDATETIME = fld.SqlFieldOptions.Contains("[DATETIME]");
                         //---------
+                        DisplayAttribute? displaydAttribute = property.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+                        if (displaydAttribute != null)
+                        {
+                            fld.Description = displaydAttribute.Description;
+                        }
+                        DefaultValueAttribute? defaultValueAttribute = property.GetCustomAttribute(typeof(DefaultValueAttribute)) as DefaultValueAttribute;
+                        if (defaultValueAttribute != null)
+                        {
+                            fld.DefaultValue = defaultValueAttribute.Value;
+                        }
+                        StringLengthAttribute? stringLengthAttribute = property.GetCustomAttribute(typeof(StringLengthAttribute)) as StringLengthAttribute;
+                        if (stringLengthAttribute != null)
+                        {
+                            fld.StringLength = stringLengthAttribute.MaximumLength;
+                        }
+                        //---------
                         tab.fields.Add(fld);
                         fields.Add(fld.SqlFieldName, fld);
                     }
@@ -159,9 +179,19 @@ namespace ErpToolkit.Helpers.Db
                 intcodes.Add(tab.INTCODE, tab);
             }
         }
-
-
-
+        ~DogManager()
+        {
+            Dispose();
+        }
+        public void Dispose()
+        {
+            // Rilascia risorse non gestite
+            if (tables != null) { tables.Clear();  }
+            if (prefixes != null) { prefixes.Clear();  }
+            if (intcodes != null) { intcodes.Clear();  }
+            if (fields != null) { fields.Clear(); }
+            GC.SuppressFinalize(this);
+        }
 
 
         //***************************************************************************************************************************************************
@@ -170,9 +200,9 @@ namespace ErpToolkit.Helpers.Db
 
         //public
 
-        public static string BeginTransaction(string transactionId, string transactionName = "") { return _getDbMg().BeginTransaction(transactionId, transactionName); }
-        public static void CommitTransaction(string transactionId, string transactionName = "") { _getDbMg().CommitTransaction(transactionId, transactionName); }
-        public static void RollbackTransaction(string transactionId, string transactionName = "") { _getDbMg().RollbackTransaction(transactionId, transactionName); }
+        public string BeginTransaction(string transactionId, string transactionName = "") { return _getDbMg().BeginTransaction(transactionId, transactionName); }
+        public void CommitTransaction(string transactionId, string transactionName = "") { _getDbMg().CommitTransaction(transactionId, transactionName); }
+        public void RollbackTransaction(string transactionId, string transactionName = "") { _getDbMg().RollbackTransaction(transactionId, transactionName); }
 
 
         //***************************************************************************************************************************************************
@@ -182,27 +212,27 @@ namespace ErpToolkit.Helpers.Db
         //public
 
         // ExecuteScalar
-        public static bool RecordExists(string tableName, string keyField, object keyValue, string transactionId = null) 
+        public bool RecordExists(string tableName, string keyField, object keyValue, string transactionId = null) 
         { 
             return _getDbMg().RecordExists(tableName, keyField, keyValue, transactionId); 
         }
-        public static byte[] ReadBlob(string tableName, string keyField, object keyValue, string blobField, int pageNumber, string transactionId = null)
+        public byte[] ReadBlob(string tableName, string keyField, object keyValue, string blobField, int pageNumber, string transactionId = null)
         {
             return _getDbMg().ReadBlob(tableName, keyField, keyValue, blobField, pageNumber, transactionId);
         }
-        public static void WriteBlob(string tableName, string keyField, object keyValue, string blobField, byte[] data, int pageNumber, string transactionId = null)
+        public void WriteBlob(string tableName, string keyField, object keyValue, string blobField, byte[] data, int pageNumber, string transactionId = null)
         {
             _getDbMg().WriteBlob(tableName, keyField, keyValue, blobField, data, pageNumber, transactionId);
         }
 
         //ExecuteQuery
-        public static DataTable ExecuteQuery(string sql, IDictionary<string, object> parameters, int maxRecords = 10000, string transactionId = null)
+        public DataTable ExecuteQuery(string sql, IDictionary<string, object> parameters, int maxRecords = 10000, string transactionId = null)
         {
             return _getDbMg().ExecuteQuery(sql, parameters, maxRecords, transactionId);
         }
 
         //ExecNonQuery
-        public static void DeleteRecord(string tableName, string keyField, IDictionary<string, object> fields, string transactionId = null)
+        public void DeleteRecord(string tableName, string keyField, IDictionary<string, object> fields, string transactionId = null)
         {
             _getDbMg().DeleteRecord(tableName, keyField, fields, transactionId);
         }
@@ -214,11 +244,11 @@ namespace ErpToolkit.Helpers.Db
 
         //public
 
-        public static void ExportTableToCsv(string tableName, string filePath, string whereClause = null, int chunkSize = 10000)
+        public void ExportTableToCsv(string tableName, string filePath, string whereClause = null, int chunkSize = 10000)
         {
             _getDbMg().ExportTableToCsv(tableName, filePath, whereClause, chunkSize);
         }
-        public static void ImportCsvToTable(string tableName, string filePath)
+        public void ImportCsvToTable(string tableName, string filePath)
         {
             _getDbMg().ImportCsvToTable(tableName, filePath);
         }
@@ -228,7 +258,7 @@ namespace ErpToolkit.Helpers.Db
         //***************************************************************************************************************************************************
 
 
-        public static void MantainRecord(char action, string tableName, string keyField, string timestampField, string deleteField, IDictionary<string, object> fields, string options, string transactionId = null)
+        public void MantainRecord(char action, string tableName, string keyField, string timestampField, string deleteField, IDictionary<string, object> fields, string options, string transactionId = null)
         {
             _getDbMg().MantainRecord(action, tableName, keyField, timestampField, deleteField, fields, options, transactionId);
         }

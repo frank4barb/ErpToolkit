@@ -1,5 +1,6 @@
 
 using K4os.Compression.LZ4.Internal;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Data.Entity;
 using System.Reflection.Metadata;
 
@@ -33,6 +34,8 @@ namespace ErpToolkit.Helpers.Db
 
         public DatabaseManager GetDatabase(string dbType, string connectionStringName, string databaseName = "")
         {
+            if (String.IsNullOrWhiteSpace(dbType)) throw new ArgumentException("Errore: GetDatabase: dbType vuota.");
+            if (String.IsNullOrWhiteSpace(connectionStringName)) throw new ArgumentException("Errore: GetDatabase: connectionStringName vuota.");
             string key = dbType + "***" + connectionStringName;
             DatabaseManager db = null; if (_itemsDB.ContainsKey(key)) db = _itemsDB[key];
             if (db == null)

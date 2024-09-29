@@ -32,7 +32,7 @@ namespace ErpToolkit.Helpers.Db
         public bool EnableTrace { get; set; } = false;
         public int MaxFileLengthBytes { get; set; } = 1024 * 1024 * 1024;  // 1 Gb
 
-        public DatabaseManager(string databaseType, IDatabase database)
+        internal DatabaseManager(string databaseType, IDatabase database)
         {
             //SetUpNLog();
             NLog.LogManager.Configuration = UtilHelper.GetNLogConfig(); // Apply config

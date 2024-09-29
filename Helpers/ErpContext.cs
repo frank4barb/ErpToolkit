@@ -39,7 +39,6 @@ namespace ErpToolkit.Helpers
         //propietà pubbliche
         public string CurrentDirectory = Environment.CurrentDirectory;
         public string PathIniFile = Environment.CurrentDirectory + "\\" + "ERPdesktop.ini";
-        public string PathDogFile = Environment.CurrentDirectory + "\\" + "ERPdatamodel.cfg";
         public DateTime StartTime = DateTime.Now;
         public DateTime LastUpdateTime = DateTime.Now;
         //--
@@ -49,6 +48,9 @@ namespace ErpToolkit.Helpers
 
         //propietà pubbliche gestore DB
         public DatabaseFactory DbFactory = new DatabaseFactory();
+
+        //propietà pubbliche gestore DOG
+        public DogFactory DogFactory = new DogFactory();
 
         // PROCESSO SCHEDULATO CHE CANCELLA LE SESSIONI SCADUTE
         private void ScheduledCleanSessionJob()
@@ -98,11 +100,6 @@ namespace ErpToolkit.Helpers
                 //Load Context
                 _instance._itemsString = readIniFile(_instance.PathIniFile, _instance._itemsString);  //load DHEdesktop.ini
                                                                                                       //_instanceCLONE = UtilHelper.DeepCopy<ErpContext>(_instance); // crea una copia da assegnare alla sessione
-
-                //Load DOG Layer
-                if (!File.Exists(_instance.PathDogFile)) { _instance.PathDogFile = Environment.CurrentDirectory + "\\..\\" + "ERPdatamodel.cfg"; }
-                if (!File.Exists(_instance.PathDogFile)) { throw new ErpException("Impossibile caricare il file DOG di configurazione: " + _instance.PathDogFile); }
-                DogManager.Init(_instance.PathDogFile, "SqlServer", "#connectionString_SQLSLocal");
 
                 _sessions = new Dictionary<string, ErpContext>();    //inizializza sessioni del server
                 _instance.ScheduledCleanSessionJob();   // attiva la schedulazione del task di cancellazione delle sessioni scadute
