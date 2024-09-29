@@ -2,7 +2,8 @@
 {
     public class BaseModel
     {
-        public List<Type> Tabelle { get; } = new List<Type>() 
+        // Lista degli Oggetti presenti nel modello  
+        public List<Type> DataObjects { get; } = new List<Type>() 
         {
              typeof(ErpToolkit.Models.SIO.Act.Prestazione)
             ,typeof(ErpToolkit.Models.SIO.Act.Attivita)
@@ -43,7 +44,8 @@
             ,typeof(ErpToolkit.Models.SIO.Costs.Diagnosi)
             ,typeof(ErpToolkit.Models.SIO.Costs.TipoDiagnosi)
         };
-        public List<Type> FiltriSelezione { get; } = new List<Type>()
+        // Lista degli Oggetti di selezione presenti nel modello  
+        public List<Type> SelectionFilterObjects { get; } = new List<Type>()
         {
              typeof(ErpToolkit.Models.SIO.Act.SelPrestazione)
             ,typeof(ErpToolkit.Models.SIO.Act.SelAttivita)

@@ -107,7 +107,7 @@ namespace ErpToolkit.Helpers.Db
             //-----------------------
             Type modelType = Type.GetType(BASE_MODEL + "." + modelName + ".BaseModel");
             object objModel = Activator.CreateInstance(modelType); // create an instance of that type
-            List<Type> Tabelle = (List<Type>)modelType.GetProperty("Tabelle").GetValue(objModel);
+            List<Type> Tabelle = (List<Type>)modelType.GetProperty("DataObjects").GetValue(objModel);
             foreach (var tabellaType in Tabelle)
             {
                 DogTable tab = new DogTable();
