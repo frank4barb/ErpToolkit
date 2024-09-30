@@ -279,12 +279,14 @@ namespace ErpToolkit.Helpers.Db
 
         private Dictionary<string, object> EncodeSpecialFields(IDictionary<string, object> fields, string options="")
         {
+            if (fields == null) return null;
             var parameters = new Dictionary<string, object>();
             foreach (var field in fields) { parameters[field.Key] = EncodeSpecialField(field.Value, options); }
             return parameters;
         }
         private DataTable DecodeSpecialTable(DataTable dataTable, string options = "")  //DecodeSpecialFields
         {
+            if (dataTable == null) return null;
             foreach (DataRow row in dataTable.Rows)
             {
                 foreach (DataColumn column in row.Table.Columns)
@@ -297,6 +299,7 @@ namespace ErpToolkit.Helpers.Db
 
         public List<T> DecodeSpecialTable<T>(DataTable dt, string options = "")
         {
+            if (dt == null) return null;
             List<T> data = new List<T>();
             foreach (DataRow row in dt.Rows)
             {
@@ -336,17 +339,8 @@ namespace ErpToolkit.Helpers.Db
             return obj;
         }
 
-
-
-
-
-
-
-
-
-
-
         //-----------------------------------
+
         private object EncodeSpecialField(object value, string options = "")
         {
             if (value is DateOnly date)
@@ -364,18 +358,18 @@ namespace ErpToolkit.Helpers.Db
             if (value.GetType() == typeof(string))
             {
                 string strVal = ((string)value).Trim();  
-                if (type == typeof(DateOnly?) || this.fields[colName]?.optDATE == true)
+                if (type == typeof(DateOnly?) || (this.fields.ContainsKey(colName) && this.fields[colName]?.optDATE == true))
                 {
                     if (strVal == "" || strVal == "/  /") return DateOnly.MinValue;
                     if (strVal == "9999/99/99") return DateOnly.MaxValue;
                     if (DateOnly.TryParseExact((string)value, "yyyy/MM/dd", null, DateTimeStyles.None, out DateOnly date)) return date;
                 }
-                if (type == typeof(TimeOnly?) || this.fields[colName]?.optTIME == true)
+                if (type == typeof(TimeOnly?) || (this.fields.ContainsKey(colName) && this.fields[colName]?.optTIME == true))
                 {
                     if (strVal == "" || strVal == ":  :") return null;
                     if (TimeOnly.TryParseExact(value.ToString(), "HH:mm:ss", null, DateTimeStyles.None, out TimeOnly time)) return time;
                 }
-                if (type == typeof(DateTime?) || this.fields[colName]?.optDATETIME == true)
+                if (type == typeof(DateTime?) || (this.fields.ContainsKey(colName) && this.fields[colName]?.optDATETIME == true))
                 {
                     if (strVal == "" || strVal == "/  /" || strVal == "/  /     :  :") return DateTime.MinValue;
                     if (this.fields[colName]?.optDATE == true && DateTime.TryParseExact(value.ToString(), "yyyy/MM/dd", null, DateTimeStyles.None, out DateTime datetimeDate)) return datetimeDate;
@@ -388,8 +382,6 @@ namespace ErpToolkit.Helpers.Db
             // Aggiungere altre conversioni speciali qui se necessario
             return value;
         }
-
-
 
 
     }

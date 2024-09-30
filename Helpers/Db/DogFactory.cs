@@ -34,6 +34,7 @@ namespace ErpToolkit.Helpers.Db
             GC.SuppressFinalize(this);
         }
 
+        private static readonly object _lockObject = new object();
 
         public DogManager GetDog(string modelName, string dbType, string connectionStringName, string databaseName = "")
         {
@@ -41,14 +42,17 @@ namespace ErpToolkit.Helpers.Db
             if (String.IsNullOrWhiteSpace(dbType)) throw new ArgumentException("Errore: GetDog: dbType vuota.");
             if (String.IsNullOrWhiteSpace(connectionStringName)) throw new ArgumentException("Errore: GetDog: connectionStringName vuota.");
             string key = modelName + "***" + dbType + "***" + connectionStringName;
-            DogManager dog = null; if (_itemsDOG.ContainsKey(key)) dog = _itemsDOG[key];
-            if (dog == null)
+            lock (_lockObject)
             {
-                dog = new DogManager(modelName, dbType, connectionStringName);
-                if (dog == null) throw new ArgumentException("Errore: impossibile creare db {dbType} {databaseName}  ({connectionString}) ");
-                _itemsDOG[key] = dog;
+                DogManager dog = null; if (_itemsDOG.ContainsKey(key)) dog = _itemsDOG[key];
+                if (dog == null)
+                {
+                    dog = new DogManager(modelName, dbType, connectionStringName);
+                    if (dog == null) throw new ArgumentException("Errore: impossibile creare db {dbType} {databaseName}  ({connectionString}) ");
+                    _itemsDOG[key] = dog;
+                }
+                return dog;
             }
-            return dog;
         }
 
     }

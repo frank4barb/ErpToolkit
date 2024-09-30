@@ -668,6 +668,19 @@ $(document).ready(function () {
             }
         }
 
+        function showValidationMessage(fieldName, message) {
+            // Cerca il tag span di validazione associato al campo specifico (utilizzando asp-validation-for)
+            var validationSpan = $('span[data-valmsg-for="' + fieldName + '"]');
+
+            // Imposta il messaggio di errore all'interno del tag span
+            validationSpan.text(message);
+
+            // Aggiungi la classe 'text-danger' per applicare lo stile di errore (nel caso non sia presente)
+            validationSpan.addClass('text-danger');
+
+            // Mostra il messaggio di errore (se nascosto o gestito con altre classi)
+            validationSpan.show();
+        }
 
         function adjustResultsDivWidth(input, resultsDiv) {
             resultsDiv.css('width', input.outerWidth() + 'px');

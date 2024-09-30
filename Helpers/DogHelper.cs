@@ -1,6 +1,8 @@
 using ErpToolkit.Helpers.Db;
 using Google.Protobuf.Reflection;
 using Microsoft.Extensions.Primitives;
+using MongoDB.Driver;
+using MongoDB.Driver.Core.Configuration;
 using NLog.LayoutRenderers.Wrappers;
 using System;
 using System.Collections;
@@ -74,8 +76,10 @@ namespace ErpToolkit.Helpers
             if (sql == null) { throw new ArgumentNullException(nameof(sql)); }
             T objModel = (T)Activator.CreateInstance(typeof(T)); // create an instance of that type
             //access DB
-            DataTable dt = ErpContext.Instance.getSQLSERVERHelper(dbConnectionString).execQuery(sql);  //eg: dbConnectionString="#connectionString_SQLSLocal"
-            return SQLSERVERHelper.ConvertDataTable<T>(dt, "");
+            //$$//DataTable dt = ErpContext.Instance.getSQLSERVERHelper(dbConnectionString).execQuery(sql);  //eg: dbConnectionString="#connectionString_SQLSLocal"
+            //$$//return SQLSERVERHelper.ConvertDataTable<T>(dt, "");
+            return ErpContext.Instance.DogFactory.GetDog("SIO", "SqlServer", dbConnectionString).ExecuteQuery<T>(sql, null);
+            //$$//
         }
 
 
@@ -89,8 +93,10 @@ namespace ErpToolkit.Helpers
                 .Append(sqlFrom(objModel))
                 .Append(sqlWhere(selModel));
             //access DB
-            DataTable dt = ErpContext.Instance.getSQLSERVERHelper(dbConnectionString).execQuery(sb.ToString());  //eg: dbConnectionString="#connectionString_SQLSLocal"
-            return SQLSERVERHelper.ConvertDataTable<T>(dt, "");
+            //$$//DataTable dt = ErpContext.Instance.getSQLSERVERHelper(dbConnectionString).execQuery(sb.ToString());  //eg: dbConnectionString="#connectionString_SQLSLocal"
+            //$$//return SQLSERVERHelper.ConvertDataTable<T>(dt, "");
+            return ErpContext.Instance.DogFactory.GetDog("SIO", "SqlServer", dbConnectionString).ExecuteQuery<T>(sb.ToString(), null);
+            //$$//
         }
         //carica row con il contenuto del DB in base all'icode'  
         public static T Row<T>(string dbConnectionString, string icode)
@@ -101,10 +107,14 @@ namespace ErpToolkit.Helpers
                 .Append(sqlFrom(objModel))
                 .Append(sqlWhere(objModel, icode));
             //access DB
-            DataTable dt = ErpContext.Instance.getSQLSERVERHelper(dbConnectionString).execQuery(sb.ToString()); //eg: dbConnectionString="#connectionString_SQLSLocal"
+            //$$//DataTable dt = ErpContext.Instance.getSQLSERVERHelper(dbConnectionString).execQuery(sb.ToString()); //eg: dbConnectionString="#connectionString_SQLSLocal"
+            DataTable dt = ErpContext.Instance.DogFactory.GetDog("SIO", "SqlServer", dbConnectionString).ExecuteQuery(sb.ToString(), null);
+            //$$//
             if (dt.Rows.Count > 0)
             {
-                objModel = SQLSERVERHelper.GetItemDataTable<T>(dt.Rows[0], "");
+                //$$//objModel = SQLSERVERHelper.GetItemDataTable<T>(dt.Rows[0], "");
+                objModel = ErpContext.Instance.DogFactory.GetDog("SIO", "SqlServer", dbConnectionString).DecodeSpecialRow<T>(dt.Rows[0], "");
+                //$$//
             }
             return objModel;
         }

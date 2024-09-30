@@ -18,7 +18,7 @@ namespace ErpToolkit.Helpers.Db
 
         private Stack<string> _transactionStack = new Stack<string>();
         private Timer _transactionTimeoutTimer;
-        private string _transactionId = "";
+        private string _transactionId = null;
 
 
         // Proprietà configurabili
@@ -107,7 +107,7 @@ namespace ErpToolkit.Helpers.Db
 
         private void CleanupTransaction()
         {
-            _transactionStack.Clear(); _transactionId = "";
+            _transactionStack.Clear(); _transactionId = null;
             _transactionTimeoutTimer?.Dispose(); _transactionTimeoutTimer = null;
         }
         private void RollBackDefaulTransaction(string action)
@@ -232,6 +232,14 @@ namespace ErpToolkit.Helpers.Db
         //---
         private void AddParametersToCommand(IDbCommand command, IDictionary<string, object> parameters)
         {
+            if (parameters == null)
+            {
+                if (EnableTrace)
+                {
+                    _logger.Trace($"Executing SQL: {command.CommandText} with parameters: null");
+                }
+                return;
+            }
             foreach (var param in parameters)
             {
                 IDbDataParameter parameter = command.CreateParameter(); //command.Parameters.AddWithValue($"@{param.Key}", param.Value ?? DBNull.Value);

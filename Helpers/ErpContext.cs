@@ -311,27 +311,27 @@ namespace ErpToolkit.Helpers
 
 
 
-        //GESTIONE DB
-        public SQLSERVERHelper getSQLSERVERHelper(string connStringName)
-        {
-            SQLSERVERHelper? sqlsv = (SQLSERVERHelper)GetObject("SQLSERVERhelper" + connStringName);
-            if ((sqlsv == null))
-            {
-                sqlsv = new SQLSERVERHelper(connStringName);
-                Set("SQLSERVERhelper" + connStringName, sqlsv);
-            }
-            return sqlsv;
-        }
-        public IRISHelper getIRISHelper(string connStringName)
-        {
-            IRISHelper? sqlsv = (IRISHelper)GetObject("IRIShelper" + connStringName);
-            if ((sqlsv == null))
-            {
-                sqlsv = new IRISHelper(connStringName);
-                Set("IRIShelper" + connStringName, sqlsv);
-            }
-            return sqlsv;
-        }
+        //$$////GESTIONE DB
+        //$$//public SQLSERVERHelper getSQLSERVERHelper(string connStringName)
+        //$$//{
+        //$$//    SQLSERVERHelper? sqlsv = (SQLSERVERHelper)GetObject("SQLSERVERhelper" + connStringName);
+        //$$//    if ((sqlsv == null))
+        //$$//    {
+        //$$//        sqlsv = new SQLSERVERHelper(connStringName);
+        //$$//        Set("SQLSERVERhelper" + connStringName, sqlsv);
+        //$$//    }
+        //$$//    return sqlsv;
+        //$$//}
+        //$$//public IRISHelper getIRISHelper(string connStringName)
+        //$$//{
+        //$$//    IRISHelper? sqlsv = (IRISHelper)GetObject("IRIShelper" + connStringName);
+        //$$//    if ((sqlsv == null))
+        //$$//    {
+        //$$//        sqlsv = new IRISHelper(connStringName);
+        //$$//        Set("IRIShelper" + connStringName, sqlsv);
+        //$$//    }
+        //$$//    return sqlsv;
+        //$$//}
 
 
         //=========================================================================================================================================

@@ -31,52 +31,57 @@ namespace ErpToolkit.Helpers.Db
             GC.SuppressFinalize(this);
         }
 
+        private static readonly object _lockObject = new object();
 
         public DatabaseManager GetDatabase(string dbType, string connectionStringName, string databaseName = "")
         {
             if (String.IsNullOrWhiteSpace(dbType)) throw new ArgumentException("Errore: GetDatabase: dbType vuota.");
             if (String.IsNullOrWhiteSpace(connectionStringName)) throw new ArgumentException("Errore: GetDatabase: connectionStringName vuota.");
             string key = dbType + "***" + connectionStringName;
-            DatabaseManager db = null; if (_itemsDB.ContainsKey(key)) db = _itemsDB[key];
-            if (db == null)
+            lock (_lockObject)
             {
-                IDatabase idb = null;
-                string connectionString = ErpContext.Instance.GetString(connectionStringName); 
-                if (connectionString == "") throw new ArgumentException("Errore: connectionString vuota (" + connectionStringName + ") ");
-                switch (dbType)
+
+                DatabaseManager db = null; if (_itemsDB.ContainsKey(key)) db = _itemsDB[key];
+                if (db == null)
                 {
-                    case "SqlServer":
-                        idb = new SqlServerDatabase(connectionString);
-                        break;
-                    case "Sybase":
-                        idb = new SybaseDatabase(connectionString);
-                        break;
-                    case "MySql":
-                        idb = new MySqlDatabase(connectionString);
-                        break;
-                    case "PostgreSql":
-                        idb = new PostgreSqlDatabase(connectionString);
-                        break;
-                    case "SQLite":
-                        idb = new SQLiteDatabase(connectionString);
-                        break;
-                    case "Oracle":
-                        idb = new OracleDatabase(connectionString);
-                        break;
-                    case "IRIS":
-                        idb = new IRISDatabase(connectionString);
-                        break;
-                    case "MongoDb":
-                        idb = new MongoDbDatabase(connectionString, databaseName);
-                        break;
-                    // Aggiungi altri DBMS qui
-                    default:
-                        throw new ArgumentException("Tipo di database {dbType} non supportato");
+                    IDatabase idb = null;
+                    string connectionString = ErpContext.Instance.GetString(connectionStringName);
+                    if (connectionString == "") throw new ArgumentException("Errore: connectionString vuota (" + connectionStringName + ") ");
+                    switch (dbType)
+                    {
+                        case "SqlServer":
+                            idb = new SqlServerDatabase(connectionString);
+                            break;
+                        case "Sybase":
+                            idb = new SybaseDatabase(connectionString);
+                            break;
+                        case "MySql":
+                            idb = new MySqlDatabase(connectionString);
+                            break;
+                        case "PostgreSql":
+                            idb = new PostgreSqlDatabase(connectionString);
+                            break;
+                        case "SQLite":
+                            idb = new SQLiteDatabase(connectionString);
+                            break;
+                        case "Oracle":
+                            idb = new OracleDatabase(connectionString);
+                            break;
+                        case "IRIS":
+                            idb = new IRISDatabase(connectionString);
+                            break;
+                        case "MongoDb":
+                            idb = new MongoDbDatabase(connectionString, databaseName);
+                            break;
+                        // Aggiungi altri DBMS qui
+                        default:
+                            throw new ArgumentException("Tipo di database {dbType} non supportato");
+                    }
+                    if (idb == null) throw new ArgumentException("Errore: impossibile creare db {dbType} {databaseName}  ({connectionString}) ");
+                    _itemsDB[key] = new DatabaseManager(dbType, idb);
                 }
-                if (idb == null) throw new ArgumentException("Errore: impossibile creare db {dbType} {databaseName}  ({connectionString}) ");
-                _itemsDB[key] = new DatabaseManager(dbType, idb) ;
+                return _itemsDB[key];
             }
-            return _itemsDB[key];
         }
 
     }

@@ -12,6 +12,8 @@ using System.Data;
 using System.Linq;
 using System.Security.Cryptography.Xml;
 using System.Text.Json;
+using MongoDB.Driver.Core.Configuration;
+using System.Data.Entity.Infrastructure;
 
 namespace ErpToolkit.Controllers
 {
@@ -31,8 +33,10 @@ namespace ErpToolkit.Controllers
         [BindProperty]
         public List<Customers> ListCustomers { get {
                 string sql = "SELECT PA__ICODE as CustomerID, PA_COD_SANITARIO as CompanyName, PA_COGNOME as ContactName, PA_NOME as ContactTitle,  PA_NOME as City,  PA_NOME as PostalCode, PA_NOME as Country, PA_NOME as Phone FROM PAZIENTE WHERE PA_COGNOME like 'BA%' ";
-                DataTable dt = ErpContext.Instance.getSQLSERVERHelper("#connectionString_SQLSLocal").execQuery(sql);
-                return SQLSERVERHelper.ConvertDataTable<Customers>(dt, "");
+                //$$//DataTable dt = ErpContext.Instance.getSQLSERVERHelper("#connectionString_SQLSLocal").execQuery(sql);
+                //$$//return SQLSERVERHelper.ConvertDataTable<Customers>(dt, "");
+                return ErpContext.Instance.DogFactory.GetDog("SIO", "SqlServer", "#connectionString_SQLSLocal").ExecuteQuery<Customers>(sql, null);
+                //$$//
             }
         }
         [BindProperty]
@@ -98,7 +102,9 @@ namespace ErpToolkit.Controllers
 
                 //CustomerID CompanyName ContactName ContactTitle City PostalCode Country Phone
                 string sql = "SELECT PA__ICODE as CustomerID, PA_COD_SANITARIO as CompanyName, PA_COGNOME as ContactName, PA_NOME as ContactTitle,  PA_NOME as City,  PA_NOME as PostalCode, PA_NOME as Country, PA_NOME as Phone FROM PAZIENTE WHERE PA_COGNOME like 'BA%' ";
-                DataTable dt = ErpContext.Instance.getSQLSERVERHelper("#connectionString_SQLSLocal").execQuery(sql);
+                //$$//DataTable dt = ErpContext.Instance.getSQLSERVERHelper("#connectionString_SQLSLocal").execQuery(sql);
+                DataTable dt = ErpContext.Instance.DogFactory.GetDog("SIO", "SqlServer", "#connectionString_SQLSLocal").ExecuteQuery(sql, null);
+                //$$//
 
                 //applica Search + Sorting
                 string sortStatement = "";
@@ -123,7 +129,10 @@ namespace ErpToolkit.Controllers
                 }
 
 
-                List<Customers> results = SQLSERVERHelper.ConvertDataTable<Customers>(dt, "");
+                //$$//List<Customers> results = SQLSERVERHelper.ConvertDataTable<Customers>(dt, "");
+                List<Customers> results = ErpContext.Instance.DogFactory.GetDog("SIO", "SqlServer", "#connectionString_SQLSLocal").DecodeSpecialTable<Customers>(dt, "");
+                //$$//
+
                 //List<object[]> results = SQLSERVERHelper.ConvertDataTable<object[]>(dt, "");
 
 
@@ -161,10 +170,14 @@ namespace ErpToolkit.Controllers
             {
 
                 string sql = "SELECT PA__ICODE as CustomerID, PA_COD_SANITARIO as CompanyName, PA_COGNOME as ContactName, PA_NOME as ContactTitle,  PA_NOME as City,  PA_NOME as PostalCode, PA_NOME as Country, PA_NOME as Phone FROM PAZIENTE WHERE PA__ICODE='" + parms.Id + "' ";
-                DataTable dt = ErpContext.Instance.getSQLSERVERHelper("#connectionString_SQLSLocal").execQuery(sql);
+                //$$//DataTable dt = ErpContext.Instance.getSQLSERVERHelper("#connectionString_SQLSLocal").execQuery(sql);
+                DataTable dt = ErpContext.Instance.DogFactory.GetDog("SIO", "SqlServer", "#connectionString_SQLSLocal").ExecuteQuery(sql, null);
+                //$$//
                 if (dt.Rows.Count > 0)
                 {
-                    customer = SQLSERVERHelper.GetItemDataTable<Customers>(dt.Rows[0], "");
+                    //$$//customer = SQLSERVERHelper.GetItemDataTable<Customers>(dt.Rows[0], "");
+                    customer = ErpContext.Instance.DogFactory.GetDog("SIO", "SqlServer", "#connectionString_SQLSLocal").DecodeSpecialRow<Customers>(dt.Rows[0], "");
+                    //$$//
                 }
             }
             ModelState.Clear(); //ModelState.ClearValidationState("CompanyName"); //FORZA RICONVALIDA MODELLO >>> https://learn.microsoft.com/it-it/aspnet/core/mvc/models/validation?view=aspnetcore-8.0
@@ -203,10 +216,14 @@ namespace ErpToolkit.Controllers
             {
 
                 string sql = "SELECT PA__ICODE as CustomerID, PA_COD_SANITARIO as CompanyName, PA_COGNOME as ContactName, PA_NOME as ContactTitle,  PA_NOME as City,  PA_NOME as PostalCode, PA_NOME as Country, PA_NOME as Phone FROM PAZIENTE WHERE PA__ICODE='" + parms.Id + "' ";
-                DataTable dt = ErpContext.Instance.getSQLSERVERHelper("#connectionString_SQLSLocal").execQuery(sql);
+                //$$//DataTable dt = ErpContext.Instance.getSQLSERVERHelper("#connectionString_SQLSLocal").execQuery(sql);
+                DataTable dt = ErpContext.Instance.DogFactory.GetDog("SIO", "SqlServer", "#connectionString_SQLSLocal").ExecuteQuery(sql, null);
+                //$$//
                 if (dt.Rows.Count > 0)
                 {
-                    customer = SQLSERVERHelper.GetItemDataTable<Customers>(dt.Rows[0], "");
+                    //$$//customer = SQLSERVERHelper.GetItemDataTable<Customers>(dt.Rows[0], "");
+                    customer = ErpContext.Instance.DogFactory.GetDog("SIO", "SqlServer", "#connectionString_SQLSLocal").DecodeSpecialRow<Customers>(dt.Rows[0], "");
+                    //$$//
                 }
             }
             ModelState.Clear(); //ModelState.ClearValidationState("CompanyName"); //FORZA RICONVALIDA MODELLO >>> https://learn.microsoft.com/it-it/aspnet/core/mvc/models/validation?view=aspnetcore-8.0
