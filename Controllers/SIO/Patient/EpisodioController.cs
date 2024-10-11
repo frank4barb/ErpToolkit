@@ -25,7 +25,7 @@ namespace ErpToolkit.Controllers.SIO.Patient
             try
             {
                 string sql = "select EP_COD_EPISODIO + ' - ' + EP_NOTE as label, EP__ICODE as value from EPISODIO where EP__DELETED='N' and upper(' ' + EP_COD_EPISODIO + ' - ' + EP_NOTE + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Episodio: " + ex.Message }); }
         }
@@ -35,7 +35,7 @@ namespace ErpToolkit.Controllers.SIO.Patient
             try
             {
                 string sql = "select EP_COD_EPISODIO + ' - ' + EP_NOTE as label, EP__ICODE as value from EPISODIO where EP__DELETED='N' and EP__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Episodio: " + ex.Message }); }
         }
@@ -75,7 +75,7 @@ namespace ErpToolkit.Controllers.SIO.Patient
                 return View("~/Views/SIO/Patient/Episodio/Index.cshtml", this);
             }
             //carica lista
-            try { this.List = DogHelper.List<Episodio>(DbConnectionString, this.Select); }
+            try { this.List = DogHelper.List<Episodio>(dogId, this.Select); }
             catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
             this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/Patient/Episodio/Index.cshtml", this);
@@ -88,7 +88,7 @@ namespace ErpToolkit.Controllers.SIO.Patient
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<Episodio>(DbConnectionString, parms.Id); }
+                try { obj = DogHelper.Row<Episodio>(dogId, parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/Patient/Episodio/_PartialEdit.cshtml", obj);
@@ -128,7 +128,7 @@ namespace ErpToolkit.Controllers.SIO.Patient
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<Episodio>(DbConnectionString, parms.Id); }
+                try { obj = DogHelper.Row<Episodio>(dogId, parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/Patient/Episodio/_PartialDelete.cshtml", obj);

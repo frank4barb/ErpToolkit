@@ -25,7 +25,7 @@ namespace ErpToolkit.Controllers.SIO.Resource
             try
             {
                 string sql = "select PE_CODICE + ' - ' + PE_DESCRIZIONE as label, PE__ICODE as value from PERSONALE where PE__DELETED='N' ";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetAll Personale: " + ex.Message }); }
         }
@@ -35,7 +35,7 @@ namespace ErpToolkit.Controllers.SIO.Resource
             try
             {
                 string sql = "select PE_CODICE + ' - ' + PE_DESCRIZIONE as label, PE__ICODE as value from PERSONALE where PE__DELETED='N' and upper(' ' + PE_CODICE + ' - ' + PE_DESCRIZIONE + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Personale: " + ex.Message }); }
         }
@@ -45,7 +45,7 @@ namespace ErpToolkit.Controllers.SIO.Resource
             try
             {
                 string sql = "select PE_CODICE + ' - ' + PE_DESCRIZIONE as label, PE__ICODE as value from PERSONALE where PE__DELETED='N' and PE__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Personale: " + ex.Message }); }
         }
@@ -85,7 +85,7 @@ namespace ErpToolkit.Controllers.SIO.Resource
                 return View("~/Views/SIO/Resource/Personale/Index.cshtml", this);
             }
             //carica lista
-            try { this.List = DogHelper.List<Personale>(DbConnectionString, this.Select); }
+            try { this.List = DogHelper.List<Personale>(dogId, this.Select); }
             catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
             this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/Resource/Personale/Index.cshtml", this);
@@ -98,7 +98,7 @@ namespace ErpToolkit.Controllers.SIO.Resource
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<Personale>(DbConnectionString, parms.Id); }
+                try { obj = DogHelper.Row<Personale>(dogId, parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/Resource/Personale/_PartialEdit.cshtml", obj);
@@ -138,7 +138,7 @@ namespace ErpToolkit.Controllers.SIO.Resource
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<Personale>(DbConnectionString, parms.Id); }
+                try { obj = DogHelper.Row<Personale>(dogId, parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/Resource/Personale/_PartialDelete.cshtml", obj);

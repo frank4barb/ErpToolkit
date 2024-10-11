@@ -25,7 +25,7 @@ namespace ErpToolkit.Controllers.SIO.Common
             try
             {
                 string sql = "select OR_CODICE + ' - ' + OR_DESCRIZIONE as label, OR__ICODE as value from ORGANIZZAZIONE where OR__DELETED='N' ";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetAll Organizzazione: " + ex.Message }); }
         }
@@ -35,7 +35,7 @@ namespace ErpToolkit.Controllers.SIO.Common
             try
             {
                 string sql = "select OR_CODICE + ' - ' + OR_DESCRIZIONE as label, OR__ICODE as value from ORGANIZZAZIONE where OR__DELETED='N' and upper(' ' + OR_CODICE + ' - ' + OR_DESCRIZIONE + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Organizzazione: " + ex.Message }); }
         }
@@ -45,7 +45,7 @@ namespace ErpToolkit.Controllers.SIO.Common
             try
             {
                 string sql = "select OR_CODICE + ' - ' + OR_DESCRIZIONE as label, OR__ICODE as value from ORGANIZZAZIONE where OR__DELETED='N' and OR__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Organizzazione: " + ex.Message }); }
         }
@@ -85,7 +85,7 @@ namespace ErpToolkit.Controllers.SIO.Common
                 return View("~/Views/SIO/Common/Organizzazione/Index.cshtml", this);
             }
             //carica lista
-            try { this.List = DogHelper.List<Organizzazione>(DbConnectionString, this.Select); }
+            try { this.List = DogHelper.List<Organizzazione>(dogId, this.Select); }
             catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
             this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/Common/Organizzazione/Index.cshtml", this);
@@ -98,7 +98,7 @@ namespace ErpToolkit.Controllers.SIO.Common
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<Organizzazione>(DbConnectionString, parms.Id); }
+                try { obj = DogHelper.Row<Organizzazione>(dogId, parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/Common/Organizzazione/_PartialEdit.cshtml", obj);
@@ -138,7 +138,7 @@ namespace ErpToolkit.Controllers.SIO.Common
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<Organizzazione>(DbConnectionString, parms.Id); }
+                try { obj = DogHelper.Row<Organizzazione>(dogId, parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/Common/Organizzazione/_PartialDelete.cshtml", obj);

@@ -25,7 +25,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             try
             {
                 string sql = "select TC_CODICE + ' - ' + TC_DESCRIZIONE as label, TC__ICODE as value from TIPO_DATO_CLINICO where TC__DELETED='N' ";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetAll TipoDatoClinico: " + ex.Message }); }
         }
@@ -35,7 +35,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             try
             {
                 string sql = "select TC_CODICE + ' - ' + TC_DESCRIZIONE as label, TC__ICODE as value from TIPO_DATO_CLINICO where TC__DELETED='N' and upper(' ' + TC_CODICE + ' - ' + TC_DESCRIZIONE + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect TipoDatoClinico: " + ex.Message }); }
         }
@@ -45,7 +45,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             try
             {
                 string sql = "select TC_CODICE + ' - ' + TC_DESCRIZIONE as label, TC__ICODE as value from TIPO_DATO_CLINICO where TC__DELETED='N' and TC__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad TipoDatoClinico: " + ex.Message }); }
         }
@@ -85,7 +85,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
                 return View("~/Views/SIO/HealthData/TipoDatoClinico/Index.cshtml", this);
             }
             //carica lista
-            try { this.List = DogHelper.List<TipoDatoClinico>(DbConnectionString, this.Select); }
+            try { this.List = DogHelper.List<TipoDatoClinico>(dogId, this.Select); }
             catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
             this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/HealthData/TipoDatoClinico/Index.cshtml", this);
@@ -98,7 +98,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<TipoDatoClinico>(DbConnectionString, parms.Id); }
+                try { obj = DogHelper.Row<TipoDatoClinico>(dogId, parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/HealthData/TipoDatoClinico/_PartialEdit.cshtml", obj);
@@ -138,7 +138,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<TipoDatoClinico>(DbConnectionString, parms.Id); }
+                try { obj = DogHelper.Row<TipoDatoClinico>(dogId, parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/HealthData/TipoDatoClinico/_PartialDelete.cshtml", obj);

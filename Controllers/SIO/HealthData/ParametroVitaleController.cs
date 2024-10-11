@@ -25,7 +25,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             try
             {
                 string sql = "select PV__ICODE + ' - ' + PV_NOTE as label, PV__ICODE as value from PARAMETRO_VITALE where PV__DELETED='N' and upper(' ' + PV__ICODE + ' - ' + PV_NOTE + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect ParametroVitale: " + ex.Message }); }
         }
@@ -35,7 +35,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             try
             {
                 string sql = "select PV__ICODE + ' - ' + PV_NOTE as label, PV__ICODE as value from PARAMETRO_VITALE where PV__DELETED='N' and PV__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad ParametroVitale: " + ex.Message }); }
         }
@@ -75,7 +75,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
                 return View("~/Views/SIO/HealthData/ParametroVitale/Index.cshtml", this);
             }
             //carica lista
-            try { this.List = DogHelper.List<ParametroVitale>(DbConnectionString, this.Select); }
+            try { this.List = DogHelper.List<ParametroVitale>(dogId, this.Select); }
             catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
             this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/HealthData/ParametroVitale/Index.cshtml", this);
@@ -88,7 +88,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<ParametroVitale>(DbConnectionString, parms.Id); }
+                try { obj = DogHelper.Row<ParametroVitale>(dogId, parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/HealthData/ParametroVitale/_PartialEdit.cshtml", obj);
@@ -128,7 +128,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<ParametroVitale>(DbConnectionString, parms.Id); }
+                try { obj = DogHelper.Row<ParametroVitale>(dogId, parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/HealthData/ParametroVitale/_PartialDelete.cshtml", obj);

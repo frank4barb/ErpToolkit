@@ -18,6 +18,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using System.Security.Cryptography.Xml;
 using System.Text;
+using static ErpToolkit.Helpers.Db.DogFactory;
 
 namespace ErpToolkit.Helpers
 {
@@ -71,20 +72,20 @@ namespace ErpToolkit.Helpers
         //******************************************************************************************************************
 
         //carica list oggetti con il contenuto del DB in base alla struttura in selezione  
-        public static List<T> ExecQuery<T>(string dbConnectionString, string sql)
+        public static List<T> ExecQuery<T>(DogId dogId, string sql)
         {
             if (sql == null) { throw new ArgumentNullException(nameof(sql)); }
             T objModel = (T)Activator.CreateInstance(typeof(T)); // create an instance of that type
             //access DB
             //$$//DataTable dt = ErpContext.Instance.getSQLSERVERHelper(dbConnectionString).execQuery(sql);  //eg: dbConnectionString="#connectionString_SQLSLocal"
             //$$//return SQLSERVERHelper.ConvertDataTable<T>(dt, "");
-            return ErpContext.Instance.DogFactory.GetDog("SIO", "SqlServer", dbConnectionString).ExecuteQuery<T>(sql, null);
+            return ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<T>(sql, null);
             //$$//
         }
 
 
         //carica list oggetti con il contenuto del DB in base alla struttura in selezione  
-        public static List<T> List<T>(string dbConnectionString, object selModel)
+        public static List<T> List<T>(DogId dogId, object selModel)
         {
             if (selModel == null) { throw new ArgumentNullException(nameof(selModel)); }
             T objModel = (T)Activator.CreateInstance(typeof(T)); // create an instance of that type
@@ -95,11 +96,11 @@ namespace ErpToolkit.Helpers
             //access DB
             //$$//DataTable dt = ErpContext.Instance.getSQLSERVERHelper(dbConnectionString).execQuery(sb.ToString());  //eg: dbConnectionString="#connectionString_SQLSLocal"
             //$$//return SQLSERVERHelper.ConvertDataTable<T>(dt, "");
-            return ErpContext.Instance.DogFactory.GetDog("SIO", "SqlServer", dbConnectionString).ExecuteQuery<T>(sb.ToString(), null);
+            return ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<T>(sb.ToString(), null);
             //$$//
         }
         //carica row con il contenuto del DB in base all'icode'  
-        public static T Row<T>(string dbConnectionString, string icode)
+        public static T Row<T>(DogId dogId, string icode)
         {
             T objModel = (T)Activator.CreateInstance(typeof(T)); // create an instance of that type
             StringBuilder sb = new StringBuilder()
@@ -108,12 +109,12 @@ namespace ErpToolkit.Helpers
                 .Append(sqlWhere(objModel, icode));
             //access DB
             //$$//DataTable dt = ErpContext.Instance.getSQLSERVERHelper(dbConnectionString).execQuery(sb.ToString()); //eg: dbConnectionString="#connectionString_SQLSLocal"
-            DataTable dt = ErpContext.Instance.DogFactory.GetDog("SIO", "SqlServer", dbConnectionString).ExecuteQuery(sb.ToString(), null);
+            DataTable dt = ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery(sb.ToString(), null);
             //$$//
             if (dt.Rows.Count > 0)
             {
                 //$$//objModel = SQLSERVERHelper.GetItemDataTable<T>(dt.Rows[0], "");
-                objModel = ErpContext.Instance.DogFactory.GetDog("SIO", "SqlServer", dbConnectionString).DecodeSpecialRow<T>(dt.Rows[0], "");
+                objModel = ErpContext.Instance.DogFactory.GetDog(dogId).DecodeSpecialRow<T>(dt.Rows[0], "");
                 //$$//
             }
             return objModel;

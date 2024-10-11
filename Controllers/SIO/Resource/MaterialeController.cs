@@ -25,7 +25,7 @@ namespace ErpToolkit.Controllers.SIO.Resource
             try
             {
                 string sql = "select MT_CODICE + ' - ' + MT_DESCRIZIONE as label, MT__ICODE as value from MATERIALE where MT__DELETED='N' ";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetAll Materiale: " + ex.Message }); }
         }
@@ -35,7 +35,7 @@ namespace ErpToolkit.Controllers.SIO.Resource
             try
             {
                 string sql = "select MT_CODICE + ' - ' + MT_DESCRIZIONE as label, MT__ICODE as value from MATERIALE where MT__DELETED='N' and upper(' ' + MT_CODICE + ' - ' + MT_DESCRIZIONE + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Materiale: " + ex.Message }); }
         }
@@ -45,7 +45,7 @@ namespace ErpToolkit.Controllers.SIO.Resource
             try
             {
                 string sql = "select MT_CODICE + ' - ' + MT_DESCRIZIONE as label, MT__ICODE as value from MATERIALE where MT__DELETED='N' and MT__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Materiale: " + ex.Message }); }
         }
@@ -85,7 +85,7 @@ namespace ErpToolkit.Controllers.SIO.Resource
                 return View("~/Views/SIO/Resource/Materiale/Index.cshtml", this);
             }
             //carica lista
-            try { this.List = DogHelper.List<Materiale>(DbConnectionString, this.Select); }
+            try { this.List = DogHelper.List<Materiale>(dogId, this.Select); }
             catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
             this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/Resource/Materiale/Index.cshtml", this);
@@ -98,7 +98,7 @@ namespace ErpToolkit.Controllers.SIO.Resource
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<Materiale>(DbConnectionString, parms.Id); }
+                try { obj = DogHelper.Row<Materiale>(dogId, parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/Resource/Materiale/_PartialEdit.cshtml", obj);
@@ -138,7 +138,7 @@ namespace ErpToolkit.Controllers.SIO.Resource
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<Materiale>(DbConnectionString, parms.Id); }
+                try { obj = DogHelper.Row<Materiale>(dogId, parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/Resource/Materiale/_PartialDelete.cshtml", obj);

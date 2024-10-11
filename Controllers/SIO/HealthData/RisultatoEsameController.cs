@@ -25,7 +25,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             try
             {
                 string sql = "select RE__ICODE + ' - ' + RE_NOTE as label, RE__ICODE as value from RISULTATO_ESAME where RE__DELETED='N' and upper(' ' + RE__ICODE + ' - ' + RE_NOTE + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect RisultatoEsame: " + ex.Message }); }
         }
@@ -35,7 +35,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             try
             {
                 string sql = "select RE__ICODE + ' - ' + RE_NOTE as label, RE__ICODE as value from RISULTATO_ESAME where RE__DELETED='N' and RE__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad RisultatoEsame: " + ex.Message }); }
         }
@@ -75,7 +75,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
                 return View("~/Views/SIO/HealthData/RisultatoEsame/Index.cshtml", this);
             }
             //carica lista
-            try { this.List = DogHelper.List<RisultatoEsame>(DbConnectionString, this.Select); }
+            try { this.List = DogHelper.List<RisultatoEsame>(dogId, this.Select); }
             catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
             this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/HealthData/RisultatoEsame/Index.cshtml", this);
@@ -88,7 +88,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<RisultatoEsame>(DbConnectionString, parms.Id); }
+                try { obj = DogHelper.Row<RisultatoEsame>(dogId, parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/HealthData/RisultatoEsame/_PartialEdit.cshtml", obj);
@@ -128,7 +128,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<RisultatoEsame>(DbConnectionString, parms.Id); }
+                try { obj = DogHelper.Row<RisultatoEsame>(dogId, parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/HealthData/RisultatoEsame/_PartialDelete.cshtml", obj);

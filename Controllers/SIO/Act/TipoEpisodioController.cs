@@ -25,7 +25,7 @@ namespace ErpToolkit.Controllers.SIO.Act
             try
             {
                 string sql = "select TE_CODICE + ' - ' + TE_DESCRIZIONE as label, TE__ICODE as value from TIPO_EPISODIO where TE__DELETED='N' ";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetAll TipoEpisodio: " + ex.Message }); }
         }
@@ -35,7 +35,7 @@ namespace ErpToolkit.Controllers.SIO.Act
             try
             {
                 string sql = "select TE_CODICE + ' - ' + TE_DESCRIZIONE as label, TE__ICODE as value from TIPO_EPISODIO where TE__DELETED='N' and upper(' ' + TE_CODICE + ' - ' + TE_DESCRIZIONE + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect TipoEpisodio: " + ex.Message }); }
         }
@@ -45,7 +45,7 @@ namespace ErpToolkit.Controllers.SIO.Act
             try
             {
                 string sql = "select TE_CODICE + ' - ' + TE_DESCRIZIONE as label, TE__ICODE as value from TIPO_EPISODIO where TE__DELETED='N' and TE__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(DogHelper.ExecQuery<Choice>(DbConnectionString, sql));
+                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad TipoEpisodio: " + ex.Message }); }
         }
@@ -85,7 +85,7 @@ namespace ErpToolkit.Controllers.SIO.Act
                 return View("~/Views/SIO/Act/TipoEpisodio/Index.cshtml", this);
             }
             //carica lista
-            try { this.List = DogHelper.List<TipoEpisodio>(DbConnectionString, this.Select); }
+            try { this.List = DogHelper.List<TipoEpisodio>(dogId, this.Select); }
             catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
             this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/Act/TipoEpisodio/Index.cshtml", this);
@@ -98,7 +98,7 @@ namespace ErpToolkit.Controllers.SIO.Act
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<TipoEpisodio>(DbConnectionString, parms.Id); }
+                try { obj = DogHelper.Row<TipoEpisodio>(dogId, parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/Act/TipoEpisodio/_PartialEdit.cshtml", obj);
@@ -138,7 +138,7 @@ namespace ErpToolkit.Controllers.SIO.Act
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<TipoEpisodio>(DbConnectionString, parms.Id); }
+                try { obj = DogHelper.Row<TipoEpisodio>(dogId, parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/Act/TipoEpisodio/_PartialDelete.cshtml", obj);

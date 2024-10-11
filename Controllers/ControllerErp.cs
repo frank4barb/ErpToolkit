@@ -14,6 +14,7 @@ using NLog.Filters;
 using Google.Api;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Policy;
+using static ErpToolkit.Helpers.Db.DogFactory;
 
 
 namespace ErpToolkit.Controllers
@@ -39,7 +40,13 @@ namespace ErpToolkit.Controllers
         // VARIABILI GLOBALI
         //---------------
 
-        public const string DbConnectionString = "#connectionString_SQLSLocal";
+
+
+
+
+        //$$//public const string DbConnectionString = "#connectionString_SQLSLocal";
+        //$$//public readonly DogId dogId = new DogId("SIO", "SqlServer", "#connectionString_SQLSLocal");
+        public readonly DogId dogId = new DogId(ErpContext.Instance.GetString("#defaultServerDOG"));  //connectionStringFull_NameTypeModel syntax: connectionStringAMM__SqlServer__SIO eg: #connectionStringAMM__SqlServer__SIO 
 
 
         //==========================================================================================================
