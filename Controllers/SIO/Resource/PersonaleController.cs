@@ -24,8 +24,9 @@ namespace ErpToolkit.Controllers.SIO.Resource
         {
             try
             {
-                string sql = "select PE_CODICE + ' - ' + PE_DESCRIZIONE as label, PE__ICODE as value from PERSONALE where PE__DELETED='N' ";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select PE_CODICE + {DogManager.addParam(" - ", ref parameters)} + PE_DESCRIZIONE as label, PE__ICODE as value from PERSONALE where PE__DELETED = {DogManager.addParam("N", ref parameters)} ";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetAll Personale: " + ex.Message }); }
         }
@@ -34,8 +35,9 @@ namespace ErpToolkit.Controllers.SIO.Resource
         {
             try
             {
-                string sql = "select PE_CODICE + ' - ' + PE_DESCRIZIONE as label, PE__ICODE as value from PERSONALE where PE__DELETED='N' and upper(' ' + PE_CODICE + ' - ' + PE_DESCRIZIONE + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select PE_CODICE + {DogManager.addParam(" - ", ref parameters)} + PE_DESCRIZIONE as label, PE__ICODE as value from PERSONALE where PE__DELETED = {DogManager.addParam("N", ref parameters)} and upper({DogManager.addParam(" ", ref parameters)} + PE_CODICE + {DogManager.addParam(" - ", ref parameters)} + PE_DESCRIZIONE + {DogManager.addParam(" ", ref parameters)}) like {DogManager.addParam("%" + term.ToUpper() + "%", ref parameters)} ";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Personale: " + ex.Message }); }
         }
@@ -44,8 +46,9 @@ namespace ErpToolkit.Controllers.SIO.Resource
         {
             try
             {
-                string sql = "select PE_CODICE + ' - ' + PE_DESCRIZIONE as label, PE__ICODE as value from PERSONALE where PE__DELETED='N' and PE__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select PE_CODICE + {DogManager.addParam(" - ", ref parameters)} + PE_DESCRIZIONE as label, PE__ICODE as value from PERSONALE where PE__DELETED = {DogManager.addParam("N", ref parameters)} and PE__ICODE in (" + string.Join(", ", DogManager.addListParam(values.ToList<object>(), ref parameters)) + ")";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Personale: " + ex.Message }); }
         }

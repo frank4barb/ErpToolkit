@@ -24,8 +24,9 @@ namespace ErpToolkit.Controllers.SIO.Common
         {
             try
             {
-                string sql = "select RI__ICODE + ' - ' + RI_OGGETTO as label, RI__ICODE as value from RICHIESTA where RI__DELETED='N' and upper(' ' + RI__ICODE + ' - ' + RI_OGGETTO + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select RI__ICODE + {DogManager.addParam(" - ", ref parameters)} + RI_OGGETTO as label, RI__ICODE as value from RICHIESTA where RI__DELETED = {DogManager.addParam("N", ref parameters)} and upper({DogManager.addParam(" ", ref parameters)} + RI__ICODE + {DogManager.addParam(" - ", ref parameters)} + RI_OGGETTO + {DogManager.addParam(" ", ref parameters)}) like {DogManager.addParam("%" + term.ToUpper() + "%", ref parameters)} ";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Richiesta: " + ex.Message }); }
         }
@@ -34,8 +35,9 @@ namespace ErpToolkit.Controllers.SIO.Common
         {
             try
             {
-                string sql = "select RI__ICODE + ' - ' + RI_OGGETTO as label, RI__ICODE as value from RICHIESTA where RI__DELETED='N' and RI__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select RI__ICODE + {DogManager.addParam(" - ", ref parameters)} + RI_OGGETTO as label, RI__ICODE as value from RICHIESTA where RI__DELETED = {DogManager.addParam("N", ref parameters)} and RI__ICODE in (" + string.Join(", ", DogManager.addListParam(values.ToList<object>(), ref parameters)) + ")";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Richiesta: " + ex.Message }); }
         }

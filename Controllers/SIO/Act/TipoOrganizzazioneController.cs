@@ -24,8 +24,9 @@ namespace ErpToolkit.Controllers.SIO.Act
         {
             try
             {
-                string sql = "select TZ_CODICE + ' - ' + TZ_DESCRIZIONE as label, TZ__ICODE as value from TIPO_ORGANIZZAZIONE where TZ__DELETED='N' ";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select TZ_CODICE + {DogManager.addParam(" - ", ref parameters)} + TZ_DESCRIZIONE as label, TZ__ICODE as value from TIPO_ORGANIZZAZIONE where TZ__DELETED = {DogManager.addParam("N", ref parameters)} ";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetAll TipoOrganizzazione: " + ex.Message }); }
         }
@@ -34,8 +35,9 @@ namespace ErpToolkit.Controllers.SIO.Act
         {
             try
             {
-                string sql = "select TZ_CODICE + ' - ' + TZ_DESCRIZIONE as label, TZ__ICODE as value from TIPO_ORGANIZZAZIONE where TZ__DELETED='N' and upper(' ' + TZ_CODICE + ' - ' + TZ_DESCRIZIONE + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select TZ_CODICE + {DogManager.addParam(" - ", ref parameters)} + TZ_DESCRIZIONE as label, TZ__ICODE as value from TIPO_ORGANIZZAZIONE where TZ__DELETED = {DogManager.addParam("N", ref parameters)} and upper({DogManager.addParam(" ", ref parameters)} + TZ_CODICE + {DogManager.addParam(" - ", ref parameters)} + TZ_DESCRIZIONE + {DogManager.addParam(" ", ref parameters)}) like {DogManager.addParam("%" + term.ToUpper() + "%", ref parameters)} ";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect TipoOrganizzazione: " + ex.Message }); }
         }
@@ -44,8 +46,9 @@ namespace ErpToolkit.Controllers.SIO.Act
         {
             try
             {
-                string sql = "select TZ_CODICE + ' - ' + TZ_DESCRIZIONE as label, TZ__ICODE as value from TIPO_ORGANIZZAZIONE where TZ__DELETED='N' and TZ__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select TZ_CODICE + {DogManager.addParam(" - ", ref parameters)} + TZ_DESCRIZIONE as label, TZ__ICODE as value from TIPO_ORGANIZZAZIONE where TZ__DELETED = {DogManager.addParam("N", ref parameters)} and TZ__ICODE in (" + string.Join(", ", DogManager.addListParam(values.ToList<object>(), ref parameters)) + ")";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad TipoOrganizzazione: " + ex.Message }); }
         }

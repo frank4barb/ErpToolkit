@@ -24,8 +24,9 @@ namespace ErpToolkit.Controllers.SIO.Patient
         {
             try
             {
-                string sql = "select PA_COD_SANITARIO + ' - ' + PA_COGNOME + '  ' + PA_NOME as label, PA__ICODE as value from PAZIENTE where PA__DELETED='N' and upper(' ' + PA_COD_SANITARIO + ' - ' + PA_COGNOME + '  ' + PA_NOME + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select PA_COD_SANITARIO + {DogManager.addParam(" - ", ref parameters)} + PA_COGNOME + {DogManager.addParam(" - ", ref parameters)} + PA_NOME as label, PA__ICODE as value from PAZIENTE where PA__DELETED = {DogManager.addParam("N", ref parameters)} and upper({DogManager.addParam(" ", ref parameters)} + PA_COD_SANITARIO + {DogManager.addParam(" - ", ref parameters)} + PA_COGNOME + {DogManager.addParam(" - ", ref parameters)} + PA_NOME + {DogManager.addParam(" ", ref parameters)}) like {DogManager.addParam("%" + term.ToUpper() + "%", ref parameters)} ";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Paziente: " + ex.Message }); }
         }
@@ -34,8 +35,9 @@ namespace ErpToolkit.Controllers.SIO.Patient
         {
             try
             {
-                string sql = "select PA_COD_SANITARIO + ' - ' + PA_COGNOME + '  ' + PA_NOME as label, PA__ICODE as value from PAZIENTE where PA__DELETED='N' and PA__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select PA_COD_SANITARIO + {DogManager.addParam(" - ", ref parameters)} + PA_COGNOME + {DogManager.addParam(" - ", ref parameters)} + PA_NOME as label, PA__ICODE as value from PAZIENTE where PA__DELETED = {DogManager.addParam("N", ref parameters)} and PA__ICODE in (" + string.Join(", ", DogManager.addListParam(values.ToList<object>(), ref parameters)) + ")";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Paziente: " + ex.Message }); }
         }

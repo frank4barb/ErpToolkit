@@ -24,8 +24,9 @@ namespace ErpToolkit.Controllers.SIO.Resource
         {
             try
             {
-                string sql = "select FM_CODICE + ' - ' + FM_DESCRIZIONE as label, FM__ICODE as value from FARMACO where FM__DELETED='N' ";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select FM_CODICE + {DogManager.addParam(" - ", ref parameters)} + FM_DESCRIZIONE as label, FM__ICODE as value from FARMACO where FM__DELETED = {DogManager.addParam("N", ref parameters)} ";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetAll Farmaco: " + ex.Message }); }
         }
@@ -34,8 +35,9 @@ namespace ErpToolkit.Controllers.SIO.Resource
         {
             try
             {
-                string sql = "select FM_CODICE + ' - ' + FM_DESCRIZIONE as label, FM__ICODE as value from FARMACO where FM__DELETED='N' and upper(' ' + FM_CODICE + ' - ' + FM_DESCRIZIONE + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select FM_CODICE + {DogManager.addParam(" - ", ref parameters)} + FM_DESCRIZIONE as label, FM__ICODE as value from FARMACO where FM__DELETED = {DogManager.addParam("N", ref parameters)} and upper({DogManager.addParam(" ", ref parameters)} + FM_CODICE + {DogManager.addParam(" - ", ref parameters)} + FM_DESCRIZIONE + {DogManager.addParam(" ", ref parameters)}) like {DogManager.addParam("%" + term.ToUpper() + "%", ref parameters)} ";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Farmaco: " + ex.Message }); }
         }
@@ -44,8 +46,9 @@ namespace ErpToolkit.Controllers.SIO.Resource
         {
             try
             {
-                string sql = "select FM_CODICE + ' - ' + FM_DESCRIZIONE as label, FM__ICODE as value from FARMACO where FM__DELETED='N' and FM__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select FM_CODICE + {DogManager.addParam(" - ", ref parameters)} + FM_DESCRIZIONE as label, FM__ICODE as value from FARMACO where FM__DELETED = {DogManager.addParam("N", ref parameters)} and FM__ICODE in (" + string.Join(", ", DogManager.addListParam(values.ToList<object>(), ref parameters)) + ")";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Farmaco: " + ex.Message }); }
         }

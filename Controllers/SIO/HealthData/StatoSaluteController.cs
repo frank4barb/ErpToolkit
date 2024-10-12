@@ -24,8 +24,9 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         {
             try
             {
-                string sql = "select SS__ICODE + ' - ' + SS_NOTE as label, SS__ICODE as value from STATO_SALUTE where SS__DELETED='N' and upper(' ' + SS__ICODE + ' - ' + SS_NOTE + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select SS__ICODE + {DogManager.addParam(" - ", ref parameters)} + SS_NOTE as label, SS__ICODE as value from STATO_SALUTE where SS__DELETED = {DogManager.addParam("N", ref parameters)} and upper({DogManager.addParam(" ", ref parameters)} + SS__ICODE + {DogManager.addParam(" - ", ref parameters)} + SS_NOTE + {DogManager.addParam(" ", ref parameters)}) like {DogManager.addParam("%" + term.ToUpper() + "%", ref parameters)} ";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect StatoSalute: " + ex.Message }); }
         }
@@ -34,8 +35,9 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         {
             try
             {
-                string sql = "select SS__ICODE + ' - ' + SS_NOTE as label, SS__ICODE as value from STATO_SALUTE where SS__DELETED='N' and SS__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select SS__ICODE + {DogManager.addParam(" - ", ref parameters)} + SS_NOTE as label, SS__ICODE as value from STATO_SALUTE where SS__DELETED = {DogManager.addParam("N", ref parameters)} and SS__ICODE in (" + string.Join(", ", DogManager.addListParam(values.ToList<object>(), ref parameters)) + ")";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad StatoSalute: " + ex.Message }); }
         }

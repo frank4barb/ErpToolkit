@@ -24,8 +24,9 @@ namespace ErpToolkit.Controllers.SIO.Patient
         {
             try
             {
-                string sql = "select DI_CODICE + ' - ' + DI_NOME as label, DI__ICODE as value from DISTRETTO where DI__DELETED='N' ";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select DI_CODICE + {DogManager.addParam(" - ", ref parameters)} + DI_NOME as label, DI__ICODE as value from DISTRETTO where DI__DELETED = {DogManager.addParam("N", ref parameters)} ";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetAll Distretto: " + ex.Message }); }
         }
@@ -34,8 +35,9 @@ namespace ErpToolkit.Controllers.SIO.Patient
         {
             try
             {
-                string sql = "select DI_CODICE + ' - ' + DI_NOME as label, DI__ICODE as value from DISTRETTO where DI__DELETED='N' and upper(' ' + DI_CODICE + ' - ' + DI_NOME + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select DI_CODICE + {DogManager.addParam(" - ", ref parameters)} + DI_NOME as label, DI__ICODE as value from DISTRETTO where DI__DELETED = {DogManager.addParam("N", ref parameters)} and upper({DogManager.addParam(" ", ref parameters)} + DI_CODICE + {DogManager.addParam(" - ", ref parameters)} + DI_NOME + {DogManager.addParam(" ", ref parameters)}) like {DogManager.addParam("%" + term.ToUpper() + "%", ref parameters)} ";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Distretto: " + ex.Message }); }
         }
@@ -44,8 +46,9 @@ namespace ErpToolkit.Controllers.SIO.Patient
         {
             try
             {
-                string sql = "select DI_CODICE + ' - ' + DI_NOME as label, DI__ICODE as value from DISTRETTO where DI__DELETED='N' and DI__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select DI_CODICE + {DogManager.addParam(" - ", ref parameters)} + DI_NOME as label, DI__ICODE as value from DISTRETTO where DI__DELETED = {DogManager.addParam("N", ref parameters)} and DI__ICODE in (" + string.Join(", ", DogManager.addListParam(values.ToList<object>(), ref parameters)) + ")";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Distretto: " + ex.Message }); }
         }

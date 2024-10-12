@@ -24,8 +24,9 @@ namespace ErpToolkit.Controllers.SIO.Patient
         {
             try
             {
-                string sql = "select EP_COD_EPISODIO + ' - ' + EP_NOTE as label, EP__ICODE as value from EPISODIO where EP__DELETED='N' and upper(' ' + EP_COD_EPISODIO + ' - ' + EP_NOTE + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select EP_COD_EPISODIO + {DogManager.addParam(" - ", ref parameters)} + EP_NOTE as label, EP__ICODE as value from EPISODIO where EP__DELETED = {DogManager.addParam("N", ref parameters)} and upper({DogManager.addParam(" ", ref parameters)} + EP_COD_EPISODIO + {DogManager.addParam(" - ", ref parameters)} + EP_NOTE + {DogManager.addParam(" ", ref parameters)}) like {DogManager.addParam("%" + term.ToUpper() + "%", ref parameters)} ";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Episodio: " + ex.Message }); }
         }
@@ -34,8 +35,9 @@ namespace ErpToolkit.Controllers.SIO.Patient
         {
             try
             {
-                string sql = "select EP_COD_EPISODIO + ' - ' + EP_NOTE as label, EP__ICODE as value from EPISODIO where EP__DELETED='N' and EP__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select EP_COD_EPISODIO + {DogManager.addParam(" - ", ref parameters)} + EP_NOTE as label, EP__ICODE as value from EPISODIO where EP__DELETED = {DogManager.addParam("N", ref parameters)} and EP__ICODE in (" + string.Join(", ", DogManager.addListParam(values.ToList<object>(), ref parameters)) + ")";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Episodio: " + ex.Message }); }
         }

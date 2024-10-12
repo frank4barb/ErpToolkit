@@ -24,8 +24,9 @@ namespace ErpToolkit.Controllers.SIO.Act
         {
             try
             {
-                string sql = "select PR__ICODE + ' - ' + PR_NOTE_RICHIESTA as label, PR__ICODE as value from PRESTAZIONE where PR__DELETED='N' and upper(' ' + PR__ICODE + ' - ' + PR_NOTE_RICHIESTA + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select PR__ICODE + {DogManager.addParam(" - ", ref parameters)} + PR_NOTE_RICHIESTA as label, PR__ICODE as value from PRESTAZIONE where PR__DELETED = {DogManager.addParam("N", ref parameters)} and upper({DogManager.addParam(" ", ref parameters)} + PR__ICODE + {DogManager.addParam(" - ", ref parameters)} + PR_NOTE_RICHIESTA + {DogManager.addParam(" ", ref parameters)}) like {DogManager.addParam("%" + term.ToUpper() + "%", ref parameters)} ";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Prestazione: " + ex.Message }); }
         }
@@ -34,8 +35,9 @@ namespace ErpToolkit.Controllers.SIO.Act
         {
             try
             {
-                string sql = "select PR__ICODE + ' - ' + PR_NOTE_RICHIESTA as label, PR__ICODE as value from PRESTAZIONE where PR__DELETED='N' and PR__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select PR__ICODE + {DogManager.addParam(" - ", ref parameters)} + PR_NOTE_RICHIESTA as label, PR__ICODE as value from PRESTAZIONE where PR__DELETED = {DogManager.addParam("N", ref parameters)} and PR__ICODE in (" + string.Join(", ", DogManager.addListParam(values.ToList<object>(), ref parameters)) + ")";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Prestazione: " + ex.Message }); }
         }

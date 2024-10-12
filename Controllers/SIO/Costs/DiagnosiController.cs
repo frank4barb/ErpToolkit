@@ -24,8 +24,9 @@ namespace ErpToolkit.Controllers.SIO.Costs
         {
             try
             {
-                string sql = "select DG_CODICE + ' - ' + DG_DESCRIZIONE as label, DG__ICODE as value from DIAGNOSI where DG__DELETED='N' ";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select DG_CODICE + {DogManager.addParam(" - ", ref parameters)} + DG_DESCRIZIONE as label, DG__ICODE as value from DIAGNOSI where DG__DELETED = {DogManager.addParam("N", ref parameters)} ";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetAll Diagnosi: " + ex.Message }); }
         }
@@ -34,8 +35,9 @@ namespace ErpToolkit.Controllers.SIO.Costs
         {
             try
             {
-                string sql = "select DG_CODICE + ' - ' + DG_DESCRIZIONE as label, DG__ICODE as value from DIAGNOSI where DG__DELETED='N' and upper(' ' + DG_CODICE + ' - ' + DG_DESCRIZIONE + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select DG_CODICE + {DogManager.addParam(" - ", ref parameters)} + DG_DESCRIZIONE as label, DG__ICODE as value from DIAGNOSI where DG__DELETED = {DogManager.addParam("N", ref parameters)} and upper({DogManager.addParam(" ", ref parameters)} + DG_CODICE + {DogManager.addParam(" - ", ref parameters)} + DG_DESCRIZIONE + {DogManager.addParam(" ", ref parameters)}) like {DogManager.addParam("%" + term.ToUpper() + "%", ref parameters)} ";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Diagnosi: " + ex.Message }); }
         }
@@ -44,8 +46,9 @@ namespace ErpToolkit.Controllers.SIO.Costs
         {
             try
             {
-                string sql = "select DG_CODICE + ' - ' + DG_DESCRIZIONE as label, DG__ICODE as value from DIAGNOSI where DG__DELETED='N' and DG__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
+                IDictionary<string, object> parameters = new Dictionary<string, object>();
+                string sql = $"select DG_CODICE + {DogManager.addParam(" - ", ref parameters)} + DG_DESCRIZIONE as label, DG__ICODE as value from DIAGNOSI where DG__DELETED = {DogManager.addParam("N", ref parameters)} and DG__ICODE in (" + string.Join(", ", DogManager.addListParam(values.ToList<object>(), ref parameters)) + ")";
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, parameters));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Diagnosi: " + ex.Message }); }
         }

@@ -20,7 +20,11 @@ namespace ErpToolkit.Helpers.Db
         internal const string DB_FORMAT_DATE = "yyyy/MM/dd"; //formato stringa di memorizzazione della data nel DB
         internal const string DB_FORMAT_TIME = "HH:mm:ss"; //formato stringa di memorizzazione dell'ora nel DB
         internal const string DB_FORMAT_DATETIME = "yyyy/MM/dd HH:mm:ss"; //formato stringa di memorizzazione di data e ora nel DB
-                                                                          //---
+
+        internal const string DB_DATE_MAX = "9999/99/99"; //futuro
+        internal const string DB_DATE_MIN = "    /  /  "; //passato
+        internal const string DB_TIME_EMPTY = "  :  :  "; //vuoto
+        //---
 
         //***************************************************************************************************************************************************
         //*** STRUTTURE STATICHE
@@ -51,9 +55,15 @@ namespace ErpToolkit.Helpers.Db
             public static string strAttr(bool readOnly, bool visible) { return new FieldAttr(readOnly, visible).getAttr(); }
         }
 
-
+        //gestione properties
         public static object? getPropertyValue(object selModel, string propName) { return DogManagerInt.getPropertyValue(selModel, propName); }
         public static bool setPropertyValue(object selModel, string propName, string? propValue) { return DogManagerInt.setPropertyValue(selModel, propName, propValue);  }
+
+
+        //gestione parameters
+        public static string addParam(object value, ref IDictionary<string, object> parameters) { string parName = $"COND{parameters.Count}"; parameters.Add(parName, value); return $"@{parName}"; }
+        public static List<string> addListParam(List<object> values, ref IDictionary<string, object> parameters) { List<string> cond = new List<string>(); foreach (var value in values) { string parName = $"COND{parameters.Count}"; parameters.Add(parName, value); cond.Add($"@{parName}"); } return cond; }
+
 
 
         //***************************************************************************************************************************************************
@@ -318,11 +328,13 @@ namespace ErpToolkit.Helpers.Db
         public DataTable ExecuteQuery(string sql, IDictionary<string, object> parameters, string options = "", int maxRecords = 10000, string transactionId = null)
         {
             if (sql == null) { throw new ArgumentNullException(nameof(sql)); }
+            if (sql.Contains('\'') || sql.Contains('#') || sql.Contains("--")) { throw new ArgumentOutOfRangeException(nameof(sql)); }  // Non devo passare i parametri esplicitamente ma sempre attraverso il Dictionary parameters 
             return DecodeSpecialTable(_getDbMg().ExecuteQuery(sql, EncodeSpecialFields(parameters, options), maxRecords, transactionId), options);
         }
         public List<T> ExecuteQuery<T>(string sql, IDictionary<string, object> parameters, string options = "", int maxRecords = 10000, string transactionId = null)
         {
             if (sql == null) { throw new ArgumentNullException(nameof(sql)); }
+            if (sql.Contains('\'') || sql.Contains('#') || sql.Contains("--")) { throw new ArgumentOutOfRangeException(nameof(sql)); }  // Non devo passare i parametri esplicitamente ma sempre attraverso il Dictionary parameters 
             return DecodeSpecialTable<T>(_getDbMg().ExecuteQuery(sql, EncodeSpecialFields(parameters, options), maxRecords, transactionId), options);
         }
 
@@ -429,10 +441,18 @@ namespace ErpToolkit.Helpers.Db
 
         private object EncodeSpecialField(object value, string options = "")
         {
+            if (value is string str) return str;  // ATTENZIONE!! non elimino eventuali bianchi alla fine
             if (value is DateOnly date)
-                return date.ToString(DB_FORMAT_DATE);
+            {
+                if (date.Equals(DateOnly.MinValue)) return DB_DATE_MIN;
+                else if(date.Equals(DateOnly.MaxValue)) return DB_DATE_MAX;
+                else return date.ToString(DB_FORMAT_DATE);
+            }
             if (value is TimeOnly time)
-                return time.ToString(DB_FORMAT_TIME);
+            {
+                if (time == default) return DB_TIME_EMPTY;
+                else return time.ToString(DB_FORMAT_TIME);
+            }
             if (value is DateTime datetime)
                 return datetime.ToString(DB_FORMAT_DATETIME);
             // Aggiungere altre conversioni speciali qui se necessario
@@ -446,13 +466,13 @@ namespace ErpToolkit.Helpers.Db
                 string strVal = ((string)value).Trim();  
                 if (type == typeof(DateOnly?) || (this.tabFields.ContainsKey(colName) && this.tabFields[colName]?.optDATE == true))
                 {
-                    if (strVal == "" || strVal == "/  /") return DateOnly.MinValue;
-                    if (strVal == "9999/99/99") return DateOnly.MaxValue;
+                    if (strVal == "" || strVal == "/  /" || strVal == DB_DATE_MIN) return DateOnly.MinValue;
+                    if (strVal == DB_DATE_MAX) return DateOnly.MaxValue;
                     if (DateOnly.TryParseExact((string)value, DB_FORMAT_DATE, null, DateTimeStyles.None, out DateOnly date)) return date;
                 }
                 if (type == typeof(TimeOnly?) || (this.tabFields.ContainsKey(colName) && this.tabFields[colName]?.optTIME == true))
                 {
-                    if (strVal == "" || strVal == ":  :") return null;
+                    if (strVal == "" || strVal == ":  :" || strVal == DB_TIME_EMPTY) return null;
                     if (TimeOnly.TryParseExact(value.ToString(), DB_FORMAT_TIME, null, DateTimeStyles.None, out TimeOnly time)) return time;
                 }
                 if (type == typeof(DateTime?) || (this.tabFields.ContainsKey(colName) && this.tabFields[colName]?.optDATETIME == true))
@@ -486,7 +506,7 @@ namespace ErpToolkit.Helpers.Db
                 .Append(DogManagerInt.sqlFrom(this, objModel, ref parameters))
                 .Append(DogManagerInt.sqlWhere(this, selModel, ref parameters));
             //access DB
-            return this.ExecuteQuery<T>(sb.ToString(), null);
+            return this.ExecuteQuery<T>(sb.ToString(), parameters);
             //$$//
         }
         //carica row con il contenuto del DB in base all'icode'  
@@ -500,7 +520,7 @@ namespace ErpToolkit.Helpers.Db
                 .Append(DogManagerInt.sqlFrom(this,objModel, ref parameters))
                 .Append(DogManagerInt.sqlWhere(this, objModel, icode, ref parameters));
             //access DB
-            DataTable dt = this.ExecuteQuery(sb.ToString(), null);
+            DataTable dt = this.ExecuteQuery(sb.ToString(), parameters);
             if (dt.Rows.Count > 0) { objModel = this.DecodeSpecialRow<T>(dt.Rows[0], ""); }
             return objModel;
         }
