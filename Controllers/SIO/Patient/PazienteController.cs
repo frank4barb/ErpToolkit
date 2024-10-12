@@ -25,7 +25,7 @@ namespace ErpToolkit.Controllers.SIO.Patient
             try
             {
                 string sql = "select PA_COD_SANITARIO + ' - ' + PA_COGNOME + '  ' + PA_NOME as label, PA__ICODE as value from PAZIENTE where PA__DELETED='N' and upper(' ' + PA_COD_SANITARIO + ' - ' + PA_COGNOME + '  ' + PA_NOME + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Paziente: " + ex.Message }); }
         }
@@ -35,7 +35,7 @@ namespace ErpToolkit.Controllers.SIO.Patient
             try
             {
                 string sql = "select PA_COD_SANITARIO + ' - ' + PA_COGNOME + '  ' + PA_NOME as label, PA__ICODE as value from PAZIENTE where PA__DELETED='N' and PA__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Paziente: " + ex.Message }); }
         }
@@ -53,7 +53,7 @@ namespace ErpToolkit.Controllers.SIO.Patient
         public IActionResult Index(string returnUrl = null)
         {
             this.Select = new SelPaziente();
-            foreach (var key in Request.Query.Keys) DogHelper.setPropertyValue(this.Select, key, Request.Query[key]); // carica parametri QueryString
+            foreach (var key in Request.Query.Keys) DogManager.setPropertyValue(this.Select, key, Request.Query[key]); // carica parametri QueryString
             this.List = new List<Paziente>();
             //carico eventuali parametri presenti in TempData
             foreach (var item in TempData.Keys) ViewData[item] = TempData[item];
@@ -75,7 +75,7 @@ namespace ErpToolkit.Controllers.SIO.Patient
                 return View("~/Views/SIO/Patient/Paziente/Index.cshtml", this);
             }
             //carica lista
-            try { this.List = DogHelper.List<Paziente>(dogId, this.Select); }
+            try { this.List = ErpContext.Instance.DogFactory.GetDog(dogId).List<Paziente>(this.Select); }
             catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
             this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/Patient/Paziente/Index.cshtml", this);
@@ -88,7 +88,7 @@ namespace ErpToolkit.Controllers.SIO.Patient
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<Paziente>(dogId, parms.Id); }
+                try { obj = ErpContext.Instance.DogFactory.GetDog(dogId).Row<Paziente>(parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/Patient/Paziente/_PartialEdit.cshtml", obj);
@@ -128,7 +128,7 @@ namespace ErpToolkit.Controllers.SIO.Patient
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<Paziente>(dogId, parms.Id); }
+                try { obj = ErpContext.Instance.DogFactory.GetDog(dogId).Row<Paziente>(parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/Patient/Paziente/_PartialDelete.cshtml", obj);

@@ -14,6 +14,7 @@ using NLog.Filters;
 using Google.Api;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Routing;
+using ErpToolkit.Helpers.Db;
 
 
 namespace ErpToolkit.Controllers
@@ -220,10 +221,10 @@ namespace ErpToolkit.Controllers
         public static readonly Dictionary<string, List<Page>> PathMenu = new Dictionary<string, List<Page>> {
              { "Percorso1", new List<Page> {
                  new Page("Paziente")
-                        .AddDefault("PaNome_Attr", DogHelper.FieldAttr.strAttr(true, false))
+                        .AddDefault("PaNome_Attr", DogManager.FieldAttr.strAttr(true, false))
                  , new Page("Episodio").AddDefault("Te1Icode", "UCSC")
-                        .AddDefault("Te1Icode_Attr", DogHelper.FieldAttr.strAttr(true, true))
-                        .AddDefault("EpLetto_Attr", DogHelper.FieldAttr.strAttr(true, true)) } }
+                        .AddDefault("Te1Icode_Attr", DogManager.FieldAttr.strAttr(true, true))
+                        .AddDefault("EpLetto_Attr", DogManager.FieldAttr.strAttr(true, true)) } }
             ,{ "Percorso2", new List<Page> { new Page("Page2"), new Page("Page1") } }
             };
 

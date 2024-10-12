@@ -1,42 +1,13 @@
-﻿using static ErpToolkit.Helpers.Db.DogFactory;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Data;
 using System.Reflection;
 using System.Text;
 using System.Collections;
-using K4os.Hash.xxHash;
-
 
 namespace ErpToolkit.Helpers.Db
 {
     public static class DogManagerInt
     {
-
-        public class FieldAttr
-        {
-            public char Readonly { get; set; } = 'N';
-            public char Visible { get; set; } = 'Y';
-            public void setAttr(string attr)
-            {
-                char[] a = attr.ToCharArray();
-                for (int i = 0; i < a.Length; i++)
-                {
-                    switch (i)
-                    {
-                        case 0: Readonly = a[i]; break; // 0) ReadOnly
-                        case 1: Visible = a[i]; break; // 1) Visible
-                    }
-                }
-            }
-            public string getAttr()
-            {
-                return (new string(new char[] { Readonly, Visible }));
-            }
-            public FieldAttr(string attr) { setAttr(attr); }
-            public FieldAttr(bool readOnly, bool visible) { if (readOnly) Readonly = 'Y'; if (!visible) Visible = 'N'; }
-            public static string strAttr(bool readOnly, bool visible) { return new FieldAttr(readOnly, visible).getAttr(); }
-        }
-
 
         //configura NLog per la classe
         public static NLog.Config.LoggingConfiguration GetNLogConfig()
@@ -53,7 +24,6 @@ namespace ErpToolkit.Helpers.Db
 
         //******************************************************************************************************************
 
-
         //crea SELECT per l'oggetto del modello 'objModel'
         internal static string sqlSelect(DogManager dogMng, object objModel, ref IDictionary<string, object> parameters)
         {
@@ -66,30 +36,8 @@ namespace ErpToolkit.Helpers.Db
                 try
                 {
                     string propertyName = property.Name; // Get property name and value
-                    //object propertyValue = property.GetValue(objModel); //sb.AppendLine($"Property: {propertyName}, Value: {propertyValue}");
-                    var attributes = property.GetCustomAttributes(); // Get custom attributes for the property
-                    var sqlFieldNameExt = dogMng.tabProperties[propertyName]?.SqlFieldNameExt?.TrimEnd() ?? "";
+                    var sqlFieldNameExt = dogMng.tabProperties[propertyName]?.SqlFieldNameExt?.Trim() ?? "";
                     if (sqlFieldNameExt != "") { sb.AppendLine($" {sqlFieldNameExt} as {propertyName},"); }
-
-                    //foreach (var attribute in attributes)
-                    //{
-                    //    var attributeProperties = attribute.GetType().GetProperties();  // Get attribute properties and their values
-                    //    foreach (var attrProp in attributeProperties) //sb.AppendLine($"    Attribute: {attribute.GetType().Name}");
-                    //    {
-                    //        if (attrProp.CanRead && attrProp.GetIndexParameters().Length == 0) // Some properties of attributes might be methods or indexers, we skip those
-                    //        {
-                    //            try
-                    //            {
-                    //                var attrPropValue = attrProp.GetValue(attribute); //sb.AppendLine($"        {attrProp.Name}: {attrPropValue}");
-                    //                if (attribute.GetType().Name == "ErpDogFieldAttribute" && attrProp.Name == "SqlFieldNameExt" && !String.IsNullOrWhiteSpace(attrPropValue.ToString()))
-                    //                {
-                    //                    sb.AppendLine($" {attrPropValue} as {propertyName},");
-                    //                }
-                    //            }
-                    //            catch (Exception ex) { }  //skip exceptions
-                    //        }
-                    //    }
-                    //}
                 }
                 catch (Exception ex) { }  //skip exceptions
             }
@@ -104,21 +52,6 @@ namespace ErpToolkit.Helpers.Db
             Type type = objModel.GetType();
             var sqlTableNameExt = dogMng.tabTypes[type]?.SqlTableNameExt?.Trim() ?? "";
             return $"from {sqlTableNameExt} \n";
-
-            //string tableName = "";
-            //Type type = objModel.GetType(); PropertyInfo[] properties = type.GetProperties();
-            //// Recupera tutte le costanti
-            //FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-            //foreach (var field in fields)
-            //{
-            //    if (field.IsLiteral && !field.IsInitOnly)
-            //    {
-            //        string constantName = field.Name; // Recupera il nome della costante e il valore
-            //        object constantValue = field.GetRawConstantValue(); //sb.AppendLine($"Constant: {constantName}, Value: {constantValue}");
-            //        if (constantName == "SqlTableNameExt") tableName = constantValue.ToString();
-            //    }
-            //}
-            //return $"from {tableName} \n";
         }
         //crea WHERE per l'oggetto del modello 'objModel' in base all'oggetto di selezione 'selModel'
         internal static string sqlWhere(DogManager dogMng, object selModel, ref IDictionary<string, object> parameters)
@@ -156,7 +89,7 @@ namespace ErpToolkit.Helpers.Db
                     numPreCond++; //condizione prevista
                     //---
                     // esiste una condizione
-                    var sqlFieldNameExt = dogMng.tabProperties[propertyName]?.SqlFieldNameExt?.TrimEnd() ?? "";
+                    var sqlFieldNameExt = dogMng.tabProperties[propertyName]?.SqlFieldNameExt?.Trim() ?? "";
                     if (sqlFieldNameExt != "") 
                     {
                         try
@@ -203,122 +136,10 @@ namespace ErpToolkit.Helpers.Db
             if (numCond == 0) throw new ErpException("Nessuna condizione inserita");
             if (numCond != numPreCond) throw new ErpException("Errore nell'applicazione delle condizioni di filtro. Previste {" + numPreCond.ToString() + "}, applicate " + numCond.ToString() + "");
             // terminatore di where
-            var sqlPrefixExt = dogMng.tabTypes[type]?.SqlPrefixExt?.Trim() ?? "";
+            var sqlPrefixExt = dogMng.selTypes[type]?.SqlPrefixExt?.Trim() ?? "";
             sb.AppendLine($" {sqlPrefixExt}_DELETED='N' ");
             return sb.ToString();
         }
-
-
-
-        //internal static string sqlWhere(DogManager dogMng, object selModel, ref IDictionary<string, object> parameters)
-        //{
-        //    int numCond = 0, numPreCond = 0;
-        //    if (selModel == null) { throw new ArgumentNullException(nameof(selModel)); }
-        //    StringBuilder sb = new StringBuilder("where ");
-        //    //ciclo sulle proprietà
-        //    Type type = selModel.GetType(); PropertyInfo[] properties = type.GetProperties();
-        //    foreach (var property in properties)
-        //    {
-        //        try
-        //        {
-        //            string propertyName = property.Name; // Get property name and value
-        //            //xx//if (propertyName == "AttrFields") continue; // SGANCIO DAL MODELLO IL CONCETTO DI VISIBILITA'
-        //            object propertyValue = property.GetValue(selModel); //sb.AppendLine($"Property: {propertyName}, Value: {propertyValue}");
-        //            if (propertyValue == null) continue;
-        //            // >>> verifica List
-        //            if (typeof(IEnumerable<object>).IsAssignableFrom(propertyValue.GetType()))
-        //            {
-        //                IEnumerable<object> ienum = (IEnumerable<object>)propertyValue;
-        //                List<object> list = ienum.Where(item => item != null && !(item is string str && string.IsNullOrWhiteSpace(str))).ToList();  // elimina elementi null e strighe vuote
-        //                if (list.Count() == 0) continue;
-        //                if (list[0] is string) propertyValue = (List<string>)list.Select(i => i.ToString()).ToList();
-        //                else if (list[0] is sbyte || list[0] is byte || list[0] is short || list[0] is ushort || list[0] is int || list[0] is uint
-        //                     || list[0] is long || list[0] is ulong) propertyValue = (List<long>)list.Select(i => Convert.ToInt64(i)).ToList();
-        //                else throw new ErpException("Tipo Lista non supportato (solo stinga e intero)");
-        //            }
-        //            // >>> verifica DateRange
-        //            if (propertyValue is DateRange dateRange)
-        //            {
-        //                if (dateRange.StartDate == default && dateRange.EndDate == default) continue; //entrambe le date sono null
-        //            }
-        //            //---
-        //            numPreCond++; //condizione prevista
-        //            //---
-        //            //if (typeof(IEnumerable<object>).IsAssignableFrom(propertyValue.GetType()) && ((IEnumerable<object>)propertyValue).Count == 0) == null) continue;
-        //            // esiste una condizione
-        //            var attributes = property.GetCustomAttributes(); // Get custom attributes for the property
-        //            foreach (var attribute in attributes)
-        //            {
-        //                var attributeProperties = attribute.GetType().GetProperties();  // Get attribute properties and their values
-        //                foreach (var attrProp in attributeProperties) //sb.AppendLine($"    Attribute: {attribute.GetType().Name}");
-        //                {
-        //                    if (attrProp.CanRead && attrProp.GetIndexParameters().Length == 0) // Some properties of attributes might be methods or indexers, we skip those
-        //                    {
-        //                        try
-        //                        {
-        //                            var attrPropValue = attrProp.GetValue(attribute); //sb.AppendLine($"        {attrProp.Name}: {attrPropValue}");
-        //                            if (attribute.GetType().Name == "ErpDogFieldAttribute" && attrProp.Name == "SqlFieldNameExt" && !String.IsNullOrWhiteSpace(attrPropValue.ToString()))
-        //                            {
-        //                                string fieldOptions = ((ErpDogFieldAttribute)attribute).SqlFieldOptions?.ToString() ?? "";
-        //                                if (propertyValue is string str)
-        //                                {
-        //                                    if (fieldOptions.Contains("[UID]")) sb.AppendLine($" {attrPropValue} = '{str.TrimEnd()}' and ");
-        //                                    else if (fieldOptions.Contains("[XID]")) sb.AppendLine($" {attrPropValue} = '{str.TrimEnd()}' and ");
-        //                                    else sb.AppendLine($" {attrPropValue} LIKE '%{str}%' and ");
-        //                                }
-        //                                else if (propertyValue is DateTime dattim)
-        //                                {
-        //                                    if (fieldOptions.Contains("[DATE]")) sb.AppendLine($" {attrPropValue} = '{dattim.ToString(DB_FORMAT_DATE)}' and ");
-        //                                    else if (fieldOptions.Contains("[TIME]")) sb.AppendLine($" {attrPropValue} = '{dattim.ToString(DB_FORMAT_TIME)}' and ");
-        //                                    else if (fieldOptions.Contains("[DATETIME]")) sb.AppendLine($" {attrPropValue} = '{dattim.ToString(DB_FORMAT_DATETIME)}' and ");
-        //                                }
-        //                                else if (propertyValue is DateOnly dat)
-        //                                {
-        //                                    if (fieldOptions.Contains("[DATE]")) sb.AppendLine($" {attrPropValue} = '{dat.ToString(DB_FORMAT_DATE)}' and ");
-        //                                }
-        //                                else if (propertyValue is TimeOnly tim)
-        //                                {
-        //                                    if (fieldOptions.Contains("[TIME]")) sb.AppendLine($" {attrPropValue} = '{tim.ToString(DB_FORMAT_TIME)}' and ");
-        //                                }
-        //                                else if (propertyValue is List<string> strList) sb.Append($" {attrPropValue} in (").Append(string.Join(", ", strList.Select(str => $"'{str.Trim()}'"))).AppendLine($") and");
-        //                                else if (propertyValue is List<long> lngList) sb.Append($" {attrPropValue} in (").Append(string.Join(", ", lngList)).AppendLine($") and");
-        //                                else if (propertyValue is DateRange dateRng)
-        //                                {
-        //                                    if (dateRng.StartDate == default) sb.AppendLine($" {attrPropValue} <= '{dateRng.EndDate.ToString(DB_FORMAT_DATE)}' and");
-        //                                    else if (dateRng.EndDate == default) sb.AppendLine($" {attrPropValue} >= '{dateRng.StartDate.ToString(DB_FORMAT_DATE)}' and");
-        //                                    else sb.AppendLine($" ({attrPropValue} BETWEEN '{dateRng.StartDate.ToString(DB_FORMAT_DATE)}' and '{dateRng.EndDate.ToString(DB_FORMAT_DATE)}') and");
-        //                                }
-        //                                else continue;
-        //                                numCond++; //condizione applicata correttamente
-        //                            }
-        //                        }
-        //                        catch (Exception ex) { }  //skip exceptions
-        //                    }
-        //                }
-        //            }
-        //        }
-        //        catch (Exception ex) { }  //skip exceptions
-        //    }
-        //    // Verifica condizioni
-        //    if (numCond == 0) throw new ErpException("Nessuna condizione inserita");
-        //    if (numCond != numPreCond) throw new ErpException("Errore nell'applicazione delle condizioni di filtro. Previste {" + numPreCond.ToString() + "}, applicate " + numCond.ToString() + "");
-        //    // Recupera tutte le costanti
-        //    string prefix = "";
-        //    FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-        //    foreach (var field in fields)
-        //    {
-        //        if (field.IsLiteral && !field.IsInitOnly)
-        //        {
-        //            string constantName = field.Name; // Recupera il nome della costante e il valore
-        //            object constantValue = field.GetRawConstantValue(); //sb.AppendLine($"Constant: {constantName}, Value: {constantValue}");
-        //            if (constantName == "SqlPrefixExt") prefix = constantValue.ToString();
-        //        }
-        //    }
-
-        //    // terminatore di where
-        //    sb.AppendLine($" {prefix}_DELETED='N' ");
-        //    return sb.ToString();
-        //}
 
         //crea WHERE per l'oggetto del modello 'objModel' in base all'icode
         internal static string sqlWhere(DogManager dogMng, object objModel, string icode, ref IDictionary<string, object> parameters)
@@ -329,30 +150,10 @@ namespace ErpToolkit.Helpers.Db
             return $"where {sqlRowIdNameExt}='{icode}' ";
         }
 
-        //internal static string sqlWhere(DogManager dogMng, object objModel, string icode, ref IDictionary<string, object> parameters)
-        //{
-        //    if (objModel == null) { throw new ArgumentNullException(nameof(objModel)); }
-        //    string icodeName = "";
-        //    Type type = objModel.GetType(); PropertyInfo[] properties = type.GetProperties();
-        //    // Recupera tutte le costanti
-        //    FieldInfo[] fields = type.GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
-        //    foreach (var field in fields)
-        //    {
-        //        if (field.IsLiteral && !field.IsInitOnly)
-        //        {
-        //            string constantName = field.Name; // Recupera il nome della costante e il valore
-        //            object constantValue = field.GetRawConstantValue(); //sb.AppendLine($"Constant: {constantName}, Value: {constantValue}");
-        //            if (constantName == "SqlRowIdNameExt") icodeName = constantValue.ToString();
-        //        }
-        //    }
-        //    return $"where {icodeName}='{icode}' ";
-        //}
-
-
         //******************************************************************************************************************
         //******************************************************************************************************************
 
-        public static object? getPropertyValue(object selModel, string propName)
+        internal static object? getPropertyValue(object selModel, string propName)
         {
             if (selModel == null) { throw new ArgumentNullException(nameof(selModel)); }
             //ciclo sulle proprietà
@@ -411,7 +212,7 @@ namespace ErpToolkit.Helpers.Db
         }
 
         //Custom Model Binder
-        public static bool setPropertyValue(object selModel, string propName, string? propValue)
+        internal static bool setPropertyValue(object selModel, string propName, string? propValue)
         {
             if (selModel == null) { throw new ArgumentNullException(nameof(selModel)); }
             if (propName == null) { throw new ArgumentNullException(nameof(propName)); }

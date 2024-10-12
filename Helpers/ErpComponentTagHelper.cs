@@ -1,30 +1,14 @@
 
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using System.Linq;
-using System;
-using Microsoft.AspNetCore.Mvc;
-using ErpToolkit.Helpers.Db;
 using System.Data;
 using System.Text;
-using static Google.Rpc.Help.Types;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Text.Json;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
-using System.Text.Encodings.Web;
-using ErpToolkit.Models;
-using ErpToolkit.Controllers;
-using Quartz.Util;
-using static ErpToolkit.Helpers.DogHelper;
-using NLog.Layouts;
-using Google.Rpc;
 using System.Reflection;
-using Google.Protobuf.WellKnownTypes;
-using Newtonsoft.Json.Linq;
+using ErpToolkit.Helpers.Db;
 
 
 // VALIDATE FIELD AT SERVER SIDE
@@ -443,7 +427,7 @@ namespace ErpToolkit.Helpers
 
             //calcola restrizioni visibilità pagina
             //-------------------------------------
-            FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
+            DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
 
 
             if (attributeServer != null)
@@ -681,7 +665,7 @@ namespace ErpToolkit.Helpers
 
                 //calcola restrizioni visibilità pagina
                 //-------------------------------------
-                FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
+                DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
 
 
                 string content = $@"
@@ -791,7 +775,7 @@ namespace ErpToolkit.Helpers
 
                 //calcola restrizioni visibilità pagina
                 //-------------------------------------
-                FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
+                DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
                 //-------------------------------------
 
 
@@ -1100,7 +1084,7 @@ namespace ErpToolkit.Helpers
 
                 //calcola restrizioni visibilità pagina
                 //-------------------------------------
-                FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
+                DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
                 //-------------------------------------
 
                 var dataTypeAttribute = property.GetCustomAttributes(typeof(DataTypeAttribute), false).FirstOrDefault() as DataTypeAttribute;

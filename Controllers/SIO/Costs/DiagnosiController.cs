@@ -25,7 +25,7 @@ namespace ErpToolkit.Controllers.SIO.Costs
             try
             {
                 string sql = "select DG_CODICE + ' - ' + DG_DESCRIZIONE as label, DG__ICODE as value from DIAGNOSI where DG__DELETED='N' ";
-                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetAll Diagnosi: " + ex.Message }); }
         }
@@ -35,7 +35,7 @@ namespace ErpToolkit.Controllers.SIO.Costs
             try
             {
                 string sql = "select DG_CODICE + ' - ' + DG_DESCRIZIONE as label, DG__ICODE as value from DIAGNOSI where DG__DELETED='N' and upper(' ' + DG_CODICE + ' - ' + DG_DESCRIZIONE + ' ') like '%" + term.ToUpper() + "%'";
-                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
             }
             catch (Exception ex)  { return Json(new { error = "Problemi in accesso al DB: AutocompleteGetSelect Diagnosi: " + ex.Message }); }
         }
@@ -45,7 +45,7 @@ namespace ErpToolkit.Controllers.SIO.Costs
             try
             {
                 string sql = "select DG_CODICE + ' - ' + DG_DESCRIZIONE as label, DG__ICODE as value from DIAGNOSI where DG__DELETED='N' and DG__ICODE in ('" + string.Join("', '", values.ToArray()) + "')";
-                return Json(DogHelper.ExecQuery<Choice>(dogId, sql));
+                return Json(ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery<Choice>(sql, null));
             }
             catch (Exception ex) { return Json(new { error = "Problemi in accesso al DB: AutocompletePreLoad Diagnosi: " + ex.Message }); }
         }
@@ -63,7 +63,7 @@ namespace ErpToolkit.Controllers.SIO.Costs
         public IActionResult Index(string returnUrl = null)
         {
             this.Select = new SelDiagnosi();
-            foreach (var key in Request.Query.Keys) DogHelper.setPropertyValue(this.Select, key, Request.Query[key]); // carica parametri QueryString
+            foreach (var key in Request.Query.Keys) DogManager.setPropertyValue(this.Select, key, Request.Query[key]); // carica parametri QueryString
             this.List = new List<Diagnosi>();
             //carico eventuali parametri presenti in TempData
             foreach (var item in TempData.Keys) ViewData[item] = TempData[item];
@@ -85,7 +85,7 @@ namespace ErpToolkit.Controllers.SIO.Costs
                 return View("~/Views/SIO/Costs/Diagnosi/Index.cshtml", this);
             }
             //carica lista
-            try { this.List = DogHelper.List<Diagnosi>(dogId, this.Select); }
+            try { this.List = ErpContext.Instance.DogFactory.GetDog(dogId).List<Diagnosi>(this.Select); }
             catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: List: " + ex.Message); }
             this.StatusMessage = "Lista caricata!";
             return View("~/Views/SIO/Costs/Diagnosi/Index.cshtml", this);
@@ -98,7 +98,7 @@ namespace ErpToolkit.Controllers.SIO.Costs
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<Diagnosi>(dogId, parms.Id); }
+                try { obj = ErpContext.Instance.DogFactory.GetDog(dogId).Row<Diagnosi>(parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/Costs/Diagnosi/_PartialEdit.cshtml", obj);
@@ -138,7 +138,7 @@ namespace ErpToolkit.Controllers.SIO.Costs
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
             {
-                try { obj = DogHelper.Row<Diagnosi>(dogId, parms.Id); }
+                try { obj = ErpContext.Instance.DogFactory.GetDog(dogId).Row<Diagnosi>(parms.Id); }
                 catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
             }
             return PartialView("~/Views/SIO/Costs/Diagnosi/_PartialDelete.cshtml", obj);

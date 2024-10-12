@@ -1,4 +1,5 @@
 ﻿using ErpToolkit.Helpers;
+using ErpToolkit.Helpers.Db;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -125,10 +126,10 @@ public bool TryValidateInt(ModelStateDictionary modelState)
         foreach (var idx in ListIndexes()) { 
             string fldLst = idx.Split("|")[2]; 
             foreach (var fld in fldLst.Split(",")) { 
-                if (DogHelper.getPropertyValue(this, fld.Trim()) != null) found = true; 
-                if (DogHelper.getPropertyValue(this, fld.Trim() + "[0]") != null) found = true; 
-                if (DogHelper.getPropertyValue(this, fld.Trim() + ".StartDate") != null) found = true; 
-                if (DogHelper.getPropertyValue(this, fld.Trim() + ".EndDate") != null) found = true; 
+                if (DogManager.getPropertyValue(this, fld.Trim()) != null) found = true; 
+                if (DogManager.getPropertyValue(this, fld.Trim() + "[0]") != null) found = true; 
+                if (DogManager.getPropertyValue(this, fld.Trim() + ".StartDate") != null) found = true; 
+                if (DogManager.getPropertyValue(this, fld.Trim() + ".EndDate") != null) found = true; 
             } 
         } 
         if (!found) { isValidate = false;  modelState.AddModelError(string.Empty, "Deve essere compilato almeno un campo indicizzato."); } 

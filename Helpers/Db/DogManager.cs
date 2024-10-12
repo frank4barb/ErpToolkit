@@ -1,18 +1,12 @@
 
-using Google.Protobuf.Reflection;
-using Microsoft.Extensions.Options;
-using Microsoft.VisualBasic;
-using System.Collections.Generic;
+
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
-using static ErpToolkit.Helpers.Db.DogFactory;
 using System.Text;
-using static ErpToolkit.Helpers.ErpError;
-using Org.BouncyCastle.Crypto;
 
 namespace ErpToolkit.Helpers.Db
 {
@@ -26,7 +20,45 @@ namespace ErpToolkit.Helpers.Db
         internal const string DB_FORMAT_DATE = "yyyy/MM/dd"; //formato stringa di memorizzazione della data nel DB
         internal const string DB_FORMAT_TIME = "HH:mm:ss"; //formato stringa di memorizzazione dell'ora nel DB
         internal const string DB_FORMAT_DATETIME = "yyyy/MM/dd HH:mm:ss"; //formato stringa di memorizzazione di data e ora nel DB
-        //---
+                                                                          //---
+
+        //***************************************************************************************************************************************************
+        //*** STRUTTURE STATICHE
+        //***************************************************************************************************************************************************
+
+        public class FieldAttr
+        {
+            public char Readonly { get; set; } = 'N';
+            public char Visible { get; set; } = 'Y';
+            public void setAttr(string attr)
+            {
+                char[] a = attr.ToCharArray();
+                for (int i = 0; i < a.Length; i++)
+                {
+                    switch (i)
+                    {
+                        case 0: Readonly = a[i]; break; // 0) ReadOnly
+                        case 1: Visible = a[i]; break; // 1) Visible
+                    }
+                }
+            }
+            public string getAttr()
+            {
+                return (new string(new char[] { Readonly, Visible }));
+            }
+            public FieldAttr(string attr) { setAttr(attr); }
+            public FieldAttr(bool readOnly, bool visible) { if (readOnly) Readonly = 'Y'; if (!visible) Visible = 'N'; }
+            public static string strAttr(bool readOnly, bool visible) { return new FieldAttr(readOnly, visible).getAttr(); }
+        }
+
+
+        public static object? getPropertyValue(object selModel, string propName) { return DogManagerInt.getPropertyValue(selModel, propName); }
+        public static bool setPropertyValue(object selModel, string propName, string? propValue) { return DogManagerInt.setPropertyValue(selModel, propName, propValue);  }
+
+
+        //***************************************************************************************************************************************************
+        //*** INIZIO CLASSE
+        //***************************************************************************************************************************************************
 
 
         private string _modelName; // = "SIO";
@@ -111,119 +143,7 @@ namespace ErpToolkit.Helpers.Db
         }
 
         private const string BASE_MODEL = "ErpToolkit.Models";
-
         internal DogManager(string modelName, string databaseType, string connectionStringName)
-        {
-            //SetUpNLog();
-            NLog.LogManager.Configuration = UtilHelper.GetNLogConfig(); // Apply config
-            _logger = NLog.LogManager.GetCurrentClassLogger();
-            //set dog
-            _modelName = databaseType;
-            _databaseType = databaseType;
-            _connectionStringName = connectionStringName;
-
-            //-----------------------
-            //Load Default Data Model
-            //-----------------------
-            Type modelType = Type.GetType(BASE_MODEL + "." + modelName + ".BaseModel");
-            object objModel = Activator.CreateInstance(modelType); // create an instance of that type
-            List<Type> Tabelle = (List<Type>)modelType.GetProperty("DataObjects").GetValue(objModel);
-            List<Type> FiltriSelezione = (List<Type>)modelType.GetProperty("SelectionFilterObjects").GetValue(objModel);
-            List<Type>[] listaTab = new List<Type>[] { Tabelle, FiltriSelezione };
-            for (int idTab = 0; idTab < listaTab.Length; idTab++)
-            {
-
-                foreach (var tabellaType in listaTab[idTab])  //foreach (var tabellaType in Tabelle)
-                {
-                    DogTable tab = new DogTable();
-                    tab.tableName = tabellaType.Name;
-                    tab.tableTpy = tabellaType;
-                    //--
-                    tab.Description = tabellaType.GetField("Description")?.GetRawConstantValue()?.ToString() ?? "";
-                    tab.SqlTableName = tabellaType.GetField("SqlTableName")?.GetRawConstantValue()?.ToString() ?? "";
-                    tab.SqlTableNameExt = tabellaType.GetField("SqlTableNameExt")?.GetRawConstantValue()?.ToString() ?? "";
-                    tab.SqlRowIdName = tabellaType.GetField("SqlRowIdName")?.GetRawConstantValue()?.ToString() ?? "";
-                    tab.SqlRowIdNameExt = tabellaType.GetField("SqlRowIdNameExt")?.GetRawConstantValue()?.ToString() ?? "";
-                    tab.SqlPrefix = tabellaType.GetField("SqlPrefix")?.GetRawConstantValue()?.ToString() ?? "";
-                    tab.SqlPrefixExt = tabellaType.GetField("SqlPrefixExt")?.GetRawConstantValue()?.ToString() ?? "";
-                    tab.SqlXdataTableName = tabellaType.GetField("SqlXdataTableName")?.GetRawConstantValue()?.ToString() ?? "";
-                    tab.SqlXdataTableNameExt = tabellaType.GetField("SqlXdataTableNameExt")?.GetRawConstantValue()?.ToString() ?? "";
-                    tab.MODEL = tabellaType.GetField("MODEL")?.GetRawConstantValue()?.ToString() ?? "";
-                    tab.INTCODE = Convert.ToInt32(tabellaType.GetField("INTCODE")?.GetRawConstantValue());
-                    tab.TBAREA = tabellaType.GetField("TBAREA")?.GetRawConstantValue()?.ToString() ?? "";
-                    tab.PREFIX = tabellaType.GetField("PREFIX")?.GetRawConstantValue()?.ToString() ?? "";
-                    tab.LIVEDESC = tabellaType.GetField("LIVEDESC")?.GetRawConstantValue()?.ToString() ?? "";
-                    tab.IS_RELTABLE = tabellaType.GetField("IS_RELTABLE")?.GetRawConstantValue()?.ToString() ?? "";
-                    //---------
-                    foreach (var property in tabellaType.GetProperties())
-                    {
-                        ErpDogFieldAttribute? erpDogFieldAttribute = property.GetCustomAttribute(typeof(ErpDogFieldAttribute)) as ErpDogFieldAttribute;
-                        if (erpDogFieldAttribute != null)
-                        {
-                            //---------
-                            DogField fld = new DogField();
-                            fld.fieldName = property.Name;
-                            fld.fieldTyp = property.PropertyType;
-                            fld.table = tab;
-                            //--
-                            fld.SqlFieldName = erpDogFieldAttribute.SqlFieldName?.ToString() ?? "";
-                            fld.SqlFieldProperties = erpDogFieldAttribute.SqlFieldProperties?.ToString() ?? "";
-                            fld.SqlFieldOptions = erpDogFieldAttribute.SqlFieldOptions?.ToString() ?? "";
-                            fld.SqlFieldNameExt = erpDogFieldAttribute.SqlFieldNameExt?.ToString() ?? "";
-                            fld.Xref = erpDogFieldAttribute.Xref?.ToString() ?? "";
-                            //---------
-                            fld.optUID = fld.SqlFieldOptions.Contains("[UID]");
-                            fld.optXID = fld.SqlFieldOptions.Contains("[XID]");
-                            fld.optDATE = fld.SqlFieldOptions.Contains("[DATE]");
-                            fld.optTIME = fld.SqlFieldOptions.Contains("[TIME]");
-                            fld.optDATETIME = fld.SqlFieldOptions.Contains("[DATETIME]");
-                            //---------
-                            DisplayAttribute? displaydAttribute = property.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
-                            if (displaydAttribute != null)
-                            {
-                                fld.Description = displaydAttribute.Description;
-                            }
-                            DefaultValueAttribute? defaultValueAttribute = property.GetCustomAttribute(typeof(DefaultValueAttribute)) as DefaultValueAttribute;
-                            if (defaultValueAttribute != null)
-                            {
-                                fld.DefaultValue = defaultValueAttribute.Value;
-                            }
-                            StringLengthAttribute? stringLengthAttribute = property.GetCustomAttribute(typeof(StringLengthAttribute)) as StringLengthAttribute;
-                            if (stringLengthAttribute != null)
-                            {
-                                fld.StringLength = stringLengthAttribute.MaximumLength;
-                            }
-                            //---------
-                            tab.fields.Add(fld);
-                            switch (idTab)
-                            {
-                                case 0:
-                                    tabFields.Add(fld.SqlFieldName, fld);
-                                    break;
-                                case 1:
-                                    selFields.Add(fld.SqlFieldName, fld);
-                                    break;
-                            }
-                        }
-                    }
-                    //-------
-                    switch (idTab)
-                    {
-                        case 0:
-                            tables.Add(tab.SqlTableName, tab);
-                            tabPrefixes.Add(tab.SqlPrefix, tab);
-                            tabIntcodes.Add(tab.INTCODE, tab);
-                            break;
-                        case 1:
-                            selfilters.Add(tab.SqlTableName, tab);
-                            break;
-                    }
-                }
-            }
-        }
-
-
-        internal void DogManager2(string modelName, string databaseType, string connectionStringName)
         {
             //SetUpNLog();
             NLog.LogManager.Configuration = UtilHelper.GetNLogConfig(); // Apply config
@@ -238,7 +158,7 @@ namespace ErpToolkit.Helpers.Db
             //-----------------------
             // Ottieni tutti i tipi nell'assembly corrente, il cui namespace inizia con "Models"
             var typesInNamespace = Assembly.GetExecutingAssembly().GetTypes()
-                .Where(t => t.IsClass && t.Namespace != null && t.Namespace.StartsWith("Models"));
+                .Where(t => t.IsClass && t.Namespace != null && t.Namespace.StartsWith(BASE_MODEL));
 
             foreach (var objType in typesInNamespace)
             {
@@ -343,9 +263,6 @@ namespace ErpToolkit.Helpers.Db
             }
 
         }
-
-
-
         ~DogManager()
         {
             Dispose();
@@ -573,8 +490,9 @@ namespace ErpToolkit.Helpers.Db
             //$$//
         }
         //carica row con il contenuto del DB in base all'icode'  
-        public T Row<T>(DogId dogId, string icode)
+        public T Row<T>(string icode)
         {
+            if (String.IsNullOrEmpty(icode)) { throw new ArgumentNullException(nameof(icode)); }
             T objModel = (T)Activator.CreateInstance(typeof(T)); // create an instance of that type
             IDictionary<string, object> parameters = new Dictionary<string, object>();
             StringBuilder sb = new StringBuilder()
@@ -582,15 +500,8 @@ namespace ErpToolkit.Helpers.Db
                 .Append(DogManagerInt.sqlFrom(this,objModel, ref parameters))
                 .Append(DogManagerInt.sqlWhere(this, objModel, icode, ref parameters));
             //access DB
-            //$$//DataTable dt = ErpContext.Instance.getSQLSERVERHelper(dbConnectionString).execQuery(sb.ToString()); //eg: dbConnectionString="#connectionString_SQLSLocal"
-            DataTable dt = ErpContext.Instance.DogFactory.GetDog(dogId).ExecuteQuery(sb.ToString(), null);
-            //$$//
-            if (dt.Rows.Count > 0)
-            {
-                //$$//objModel = SQLSERVERHelper.GetItemDataTable<T>(dt.Rows[0], "");
-                objModel = ErpContext.Instance.DogFactory.GetDog(dogId).DecodeSpecialRow<T>(dt.Rows[0], "");
-                //$$//
-            }
+            DataTable dt = this.ExecuteQuery(sb.ToString(), null);
+            if (dt.Rows.Count > 0) { objModel = this.DecodeSpecialRow<T>(dt.Rows[0], ""); }
             return objModel;
         }
 
