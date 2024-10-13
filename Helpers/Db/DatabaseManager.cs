@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Data.Common;
 using static ErpToolkit.Helpers.ErpError;
 using System.Text;
+using Type = System.Type;
 
 namespace ErpToolkit.Helpers.Db
 {
@@ -51,9 +52,25 @@ namespace ErpToolkit.Helpers.Db
             GC.SuppressFinalize(this);
         }
 
+
         //***************************************************************************************************************************************************
-        //*** TRANSAZIONI
+        //*** STATIC INTERNAL ULILS
         //***************************************************************************************************************************************************
+
+
+        internal static byte[] GenerateTimestamp()
+        {
+            byte[] timestamp = new byte[8];
+            using (var rng = new System.Security.Cryptography.RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(timestamp);
+            }
+            return timestamp;
+        }
+
+
+
+
 
         //public
 
@@ -265,7 +282,7 @@ namespace ErpToolkit.Helpers.Db
         }
 
         //---
-        private int ExecuteNonQuery(string sql, IDictionary<string, object> parameters, string transactionId = null)
+        internal int ExecuteNonQuery(string sql, IDictionary<string, object> parameters, string transactionId = null)
         {
             if (_transactionId != transactionId) RollBackDefaulTransaction("ExecuteNonQuery");
             IDbConnection connection = _database.NewConnection();
@@ -279,15 +296,6 @@ namespace ErpToolkit.Helpers.Db
                 }
             }
             finally { _database.ReleaseConnection(connection); } // la connessione viene chiusa se non c'è transazione
-        }
-        private byte[] GenerateTimestamp()
-        {
-            byte[] timestamp = new byte[8];
-            using (var rng = new System.Security.Cryptography.RNGCryptoServiceProvider())
-            {
-                rng.GetBytes(timestamp);
-            }
-            return timestamp;
         }
         private T ExecuteWithRetry<T>(Func<T> operation)
         {

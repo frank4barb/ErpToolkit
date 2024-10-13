@@ -3,12 +3,14 @@ using System.Data;
 using System.Reflection;
 using System.Text;
 using System.Collections;
-using System.Linq;
+using static ErpToolkit.Helpers.Db.DogManager;
 
 namespace ErpToolkit.Helpers.Db
 {
     public static class DogManagerInt
     {
+        private const bool IS_NULLABLE_ID = false; //=true se posso inserire NULL in tutti gli identifificatori univoci (serve per velocizzare gli indici)
+
 
         //configura NLog per la classe
         public static NLog.Config.LoggingConfiguration GetNLogConfig()
@@ -55,95 +57,6 @@ namespace ErpToolkit.Helpers.Db
             return $"from {sqlTableNameExt} \n";
         }
         //crea WHERE per l'oggetto del modello 'objModel' in base all'oggetto di selezione 'selModel'
-
-        //internal static string sqlWhere(DogManager dogMng, object selModel, ref IDictionary<string, object> parameters)
-        //{
-        //    int numCond = 0, numPreCond = 0;
-        //    if (selModel == null) { throw new ArgumentNullException(nameof(selModel)); }
-        //    StringBuilder sb = new StringBuilder("where ");
-        //    //ciclo sulle proprietà
-        //    Type type = selModel.GetType(); 
-        //    foreach (var property in type.GetProperties())
-        //    {
-        //        try
-        //        {
-        //            string propertyName = property.Name; // Get property name and value
-        //            //xx//if (propertyName == "AttrFields") continue; // SGANCIO DAL MODELLO IL CONCETTO DI VISIBILITA'
-        //            object propertyValue = property.GetValue(selModel); //sb.AppendLine($"Property: {propertyName}, Value: {propertyValue}");
-        //            if (propertyValue == null) continue;
-        //            // >>> verifica List
-        //            if (typeof(IEnumerable<object>).IsAssignableFrom(propertyValue.GetType()))
-        //            {
-        //                IEnumerable<object> ienum = (IEnumerable<object>)propertyValue;
-        //                List<object> list = ienum.Where(item => item != null && !(item is string str && string.IsNullOrWhiteSpace(str))).ToList();  // elimina elementi null e strighe vuote
-        //                if (list.Count() == 0) continue;
-        //                if (list[0] is string) propertyValue = (List<string>)list.Select(i => i.ToString()).ToList();
-        //                else if (list[0] is sbyte || list[0] is byte || list[0] is short || list[0] is ushort || list[0] is int || list[0] is uint
-        //                     || list[0] is long || list[0] is ulong) propertyValue = (List<long>)list.Select(i => Convert.ToInt64(i)).ToList();
-        //                else throw new ErpException("Tipo Lista non supportato (solo stinga e intero)");
-        //            }
-        //            // >>> verifica DateRange
-        //            if (propertyValue is DateRange dateRange)
-        //            {
-        //                if (dateRange.StartDate == default && dateRange.EndDate == default) continue; //entrambe le date sono null
-        //            }
-        //            //---
-        //            numPreCond++; //condizione prevista
-        //            //---
-        //            // esiste una condizione
-        //            var sqlFieldNameExt = dogMng.tabProperties[propertyName]?.SqlFieldNameExt?.Trim() ?? "";
-        //            if (sqlFieldNameExt != "") 
-        //            {
-        //                try
-        //                {
-        //                    //string fieldOptions = ((ErpDogFieldAttribute)attribute).SqlFieldOptions?.ToString() ?? "";
-        //                    DogManager.DogField fld = dogMng.tabProperties[propertyName];
-        //                    if (propertyValue is string str)
-        //                    {
-        //                        if (fld.optUID) sb.AppendLine($" {sqlFieldNameExt} = '{str.TrimEnd()}' and ");
-        //                        else if (fld.optXID) sb.AppendLine($" {sqlFieldNameExt} = '{str.TrimEnd()}' and ");
-        //                        else sb.AppendLine($" {sqlFieldNameExt} LIKE '%{str}%' and ");
-        //                    }
-        //                    else if (propertyValue is DateTime dattim)
-        //                    {
-        //                        if (fld.optDATE) sb.AppendLine($" {sqlFieldNameExt} = '{dattim.ToString(DogManager.DB_FORMAT_DATE)}' and ");
-        //                        else if (fld.optTIME) sb.AppendLine($" {sqlFieldNameExt} = '{dattim.ToString(DogManager.DB_FORMAT_TIME)}' and ");
-        //                        else if (fld.optDATETIME) sb.AppendLine($" {sqlFieldNameExt} = '{dattim.ToString(DogManager.DB_FORMAT_DATETIME)}' and ");
-        //                    }
-        //                    else if (propertyValue is DateOnly dat)
-        //                    {
-        //                        if (fld.optDATE) sb.AppendLine($" {sqlFieldNameExt} = '{dat.ToString(DogManager.DB_FORMAT_DATE)}' and ");
-        //                    }
-        //                    else if (propertyValue is TimeOnly tim)
-        //                    {
-        //                        if (fld.optTIME) sb.AppendLine($" {sqlFieldNameExt} = '{tim.ToString(DogManager.DB_FORMAT_TIME)}' and ");
-        //                    }
-        //                    else if (propertyValue is List<string> strList) sb.Append($" {sqlFieldNameExt} in (").Append(string.Join(", ", strList.Select(str => $"'{str.Trim()}'"))).AppendLine($") and");
-        //                    else if (propertyValue is List<long> lngList) sb.Append($" {sqlFieldNameExt} in (").Append(string.Join(", ", lngList)).AppendLine($") and");
-        //                    else if (propertyValue is DateRange dateRng)
-        //                    {
-        //                        if (dateRng.StartDate == default) sb.AppendLine($" {sqlFieldNameExt} <= '{dateRng.EndDate.ToString(DogManager.DB_FORMAT_DATE)}' and");
-        //                        else if (dateRng.EndDate == default) sb.AppendLine($" {sqlFieldNameExt} >= '{dateRng.StartDate.ToString(DogManager.DB_FORMAT_DATE)}' and");
-        //                        else sb.AppendLine($" ({sqlFieldNameExt} BETWEEN '{dateRng.StartDate.ToString(DogManager.DB_FORMAT_DATE)}' and '{dateRng.EndDate.ToString(DogManager.DB_FORMAT_DATE)}') and");
-        //                    }
-        //                    else continue;
-        //                    numCond++; //condizione applicata correttamente
-        //                }
-        //                catch (Exception ex) { }  //skip exceptions
-        //            }
-        //        }
-        //        catch (Exception ex) { }  //skip exceptions
-        //    }
-        //    // Verifica condizioni
-        //    if (numCond == 0) throw new ErpException("Nessuna condizione inserita");
-        //    if (numCond != numPreCond) throw new ErpException("Errore nell'applicazione delle condizioni di filtro. Previste {" + numPreCond.ToString() + "}, applicate " + numCond.ToString() + "");
-        //    // terminatore di where
-        //    var sqlPrefixExt = dogMng.selTypes[type]?.SqlPrefixExt?.Trim() ?? "";
-        //    sb.AppendLine($" {sqlPrefixExt}_DELETED='N' ");
-        //    return sb.ToString();
-        //}
-
-
         internal static string sqlWhere(DogManager dogMng, object selModel, ref IDictionary<string, object> parameters)
         {
             // init
@@ -259,6 +172,159 @@ namespace ErpToolkit.Helpers.Db
             var sqlRowIdNameExt = dogMng.tabTypes[type]?.SqlRowIdNameExt?.Trim() ?? "";
             return $"where {sqlRowIdNameExt} = {DogManager.addParam(icode, ref parameters)} ";
         }
+
+        //crea INSERT, UPDATE, DELETE(logico) per l'oggetto del modello 'tabModel' (SOLO PER TABELLE)
+        internal static string sqlMantain(DogManager dogMng, object tabModel, ref IDictionary<string, object> parameters, ref List<DogResult> results, string options = "")
+        {
+            // init
+            int numParam = 0;
+            if (tabModel == null) { throw new ArgumentNullException(nameof(tabModel)); }
+            StringBuilder sb = new StringBuilder(), sbValues = new StringBuilder(); 
+            //ciclo sulle proprietà
+            Type type = tabModel.GetType();
+            DogManager.DogTable tab = dogMng.tabTypes[type];
+            if (tab == null) throw new ArgumentNullException(nameof(tabModel));
+            //campi di sistema
+            var sqlPrefixExt = dogMng.selTypes[type]?.SqlPrefixExt?.Trim() ?? "";
+            if (sqlPrefixExt == "") throw new ArgumentNullException(nameof(sqlPrefixExt));
+            List<string> sysFieldList = new List<string>() { "_ICODE","_DELETED","_TIMESTAMP", "_CDATE","_CTIME","_CAGENT","_CUNIT", "_MDATE","_MTIME","_MAGENT","_MUNIT" };
+
+            string icode = ""; byte[] oldTimestamp = new byte[8], newTimestamp = DatabaseManager.GenerateTimestamp();
+            string dateNow = DateTime.Now.ToString(DogManager.DB_FORMAT_DATE), timeNow = DateTime.Now.ToString(DogManager.DB_FORMAT_TIME);
+            string agent = ErpContext.Instance.UserId, unit = ErpContext.Instance.UnitId;
+
+            string _db_cdate = dateNow, _db_ctime = timeNow, _db_cagent = agent, _db_cunit = unit;
+            string _db_mdate = dateNow, _db_mtime = timeNow, _db_magent = agent, _db_munit = unit;
+
+            if (options.Contains("*noSys*"))
+            {
+                IDictionary<string, string>? opts = (IDictionary<string, string>)type.GetProperty("options", typeof(Dictionary<string, string>)).GetValue(tabModel);  //carico opzioni
+                if (opts != null)
+                {
+                    _db_cdate = opts["_db_cdate"] ?? dateNow; _db_ctime = opts["_db_ctime"] ?? timeNow; _db_cagent = opts["_db_cagent"] ?? agent; _db_cunit = opts["_db_cunit"] ?? unit;
+                    _db_mdate = opts["_db_mdate"] ?? dateNow; _db_mtime = opts["_db_mtime"] ?? timeNow; _db_magent = opts["_db_magent"] ?? agent; _db_munit = opts["_db_munit"] ?? unit;
+                }
+            }
+
+            //gestione action
+            char? action = (char)type.GetProperty("action", typeof(char)).GetValue(tabModel);  //può assumere solo A[dd], M[odify], D[elete]
+            if (action == null || "AMD".Contains((char)action) == false) throw new ArgumentOutOfRangeException(nameof(action));
+            if (action == 'A') { sb.Append($"insert into {tab.SqlTableNameExt} ("); sbValues.Append("("); } else { sb.Append($"update {tab.SqlTableNameExt} set"); }
+            if (action != 'D')
+            {
+                foreach (var property in type.GetProperties())
+                {
+                    string propertyName = property.Name; // Get property name and value
+                    object propertyValue = property.GetValue(tabModel);
+                    if (propertyValue == null) continue;  //  <<<<<<<<<<<<<<<<<<<<<< SALTO I CAMPI NULL
+                                                          // esiste una condizione
+                    var sqlFieldNameExt = dogMng.tabProperties[propertyName]?.SqlFieldNameExt?.Trim() ?? "";
+                    if (sqlFieldNameExt != "")
+                    {
+                        //recupero icode
+                        if (sqlFieldNameExt == $"{sqlPrefixExt}_ICODE") { icode = (string)propertyValue;  }
+                        //recupero timestamp
+                        if (sqlFieldNameExt == $"{sqlPrefixExt}_TIMESTAMP") { oldTimestamp = (byte[])propertyValue; }
+                        //escludo campi di sistema
+                        if (sysFieldList.Contains(sqlFieldNameExt.Substring(3))) continue;
+
+                        //gestione tipo campi
+                        object? propertyObject = null;
+                        //string fieldOptions = ((ErpDogFieldAttribute)attribute).SqlFieldOptions?.ToString() ?? "";
+                        DogManager.DogField fld = dogMng.tabProperties[propertyName];
+                        if (propertyValue is string str)
+                        {
+                            if (String.IsNullOrEmpty(str) && (fld.optUID || fld.optXID || fld.optXREF))
+                            {
+                                if (IS_NULLABLE_ID) { propertyObject = DBNull.Value; } else { propertyObject = (string)" "; }
+                            }
+                            else propertyObject = (string)str.TrimEnd();
+                        }
+                        else if (propertyValue is DateTime dattim)  // DateOnly.FromDateTime()
+                        {
+                            if (fld.optDATE) propertyObject = DateOnly.FromDateTime(dattim);
+                            else if (fld.optTIME) propertyObject = TimeOnly.FromDateTime(dattim);
+                            else if (fld.optDATETIME) propertyObject = (DateTime)dattim;
+                            else throw new ErpException($"{propertyName}: DateTime fa riferimento ad un campo non data ora");
+                        }
+                        else if (propertyValue is DateOnly dat)
+                        {
+                            if (fld.optDATE) propertyObject = (DateOnly)dat;
+                            else throw new ErpException($"{propertyName}: DateOnly fa riferimento ad un campo non data");
+                        }
+                        else if (propertyValue is TimeOnly tim)
+                        {
+                            if (fld.optTIME) propertyObject = (TimeOnly)tim;
+                            else throw new ErpException($"{propertyName}: TimeOnly fa riferimento ad un campo non ora");
+                        }
+                        else if (propertyValue is byte[] bty)
+                        {
+                            propertyObject = (byte[])bty;
+                        }
+                        else if (propertyValue is short shr)
+                        {
+                            if (shr == DogManager.DB_SHORT_EMPTY) continue;  //  <<<<<<<<<<<<<<<<<<<<<< SALTO I CAMPI NULL
+                            propertyObject = (short)shr;
+                        }
+                        else if (propertyValue is long lng)
+                        {
+                            if (lng == DogManager.DB_LONG_EMPTY) continue;  //  <<<<<<<<<<<<<<<<<<<<<< SALTO I CAMPI NULL
+                            propertyObject = (long)lng;
+                        }
+                        else if (propertyValue is double dbl)
+                        {
+                            if (dbl == DogManager.DB_DOUBLE_EMPTY) continue;  //  <<<<<<<<<<<<<<<<<<<<<< SALTO I CAMPI NULL
+                            propertyObject = (double)dbl;
+                        }
+                        else throw new ErpException($"{propertyName}: {propertyValue.GetType().Name} non è un tipo consentito"); ;
+
+                        // Costruzione SQL
+                        if (action == 'A') { sb.AppendLine($"{sqlFieldNameExt}, "); sbValues.AppendLine($"{DogManager.addParam(propertyObject, ref parameters)}, "); }
+                        else if (action == 'M') { sb.AppendLine($"{sqlFieldNameExt} = {DogManager.addParam(propertyObject, ref parameters)}, "); }
+                        else throw new ArgumentOutOfRangeException(nameof(action));
+                        numParam++; //condizione applicata correttamente
+                    }
+                }
+            }
+            else
+            {
+                //DELETED
+                sb.AppendLine($"{sqlPrefixExt}_DELETED = {DogManager.addParam("Y", ref parameters)}, ");
+            }
+
+            // Verifica condizioni
+            if (numParam == 0) throw new ErpException("Nessuna parametro inserito");
+            // terminatore di insert update
+            if (action == 'A')
+            {
+                sb.AppendLine($"{sqlPrefixExt}_CDATE, {sqlPrefixExt}_CTIME, {sqlPrefixExt}_CAGENT, {sqlPrefixExt}_CUNIT, ");
+                sbValues.AppendLine($"{DogManager.addParam(_db_cdate, ref parameters)}, {DogManager.addParam(_db_ctime, ref parameters)}, {DogManager.addParam(_db_cagent, ref parameters)}, {DogManager.addParam(_db_cunit, ref parameters)}, ");
+                //--
+                sb.AppendLine($"{sqlPrefixExt}_MDATE, {sqlPrefixExt}_MTIME, {sqlPrefixExt}_MAGENT, {sqlPrefixExt}_MUNIT, ");
+                sbValues.AppendLine($"{DogManager.addParam(_db_mdate, ref parameters)}, {DogManager.addParam(_db_mtime, ref parameters)}, {DogManager.addParam(_db_magent, ref parameters)}, {DogManager.addParam(_db_munit, ref parameters)}, ");
+                //--
+                sb.AppendLine($"{sqlPrefixExt}_ICODE, {sqlPrefixExt}_DELETED, {sqlPrefixExt}_TIMESTAMP");
+                sbValues.AppendLine($"{DogManager.addParam(icode, ref parameters)}, {DogManager.addParam("N", ref parameters)}, {DogManager.addParam(newTimestamp, ref parameters)}");
+                //---
+                sb.AppendLine(") values (").Append(sbValues.ToString()).Append(") ");
+            }
+            else  // modify or delete
+            {
+                sb.AppendLine($"{sqlPrefixExt}_MDATE = {DogManager.addParam(_db_mdate, ref parameters)}, {sqlPrefixExt}_MTIME = {DogManager.addParam(_db_mtime, ref parameters)}, ");
+                sb.AppendLine($"{sqlPrefixExt}_MAGENT = {DogManager.addParam(_db_magent, ref parameters)}, {sqlPrefixExt}_MUNIT = {DogManager.addParam(_db_munit, ref parameters)}, ");
+                //--
+                sb.AppendLine($"{sqlPrefixExt}_TIMESTAMP = {DogManager.addParam(newTimestamp, ref parameters)}");
+                //--
+                sb.AppendLine($" where {sqlPrefixExt}_ICODE = {DogManager.addParam(icode, ref parameters)}");
+                if (options.Contains("*noTms*") == false) sb.Append($" and {sqlPrefixExt}_TIMESTAMP = {DogManager.addParam(oldTimestamp, ref parameters)}");
+            }
+
+            //result
+            results.Add(new DogResult(type, (char)action, icode, newTimestamp));
+            return sb.ToString();
+        }
+
+
 
         //******************************************************************************************************************
         //******************************************************************************************************************

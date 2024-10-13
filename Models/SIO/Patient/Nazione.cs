@@ -23,6 +23,9 @@ public const string TBAREA = "Accoglienza"; //Table Area
 public const string PREFIX = "Nz"; //Table Prefix
 public const string LIVEDESC = "D"; //Table type: Live or Description
 public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
+
+public char? action = null; public IDictionary<string, string> options = new Dictionary<string, string>();  // proprietà necessarie per la mantain del record
+
 [Display(Name = "Nz1Ienv", ShortName="", Description = "Parametri dell'ambiente Ienv", Prompt="")]
 [ErpDogField("NZ__IENV", SqlFieldNameExt="", SqlFieldProperties="")]
 [DataType(DataType.Text)]

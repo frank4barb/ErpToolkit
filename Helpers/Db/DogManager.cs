@@ -1,12 +1,16 @@
 
 
+
+using MongoDB.Driver;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Globalization;
-using System.IO;
 using System.Reflection;
 using System.Text;
+using Type = System.Type;
+using static ErpToolkit.Helpers.ErpError;
+
 
 namespace ErpToolkit.Helpers.Db
 {
@@ -24,7 +28,10 @@ namespace ErpToolkit.Helpers.Db
         internal const string DB_DATE_MAX = "9999/99/99"; //futuro
         internal const string DB_DATE_MIN = "    /  /  "; //passato
         internal const string DB_TIME_EMPTY = "  :  :  "; //vuoto
-        //---
+        internal const short DB_SHORT_EMPTY = (short)(-32768); //vuoto
+        internal const long DB_LONG_EMPTY = (long)(-2147483647 - 1); //vuoto
+        internal const double DB_DOUBLE_EMPTY = (double)(-2147483648.0000); //vuoto
+                                                      //---
 
         //***************************************************************************************************************************************************
         //*** STRUTTURE STATICHE
@@ -55,14 +62,31 @@ namespace ErpToolkit.Helpers.Db
             public static string strAttr(bool readOnly, bool visible) { return new FieldAttr(readOnly, visible).getAttr(); }
         }
 
+
+        public class DogResult
+        {
+            public Type TabType { get; set; } = null;
+            public char Action { get; set; } = ' ';
+            public string Icode { get; set; } = "";
+            public byte[]? Timestamp { get; set; } = null;
+            public DogResult(Type tabType, char action, string icode, byte[]? timestamp)
+            {
+                TabType = tabType; Action = action; Icode = icode; Timestamp = timestamp;
+            }
+        }
+
+        //gestione objects
+        public static void checkTableObj(object tabModel) { if("TAB" != (tabModel.GetType().GetField("CATEG", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)?.GetValue(null)?.ToString()?.Trim() ?? "")) throw new ArgumentOutOfRangeException(nameof(tabModel)); }
+
+
         //gestione properties
         public static object? getPropertyValue(object selModel, string propName) { return DogManagerInt.getPropertyValue(selModel, propName); }
         public static bool setPropertyValue(object selModel, string propName, string? propValue) { return DogManagerInt.setPropertyValue(selModel, propName, propValue);  }
 
 
         //gestione parameters
-        public static string addParam(object value, ref IDictionary<string, object> parameters) { string parName = $"COND{parameters.Count}"; parameters.Add(parName, value); return $"@{parName}"; }
-        public static List<string> addListParam(List<object> values, ref IDictionary<string, object> parameters) { List<string> cond = new List<string>(); foreach (var value in values) { string parName = $"COND{parameters.Count}"; parameters.Add(parName, value); cond.Add($"@{parName}"); } return cond; }
+        public static string addParam(object value, ref IDictionary<string, object> parameters) { string parName = $"PARM{parameters.Count}"; parameters.Add(parName, value); return $"@{parName}"; }
+        public static List<string> addListParam(List<object> values, ref IDictionary<string, object> parameters) { List<string> cond = new List<string>(); foreach (var value in values) { string parName = $"PARM{parameters.Count}"; parameters.Add(parName, value); cond.Add($"@{parName}"); } return cond; }
 
 
 
@@ -141,6 +165,7 @@ namespace ErpToolkit.Helpers.Db
             public string SqlFieldNameExt = "";  // AY_CODE
             public string Xref = "";  // external reference (if any) eg: Pa1Icode
             //--
+            public bool optXREF = false;
             public bool optUID = false;
             public bool optXID = false;
             public bool optDATE = false;
@@ -219,6 +244,7 @@ namespace ErpToolkit.Helpers.Db
                                 fld.SqlFieldNameExt = erpDogFieldAttribute.SqlFieldNameExt?.ToString() ?? "";
                                 fld.Xref = erpDogFieldAttribute.Xref?.ToString() ?? "";
                                 //---------
+                                fld.optXREF = String.IsNullOrWhiteSpace(fld.Xref) == false;
                                 fld.optUID = fld.SqlFieldOptions.Contains("[UID]");
                                 fld.optXID = fld.SqlFieldOptions.Contains("[XID]");
                                 fld.optDATE = fld.SqlFieldOptions.Contains("[DATE]");
@@ -441,7 +467,11 @@ namespace ErpToolkit.Helpers.Db
 
         private object EncodeSpecialField(object value, string options = "")
         {
-            if (value is string str) return str;  // ATTENZIONE!! non elimino eventuali bianchi alla fine
+            if (value is string str)
+            {
+                if (str == "") str = " ";  //in caso di stringa vuota devo sbianchettare
+                return str;  // ATTENZIONE!! non devo eliminare eventuali bianchi alla fine
+            }
             if (value is DateOnly date)
             {
                 if (date.Equals(DateOnly.MinValue)) return DB_DATE_MIN;
@@ -454,7 +484,9 @@ namespace ErpToolkit.Helpers.Db
                 else return time.ToString(DB_FORMAT_TIME);
             }
             if (value is DateTime datetime)
+            {
                 return datetime.ToString(DB_FORMAT_DATETIME);
+            }
             // Aggiungere altre conversioni speciali qui se necessario
             return value;
         }
@@ -483,7 +515,10 @@ namespace ErpToolkit.Helpers.Db
                     else if (DateTime.TryParseExact(value.ToString(), DB_FORMAT_DATETIME, null, DateTimeStyles.None, out DateTime datetime)) return datetime;
                 }
             }
-            if (type == typeof(System.Double?)) { return Convert.ToDouble(value); }
+            if (type == typeof(System.Int16?)) { short shr = Convert.ToInt16(value); if (shr == DogManager.DB_SHORT_EMPTY) return null; else return shr; }  //short
+            if (type == typeof(System.Int64?)) { long lng = Convert.ToInt64(value); if (lng == DogManager.DB_SHORT_EMPTY) return null; else return lng; }  //long
+            if (type == typeof(System.Double?)) { double dbl = Convert.ToDouble(value); if (dbl == DogManager.DB_SHORT_EMPTY) return null; else return dbl; }  //double
+            if (type == typeof(System.Byte[])) { return value; }  //byte[]   ?????????????????????????????
 
             // Aggiungere altre conversioni speciali qui se necessario
             return value;
@@ -507,7 +542,6 @@ namespace ErpToolkit.Helpers.Db
                 .Append(DogManagerInt.sqlWhere(this, selModel, ref parameters));
             //access DB
             return this.ExecuteQuery<T>(sb.ToString(), parameters);
-            //$$//
         }
         //carica row con il contenuto del DB in base all'icode'  
         public T Row<T>(string icode)
@@ -523,6 +557,28 @@ namespace ErpToolkit.Helpers.Db
             DataTable dt = this.ExecuteQuery(sb.ToString(), parameters);
             if (dt.Rows.Count > 0) { objModel = this.DecodeSpecialRow<T>(dt.Rows[0], ""); }
             return objModel;
+        }
+        //salva su DB modifiche e nuovi record  
+        public DogResult Mnt<T>(T tablModel) { return Mnt((new List<object>() { (object)tablModel }).First()); }
+
+        public List<DogResult> Mnt(List<object> tabModels, string options = "", string transactionId = null)
+        {
+            if (tabModels == null) { throw new ArgumentNullException(nameof(tabModels)); }
+            List<DogResult> results = new List<DogResult>();
+            IDictionary<string, object> parameters = new Dictionary<string, object>();
+            StringBuilder sb = new StringBuilder();
+            foreach (var tab in tabModels)
+            {
+                if (tab == null) { throw new ArgumentNullException(nameof(tab)); }
+                sb.Append(DogManagerInt.sqlMantain(this, tab, ref parameters, ref results)).AppendLine("; ");
+
+            }
+            //access DB
+            string sql = sb.ToString(); 
+            if (sql.Contains('\'') || sql.Contains('#') || sql.Contains("--")) { throw new ArgumentOutOfRangeException(nameof(sql)); }  // Non devo passare i parametri esplicitamente ma sempre attraverso il Dictionary parameters 
+            int affectedRows = _getDbMg().ExecuteNonQuery(sql, EncodeSpecialFields(parameters, options), transactionId);
+            if (affectedRows != results.Count()) throw new DatabaseException(ERR_DB_TIMESTAMP, "Timestamp non valido o errore in insert/update.", null);
+            return results;
         }
 
 
