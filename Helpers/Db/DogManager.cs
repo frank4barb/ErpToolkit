@@ -1,6 +1,3 @@
-
-
-
 using MongoDB.Driver;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -28,6 +25,8 @@ namespace ErpToolkit.Helpers.Db
         internal const string DB_DATE_MAX = "9999/99/99"; //futuro
         internal const string DB_DATE_MIN = "    /  /  "; //passato
         internal const string DB_TIME_EMPTY = "  :  :  "; //vuoto
+        internal const string DB_DATETIME_EMPTY = "    /  /     :  :  "; //vuoto
+        internal const string DB_STRING_EMPTY = " "; //vuoto
         internal const short DB_SHORT_EMPTY = (short)(-32768); //vuoto
         internal const long DB_LONG_EMPTY = (long)(-2147483647 - 1); //vuoto
         internal const double DB_DOUBLE_EMPTY = (double)(-2147483648.0000); //vuoto
@@ -469,7 +468,7 @@ namespace ErpToolkit.Helpers.Db
         {
             if (value is string str)
             {
-                if (str == "") str = " ";  //in caso di stringa vuota devo sbianchettare
+                if (str == "") str = DB_STRING_EMPTY;  //in caso di stringa vuota devo sbianchettare
                 return str;  // ATTENZIONE!! non devo eliminare eventuali bianchi alla fine
             }
             if (value is DateOnly date)
@@ -516,8 +515,8 @@ namespace ErpToolkit.Helpers.Db
                 }
             }
             if (type == typeof(System.Int16?)) { short shr = Convert.ToInt16(value); if (shr == DogManager.DB_SHORT_EMPTY) return null; else return shr; }  //short
-            if (type == typeof(System.Int64?)) { long lng = Convert.ToInt64(value); if (lng == DogManager.DB_SHORT_EMPTY) return null; else return lng; }  //long
-            if (type == typeof(System.Double?)) { double dbl = Convert.ToDouble(value); if (dbl == DogManager.DB_SHORT_EMPTY) return null; else return dbl; }  //double
+            if (type == typeof(System.Int64?)) { long lng = Convert.ToInt64(value); if (lng == DogManager.DB_LONG_EMPTY) return null; else return lng; }  //long
+            if (type == typeof(System.Double?)) { double dbl = Convert.ToDouble(value); if (dbl == DogManager.DB_DOUBLE_EMPTY) return null; else return dbl; }  //double
             if (type == typeof(System.Byte[])) { return value; }  //byte[]   ?????????????????????????????
 
             // Aggiungere altre conversioni speciali qui se necessario
