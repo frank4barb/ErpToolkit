@@ -4,9 +4,7 @@ using System.Reflection;
 using System.Text;
 using System.Collections;
 using static ErpToolkit.Helpers.Db.DogManager;
-using Google.Protobuf.WellKnownTypes;
-using System.Globalization;
-using System.IO;
+
 
 namespace ErpToolkit.Helpers.Db
 {
@@ -183,9 +181,9 @@ namespace ErpToolkit.Helpers.Db
             // init
             int numParam = 0;
             if (tabModel == null) { throw new ArgumentNullException(nameof(tabModel)); }
-            StringBuilder sb = new StringBuilder(), sbValues = new StringBuilder(); 
+            StringBuilder sb = new StringBuilder(), sbValues = new StringBuilder();
             //ciclo sulle proprietà
-            Type type = tabModel.GetType();
+            System.Type type = tabModel.GetType();
             DogManager.DogTable tab = dogMng.tabTypes[type];
             if (tab == null) throw new ArgumentNullException(nameof(tabModel));
             //campi di sistema
@@ -219,8 +217,8 @@ namespace ErpToolkit.Helpers.Db
                 foreach (var property in type.GetProperties())
                 {
                     string propertyName = property.Name; // Get property name and value
-                    object propertyValue = property.GetValue(tabModel); 
-                    
+                    object propertyValue = property.GetValue(tabModel);
+
                     //string fieldOptions = ((ErpDogFieldAttribute)attribute).SqlFieldOptions?.ToString() ?? "";
                     DogManager.DogField fld = dogMng.tabProperties[propertyName];
 
@@ -322,7 +320,8 @@ namespace ErpToolkit.Helpers.Db
             {
                 //DELETED
                 sb.AppendLine($"{sqlPrefixExt}_DELETED = {DogManager.addParam("Y", ref parameters)}, ");
-                if (IS_NULLABLE_INDEX && IS_NULLABLE_ID) {  //se cancello il record elimino i campi chiave per evitare problemi di integrita referenziale
+                if (IS_NULLABLE_INDEX && IS_NULLABLE_ID)
+                {  //se cancello il record elimino i campi chiave per evitare problemi di integrita referenziale
                     foreach (var property in type.GetProperties())
                     {
                         string propertyName = property.Name; // Get property name and value
@@ -334,7 +333,7 @@ namespace ErpToolkit.Helpers.Db
                         }
                     }
                 }
-
+            }
             // Verifica condizioni
             if (numParam == 0) throw new ErpException("Nessuna parametro inserito");
             // terminatore di insert update
