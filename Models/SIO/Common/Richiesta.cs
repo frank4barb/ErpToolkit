@@ -167,15 +167,15 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioRi1Icode|K|Ri1Icode","sioRi1RecDate|N|Ri1Mdate,Ri1Cdate"
-        ,"sioRiDataRichiesta|N|RiDataRichiesta"
-        ,"sioRiIdOperatoreRichiedente|N|RiIdOperatoreRichiedente"
-        ,"sioRiIdTipoRichiestaRiStatoRichiesta|N|RiIdTipoRichiesta,RiStatoRichiesta"
-        ,"sioRiIdEpisodio|N|RiIdEpisodio"
-        ,"sioRiIdPaziente|N|RiIdPaziente"
-        ,"sioRiIdIstitutoRichiedente|N|RiIdIstitutoRichiedente"
-        ,"sioRiIdPostazioneRichiedente|N|RiIdPostazioneRichiedente"
-        ,"sioRiIdUnitaRichiedente|N|RiIdUnitaRichiedente"
+    return new List<string>() { "sioRi1Icode|K|RI__ICODE","sioRi1RecDate|N|RI__MDATE,RI__CDATE"
+        ,"sioRiDataRichiesta|N|RI_DATA_RICHIESTA"
+        ,"sioRiIdOperatoreRichiedente|N|RI_ID_OPERATORE_RICHIEDENTE"
+        ,"sioRiIdTipoRichiestariStatoRichiesta|N|RI_ID_TIPO_RICHIESTA,RI_STATO_RICHIESTA"
+        ,"sioRiIdEpisodio|N|RI_ID_EPISODIO"
+        ,"sioRiIdPaziente|N|RI_ID_PAZIENTE"
+        ,"sioRiIdIstitutoRichiedente|N|RI_ID_ISTITUTO_RICHIEDENTE"
+        ,"sioRiIdPostazioneRichiedente|N|RI_ID_POSTAZIONE_RICHIEDENTE"
+        ,"sioRiIdUnitaRichiedente|N|RI_ID_UNITA_RICHIEDENTE"
     };
 }
 }

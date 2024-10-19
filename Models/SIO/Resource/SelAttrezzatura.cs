@@ -24,93 +24,93 @@ public const string PREFIX = "At"; //Table Prefix
 public const string LIVEDESC = "D"; //Table type: Live or Description
 public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
 //127-124//REL_PRESTAZIONE_USA.PU_ID_RISORSA
-public List<ErpToolkit.Models.SIO.Act.RelPrestazioneUsa> RelPrestazioneUsa4PuIdRisorsa  { get; set; } = new List<ErpToolkit.Models.SIO.Act.RelPrestazioneUsa>();
+public List<ErpToolkit.Models.SIO.Act.RelPrestazioneUsa> SelRelPrestazioneUsa4PuIdRisorsa  { get; set; } = new List<ErpToolkit.Models.SIO.Act.RelPrestazioneUsa>();
 //1182-1179//REL_ATTIVITA_USA.AU_ID_RISORSA
-public List<ErpToolkit.Models.SIO.Act.RelAttivitaUsa> RelAttivitaUsa4AuIdRisorsa  { get; set; } = new List<ErpToolkit.Models.SIO.Act.RelAttivitaUsa>();
+public List<ErpToolkit.Models.SIO.Act.RelAttivitaUsa> SelRelAttivitaUsa4AuIdRisorsa  { get; set; } = new List<ErpToolkit.Models.SIO.Act.RelAttivitaUsa>();
 
 [Display(Name = "Codice", ShortName="", Description = "Codice assegnato dall'utente", Prompt="")]
 [ErpDogField("AT_CODICE", SqlFieldNameExt="AT_CODICE", SqlFieldOptions="[UID]", Xref="", SqlFieldProperties="prop() xref() xdup(ATTREZZATURA.AT__ICODE[AT__ICODE] {AT_CODICE=' '}) multbxref()")]
 [DataType(DataType.Text)]
-public string? AtCodice  { get; set; }
+public string? SelAtCodice  { get; set; }
 
 [Display(Name = "Classe Risorsa", ShortName="", Description = "Classe di risorsa E[quipaggiamenti]", Prompt="")]
 [ErpDogField("AT_CLASSE_RISORSA", SqlFieldNameExt="AT_CLASSE_RISORSA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup(TIPO_RISORSA.TS_CLASSE_RISORSA[ATTREZZATURA.AT_ID_TIPO_RISORSA]) multbxref()")]
 [DataType(DataType.Text)]
-public string? AtClasseRisorsa  { get; set; }
+public string? SelAtClasseRisorsa  { get; set; }
 
 [Display(Name = "Descrizione", ShortName="", Description = "Descrizione estesa", Prompt="")]
 [ErpDogField("AT_DESCRIZIONE", SqlFieldNameExt="AT_DESCRIZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? AtDescrizione  { get; set; }
+public string? SelAtDescrizione  { get; set; }
 
 [Display(Name = "Id Tipo Risorsa", ShortName="", Description = "Codice del tipo di attrezzatura", Prompt="")]
 [ErpDogField("AT_ID_TIPO_RISORSA", SqlFieldNameExt="AT_ID_TIPO_RISORSA", SqlFieldOptions="", Xref="Ts1Icode", SqlFieldProperties="prop() xref(TIPO_RISORSA.TS__ICODE) xdup() multbxref()")]
 [DefaultValue("")]
 [AutocompleteClient("TipoRisorsa", "AutocompleteGetAll", 10)]
 [DataType(DataType.Text)]
-public List<string> AtIdTipoRisorsa  { get; set; } = new List<string>();
+public List<string> SelAtIdTipoRisorsa  { get; set; } = new List<string>();
 
 [Display(Name = "Costo Unitario Uso", ShortName="", Description = "Costo unitario per l'utilizzo", Prompt="")]
 [ErpDogField("AT_COSTO_UNITARIO_USO", SqlFieldNameExt="AT_COSTO_UNITARIO_USO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("")]
-public double? AtCostoUnitarioUso  { get; set; }
+public double? SelAtCostoUnitarioUso  { get; set; }
 
 [Display(Name = "Misura Unitaria Uso", ShortName="", Description = "Unità di misura per l'utilizzo", Prompt="")]
 [ErpDogField("AT_MISURA_UNITARIA_USO", SqlFieldNameExt="AT_MISURA_UNITARIA_USO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? AtMisuraUnitariaUso  { get; set; }
+public string? SelAtMisuraUnitariaUso  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note", Prompt="")]
 [ErpDogField("AT_NOTE", SqlFieldNameExt="AT_NOTE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? AtNote  { get; set; }
+public string? SelAtNote  { get; set; }
 
 [Display(Name = "Disponibilita", ShortName="", Description = "Descrizione testuale dello stato attuale di disponibilità", Prompt="")]
 [ErpDogField("AT_DISPONIBILITA", SqlFieldNameExt="AT_DISPONIBILITA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? AtDisponibilita  { get; set; }
+public string? SelAtDisponibilita  { get; set; }
 
 [Display(Name = "Telefono Fornitore", ShortName="", Description = "Numero di telefono collegato all'attrezzatura", Prompt="")]
 [ErpDogField("AT_TELEFONO_FORNITORE", SqlFieldNameExt="AT_TELEFONO_FORNITORE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? AtTelefonoFornitore  { get; set; }
+public string? SelAtTelefonoFornitore  { get; set; }
 
 [Display(Name = "Numero Seriale", ShortName="", Description = "Numero di serie", Prompt="")]
 [ErpDogField("AT_NUMERO_SERIALE", SqlFieldNameExt="AT_NUMERO_SERIALE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? AtNumeroSeriale  { get; set; }
+public string? SelAtNumeroSeriale  { get; set; }
 
 [Display(Name = "Riferimenti Assistenza", ShortName="", Description = "Riferimento al fornitore per l'assistenza", Prompt="")]
 [ErpDogField("AT_RIFERIMENTI_ASSISTENZA", SqlFieldNameExt="AT_RIFERIMENTI_ASSISTENZA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? AtRiferimentiAssistenza  { get; set; }
+public string? SelAtRiferimentiAssistenza  { get; set; }
 
 [Display(Name = "Telefono Assistenza", ShortName="", Description = "Numero di telefono per l'assistenza", Prompt="")]
 [ErpDogField("AT_TELEFONO_ASSISTENZA", SqlFieldNameExt="AT_TELEFONO_ASSISTENZA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? AtTelefonoAssistenza  { get; set; }
+public string? SelAtTelefonoAssistenza  { get; set; }
 
 [Display(Name = "Data Ultima Manutenzione", ShortName="", Description = "Data dell'ultimo intervento di manutenzione", Prompt="")]
 [ErpDogField("AT_DATA_ULTIMA_MANUTENZIONE", SqlFieldNameExt="AT_DATA_ULTIMA_MANUTENZIONE", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-public DateRange AtDataUltimaManutenzione  { get; set; } = new DateRange();
+public DateRange SelAtDataUltimaManutenzione  { get; set; } = new DateRange();
 
 [Display(Name = "Frequenza Manutenzione", ShortName="", Description = "Frequenza della manutenzione periodica [numero di ore di funzionamento]", Prompt="")]
 [ErpDogField("AT_FREQUENZA_MANUTENZIONE", SqlFieldNameExt="AT_FREQUENZA_MANUTENZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("")]
-public short? AtFrequenzaManutenzione  { get; set; }
+public short? SelAtFrequenzaManutenzione  { get; set; }
 
 [Display(Name = "Uso Medio Giornaliero", ShortName="", Description = "Numero medio di ore effettive di lavoro al giorno", Prompt="")]
 [ErpDogField("AT_USO_MEDIO_GIORNALIERO", SqlFieldNameExt="AT_USO_MEDIO_GIORNALIERO", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("")]
-public double? AtUsoMedioGiornaliero  { get; set; }
+public double? SelAtUsoMedioGiornaliero  { get; set; }
 
 [Display(Name = "Data Prossima Manutenzione", ShortName="", Description = "Data della prossima manutenzione prevedibile", Prompt="")]
 [ErpDogField("AT_DATA_PROSSIMA_MANUTENZIONE", SqlFieldNameExt="AT_DATA_PROSSIMA_MANUTENZIONE", SqlFieldOptions="[DATE]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DateRange]
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-public DateRange AtDataProssimaManutenzione  { get; set; } = new DateRange();
+public DateRange SelAtDataProssimaManutenzione  { get; set; } = new DateRange();
 
 public bool TryValidateInt(ModelStateDictionary modelState) 
     { 
@@ -120,10 +120,10 @@ public bool TryValidateInt(ModelStateDictionary modelState)
         foreach (var idx in ListIndexes()) { 
             string fldLst = idx.Split("|")[2]; 
             foreach (var fld in fldLst.Split(",")) { 
-                if (DogManager.getPropertyValue(this, fld.Trim()) != null) found = true; 
-                if (DogManager.getPropertyValue(this, fld.Trim() + "[0]") != null) found = true; 
-                if (DogManager.getPropertyValue(this, fld.Trim() + ".StartDate") != null) found = true; 
-                if (DogManager.getPropertyValue(this, fld.Trim() + ".EndDate") != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim())) != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim()) + "[0]") != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim()) + ".StartDate") != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim()) + ".EndDate") != null) found = true; 
             } 
         } 
         if (!found) { isValidate = false;  modelState.AddModelError(string.Empty, "Deve essere compilato almeno un campo indicizzato."); } 
@@ -132,10 +132,10 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioAt1Icode|K|At1Icode","sioAt1RecDate|N|At1Mdate,At1Cdate"
-        ,"sioAtIdTipoRisorsa|N|AtIdTipoRisorsa"
-        ,"sioAt1VersionAt1Deleted|U|At1Version,At1Deleted"
-        ,"sioAtCodiceAt1VersionAt1Deleted|U|AtCodice,At1Version,At1Deleted"
+    return new List<string>() { "sioAt1Icode|K|AT__ICODE","sioAt1RecDate|N|AT__MDATE,AT__CDATE"
+        ,"sioAtIdTipoRisorsa|N|AT_ID_TIPO_RISORSA"
+        ,"sioAt1Versionat1Deleted|U|AT__VERSION,AT__DELETED"
+        ,"sioAtCodiceat1Versionat1Deleted|U|AT_CODICE,AT__VERSION,AT__DELETED"
     };
 }
 }

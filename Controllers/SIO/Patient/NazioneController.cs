@@ -55,7 +55,7 @@ namespace ErpToolkit.Controllers.SIO.Patient
         [BindProperty]
         public SelNazione Select { get; set; }
         [BindProperty]
-        public List<Nazione> List { get; set; }
+        public List<Nazione> List { get; set; } = new List<Nazione>();
         [BindProperty]
         public Nazione Row { get; set; }
         [TempData]
@@ -76,8 +76,9 @@ namespace ErpToolkit.Controllers.SIO.Patient
         [Authorize(AuthenticationSchemes = "Cookies")]
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Index()
+        public ActionResult Index(SelNazione selobj)
         {
+            if (selobj != null) { this.Select = selobj; }
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO
             if (!TryValidateModel(this.Select))
             {
@@ -107,16 +108,20 @@ namespace ErpToolkit.Controllers.SIO.Patient
             return PartialView("~/Views/SIO/Patient/Nazione/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Save([FromBody] Nazione obj)
+        public IActionResult Save([FromBody] ModalObject dataObj)
         {
+            if (dataObj == null || dataObj.data == null)
+            {
+                ModelState.AddModelError(string.Empty, "Oggetto Nazione non valido. null");
+                return PartialView("~/Views/SIO/Patient/Nazione/_PartialEdit.cshtml", null);
+            }
+            Nazione obj = System.Text.Json.JsonSerializer.Deserialize<Nazione>((System.Text.Json.JsonElement)dataObj.data);
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (!TryValidateModel(obj))
             {
                 ModelState.AddModelError(string.Empty, "Verifica valore dei campi: "+
                     string.Join(", ",
-                        ModelState.Where(ms => ms.Value.Errors.Any())
-                                              .Select(kvp => kvp.Key)
-                                              .ToArray()
+                        ModelState.Where(ms => ms.Value.Errors.Any()).Select(kvp => kvp.Key).ToArray()
                     )
                 );
                 return PartialView("~/Views/SIO/Patient/Nazione/_PartialEdit.cshtml", obj);

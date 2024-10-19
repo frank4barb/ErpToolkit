@@ -135,11 +135,11 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioTc1Icode|K|Tc1Icode","sioTc1RecDate|N|Tc1Mdate,Tc1Cdate"
-        ,"sioTcIdCategoriaDatoClinico|N|TcIdCategoriaDatoClinico"
-        ,"sioTcIdGruppoTcSequenza|N|TcIdGruppo,TcSequenza"
-        ,"sioTc1VersionTc1Deleted|U|Tc1Version,Tc1Deleted"
-        ,"sioTcCodiceTc1VersionTc1Deleted|U|TcCodice,Tc1Version,Tc1Deleted"
+    return new List<string>() { "sioTc1Icode|K|TC__ICODE","sioTc1RecDate|N|TC__MDATE,TC__CDATE"
+        ,"sioTcIdCategoriaDatoClinico|N|TC_ID_CATEGORIA_DATO_CLINICO"
+        ,"sioTcIdGruppotcSequenza|N|TC_ID_GRUPPO,TC_SEQUENZA"
+        ,"sioTc1Versiontc1Deleted|U|TC__VERSION,TC__DELETED"
+        ,"sioTcCodicetc1Versiontc1Deleted|U|TC_CODICE,TC__VERSION,TC__DELETED"
     };
 }
 }

@@ -35,7 +35,7 @@ namespace ErpToolkit.Helpers.Db
             if (objModel == null) { throw new ArgumentNullException(nameof(objModel)); }
             StringBuilder sb = new StringBuilder("select ");
             //ciclo sulle proprietà
-            Type type = objModel.GetType(); 
+            System.Type type = objModel.GetType(); 
             foreach (var property in type.GetProperties())
             {
                 try
@@ -54,7 +54,7 @@ namespace ErpToolkit.Helpers.Db
         internal static string sqlFrom(DogManager dogMng, object objModel, ref IDictionary<string, object> parameters)
         {
             if (objModel == null) { throw new ArgumentNullException(nameof(objModel)); }
-            Type type = objModel.GetType();
+            System.Type type = objModel.GetType();
             var sqlTableNameExt = dogMng.tabTypes[type]?.SqlTableNameExt?.Trim() ?? "";
             return $"from {sqlTableNameExt} \n";
         }
@@ -66,7 +66,7 @@ namespace ErpToolkit.Helpers.Db
             if (selModel == null) { throw new ArgumentNullException(nameof(selModel)); }
             StringBuilder sb = new StringBuilder("where ");
             //ciclo sulle proprietà
-            Type type = selModel.GetType();
+            System.Type type = selModel.GetType();
             foreach (var property in type.GetProperties())
             {
                 try
@@ -94,13 +94,13 @@ namespace ErpToolkit.Helpers.Db
                     numPreCond++; //condizione prevista
                     //---
                     // esiste una condizione
-                    var sqlFieldNameExt = dogMng.tabProperties[propertyName]?.SqlFieldNameExt?.Trim() ?? "";
+                    var sqlFieldNameExt = dogMng.selProperties[propertyName]?.SqlFieldNameExt?.Trim() ?? "";
                     if (sqlFieldNameExt != "")
                     {
                         try
                         {
                             //string fieldOptions = ((ErpDogFieldAttribute)attribute).SqlFieldOptions?.ToString() ?? "";
-                            DogManager.DogField fld = dogMng.tabProperties[propertyName];
+                            DogManager.DogField fld = dogMng.selProperties[propertyName];
                             if (propertyValue is string str)
                             {
                                 if (fld.optUID) sb.AppendLine($" {sqlFieldNameExt} = {DogManager.addParam(str.TrimEnd(), ref parameters)} and ");   //sb.AppendLine($" {sqlFieldNameExt} = '{str.TrimEnd()}' and ");
@@ -170,7 +170,7 @@ namespace ErpToolkit.Helpers.Db
         internal static string sqlWhere(DogManager dogMng, object objModel, string icode, ref IDictionary<string, object> parameters)
         {
             if (objModel == null) { throw new ArgumentNullException(nameof(objModel)); }
-            Type type = objModel.GetType();
+            System.Type type = objModel.GetType();
             var sqlRowIdNameExt = dogMng.tabTypes[type]?.SqlRowIdNameExt?.Trim() ?? "";
             return $"where {sqlRowIdNameExt} = {DogManager.addParam(icode, ref parameters)} ";
         }
@@ -375,7 +375,7 @@ namespace ErpToolkit.Helpers.Db
         {
             if (selModel == null) { throw new ArgumentNullException(nameof(selModel)); }
             //ciclo sulle proprietà
-            Type type = selModel.GetType(); PropertyInfo[] properties = type.GetProperties();
+            System.Type type = selModel.GetType(); PropertyInfo[] properties = type.GetProperties();
             foreach (var property in properties)
             {
                 try
@@ -437,7 +437,7 @@ namespace ErpToolkit.Helpers.Db
             try
             {
                 //ciclo sulle proprietà
-                Type type = selModel.GetType(); PropertyInfo[] properties = type.GetProperties();
+                System.Type type = selModel.GetType(); PropertyInfo[] properties = type.GetProperties();
                 foreach (var property in properties)
                 {
                     string propertyName = property.Name; // Get property name and value
@@ -447,7 +447,7 @@ namespace ErpToolkit.Helpers.Db
                     {
                         if (propValue != null)
                         {
-                            Type argumentType = propertyValue.GetType().GenericTypeArguments[0];
+                            System.Type argumentType = propertyValue.GetType().GenericTypeArguments[0];
                             TypeConverter typeConverter = TypeDescriptor.GetConverter(argumentType);
                             object propValueObj = typeConverter.ConvertFromString(propValue);
                             ((IList)propertyValue).Add(propValueObj); property.SetValue(selModel, propertyValue); return true;  //((ICollection<string>)propertyValue).Add(propValue); property.SetValue(selModel, propertyValue);
@@ -469,7 +469,7 @@ namespace ErpToolkit.Helpers.Db
                         {
                             if (propValue != null)
                             {
-                                Type argumentType = propertyValue.GetType().GenericTypeArguments[0];
+                                System.Type argumentType = propertyValue.GetType().GenericTypeArguments[0];
                                 TypeConverter typeConverter = TypeDescriptor.GetConverter(argumentType);
                                 object propValueObj = typeConverter.ConvertFromString(propValue);
                                 ((IList)propertyValue).Add(propValueObj); property.SetValue(selModel, propertyValue); return true;  //((ICollection<string>)propertyValue).Add(propValue); property.SetValue(selModel, propertyValue);

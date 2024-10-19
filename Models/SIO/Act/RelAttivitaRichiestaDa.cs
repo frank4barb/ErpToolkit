@@ -124,12 +124,12 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioAr1Icode|K|Ar1Icode","sioAr1RecDate|N|Ar1Mdate,Ar1Cdate"
-        ,"sioArIdOperatore|N|ArIdOperatore"
-        ,"sioArIdAttivita|N|ArIdAttivita"
-        ,"sioArIdIstituto|N|ArIdIstituto"
-        ,"sioArIdPostazione|N|ArIdPostazione"
-        ,"sioArIdUnita|N|ArIdUnita"
+    return new List<string>() { "sioAr1Icode|K|AR__ICODE","sioAr1RecDate|N|AR__MDATE,AR__CDATE"
+        ,"sioArIdOperatore|N|AR_ID_OPERATORE"
+        ,"sioArIdAttivita|N|AR_ID_ATTIVITA"
+        ,"sioArIdIstituto|N|AR_ID_ISTITUTO"
+        ,"sioArIdPostazione|N|AR_ID_POSTAZIONE"
+        ,"sioArIdUnita|N|AR_ID_UNITA"
     };
 }
 }

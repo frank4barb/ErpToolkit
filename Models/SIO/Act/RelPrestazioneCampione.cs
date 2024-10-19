@@ -112,12 +112,12 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioPc1Icode|K|Pc1Icode","sioPc1RecDate|N|Pc1Mdate,Pc1Cdate"
-        ,"sioPcIdPrestazionePcIdCampionePcTipoPc1VersionPc1Deleted|U|PcIdPrestazione,PcIdCampione,PcTipo,Pc1Version,Pc1Deleted"
-        ,"sioPcIdPrestazionePcTipo|N|PcIdPrestazione,PcTipo"
-        ,"sioPcIdTipoCampione|N|PcIdTipoCampione"
-        ,"sioPcIdCampione|N|PcIdCampione"
-        ,"sioPcIdTipoCampionePcIdPrestazionePcTipo|N|PcIdTipoCampione,PcIdPrestazione,PcTipo"
+    return new List<string>() { "sioPc1Icode|K|PC__ICODE","sioPc1RecDate|N|PC__MDATE,PC__CDATE"
+        ,"sioPcIdPrestazionepcIdCampionepcTipopc1Versionpc1Deleted|U|PC_ID_PRESTAZIONE,PC_ID_CAMPIONE,PC_TIPO,PC__VERSION,PC__DELETED"
+        ,"sioPcIdPrestazionepcTipo|N|PC_ID_PRESTAZIONE,PC_TIPO"
+        ,"sioPcIdTipoCampione|N|PC_ID_TIPO_CAMPIONE"
+        ,"sioPcIdCampione|N|PC_ID_CAMPIONE"
+        ,"sioPcIdTipoCampionepcIdPrestazionepcTipo|N|PC_ID_TIPO_CAMPIONE,PC_ID_PRESTAZIONE,PC_TIPO"
     };
 }
 }

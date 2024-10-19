@@ -63,11 +63,11 @@ namespace ErpToolkit.Helpers.Db
 
         public class DogResult
         {
-            public Type TabType { get; set; } = null;
+            public System.Type TabType { get; set; } = null;
             public char Action { get; set; } = ' ';
             public string Icode { get; set; } = "";
             public byte[]? Timestamp { get; set; } = null;
-            public DogResult(Type tabType, char action, string icode, byte[]? timestamp)
+            public DogResult(System.Type tabType, char action, string icode, byte[]? timestamp)
             {
                 TabType = tabType; Action = action; Icode = icode; Timestamp = timestamp;
             }
@@ -117,21 +117,22 @@ namespace ErpToolkit.Helpers.Db
         //***************************************************************************************************************************************************
 
         public readonly Dictionary<string, DogTable> tables = new Dictionary<string, DogTable>();
-        public readonly Dictionary<Type, DogTable> tabTypes = new Dictionary<Type, DogTable>();
+        public readonly Dictionary<System.Type, DogTable> tabTypes = new Dictionary<System.Type, DogTable>();
         public readonly Dictionary<string, DogTable> tabPrefixes = new Dictionary<string, DogTable>();
         public readonly Dictionary<int, DogTable> tabIntcodes = new Dictionary<int, DogTable>();
         public readonly Dictionary<string, DogField> tabProperties = new Dictionary<string, DogField>();
         public readonly Dictionary<string, DogField> tabFields = new Dictionary<string, DogField>();
         //----Tabelle di selezione-------------------------
         public readonly Dictionary<string, DogTable> selfilters = new Dictionary<string, DogTable>();
-        public readonly Dictionary<Type, DogTable> selTypes = new Dictionary<Type, DogTable>();
+        public readonly Dictionary<System.Type, DogTable> selTypes = new Dictionary<System.Type, DogTable>();
+        public readonly Dictionary<string, DogField> selProperties = new Dictionary<string, DogField>();
         public readonly Dictionary<string, DogField> selFields = new Dictionary<string, DogField>();
 
 
         public class DogTable
         {
             public string tableName = "";
-            public Type tableTpy;
+            public System.Type tableTpy;
             public List<DogField> fields = new List<DogField>();
             //--
             public string Description = "";
@@ -154,7 +155,7 @@ namespace ErpToolkit.Helpers.Db
         public class DogField
         {
             public string fieldName = "";
-            public Type fieldTyp;
+            public System.Type fieldTyp;
             public DogTable table;
             //--
             public string SqlFieldName = "";  // eg: AV_CODICE
@@ -273,6 +274,7 @@ namespace ErpToolkit.Helpers.Db
                                         tabFields.Add(fld.SqlFieldName, fld);
                                         break;
                                     case "SEL":
+                                        selProperties.Add(fld.fieldName, fld);
                                         selFields.Add(fld.SqlFieldName, fld);
                                         break;
                                 }
@@ -312,6 +314,7 @@ namespace ErpToolkit.Helpers.Db
             if (tabFields != null) { tabFields.Clear(); }
             if (selfilters != null) { selfilters.Clear(); }
             if (selTypes != null) { selTypes.Clear(); }
+            if (selProperties != null) { selProperties.Clear(); }
             if (selFields != null) { selFields.Clear(); }
             GC.SuppressFinalize(this);
         }
@@ -432,7 +435,7 @@ namespace ErpToolkit.Helpers.Db
         }
         public T DecodeSpecialRow<T>(DataRow dr, string options = "")
         {
-            Type temp = typeof(T);
+            System.Type temp = typeof(T);
             //decode in object array
             if (temp == typeof(System.Object[]))
             {
@@ -488,7 +491,7 @@ namespace ErpToolkit.Helpers.Db
             // Aggiungere altre conversioni speciali qui se necessario
             return value;
         }
-        private object DecodeSpecialField(Type type, string colName, object value, string options = "")
+        private object DecodeSpecialField(System.Type type, string colName, object value, string options = "")
         {
             if (value == null) return null;
             if (value.GetType() == typeof(string))

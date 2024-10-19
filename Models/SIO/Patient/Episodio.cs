@@ -267,20 +267,20 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioEp1Icode|K|Ep1Icode","sioEp1RecDate|N|Ep1Mdate,Ep1Cdate"
-        ,"sioEpLetto|N|EpLetto"
-        ,"sioEpDataFine|N|EpDataFine"
-        ,"sioEpIdCorsiaEpStatoEpisodio|N|EpIdCorsia,EpStatoEpisodio"
-        ,"sioEpIdTipoEpisodioEpDataInizio|N|EpIdTipoEpisodio,EpDataInizio"
-        ,"sioEpIdAttoAmministrativo|N|EpIdAttoAmministrativo"
-        ,"sioEpIdDiagnosiDimissione|N|EpIdDiagnosiDimissione"
-        ,"sioEpCartellaPs|N|EpCartellaPs"
-        ,"sioEpIdTipoEpisodio|N|EpIdTipoEpisodio"
-        ,"sioEpIdPaziente|N|EpIdPaziente"
-        ,"sioEpIdRepartoEpStatoEpisodio|N|EpIdReparto,EpStatoEpisodio"
-        ,"sioEpDataInizio|N|EpDataInizio"
-        ,"sioEpStatoEpisodioEpDataInizioEpDataFine|N|EpStatoEpisodio,EpDataInizio,EpDataFine"
-        ,"sioEpCodEpisodioEp1VersionEp1Deleted|U|EpCodEpisodio,Ep1Version,Ep1Deleted"
+    return new List<string>() { "sioEp1Icode|K|EP__ICODE","sioEp1RecDate|N|EP__MDATE,EP__CDATE"
+        ,"sioEpLetto|N|EP_LETTO"
+        ,"sioEpDataFine|N|EP_DATA_FINE"
+        ,"sioEpIdCorsiaepStatoEpisodio|N|EP_ID_CORSIA,EP_STATO_EPISODIO"
+        ,"sioEpIdTipoEpisodioepDataInizio|N|EP_ID_TIPO_EPISODIO,EP_DATA_INIZIO"
+        ,"sioEpIdAttoAmministrativo|N|EP_ID_ATTO_AMMINISTRATIVO"
+        ,"sioEpIdDiagnosiDimissione|N|EP_ID_DIAGNOSI_DIMISSIONE"
+        ,"sioEpCartellaPs|N|EP_CARTELLA_PS"
+        ,"sioEpIdTipoEpisodio|N|EP_ID_TIPO_EPISODIO"
+        ,"sioEpIdPaziente|N|EP_ID_PAZIENTE"
+        ,"sioEpIdRepartoepStatoEpisodio|N|EP_ID_REPARTO,EP_STATO_EPISODIO"
+        ,"sioEpDataInizio|N|EP_DATA_INIZIO"
+        ,"sioEpStatoEpisodioepDataInizioepDataFine|N|EP_STATO_EPISODIO,EP_DATA_INIZIO,EP_DATA_FINE"
+        ,"sioEpCodEpisodioep1Versionep1Deleted|U|EP_COD_EPISODIO,EP__VERSION,EP__DELETED"
     };
 }
 }

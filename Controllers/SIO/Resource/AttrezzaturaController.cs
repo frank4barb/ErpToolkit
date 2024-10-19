@@ -55,7 +55,7 @@ namespace ErpToolkit.Controllers.SIO.Resource
         [BindProperty]
         public SelAttrezzatura Select { get; set; }
         [BindProperty]
-        public List<Attrezzatura> List { get; set; }
+        public List<Attrezzatura> List { get; set; } = new List<Attrezzatura>();
         [BindProperty]
         public Attrezzatura Row { get; set; }
         [TempData]
@@ -76,8 +76,9 @@ namespace ErpToolkit.Controllers.SIO.Resource
         [Authorize(AuthenticationSchemes = "Cookies")]
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Index()
+        public ActionResult Index(SelAttrezzatura selobj)
         {
+            if (selobj != null) { this.Select = selobj; }
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO
             if (!TryValidateModel(this.Select))
             {
@@ -107,16 +108,20 @@ namespace ErpToolkit.Controllers.SIO.Resource
             return PartialView("~/Views/SIO/Resource/Attrezzatura/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Save([FromBody] Attrezzatura obj)
+        public IActionResult Save([FromBody] ModalObject dataObj)
         {
+            if (dataObj == null || dataObj.data == null)
+            {
+                ModelState.AddModelError(string.Empty, "Oggetto Attrezzatura non valido. null");
+                return PartialView("~/Views/SIO/Resource/Attrezzatura/_PartialEdit.cshtml", null);
+            }
+            Attrezzatura obj = System.Text.Json.JsonSerializer.Deserialize<Attrezzatura>((System.Text.Json.JsonElement)dataObj.data);
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (!TryValidateModel(obj))
             {
                 ModelState.AddModelError(string.Empty, "Verifica valore dei campi: "+
                     string.Join(", ",
-                        ModelState.Where(ms => ms.Value.Errors.Any())
-                                              .Select(kvp => kvp.Key)
-                                              .ToArray()
+                        ModelState.Where(ms => ms.Value.Errors.Any()).Select(kvp => kvp.Key).ToArray()
                     )
                 );
                 return PartialView("~/Views/SIO/Resource/Attrezzatura/_PartialEdit.cshtml", obj);

@@ -3,107 +3,107 @@
     ViewData["Title"] = "Materiale Edit";
 }
 <div class="modal-dialog" role="document">
-    @Html.AntiForgeryToken()
-    <!--GESTISCE AZIONI CLICK PULSANTE-->
-    @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
-    @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
-    @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="container">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    <label asp-for="MtCodice" class="control-label"></label>
-                    <input asp-for="MtCodice" class="form-control" />
-                    <span asp-validation-for="MtCodice" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MtDescrizione" class="control-label"></label>
-                    <input asp-for="MtDescrizione" class="form-control" />
-                    <span asp-validation-for="MtDescrizione" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MtIdTipoRisorsa" class="control-label"></label>
-                    <input asp-for="MtIdTipoRisorsa" class="form-control" />
-                    <span asp-validation-for="MtIdTipoRisorsa" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MtCostoUnitarioUso" class="control-label"></label>
-                    <input asp-for="MtCostoUnitarioUso" class="form-control" />
-                    <span asp-validation-for="MtCostoUnitarioUso" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MtMisuraUnitariaUso" class="control-label"></label>
-                    <input asp-for="MtMisuraUnitariaUso" class="form-control" />
-                    <span asp-validation-for="MtMisuraUnitariaUso" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MtNote" class="control-label"></label>
-                    <input asp-for="MtNote" class="form-control" />
-                    <span asp-validation-for="MtNote" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MtDisponibilita" class="control-label"></label>
-                    <input asp-for="MtDisponibilita" class="form-control" />
-                    <span asp-validation-for="MtDisponibilita" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MtTelefonoFornitore" class="control-label"></label>
-                    <input asp-for="MtTelefonoFornitore" class="form-control" />
-                    <span asp-validation-for="MtTelefonoFornitore" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MtQuantitaDisponibile" class="control-label"></label>
-                    <input asp-for="MtQuantitaDisponibile" class="form-control" />
-                    <span asp-validation-for="MtQuantitaDisponibile" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MtQuantitaMinimaMagazzino" class="control-label"></label>
-                    <input asp-for="MtQuantitaMinimaMagazzino" class="form-control" />
-                    <span asp-validation-for="MtQuantitaMinimaMagazzino" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MtUsoMedioGiornaliero" class="control-label"></label>
-                    <input asp-for="MtUsoMedioGiornaliero" class="form-control" />
-                    <span asp-validation-for="MtUsoMedioGiornaliero" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MtDataUltimoOrdine" class="control-label"></label>
-                    <input asp-for="MtDataUltimoOrdine" class="form-control" />
-                    <span asp-validation-for="MtDataUltimoOrdine" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MtQuantitaUltimoOrdine" class="control-label"></label>
-                    <input asp-for="MtQuantitaUltimoOrdine" class="form-control" />
-                    <span asp-validation-for="MtQuantitaUltimoOrdine" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MtDataProssimoOrdine" class="control-label"></label>
-                    <input asp-for="MtDataProssimoOrdine" class="form-control" />
-                    <span asp-validation-for="MtDataProssimoOrdine" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MtQuantitaMediaOrdine" class="control-label"></label>
-                    <input asp-for="MtQuantitaMediaOrdine" class="form-control" />
-                    <span asp-validation-for="MtQuantitaMediaOrdine" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="MtCodiceNazionale" class="control-label"></label>
-                    <input asp-for="MtCodiceNazionale" class="form-control" />
-                    <span asp-validation-for="MtCodiceNazionale" class="text-danger"></span>
-                </div>
+        @Html.AntiForgeryToken()
+        <!--GESTISCE AZIONI CLICK PULSANTE-->
+        @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+        @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+        @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <br />
+            <div class="modal-body">
+                <div class="container">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label asp-for="MtCodice" class="control-label"></label>
+                        <input asp-for="MtCodice" class="form-control" />
+                        <span asp-validation-for="MtCodice" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MtDescrizione" class="control-label"></label>
+                        <input asp-for="MtDescrizione" class="form-control" />
+                        <span asp-validation-for="MtDescrizione" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MtIdTipoRisorsa" class="control-label"></label>
+                        <input asp-for="MtIdTipoRisorsa" class="form-control" />
+                        <span asp-validation-for="MtIdTipoRisorsa" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MtCostoUnitarioUso" class="control-label"></label>
+                        <input asp-for="MtCostoUnitarioUso" class="form-control" />
+                        <span asp-validation-for="MtCostoUnitarioUso" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MtMisuraUnitariaUso" class="control-label"></label>
+                        <input asp-for="MtMisuraUnitariaUso" class="form-control" />
+                        <span asp-validation-for="MtMisuraUnitariaUso" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MtNote" class="control-label"></label>
+                        <input asp-for="MtNote" class="form-control" />
+                        <span asp-validation-for="MtNote" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MtDisponibilita" class="control-label"></label>
+                        <input asp-for="MtDisponibilita" class="form-control" />
+                        <span asp-validation-for="MtDisponibilita" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MtTelefonoFornitore" class="control-label"></label>
+                        <input asp-for="MtTelefonoFornitore" class="form-control" />
+                        <span asp-validation-for="MtTelefonoFornitore" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MtQuantitaDisponibile" class="control-label"></label>
+                        <input asp-for="MtQuantitaDisponibile" class="form-control" />
+                        <span asp-validation-for="MtQuantitaDisponibile" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MtQuantitaMinimaMagazzino" class="control-label"></label>
+                        <input asp-for="MtQuantitaMinimaMagazzino" class="form-control" />
+                        <span asp-validation-for="MtQuantitaMinimaMagazzino" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MtUsoMedioGiornaliero" class="control-label"></label>
+                        <input asp-for="MtUsoMedioGiornaliero" class="form-control" />
+                        <span asp-validation-for="MtUsoMedioGiornaliero" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MtDataUltimoOrdine" class="control-label"></label>
+                        <input asp-for="MtDataUltimoOrdine" class="form-control" />
+                        <span asp-validation-for="MtDataUltimoOrdine" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MtQuantitaUltimoOrdine" class="control-label"></label>
+                        <input asp-for="MtQuantitaUltimoOrdine" class="form-control" />
+                        <span asp-validation-for="MtQuantitaUltimoOrdine" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MtDataProssimoOrdine" class="control-label"></label>
+                        <input asp-for="MtDataProssimoOrdine" class="form-control" />
+                        <span asp-validation-for="MtDataProssimoOrdine" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MtQuantitaMediaOrdine" class="control-label"></label>
+                        <input asp-for="MtQuantitaMediaOrdine" class="form-control" />
+                        <span asp-validation-for="MtQuantitaMediaOrdine" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MtCodiceNazionale" class="control-label"></label>
+                        <input asp-for="MtCodiceNazionale" class="form-control" />
+                        <span asp-validation-for="MtCodiceNazionale" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/Materiale/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
+            </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-            <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/Materiale/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
-        </div>
-    </div>
 </div>

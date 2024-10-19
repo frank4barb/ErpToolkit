@@ -27,24 +27,24 @@ public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
 [Display(Name = "Codice", ShortName="", Description = "Codice assegnato dall'utente", Prompt="")]
 [ErpDogField("TD_CODICE", SqlFieldNameExt="TD_CODICE", SqlFieldOptions="[UID]", Xref="", SqlFieldProperties="prop() xref() xdup(TIPO_DIAGNOSI.TD__ICODE[TD__ICODE] {TD_CODICE=' '}) multbxref()")]
 [DataType(DataType.Text)]
-public string? TdCodice  { get; set; }
+public string? SelTdCodice  { get; set; }
 
 [Display(Name = "Descrizione", ShortName="", Description = "Descrizione estesa", Prompt="")]
 [ErpDogField("TD_DESCRIZIONE", SqlFieldNameExt="TD_DESCRIZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? TdDescrizione  { get; set; }
+public string? SelTdDescrizione  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note", Prompt="")]
 [ErpDogField("TD_NOTE", SqlFieldNameExt="TD_NOTE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? TdNote  { get; set; }
+public string? SelTdNote  { get; set; }
 
 [Display(Name = "Id Gruppo", ShortName="", Description = "Superclasse che raggruppa la classificazione corrente", Prompt="")]
 [ErpDogField("TD_ID_GRUPPO", SqlFieldNameExt="TD_ID_GRUPPO", SqlFieldOptions="", Xref="Td1Icode", SqlFieldProperties="prop() xref(TIPO_DIAGNOSI.TD__ICODE) xdup() multbxref()")]
 [DefaultValue("")]
 [AutocompleteClient("TipoDiagnosi", "AutocompleteGetAll", 10)]
 [DataType(DataType.Text)]
-public List<string> TdIdGruppo  { get; set; } = new List<string>();
+public List<string> SelTdIdGruppo  { get; set; } = new List<string>();
 
 public bool TryValidateInt(ModelStateDictionary modelState) 
     { 
@@ -54,10 +54,10 @@ public bool TryValidateInt(ModelStateDictionary modelState)
         foreach (var idx in ListIndexes()) { 
             string fldLst = idx.Split("|")[2]; 
             foreach (var fld in fldLst.Split(",")) { 
-                if (DogManager.getPropertyValue(this, fld.Trim()) != null) found = true; 
-                if (DogManager.getPropertyValue(this, fld.Trim() + "[0]") != null) found = true; 
-                if (DogManager.getPropertyValue(this, fld.Trim() + ".StartDate") != null) found = true; 
-                if (DogManager.getPropertyValue(this, fld.Trim() + ".EndDate") != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim())) != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim()) + "[0]") != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim()) + ".StartDate") != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim()) + ".EndDate") != null) found = true; 
             } 
         } 
         if (!found) { isValidate = false;  modelState.AddModelError(string.Empty, "Deve essere compilato almeno un campo indicizzato."); } 
@@ -66,10 +66,10 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioTd1Icode|K|Td1Icode","sioTd1RecDate|N|Td1Mdate,Td1Cdate"
-        ,"sioTdIdGruppo|N|TdIdGruppo"
-        ,"sioTd1VersionTd1Deleted|U|Td1Version,Td1Deleted"
-        ,"sioTdCodiceTd1VersionTd1Deleted|U|TdCodice,Td1Version,Td1Deleted"
+    return new List<string>() { "sioTd1Icode|K|TD__ICODE","sioTd1RecDate|N|TD__MDATE,TD__CDATE"
+        ,"sioTdIdGruppo|N|TD_ID_GRUPPO"
+        ,"sioTd1Versiontd1Deleted|U|TD__VERSION,TD__DELETED"
+        ,"sioTdCodicetd1Versiontd1Deleted|U|TD_CODICE,TD__VERSION,TD__DELETED"
     };
 }
 }

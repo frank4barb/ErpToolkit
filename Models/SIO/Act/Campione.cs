@@ -184,12 +184,12 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioCp1Icode|K|Cp1Icode","sioCp1RecDate|N|Cp1Mdate,Cp1Cdate"
-        ,"sioCpCodiceAssoluto|U|CpCodiceAssoluto"
-        ,"sioCpIdEpisodio|N|CpIdEpisodio"
-        ,"sioCpIdPosizioneAttuale|N|CpIdPosizioneAttuale"
-        ,"sioCpIdTipoCampioneCpIdPaziente|N|CpIdTipoCampione,CpIdPaziente"
-        ,"sioCpCodiceUnivocoCp1VersionCp1Deleted|U|CpCodiceUnivoco,Cp1Version,Cp1Deleted"
+    return new List<string>() { "sioCp1Icode|K|CP__ICODE","sioCp1RecDate|N|CP__MDATE,CP__CDATE"
+        ,"sioCpCodiceAssoluto|U|CP_CODICE_ASSOLUTO"
+        ,"sioCpIdEpisodio|N|CP_ID_EPISODIO"
+        ,"sioCpIdPosizioneAttuale|N|CP_ID_POSIZIONE_ATTUALE"
+        ,"sioCpIdTipoCampionecpIdPaziente|N|CP_ID_TIPO_CAMPIONE,CP_ID_PAZIENTE"
+        ,"sioCpCodiceUnivococp1Versioncp1Deleted|U|CP_CODICE_UNIVOCO,CP__VERSION,CP__DELETED"
     };
 }
 }

@@ -27,24 +27,24 @@ public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
 [Display(Name = "Codice", ShortName="", Description = "Codice utente del distretto (CAP)", Prompt="")]
 [ErpDogField("DI_CODICE", SqlFieldNameExt="DI_CODICE", SqlFieldOptions="[UID]", Xref="", SqlFieldProperties="prop() xref() xdup(DISTRETTO.DI__ICODE[DI__ICODE] {DI_CODICE=' '}) multbxref()")]
 [DataType(DataType.Text)]
-public string? DiCodice  { get; set; }
+public string? SelDiCodice  { get; set; }
 
 [Display(Name = "Nome", ShortName="", Description = "Descrizione estesa del distretto", Prompt="")]
 [ErpDogField("DI_NOME", SqlFieldNameExt="DI_NOME", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? DiNome  { get; set; }
+public string? SelDiNome  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note sul distretto", Prompt="")]
 [ErpDogField("DI_NOTE", SqlFieldNameExt="DI_NOTE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? DiNote  { get; set; }
+public string? SelDiNote  { get; set; }
 
 [Display(Name = "Id Comune", ShortName="", Description = "Città in cui si trova il distretto", Prompt="")]
 [ErpDogField("DI_ID_COMUNE", SqlFieldNameExt="DI_ID_COMUNE", SqlFieldOptions="", Xref="Cm1Icode", SqlFieldProperties="prop() xref(COMUNE.CM__ICODE) xdup() multbxref()")]
 [DefaultValue("")]
 [AutocompleteClient("Comune", "AutocompleteGetAll", 10)]
 [DataType(DataType.Text)]
-public List<string> DiIdComune  { get; set; } = new List<string>();
+public List<string> SelDiIdComune  { get; set; } = new List<string>();
 
 public bool TryValidateInt(ModelStateDictionary modelState) 
     { 
@@ -54,10 +54,10 @@ public bool TryValidateInt(ModelStateDictionary modelState)
         foreach (var idx in ListIndexes()) { 
             string fldLst = idx.Split("|")[2]; 
             foreach (var fld in fldLst.Split(",")) { 
-                if (DogManager.getPropertyValue(this, fld.Trim()) != null) found = true; 
-                if (DogManager.getPropertyValue(this, fld.Trim() + "[0]") != null) found = true; 
-                if (DogManager.getPropertyValue(this, fld.Trim() + ".StartDate") != null) found = true; 
-                if (DogManager.getPropertyValue(this, fld.Trim() + ".EndDate") != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim())) != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim()) + "[0]") != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim()) + ".StartDate") != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim()) + ".EndDate") != null) found = true; 
             } 
         } 
         if (!found) { isValidate = false;  modelState.AddModelError(string.Empty, "Deve essere compilato almeno un campo indicizzato."); } 
@@ -66,10 +66,10 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioDi1Icode|K|Di1Icode","sioDi1RecDate|N|Di1Mdate,Di1Cdate"
-        ,"sioDiIdComune|N|DiIdComune"
-        ,"sioDi1VersionDi1Deleted|U|Di1Version,Di1Deleted"
-        ,"sioDiCodiceDi1VersionDi1Deleted|U|DiCodice,Di1Version,Di1Deleted"
+    return new List<string>() { "sioDi1Icode|K|DI__ICODE","sioDi1RecDate|N|DI__MDATE,DI__CDATE"
+        ,"sioDiIdComune|N|DI_ID_COMUNE"
+        ,"sioDi1Versiondi1Deleted|U|DI__VERSION,DI__DELETED"
+        ,"sioDiCodicedi1Versiondi1Deleted|U|DI_CODICE,DI__VERSION,DI__DELETED"
     };
 }
 }

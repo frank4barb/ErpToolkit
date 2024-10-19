@@ -3,102 +3,102 @@
     ViewData["Title"] = "Attivita Edit";
 }
 <div class="modal-dialog" role="document">
-    @Html.AntiForgeryToken()
-    <!--GESTISCE AZIONI CLICK PULSANTE-->
-    @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
-    @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
-    @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="container">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    <label asp-for="AvCodice" class="control-label"></label>
-                    <input asp-for="AvCodice" class="form-control" />
-                    <span asp-validation-for="AvCodice" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AvDescrizione" class="control-label"></label>
-                    <input asp-for="AvDescrizione" class="form-control" />
-                    <span asp-validation-for="AvDescrizione" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AvNote" class="control-label"></label>
-                    <input asp-for="AvNote" class="form-control" />
-                    <span asp-validation-for="AvNote" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AvFiltroRegimeErogazione" class="control-label"></label>
-                    <input asp-for="AvFiltroRegimeErogazione" class="form-control" />
-                    <span asp-validation-for="AvFiltroRegimeErogazione" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AvCostoMedio" class="control-label"></label>
-                    <input asp-for="AvCostoMedio" class="form-control" />
-                    <span asp-validation-for="AvCostoMedio" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AvIdGruppo" class="control-label"></label>
-                    <input asp-for="AvIdGruppo" class="form-control" />
-                    <span asp-validation-for="AvIdGruppo" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AvAttivitaPreferenziale" class="control-label"></label>
-                    <input asp-for="AvAttivitaPreferenziale" class="form-control" />
-                    <span asp-validation-for="AvAttivitaPreferenziale" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AvDurataValidita" class="control-label"></label>
-                    <input asp-for="AvDurataValidita" class="form-control" />
-                    <span asp-validation-for="AvDurataValidita" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AvDurataMedia" class="control-label"></label>
-                    <input asp-for="AvDurataMedia" class="form-control" />
-                    <span asp-validation-for="AvDurataMedia" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AvInEvidenza" class="control-label"></label>
-                    <input asp-for="AvInEvidenza" class="form-control" />
-                    <span asp-validation-for="AvInEvidenza" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AvIdTipoAttivita" class="control-label"></label>
-                    <input asp-for="AvIdTipoAttivita" class="form-control" />
-                    <span asp-validation-for="AvIdTipoAttivita" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AvRoutine" class="control-label"></label>
-                    <input asp-for="AvRoutine" class="form-control" />
-                    <span asp-validation-for="AvRoutine" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AvNoteEstese" class="control-label"></label>
-                    <input asp-for="AvNoteEstese" class="form-control" />
-                    <span asp-validation-for="AvNoteEstese" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AvAttributi1" class="control-label"></label>
-                    <input asp-for="AvAttributi1" class="form-control" />
-                    <span asp-validation-for="AvAttributi1" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AvAttributi2" class="control-label"></label>
-                    <input asp-for="AvAttributi2" class="form-control" />
-                    <span asp-validation-for="AvAttributi2" class="text-danger"></span>
-                </div>
+        @Html.AntiForgeryToken()
+        <!--GESTISCE AZIONI CLICK PULSANTE-->
+        @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+        @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+        @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <br />
+            <div class="modal-body">
+                <div class="container">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label asp-for="AvCodice" class="control-label"></label>
+                        <input asp-for="AvCodice" class="form-control" />
+                        <span asp-validation-for="AvCodice" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvDescrizione" class="control-label"></label>
+                        <input asp-for="AvDescrizione" class="form-control" />
+                        <span asp-validation-for="AvDescrizione" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvNote" class="control-label"></label>
+                        <input asp-for="AvNote" class="form-control" />
+                        <span asp-validation-for="AvNote" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvFiltroRegimeErogazione" class="control-label"></label>
+                        <input asp-for="AvFiltroRegimeErogazione" class="form-control" />
+                        <span asp-validation-for="AvFiltroRegimeErogazione" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvCostoMedio" class="control-label"></label>
+                        <input asp-for="AvCostoMedio" class="form-control" />
+                        <span asp-validation-for="AvCostoMedio" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvIdGruppo" class="control-label"></label>
+                        <input asp-for="AvIdGruppo" class="form-control" />
+                        <span asp-validation-for="AvIdGruppo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvAttivitaPreferenziale" class="control-label"></label>
+                        <input asp-for="AvAttivitaPreferenziale" class="form-control" />
+                        <span asp-validation-for="AvAttivitaPreferenziale" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvDurataValidita" class="control-label"></label>
+                        <input asp-for="AvDurataValidita" class="form-control" />
+                        <span asp-validation-for="AvDurataValidita" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvDurataMedia" class="control-label"></label>
+                        <input asp-for="AvDurataMedia" class="form-control" />
+                        <span asp-validation-for="AvDurataMedia" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvInEvidenza" class="control-label"></label>
+                        <input asp-for="AvInEvidenza" class="form-control" />
+                        <span asp-validation-for="AvInEvidenza" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvIdTipoAttivita" class="control-label"></label>
+                        <input asp-for="AvIdTipoAttivita" class="form-control" />
+                        <span asp-validation-for="AvIdTipoAttivita" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvRoutine" class="control-label"></label>
+                        <input asp-for="AvRoutine" class="form-control" />
+                        <span asp-validation-for="AvRoutine" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvNoteEstese" class="control-label"></label>
+                        <input asp-for="AvNoteEstese" class="form-control" />
+                        <span asp-validation-for="AvNoteEstese" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvAttributi1" class="control-label"></label>
+                        <input asp-for="AvAttributi1" class="form-control" />
+                        <span asp-validation-for="AvAttributi1" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvAttributi2" class="control-label"></label>
+                        <input asp-for="AvAttributi2" class="form-control" />
+                        <span asp-validation-for="AvAttributi2" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/Attivita/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
+            </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-            <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/Attivita/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
-        </div>
-    </div>
 </div>

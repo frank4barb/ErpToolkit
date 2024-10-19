@@ -3,102 +3,102 @@
     ViewData["Title"] = "Campione Edit";
 }
 <div class="modal-dialog" role="document">
-    @Html.AntiForgeryToken()
-    <!--GESTISCE AZIONI CLICK PULSANTE-->
-    @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
-    @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
-    @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="container">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    <label asp-for="CpIdTipoCampione" class="control-label"></label>
-                    <input asp-for="CpIdTipoCampione" class="form-control" />
-                    <span asp-validation-for="CpIdTipoCampione" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CpDescrizione" class="control-label"></label>
-                    <input asp-for="CpDescrizione" class="form-control" />
-                    <span asp-validation-for="CpDescrizione" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CpCodiceUnivoco" class="control-label"></label>
-                    <input asp-for="CpCodiceUnivoco" class="form-control" />
-                    <span asp-validation-for="CpCodiceUnivoco" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CpDataPrelievo" class="control-label"></label>
-                    <input asp-for="CpDataPrelievo" class="form-control" />
-                    <span asp-validation-for="CpDataPrelievo" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CpOraPrelievo" class="control-label"></label>
-                    <input asp-for="CpOraPrelievo" class="form-control" />
-                    <span asp-validation-for="CpOraPrelievo" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CpNote" class="control-label"></label>
-                    <input asp-for="CpNote" class="form-control" />
-                    <span asp-validation-for="CpNote" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CpIdEpisodio" class="control-label"></label>
-                    <input asp-for="CpIdEpisodio" class="form-control" />
-                    <span asp-validation-for="CpIdEpisodio" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CpIdPaziente" class="control-label"></label>
-                    <input asp-for="CpIdPaziente" class="form-control" />
-                    <span asp-validation-for="CpIdPaziente" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CpCodiceAssoluto" class="control-label"></label>
-                    <input asp-for="CpCodiceAssoluto" class="form-control" />
-                    <span asp-validation-for="CpCodiceAssoluto" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CpStatoCampione" class="control-label"></label>
-                    <input asp-for="CpStatoCampione" class="form-control" />
-                    <span asp-validation-for="CpStatoCampione" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CpIdPosizioneAttuale" class="control-label"></label>
-                    <input asp-for="CpIdPosizioneAttuale" class="form-control" />
-                    <span asp-validation-for="CpIdPosizioneAttuale" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CpDescPosizioneAttuale" class="control-label"></label>
-                    <input asp-for="CpDescPosizioneAttuale" class="form-control" />
-                    <span asp-validation-for="CpDescPosizioneAttuale" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CpDataCambiamentoStato" class="control-label"></label>
-                    <input asp-for="CpDataCambiamentoStato" class="form-control" />
-                    <span asp-validation-for="CpDataCambiamentoStato" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CpOraCambiamentoStato" class="control-label"></label>
-                    <input asp-for="CpOraCambiamentoStato" class="form-control" />
-                    <span asp-validation-for="CpOraCambiamentoStato" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CpNoteCambiamentoStato" class="control-label"></label>
-                    <input asp-for="CpNoteCambiamentoStato" class="form-control" />
-                    <span asp-validation-for="CpNoteCambiamentoStato" class="text-danger"></span>
-                </div>
+        @Html.AntiForgeryToken()
+        <!--GESTISCE AZIONI CLICK PULSANTE-->
+        @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+        @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+        @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <br />
+            <div class="modal-body">
+                <div class="container">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label asp-for="CpIdTipoCampione" class="control-label"></label>
+                        <input asp-for="CpIdTipoCampione" class="form-control" />
+                        <span asp-validation-for="CpIdTipoCampione" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpDescrizione" class="control-label"></label>
+                        <input asp-for="CpDescrizione" class="form-control" />
+                        <span asp-validation-for="CpDescrizione" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpCodiceUnivoco" class="control-label"></label>
+                        <input asp-for="CpCodiceUnivoco" class="form-control" />
+                        <span asp-validation-for="CpCodiceUnivoco" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpDataPrelievo" class="control-label"></label>
+                        <input asp-for="CpDataPrelievo" class="form-control" />
+                        <span asp-validation-for="CpDataPrelievo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpOraPrelievo" class="control-label"></label>
+                        <input asp-for="CpOraPrelievo" class="form-control" />
+                        <span asp-validation-for="CpOraPrelievo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpNote" class="control-label"></label>
+                        <input asp-for="CpNote" class="form-control" />
+                        <span asp-validation-for="CpNote" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpIdEpisodio" class="control-label"></label>
+                        <input asp-for="CpIdEpisodio" class="form-control" />
+                        <span asp-validation-for="CpIdEpisodio" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpIdPaziente" class="control-label"></label>
+                        <input asp-for="CpIdPaziente" class="form-control" />
+                        <span asp-validation-for="CpIdPaziente" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpCodiceAssoluto" class="control-label"></label>
+                        <input asp-for="CpCodiceAssoluto" class="form-control" />
+                        <span asp-validation-for="CpCodiceAssoluto" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpStatoCampione" class="control-label"></label>
+                        <input asp-for="CpStatoCampione" class="form-control" />
+                        <span asp-validation-for="CpStatoCampione" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpIdPosizioneAttuale" class="control-label"></label>
+                        <input asp-for="CpIdPosizioneAttuale" class="form-control" />
+                        <span asp-validation-for="CpIdPosizioneAttuale" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpDescPosizioneAttuale" class="control-label"></label>
+                        <input asp-for="CpDescPosizioneAttuale" class="form-control" />
+                        <span asp-validation-for="CpDescPosizioneAttuale" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpDataCambiamentoStato" class="control-label"></label>
+                        <input asp-for="CpDataCambiamentoStato" class="form-control" />
+                        <span asp-validation-for="CpDataCambiamentoStato" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpOraCambiamentoStato" class="control-label"></label>
+                        <input asp-for="CpOraCambiamentoStato" class="form-control" />
+                        <span asp-validation-for="CpOraCambiamentoStato" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpNoteCambiamentoStato" class="control-label"></label>
+                        <input asp-for="CpNoteCambiamentoStato" class="form-control" />
+                        <span asp-validation-for="CpNoteCambiamentoStato" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/Campione/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
+            </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-            <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/Campione/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
-        </div>
-    </div>
 </div>

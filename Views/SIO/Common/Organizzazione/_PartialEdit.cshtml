@@ -3,97 +3,97 @@
     ViewData["Title"] = "Organizzazione Edit";
 }
 <div class="modal-dialog" role="document">
-    @Html.AntiForgeryToken()
-    <!--GESTISCE AZIONI CLICK PULSANTE-->
-    @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
-    @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
-    @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="container">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    <label asp-for="OrClasseAssistenza" class="control-label"></label>
-                    <input asp-for="OrClasseAssistenza" class="form-control" />
-                    <span asp-validation-for="OrClasseAssistenza" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="OrCodice" class="control-label"></label>
-                    <input asp-for="OrCodice" class="form-control" />
-                    <span asp-validation-for="OrCodice" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="OrDescrizione" class="control-label"></label>
-                    <input asp-for="OrDescrizione" class="form-control" />
-                    <span asp-validation-for="OrDescrizione" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="OrNote" class="control-label"></label>
-                    <input asp-for="OrNote" class="form-control" />
-                    <span asp-validation-for="OrNote" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="OrEmail" class="control-label"></label>
-                    <input asp-for="OrEmail" class="form-control" />
-                    <span asp-validation-for="OrEmail" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="OrTipoAssistenza" class="control-label"></label>
-                    <input asp-for="OrTipoAssistenza" class="form-control" />
-                    <span asp-validation-for="OrTipoAssistenza" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="OrTelefono" class="control-label"></label>
-                    <input asp-for="OrTelefono" class="form-control" />
-                    <span asp-validation-for="OrTelefono" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="OrIdPersonale" class="control-label"></label>
-                    <input asp-for="OrIdPersonale" class="form-control" />
-                    <span asp-validation-for="OrIdPersonale" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="OrIdIstituto" class="control-label"></label>
-                    <input asp-for="OrIdIstituto" class="form-control" />
-                    <span asp-validation-for="OrIdIstituto" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="OrIdUnita" class="control-label"></label>
-                    <input asp-for="OrIdUnita" class="form-control" />
-                    <span asp-validation-for="OrIdUnita" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="OrIdPostazione" class="control-label"></label>
-                    <input asp-for="OrIdPostazione" class="form-control" />
-                    <span asp-validation-for="OrIdPostazione" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="OrPwdCrypt" class="control-label"></label>
-                    <input asp-for="OrPwdCrypt" class="form-control" />
-                    <span asp-validation-for="OrPwdCrypt" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="OrAttivo" class="control-label"></label>
-                    <input asp-for="OrAttivo" class="form-control" />
-                    <span asp-validation-for="OrAttivo" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="OrIdentificativo" class="control-label"></label>
-                    <input asp-for="OrIdentificativo" class="form-control" />
-                    <span asp-validation-for="OrIdentificativo" class="text-danger"></span>
-                </div>
+        @Html.AntiForgeryToken()
+        <!--GESTISCE AZIONI CLICK PULSANTE-->
+        @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+        @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+        @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <br />
+            <div class="modal-body">
+                <div class="container">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label asp-for="OrClasseAssistenza" class="control-label"></label>
+                        <input asp-for="OrClasseAssistenza" class="form-control" />
+                        <span asp-validation-for="OrClasseAssistenza" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrCodice" class="control-label"></label>
+                        <input asp-for="OrCodice" class="form-control" />
+                        <span asp-validation-for="OrCodice" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrDescrizione" class="control-label"></label>
+                        <input asp-for="OrDescrizione" class="form-control" />
+                        <span asp-validation-for="OrDescrizione" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrNote" class="control-label"></label>
+                        <input asp-for="OrNote" class="form-control" />
+                        <span asp-validation-for="OrNote" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrEmail" class="control-label"></label>
+                        <input asp-for="OrEmail" class="form-control" />
+                        <span asp-validation-for="OrEmail" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrTipoAssistenza" class="control-label"></label>
+                        <input asp-for="OrTipoAssistenza" class="form-control" />
+                        <span asp-validation-for="OrTipoAssistenza" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrTelefono" class="control-label"></label>
+                        <input asp-for="OrTelefono" class="form-control" />
+                        <span asp-validation-for="OrTelefono" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrIdPersonale" class="control-label"></label>
+                        <input asp-for="OrIdPersonale" class="form-control" />
+                        <span asp-validation-for="OrIdPersonale" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrIdIstituto" class="control-label"></label>
+                        <input asp-for="OrIdIstituto" class="form-control" />
+                        <span asp-validation-for="OrIdIstituto" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrIdUnita" class="control-label"></label>
+                        <input asp-for="OrIdUnita" class="form-control" />
+                        <span asp-validation-for="OrIdUnita" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrIdPostazione" class="control-label"></label>
+                        <input asp-for="OrIdPostazione" class="form-control" />
+                        <span asp-validation-for="OrIdPostazione" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrPwdCrypt" class="control-label"></label>
+                        <input asp-for="OrPwdCrypt" class="form-control" />
+                        <span asp-validation-for="OrPwdCrypt" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrAttivo" class="control-label"></label>
+                        <input asp-for="OrAttivo" class="form-control" />
+                        <span asp-validation-for="OrAttivo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrIdentificativo" class="control-label"></label>
+                        <input asp-for="OrIdentificativo" class="form-control" />
+                        <span asp-validation-for="OrIdentificativo" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/Organizzazione/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
+            </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-            <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/Organizzazione/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
-        </div>
-    </div>
 </div>

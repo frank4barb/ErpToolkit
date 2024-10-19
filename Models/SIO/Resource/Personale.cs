@@ -177,11 +177,11 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioPe1Icode|K|Pe1Icode","sioPe1RecDate|N|Pe1Mdate,Pe1Cdate"
-        ,"sioPeCodiceFiscale|N|PeCodiceFiscale"
-        ,"sioPeCodicePe1Deleted|U|PeCodice,Pe1Deleted"
-        ,"sioPeIdTipoRisorsa|N|PeIdTipoRisorsa"
-        ,"sioPe1VersionPe1Deleted|U|Pe1Version,Pe1Deleted"
+    return new List<string>() { "sioPe1Icode|K|PE__ICODE","sioPe1RecDate|N|PE__MDATE,PE__CDATE"
+        ,"sioPeCodiceFiscale|N|PE_CODICE_FISCALE"
+        ,"sioPeCodicepe1Deleted|U|PE_CODICE,PE__DELETED"
+        ,"sioPeIdTipoRisorsa|N|PE_ID_TIPO_RISORSA"
+        ,"sioPe1Versionpe1Deleted|U|PE__VERSION,PE__DELETED"
     };
 }
 }

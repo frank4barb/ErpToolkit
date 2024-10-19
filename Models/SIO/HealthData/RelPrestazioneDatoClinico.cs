@@ -133,10 +133,10 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioPd1Icode|K|Pd1Icode","sioPd1RecDate|N|Pd1Mdate,Pd1Cdate"
-        ,"sioPdClasseDatoClinicoPdIdDatoClinicoPdIdPrestazionePd1VersionPd1Deleted|U|PdClasseDatoClinico,PdIdDatoClinico,PdIdPrestazione,Pd1Version,Pd1Deleted"
-        ,"sioPdIdPrestazionePdClasseDatoClinicoPdIdDatoClinico|N|PdIdPrestazione,PdClasseDatoClinico,PdIdDatoClinico"
-        ,"sioPdIdDatoClinico|N|PdIdDatoClinico"
+    return new List<string>() { "sioPd1Icode|K|PD__ICODE","sioPd1RecDate|N|PD__MDATE,PD__CDATE"
+        ,"sioPdClasseDatoClinicopdIdDatoClinicopdIdPrestazionepd1Versionpd1Deleted|U|PD_CLASSE_DATO_CLINICO,PD_ID_DATO_CLINICO,PD_ID_PRESTAZIONE,PD__VERSION,PD__DELETED"
+        ,"sioPdIdPrestazionepdClasseDatoClinicopdIdDatoClinico|N|PD_ID_PRESTAZIONE,PD_CLASSE_DATO_CLINICO,PD_ID_DATO_CLINICO"
+        ,"sioPdIdDatoClinico|N|PD_ID_DATO_CLINICO"
     };
 }
 }

@@ -18,8 +18,10 @@ function loadModalWithContent(modalDialogId, modalAction, strId) {
     });
 }
 //eg: updateModalWithContent('editModal', '/Datatable/SaveCustomer', {Campo1='xxxxx',Campo2='xxxx', ecc...})
-function updateModalWithContent(modalDialogId, modalAction, jsonParams) {
-    openModalWithContent(modalDialogId, modalAction, jsonParams);
+function updateModalWithContent(modalDialogId, modalAction, jsonObject) {
+    openModalWithContent(modalDialogId, modalAction, {
+        'data': jsonObject
+    });
 }
 function openModalWithContent(modalDialogId, modalAction, jsonParams) {
     fetch(modalAction, {

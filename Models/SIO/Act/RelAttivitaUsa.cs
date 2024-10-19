@@ -179,12 +179,12 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioAu1Icode|K|Au1Icode","sioAu1RecDate|N|Au1Mdate,Au1Cdate"
-        ,"sioAuIdTipoRisorsaAuIdAttivita|N|AuIdTipoRisorsa,AuIdAttivita"
-        ,"sioAuIdAttivitaAuIdTipoRisorsaAuIdRisorsaAu1VersionAu1Deleted|U|AuIdAttivita,AuIdTipoRisorsa,AuIdRisorsa,Au1Version,Au1Deleted"
-        ,"sioAuIdRisorsaAuIdAttivita|N|AuIdRisorsa,AuIdAttivita"
-        ,"sioAuIdTipoRisorsa|N|AuIdTipoRisorsa"
-        ,"sioAuIdGruppo|N|AuIdGruppo"
+    return new List<string>() { "sioAu1Icode|K|AU__ICODE","sioAu1RecDate|N|AU__MDATE,AU__CDATE"
+        ,"sioAuIdTipoRisorsaauIdAttivita|N|AU_ID_TIPO_RISORSA,AU_ID_ATTIVITA"
+        ,"sioAuIdAttivitaauIdTipoRisorsaauIdRisorsaau1Versionau1Deleted|U|AU_ID_ATTIVITA,AU_ID_TIPO_RISORSA,AU_ID_RISORSA,AU__VERSION,AU__DELETED"
+        ,"sioAuIdRisorsaauIdAttivita|N|AU_ID_RISORSA,AU_ID_ATTIVITA"
+        ,"sioAuIdTipoRisorsa|N|AU_ID_TIPO_RISORSA"
+        ,"sioAuIdGruppo|N|AU_ID_GRUPPO"
     };
 }
 }

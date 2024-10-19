@@ -189,11 +189,11 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioSs1Icode|K|Ss1Icode","sioSs1RecDate|N|Ss1Mdate,Ss1Cdate"
-        ,"sioSsIdEpisodioSsIdTipoDatoClinicoSsDataAcquisizione|N|SsIdEpisodio,SsIdTipoDatoClinico,SsDataAcquisizione"
-        ,"sioSsIdPazienteSsDataAcquisizione|N|SsIdPaziente,SsDataAcquisizione"
-        ,"sioSsIdTipoDatoClinicoSsStatoDatoClinicoSsDataAcquisizione|N|SsIdTipoDatoClinico,SsStatoDatoClinico,SsDataAcquisizione"
-        ,"sioSsCodiceReferto|N|SsCodiceReferto"
+    return new List<string>() { "sioSs1Icode|K|SS__ICODE","sioSs1RecDate|N|SS__MDATE,SS__CDATE"
+        ,"sioSsIdEpisodiossIdTipoDatoClinicossDataAcquisizione|N|SS_ID_EPISODIO,SS_ID_TIPO_DATO_CLINICO,SS_DATA_ACQUISIZIONE"
+        ,"sioSsIdPazientessDataAcquisizione|N|SS_ID_PAZIENTE,SS_DATA_ACQUISIZIONE"
+        ,"sioSsIdTipoDatoClinicossStatoDatoClinicossDataAcquisizione|N|SS_ID_TIPO_DATO_CLINICO,SS_STATO_DATO_CLINICO,SS_DATA_ACQUISIZIONE"
+        ,"sioSsCodiceReferto|N|SS_CODICE_REFERTO"
     };
 }
 }

@@ -3,47 +3,47 @@
     ViewData["Title"] = "TipoEpisodio Edit";
 }
 <div class="modal-dialog" role="document">
-    @Html.AntiForgeryToken()
-    <!--GESTISCE AZIONI CLICK PULSANTE-->
-    @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
-    @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
-    @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="container">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    <label asp-for="TeCodice" class="control-label"></label>
-                    <input asp-for="TeCodice" class="form-control" />
-                    <span asp-validation-for="TeCodice" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="TeClasse" class="control-label"></label>
-                    <input asp-for="TeClasse" class="form-control" />
-                    <span asp-validation-for="TeClasse" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="TeDescrizione" class="control-label"></label>
-                    <input asp-for="TeDescrizione" class="form-control" />
-                    <span asp-validation-for="TeDescrizione" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="TeNote" class="control-label"></label>
-                    <input asp-for="TeNote" class="form-control" />
-                    <span asp-validation-for="TeNote" class="text-danger"></span>
-                </div>
+        @Html.AntiForgeryToken()
+        <!--GESTISCE AZIONI CLICK PULSANTE-->
+        @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+        @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+        @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <br />
+            <div class="modal-body">
+                <div class="container">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label asp-for="TeCodice" class="control-label"></label>
+                        <input asp-for="TeCodice" class="form-control" />
+                        <span asp-validation-for="TeCodice" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TeClasse" class="control-label"></label>
+                        <input asp-for="TeClasse" class="form-control" />
+                        <span asp-validation-for="TeClasse" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TeDescrizione" class="control-label"></label>
+                        <input asp-for="TeDescrizione" class="form-control" />
+                        <span asp-validation-for="TeDescrizione" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TeNote" class="control-label"></label>
+                        <input asp-for="TeNote" class="form-control" />
+                        <span asp-validation-for="TeNote" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/TipoEpisodio/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
+            </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-            <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/TipoEpisodio/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
-        </div>
-    </div>
 </div>

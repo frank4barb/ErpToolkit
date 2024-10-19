@@ -2,6 +2,7 @@ using ErpToolkit.Controllers;
 using ErpToolkit.Helpers.Db;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using NLog;
+using Org.BouncyCastle.Ocsp;
 using System.DirectoryServices;
 
 using System.Security.Cryptography;
@@ -22,6 +23,28 @@ namespace ErpToolkit.Helpers
             config.AddRule(NLog.LogLevel.Info, NLog.LogLevel.Fatal, logfile);
             return config;
         }
+
+        //Converti stringa NomeCampo in NomeProprieta
+        public static string field2Property(string s)
+        {
+            string ret = "", c_2,c_1,c; s = "###" + s;
+            for (var I = Microsoft.VisualBasic.Strings.Len(s); I >= 0; I += -1)
+            {
+                c_2 = Microsoft.VisualBasic.Strings.Mid(s, I - 2, 1); c_1 = Microsoft.VisualBasic.Strings.Mid(s, I - 1, 1); c = Microsoft.VisualBasic.Strings.Mid(s, I, 1);
+                if (c == "#") break;
+                else if (c_2 == "_" & c_1 == "_")
+                    ret = "1" + c.ToUpper() + ret;
+                else if (c_1 == "#" | c_1 == "_")
+                {
+                    if (c != "_") ret = c.ToUpper() + ret;
+                }
+                else if (c == "_") ; // skip
+                else ret = c.ToLower() + ret;
+            }
+            return ret;
+
+        }
+
 
         //Cripta & Decripta -- Simple3Des
         private const string CRYP_KEY_STR = "&%£73Erp#$";

@@ -6,7 +6,6 @@ using System.Globalization;
 using System.Data.Common;
 using static ErpToolkit.Helpers.ErpError;
 using System.Text;
-using Type = System.Type;
 
 namespace ErpToolkit.Helpers.Db
 {

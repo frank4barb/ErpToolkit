@@ -273,17 +273,17 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioPa1Icode|K|Pa1Icode","sioPa1RecDate|N|Pa1Mdate,Pa1Cdate"
-        ,"sioPaIdDistrettoRes|N|PaIdDistrettoRes"
-        ,"sioPaIdDistrettoDom|N|PaIdDistrettoDom"
-        ,"sioPaIdComuneNascita|N|PaIdComuneNascita"
-        ,"sioPaIdComuneRes|N|PaIdComuneRes"
-        ,"sioPaIdComuneDom|N|PaIdComuneDom"
-        ,"sioPaIdCittadinanza|N|PaIdCittadinanza"
-        ,"sioPaIdNazioneNascita|N|PaIdNazioneNascita"
-        ,"sioPaCodFiscalePa1VersionPa1Deleted|U|PaCodFiscale,Pa1Version,Pa1Deleted"
-        ,"sioPaCodSanitarioPa1VersionPa1Deleted|U|PaCodSanitario,Pa1Version,Pa1Deleted"
-        ,"sioPaCognomePaNome|N|PaCognome,PaNome"
+    return new List<string>() { "sioPa1Icode|K|PA__ICODE","sioPa1RecDate|N|PA__MDATE,PA__CDATE"
+        ,"sioPaIdDistrettoRes|N|PA_ID_DISTRETTO_RES"
+        ,"sioPaIdDistrettoDom|N|PA_ID_DISTRETTO_DOM"
+        ,"sioPaIdComuneNascita|N|PA_ID_COMUNE_NASCITA"
+        ,"sioPaIdComuneRes|N|PA_ID_COMUNE_RES"
+        ,"sioPaIdComuneDom|N|PA_ID_COMUNE_DOM"
+        ,"sioPaIdCittadinanza|N|PA_ID_CITTADINANZA"
+        ,"sioPaIdNazioneNascita|N|PA_ID_NAZIONE_NASCITA"
+        ,"sioPaCodFiscalepa1Versionpa1Deleted|U|PA_COD_FISCALE,PA__VERSION,PA__DELETED"
+        ,"sioPaCodSanitariopa1Versionpa1Deleted|U|PA_COD_SANITARIO,PA__VERSION,PA__DELETED"
+        ,"sioPaCognomepaNome|N|PA_COGNOME,PA_NOME"
     };
 }
 }

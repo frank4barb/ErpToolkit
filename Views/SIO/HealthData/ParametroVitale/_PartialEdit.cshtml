@@ -3,107 +3,107 @@
     ViewData["Title"] = "ParametroVitale Edit";
 }
 <div class="modal-dialog" role="document">
-    @Html.AntiForgeryToken()
-    <!--GESTISCE AZIONI CLICK PULSANTE-->
-    @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
-    @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
-    @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="container">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    <label asp-for="PvClasse" class="control-label"></label>
-                    <input asp-for="PvClasse" class="form-control" />
-                    <span asp-validation-for="PvClasse" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PvIdPaziente" class="control-label"></label>
-                    <input asp-for="PvIdPaziente" class="form-control" />
-                    <span asp-validation-for="PvIdPaziente" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PvIdEpisodio" class="control-label"></label>
-                    <input asp-for="PvIdEpisodio" class="form-control" />
-                    <span asp-validation-for="PvIdEpisodio" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PvIdTipoDatoClinico" class="control-label"></label>
-                    <input asp-for="PvIdTipoDatoClinico" class="form-control" />
-                    <span asp-validation-for="PvIdTipoDatoClinico" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PvValoreMinimo" class="control-label"></label>
-                    <input asp-for="PvValoreMinimo" class="form-control" />
-                    <span asp-validation-for="PvValoreMinimo" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PvValoreMassimo" class="control-label"></label>
-                    <input asp-for="PvValoreMassimo" class="form-control" />
-                    <span asp-validation-for="PvValoreMassimo" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PvValoreScelta" class="control-label"></label>
-                    <input asp-for="PvValoreScelta" class="form-control" />
-                    <span asp-validation-for="PvValoreScelta" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PvValoreTesto" class="control-label"></label>
-                    <input asp-for="PvValoreTesto" class="form-control" />
-                    <span asp-validation-for="PvValoreTesto" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PvNote" class="control-label"></label>
-                    <input asp-for="PvNote" class="form-control" />
-                    <span asp-validation-for="PvNote" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PvCodiceReferto" class="control-label"></label>
-                    <input asp-for="PvCodiceReferto" class="form-control" />
-                    <span asp-validation-for="PvCodiceReferto" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PvDataAcquisizione" class="control-label"></label>
-                    <input asp-for="PvDataAcquisizione" class="form-control" />
-                    <span asp-validation-for="PvDataAcquisizione" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PvOraAcquisizione" class="control-label"></label>
-                    <input asp-for="PvOraAcquisizione" class="form-control" />
-                    <span asp-validation-for="PvOraAcquisizione" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PvStatoDatoClinico" class="control-label"></label>
-                    <input asp-for="PvStatoDatoClinico" class="form-control" />
-                    <span asp-validation-for="PvStatoDatoClinico" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PvDataValidazione" class="control-label"></label>
-                    <input asp-for="PvDataValidazione" class="form-control" />
-                    <span asp-validation-for="PvDataValidazione" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PvOraValidazione" class="control-label"></label>
-                    <input asp-for="PvOraValidazione" class="form-control" />
-                    <span asp-validation-for="PvOraValidazione" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="PvSequenza" class="control-label"></label>
-                    <input asp-for="PvSequenza" class="form-control" />
-                    <span asp-validation-for="PvSequenza" class="text-danger"></span>
-                </div>
+        @Html.AntiForgeryToken()
+        <!--GESTISCE AZIONI CLICK PULSANTE-->
+        @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
+        @Html.Hidden("IsPageACTION", @ViewData["IsPageACTION"])
+        @Html.Hidden("IsPageREDIRECT", @ViewData["IsPageREDIRECT"])
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="titolo">@ViewData["Title"]</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <br />
+            <div class="modal-body">
+                <div class="container">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label asp-for="PvClasse" class="control-label"></label>
+                        <input asp-for="PvClasse" class="form-control" />
+                        <span asp-validation-for="PvClasse" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvIdPaziente" class="control-label"></label>
+                        <input asp-for="PvIdPaziente" class="form-control" />
+                        <span asp-validation-for="PvIdPaziente" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvIdEpisodio" class="control-label"></label>
+                        <input asp-for="PvIdEpisodio" class="form-control" />
+                        <span asp-validation-for="PvIdEpisodio" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvIdTipoDatoClinico" class="control-label"></label>
+                        <input asp-for="PvIdTipoDatoClinico" class="form-control" />
+                        <span asp-validation-for="PvIdTipoDatoClinico" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvValoreMinimo" class="control-label"></label>
+                        <input asp-for="PvValoreMinimo" class="form-control" />
+                        <span asp-validation-for="PvValoreMinimo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvValoreMassimo" class="control-label"></label>
+                        <input asp-for="PvValoreMassimo" class="form-control" />
+                        <span asp-validation-for="PvValoreMassimo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvValoreScelta" class="control-label"></label>
+                        <input asp-for="PvValoreScelta" class="form-control" />
+                        <span asp-validation-for="PvValoreScelta" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvValoreTesto" class="control-label"></label>
+                        <input asp-for="PvValoreTesto" class="form-control" />
+                        <span asp-validation-for="PvValoreTesto" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvNote" class="control-label"></label>
+                        <input asp-for="PvNote" class="form-control" />
+                        <span asp-validation-for="PvNote" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvCodiceReferto" class="control-label"></label>
+                        <input asp-for="PvCodiceReferto" class="form-control" />
+                        <span asp-validation-for="PvCodiceReferto" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvDataAcquisizione" class="control-label"></label>
+                        <input asp-for="PvDataAcquisizione" class="form-control" />
+                        <span asp-validation-for="PvDataAcquisizione" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvOraAcquisizione" class="control-label"></label>
+                        <input asp-for="PvOraAcquisizione" class="form-control" />
+                        <span asp-validation-for="PvOraAcquisizione" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvStatoDatoClinico" class="control-label"></label>
+                        <input asp-for="PvStatoDatoClinico" class="form-control" />
+                        <span asp-validation-for="PvStatoDatoClinico" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvDataValidazione" class="control-label"></label>
+                        <input asp-for="PvDataValidazione" class="form-control" />
+                        <span asp-validation-for="PvDataValidazione" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvOraValidazione" class="control-label"></label>
+                        <input asp-for="PvOraValidazione" class="form-control" />
+                        <span asp-validation-for="PvOraValidazione" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvSequenza" class="control-label"></label>
+                        <input asp-for="PvSequenza" class="form-control" />
+                        <span asp-validation-for="PvSequenza" class="text-danger"></span>
+                    </div>
+                </div>
+                <br />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/ParametroVitale/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
+            </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-            <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/ParametroVitale/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
-        </div>
-    </div>
 </div>

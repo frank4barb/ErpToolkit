@@ -184,11 +184,11 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioAv1Icode|K|Av1Icode","sioAv1RecDate|N|Av1Mdate,Av1Cdate"
-        ,"sioAvIdGruppo|N|AvIdGruppo"
-        ,"sioAvIdTipoAttivita|N|AvIdTipoAttivita"
-        ,"sioAv1VersionAv1Deleted|U|Av1Version,Av1Deleted"
-        ,"sioAvCodiceAv1VersionAv1Deleted|U|AvCodice,Av1Version,Av1Deleted"
+    return new List<string>() { "sioAv1Icode|K|AV__ICODE","sioAv1RecDate|N|AV__MDATE,AV__CDATE"
+        ,"sioAvIdGruppo|N|AV_ID_GRUPPO"
+        ,"sioAvIdTipoAttivita|N|AV_ID_TIPO_ATTIVITA"
+        ,"sioAv1Versionav1Deleted|U|AV__VERSION,AV__DELETED"
+        ,"sioAvCodiceav1Versionav1Deleted|U|AV_CODICE,AV__VERSION,AV__DELETED"
     };
 }
 }

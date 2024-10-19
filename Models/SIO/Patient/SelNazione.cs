@@ -27,22 +27,22 @@ public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
 [Display(Name = "Codice", ShortName="", Description = "Codice ufficiale (esterno) del paese", Prompt="")]
 [ErpDogField("NZ_CODICE", SqlFieldNameExt="NZ_CODICE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? NzCodice  { get; set; }
+public string? SelNzCodice  { get; set; }
 
 [Display(Name = "Nome", ShortName="", Description = "Nome esteso", Prompt="")]
 [ErpDogField("NZ_NOME", SqlFieldNameExt="NZ_NOME", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? NzNome  { get; set; }
+public string? SelNzNome  { get; set; }
 
 [Display(Name = "Cod Istat", ShortName="", Description = "Codice statistico", Prompt="")]
 [ErpDogField("NZ_COD_ISTAT", SqlFieldNameExt="NZ_COD_ISTAT", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? NzCodIstat  { get; set; }
+public string? SelNzCodIstat  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note", Prompt="")]
 [ErpDogField("NZ_NOTE", SqlFieldNameExt="NZ_NOTE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? NzNote  { get; set; }
+public string? SelNzNote  { get; set; }
 
 public bool TryValidateInt(ModelStateDictionary modelState) 
     { 
@@ -52,10 +52,10 @@ public bool TryValidateInt(ModelStateDictionary modelState)
         foreach (var idx in ListIndexes()) { 
             string fldLst = idx.Split("|")[2]; 
             foreach (var fld in fldLst.Split(",")) { 
-                if (DogManager.getPropertyValue(this, fld.Trim()) != null) found = true; 
-                if (DogManager.getPropertyValue(this, fld.Trim() + "[0]") != null) found = true; 
-                if (DogManager.getPropertyValue(this, fld.Trim() + ".StartDate") != null) found = true; 
-                if (DogManager.getPropertyValue(this, fld.Trim() + ".EndDate") != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim())) != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim()) + "[0]") != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim()) + ".StartDate") != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim()) + ".EndDate") != null) found = true; 
             } 
         } 
         if (!found) { isValidate = false;  modelState.AddModelError(string.Empty, "Deve essere compilato almeno un campo indicizzato."); } 
@@ -64,9 +64,9 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioNz1Icode|K|Nz1Icode","sioNz1RecDate|N|Nz1Mdate,Nz1Cdate"
-        ,"sioNzNomeNz1VersionNz1Deleted|U|NzNome,Nz1Version,Nz1Deleted"
-        ,"sioNzCodiceNz1VersionNz1Deleted|U|NzCodice,Nz1Version,Nz1Deleted"
+    return new List<string>() { "sioNz1Icode|K|NZ__ICODE","sioNz1RecDate|N|NZ__MDATE,NZ__CDATE"
+        ,"sioNzNomenz1Versionnz1Deleted|U|NZ_NOME,NZ__VERSION,NZ__DELETED"
+        ,"sioNzCodicenz1Versionnz1Deleted|U|NZ_CODICE,NZ__VERSION,NZ__DELETED"
     };
 }
 }

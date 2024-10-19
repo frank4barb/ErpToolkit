@@ -27,29 +27,29 @@ public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
 [Display(Name = "Codice", ShortName="", Description = "Codice assegnato dall'utente", Prompt="")]
 [ErpDogField("TZ_CODICE", SqlFieldNameExt="TZ_CODICE", SqlFieldOptions="[UID]", Xref="", SqlFieldProperties="prop() xref() xdup(TIPO_ORGANIZZAZIONE.TZ__ICODE[TZ__ICODE] {TZ_CODICE=' '}) multbxref()")]
 [DataType(DataType.Text)]
-public string? TzCodice  { get; set; }
+public string? SelTzCodice  { get; set; }
 
 [Display(Name = "Descrizione", ShortName="", Description = "Descrizione estesa", Prompt="")]
 [ErpDogField("TZ_DESCRIZIONE", SqlFieldNameExt="TZ_DESCRIZIONE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? TzDescrizione  { get; set; }
+public string? SelTzDescrizione  { get; set; }
 
 [Display(Name = "Note", ShortName="", Description = "Note", Prompt="")]
 [ErpDogField("TZ_NOTE", SqlFieldNameExt="TZ_NOTE", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DataType(DataType.Text)]
-public string? TzNote  { get; set; }
+public string? SelTzNote  { get; set; }
 
 [Display(Name = "Gruppo", ShortName="", Description = "Classe di aggregazione (se presente)", Prompt="")]
 [ErpDogField("TZ_GRUPPO", SqlFieldNameExt="TZ_GRUPPO", SqlFieldOptions="", Xref="Tz1Icode", SqlFieldProperties="prop() xref(TIPO_ORGANIZZAZIONE.TZ__ICODE) xdup() multbxref()")]
 [DefaultValue("")]
 [AutocompleteClient("TipoOrganizzazione", "AutocompleteGetAll", 10)]
 [DataType(DataType.Text)]
-public List<string> TzGruppo  { get; set; } = new List<string>();
+public List<string> SelTzGruppo  { get; set; } = new List<string>();
 
 [Display(Name = "Sequenza", ShortName="", Description = "Numero di sequenza nell'aggregazione (se presente)", Prompt="")]
 [ErpDogField("TZ_SEQUENZA", SqlFieldNameExt="TZ_SEQUENZA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue("")]
-public short? TzSequenza  { get; set; }
+public short? SelTzSequenza  { get; set; }
 
 public bool TryValidateInt(ModelStateDictionary modelState) 
     { 
@@ -59,10 +59,10 @@ public bool TryValidateInt(ModelStateDictionary modelState)
         foreach (var idx in ListIndexes()) { 
             string fldLst = idx.Split("|")[2]; 
             foreach (var fld in fldLst.Split(",")) { 
-                if (DogManager.getPropertyValue(this, fld.Trim()) != null) found = true; 
-                if (DogManager.getPropertyValue(this, fld.Trim() + "[0]") != null) found = true; 
-                if (DogManager.getPropertyValue(this, fld.Trim() + ".StartDate") != null) found = true; 
-                if (DogManager.getPropertyValue(this, fld.Trim() + ".EndDate") != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim())) != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim()) + "[0]") != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim()) + ".StartDate") != null) found = true; 
+                if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim()) + ".EndDate") != null) found = true; 
             } 
         } 
         if (!found) { isValidate = false;  modelState.AddModelError(string.Empty, "Deve essere compilato almeno un campo indicizzato."); } 
@@ -71,9 +71,9 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioTz1Icode|K|Tz1Icode","sioTz1RecDate|N|Tz1Mdate,Tz1Cdate"
-        ,"sioTz1VersionTz1Deleted|U|Tz1Version,Tz1Deleted"
-        ,"sioTzCodiceTz1VersionTz1Deleted|U|TzCodice,Tz1Version,Tz1Deleted"
+    return new List<string>() { "sioTz1Icode|K|TZ__ICODE","sioTz1RecDate|N|TZ__MDATE,TZ__CDATE"
+        ,"sioTz1Versiontz1Deleted|U|TZ__VERSION,TZ__DELETED"
+        ,"sioTzCodicetz1Versiontz1Deleted|U|TZ_CODICE,TZ__VERSION,TZ__DELETED"
     };
 }
 }

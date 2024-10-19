@@ -112,7 +112,7 @@ namespace ErpToolkit.Helpers.Db
         {
             string[] opts = Strings.Split(optCastArray, ",");
 
-            Type temp = typeof(T);
+            System.Type temp = typeof(T);
 
             if (temp == typeof(System.Object[])) {
                 object[] objArr = new object[dr.Table.Columns.Count];

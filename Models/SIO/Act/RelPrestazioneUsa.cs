@@ -222,11 +222,11 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioPu1Icode|K|Pu1Icode","sioPu1RecDate|N|Pu1Mdate,Pu1Cdate"
-        ,"sioPuIdTipoRisorsaPuIdPrestazionePuDataInizioUso|N|PuIdTipoRisorsa,PuIdPrestazione,PuDataInizioUso"
-        ,"sioPuIdPrestazionePuDataInizioUsoPuIdTipoRisorsaPuIdRisorsa|N|PuIdPrestazione,PuDataInizioUso,PuIdTipoRisorsa,PuIdRisorsa"
-        ,"sioPuIdRisorsaPuIdPrestazionePuDataInizioUso|N|PuIdRisorsa,PuIdPrestazione,PuDataInizioUso"
-        ,"sioPuDataInizioUso|N|PuDataInizioUso"
+    return new List<string>() { "sioPu1Icode|K|PU__ICODE","sioPu1RecDate|N|PU__MDATE,PU__CDATE"
+        ,"sioPuIdTipoRisorsapuIdPrestazionepuDataInizioUso|N|PU_ID_TIPO_RISORSA,PU_ID_PRESTAZIONE,PU_DATA_INIZIO_USO"
+        ,"sioPuIdPrestazionepuDataInizioUsopuIdTipoRisorsapuIdRisorsa|N|PU_ID_PRESTAZIONE,PU_DATA_INIZIO_USO,PU_ID_TIPO_RISORSA,PU_ID_RISORSA"
+        ,"sioPuIdRisorsapuIdPrestazionepuDataInizioUso|N|PU_ID_RISORSA,PU_ID_PRESTAZIONE,PU_DATA_INIZIO_USO"
+        ,"sioPuDataInizioUso|N|PU_DATA_INIZIO_USO"
     };
 }
 }

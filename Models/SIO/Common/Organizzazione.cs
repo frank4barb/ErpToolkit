@@ -188,14 +188,14 @@ public bool TryValidateInt(ModelStateDictionary modelState)
     } 
 
 public static List<string> ListIndexes() { 
-    return new List<string>() { "sioOr1Icode|K|Or1Icode","sioOr1RecDate|N|Or1Mdate,Or1Cdate"
-        ,"sioOrIdIstitutoOrIdUnitaOrIdPostazione|N|OrIdIstituto,OrIdUnita,OrIdPostazione"
-        ,"sioOrIdPostazione|N|OrIdPostazione"
-        ,"sioOrIdPersonale|N|OrIdPersonale"
-        ,"sioOrTipoAssistenza|N|OrTipoAssistenza"
-        ,"sioOrCodiceOr1VersionOr1Deleted|U|OrCodice,Or1Version,Or1Deleted"
-        ,"sioOrIdUnita|N|OrIdUnita"
-        ,"sioOr1Version|U|Or1Version"
+    return new List<string>() { "sioOr1Icode|K|OR__ICODE","sioOr1RecDate|N|OR__MDATE,OR__CDATE"
+        ,"sioOrIdIstitutoorIdUnitaorIdPostazione|N|OR_ID_ISTITUTO,OR_ID_UNITA,OR_ID_POSTAZIONE"
+        ,"sioOrIdPostazione|N|OR_ID_POSTAZIONE"
+        ,"sioOrIdPersonale|N|OR_ID_PERSONALE"
+        ,"sioOrTipoAssistenza|N|OR_TIPO_ASSISTENZA"
+        ,"sioOrCodiceor1Versionor1Deleted|U|OR_CODICE,OR__VERSION,OR__DELETED"
+        ,"sioOrIdUnita|N|OR_ID_UNITA"
+        ,"sioOr1Version|U|OR__VERSION"
     };
 }
 }

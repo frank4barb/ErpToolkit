@@ -55,7 +55,7 @@ namespace ErpToolkit.Controllers.SIO.Common
         [BindProperty]
         public SelOrganizzazione Select { get; set; }
         [BindProperty]
-        public List<Organizzazione> List { get; set; }
+        public List<Organizzazione> List { get; set; } = new List<Organizzazione>();
         [BindProperty]
         public Organizzazione Row { get; set; }
         [TempData]
@@ -76,8 +76,9 @@ namespace ErpToolkit.Controllers.SIO.Common
         [Authorize(AuthenticationSchemes = "Cookies")]
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Index()
+        public ActionResult Index(SelOrganizzazione selobj)
         {
+            if (selobj != null) { this.Select = selobj; }
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO
             if (!TryValidateModel(this.Select))
             {
@@ -107,16 +108,20 @@ namespace ErpToolkit.Controllers.SIO.Common
             return PartialView("~/Views/SIO/Common/Organizzazione/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Save([FromBody] Organizzazione obj)
+        public IActionResult Save([FromBody] ModalObject dataObj)
         {
+            if (dataObj == null || dataObj.data == null)
+            {
+                ModelState.AddModelError(string.Empty, "Oggetto Organizzazione non valido. null");
+                return PartialView("~/Views/SIO/Common/Organizzazione/_PartialEdit.cshtml", null);
+            }
+            Organizzazione obj = System.Text.Json.JsonSerializer.Deserialize<Organizzazione>((System.Text.Json.JsonElement)dataObj.data);
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (!TryValidateModel(obj))
             {
                 ModelState.AddModelError(string.Empty, "Verifica valore dei campi: "+
                     string.Join(", ",
-                        ModelState.Where(ms => ms.Value.Errors.Any())
-                                              .Select(kvp => kvp.Key)
-                                              .ToArray()
+                        ModelState.Where(ms => ms.Value.Errors.Any()).Select(kvp => kvp.Key).ToArray()
                     )
                 );
                 return PartialView("~/Views/SIO/Common/Organizzazione/_PartialEdit.cshtml", obj);

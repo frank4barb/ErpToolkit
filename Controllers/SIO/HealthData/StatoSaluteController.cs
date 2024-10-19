@@ -44,7 +44,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         [BindProperty]
         public SelStatoSalute Select { get; set; }
         [BindProperty]
-        public List<StatoSalute> List { get; set; }
+        public List<StatoSalute> List { get; set; } = new List<StatoSalute>();
         [BindProperty]
         public StatoSalute Row { get; set; }
         [TempData]
@@ -65,8 +65,9 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         [Authorize(AuthenticationSchemes = "Cookies")]
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Index()
+        public ActionResult Index(SelStatoSalute selobj)
         {
+            if (selobj != null) { this.Select = selobj; }
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO
             if (!TryValidateModel(this.Select))
             {
@@ -96,16 +97,20 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             return PartialView("~/Views/SIO/HealthData/StatoSalute/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Save([FromBody] StatoSalute obj)
+        public IActionResult Save([FromBody] ModalObject dataObj)
         {
+            if (dataObj == null || dataObj.data == null)
+            {
+                ModelState.AddModelError(string.Empty, "Oggetto StatoSalute non valido. null");
+                return PartialView("~/Views/SIO/HealthData/StatoSalute/_PartialEdit.cshtml", null);
+            }
+            StatoSalute obj = System.Text.Json.JsonSerializer.Deserialize<StatoSalute>((System.Text.Json.JsonElement)dataObj.data);
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (!TryValidateModel(obj))
             {
                 ModelState.AddModelError(string.Empty, "Verifica valore dei campi: "+
                     string.Join(", ",
-                        ModelState.Where(ms => ms.Value.Errors.Any())
-                                              .Select(kvp => kvp.Key)
-                                              .ToArray()
+                        ModelState.Where(ms => ms.Value.Errors.Any()).Select(kvp => kvp.Key).ToArray()
                     )
                 );
                 return PartialView("~/Views/SIO/HealthData/StatoSalute/_PartialEdit.cshtml", obj);
