@@ -43,10 +43,10 @@
                     @Html.DisplayFor(modelItem => item.CcIdGruppo)
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/CategoriaDatoClinico/Edit','@Html.DisplayFor(modelItem => item.Cc1Icode)')">Edit</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/CategoriaDatoClinico/ReadForEdit','@Html.DisplayFor(modelItem => item.Cc1Icode)')">Edit</a>
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/CategoriaDatoClinico/Alert','@Html.DisplayFor(modelItem => item.Cc1Icode)')">Delete</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/CategoriaDatoClinico/ReadForDelete','@Html.DisplayFor(modelItem => item.Cc1Icode)')">Delete</a>
                 </td>
             </tr>
         }
@@ -74,7 +74,7 @@
                     { "visible": true, "data": "CcDescrizione", "name": "CcDescrizione", "title": "Descrizione", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "CcNote", "name": "CcNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "CcIdGruppo", "name": "CcIdGruppo", "title": "Id Gruppo", "defaultContent": ".", "autoWidth": true },
-                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/CategoriaDatoClinico/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/CategoriaDatoClinico/ReadForEdit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                     { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                 ]
 

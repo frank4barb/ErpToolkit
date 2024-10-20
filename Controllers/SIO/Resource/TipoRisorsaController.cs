@@ -96,9 +96,9 @@ namespace ErpToolkit.Controllers.SIO.Resource
         }
 
         [HttpPost]
-        public IActionResult Edit([FromBody] ModelParam parms)  
+        public IActionResult ReadForEdit([FromBody] ModelParam parms)  
         {
-            TipoRisorsa obj = this.EditModel<TipoRisorsa>(parms);
+            TipoRisorsa obj = this.ReadForEditModel<TipoRisorsa>(parms);
             return PartialView("~/Views/SIO/Resource/TipoRisorsa/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
@@ -118,26 +118,20 @@ namespace ErpToolkit.Controllers.SIO.Resource
             return PartialView("~/Views/SIO/Resource/TipoRisorsa/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Alert([FromBody] ModelParam parms)  
+        public IActionResult ReadForDelete([FromBody] ModelParam parms)  
         {
-            TipoRisorsa obj = new TipoRisorsa();
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
-            {
-                try { obj = ErpContext.Instance.DogFactory.GetDog(dogId).Row<TipoRisorsa>(parms.Id); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
-            }
+            TipoRisorsa obj = this.ReadForDeleteModel<TipoRisorsa>(parms);
             return PartialView("~/Views/SIO/Resource/TipoRisorsa/_PartialDelete.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Delete([FromBody] TipoRisorsa obj)
+        public IActionResult Delete([FromBody] ModelObject dataObj)
         {
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (String.IsNullOrWhiteSpace(obj.Ts1Icode))
+            TipoRisorsa obj = this.DeleteModel<TipoRisorsa>(dataObj);
+            if (ModelState.ErrorCount > 0)
             {
-                ModelState.AddModelError(string.Empty, "Identificativo nullo");
                 return PartialView("~/Views/SIO/Resource/TipoRisorsa/_PartialDelete.cshtml", obj);
             }
+            this.StatusMessage = "Record cancellato!";
             //---GESTISCE AZIONI CLICK PULSANTE
             ViewData["IsModalACTION"] = "CLOSE";
             ViewData["IsPageACTION"] = "RELOAD";

@@ -67,10 +67,10 @@
                     @Html.DisplayFor(modelItem => item.DgTipoIcd9)
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Diagnosi/Edit','@Html.DisplayFor(modelItem => item.Dg1Icode)')">Edit</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Diagnosi/ReadForEdit','@Html.DisplayFor(modelItem => item.Dg1Icode)')">Edit</a>
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Diagnosi/Alert','@Html.DisplayFor(modelItem => item.Dg1Icode)')">Delete</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Diagnosi/ReadForDelete','@Html.DisplayFor(modelItem => item.Dg1Icode)')">Delete</a>
                 </td>
             </tr>
         }
@@ -102,7 +102,7 @@
                     { "visible": true, "data": "DgIdGruppo", "name": "DgIdGruppo", "title": "Id Gruppo", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "DgTipoDrg", "name": "DgTipoDrg", "title": "Tipo Drg", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "DgTipoIcd9", "name": "DgTipoIcd9", "title": "Tipo Icd9", "defaultContent": ".", "autoWidth": true },
-                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Diagnosi/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Diagnosi/ReadForEdit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                     { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                 ]
 

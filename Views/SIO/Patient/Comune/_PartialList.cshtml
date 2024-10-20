@@ -43,10 +43,10 @@
                     @Html.DisplayFor(modelItem => item.CmNote)
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Comune/Edit','@Html.DisplayFor(modelItem => item.Cm1Icode)')">Edit</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Comune/ReadForEdit','@Html.DisplayFor(modelItem => item.Cm1Icode)')">Edit</a>
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Comune/Alert','@Html.DisplayFor(modelItem => item.Cm1Icode)')">Delete</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Comune/ReadForDelete','@Html.DisplayFor(modelItem => item.Cm1Icode)')">Delete</a>
                 </td>
             </tr>
         }
@@ -74,7 +74,7 @@
                     { "visible": true, "data": "CmNome", "name": "CmNome", "title": "Nome", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "CmCodIstat", "name": "CmCodIstat", "title": "Cod Istat", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "CmNote", "name": "CmNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
-                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Comune/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Comune/ReadForEdit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                     { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                 ]
 

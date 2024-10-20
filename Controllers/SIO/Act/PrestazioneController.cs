@@ -85,9 +85,9 @@ namespace ErpToolkit.Controllers.SIO.Act
         }
 
         [HttpPost]
-        public IActionResult Edit([FromBody] ModelParam parms)  
+        public IActionResult ReadForEdit([FromBody] ModelParam parms)  
         {
-            Prestazione obj = this.EditModel<Prestazione>(parms);
+            Prestazione obj = this.ReadForEditModel<Prestazione>(parms);
             return PartialView("~/Views/SIO/Act/Prestazione/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
@@ -107,26 +107,20 @@ namespace ErpToolkit.Controllers.SIO.Act
             return PartialView("~/Views/SIO/Act/Prestazione/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Alert([FromBody] ModelParam parms)  
+        public IActionResult ReadForDelete([FromBody] ModelParam parms)  
         {
-            Prestazione obj = new Prestazione();
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
-            {
-                try { obj = ErpContext.Instance.DogFactory.GetDog(dogId).Row<Prestazione>(parms.Id); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
-            }
+            Prestazione obj = this.ReadForDeleteModel<Prestazione>(parms);
             return PartialView("~/Views/SIO/Act/Prestazione/_PartialDelete.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Delete([FromBody] Prestazione obj)
+        public IActionResult Delete([FromBody] ModelObject dataObj)
         {
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (String.IsNullOrWhiteSpace(obj.Pr1Icode))
+            Prestazione obj = this.DeleteModel<Prestazione>(dataObj);
+            if (ModelState.ErrorCount > 0)
             {
-                ModelState.AddModelError(string.Empty, "Identificativo nullo");
                 return PartialView("~/Views/SIO/Act/Prestazione/_PartialDelete.cshtml", obj);
             }
+            this.StatusMessage = "Record cancellato!";
             //---GESTISCE AZIONI CLICK PULSANTE
             ViewData["IsModalACTION"] = "CLOSE";
             ViewData["IsPageACTION"] = "RELOAD";

@@ -175,10 +175,10 @@
                     @Html.DisplayFor(modelItem => item.EpFaseEpisodio)
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Episodio/Edit','@Html.DisplayFor(modelItem => item.Ep1Icode)')">Edit</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Episodio/ReadForEdit','@Html.DisplayFor(modelItem => item.Ep1Icode)')">Edit</a>
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Episodio/Alert','@Html.DisplayFor(modelItem => item.Ep1Icode)')">Delete</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Episodio/ReadForDelete','@Html.DisplayFor(modelItem => item.Ep1Icode)')">Delete</a>
                 </td>
             </tr>
         }
@@ -228,7 +228,7 @@
                     { "visible": true, "data": "EpOraInizioPreh", "name": "EpOraInizioPreh", "title": "Ora Inizio Preh", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "EpIdRepartoPreh", "name": "EpIdRepartoPreh", "title": "Id Reparto Preh", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "EpFaseEpisodio", "name": "EpFaseEpisodio", "title": "Fase Episodio", "defaultContent": ".", "autoWidth": true },
-                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Episodio/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Episodio/ReadForEdit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                     { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                 ]
 

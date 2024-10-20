@@ -85,9 +85,9 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         }
 
         [HttpPost]
-        public IActionResult Edit([FromBody] ModelParam parms)  
+        public IActionResult ReadForEdit([FromBody] ModelParam parms)  
         {
-            StatoSalute obj = this.EditModel<StatoSalute>(parms);
+            StatoSalute obj = this.ReadForEditModel<StatoSalute>(parms);
             return PartialView("~/Views/SIO/HealthData/StatoSalute/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
@@ -107,26 +107,20 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             return PartialView("~/Views/SIO/HealthData/StatoSalute/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Alert([FromBody] ModelParam parms)  
+        public IActionResult ReadForDelete([FromBody] ModelParam parms)  
         {
-            StatoSalute obj = new StatoSalute();
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
-            {
-                try { obj = ErpContext.Instance.DogFactory.GetDog(dogId).Row<StatoSalute>(parms.Id); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
-            }
+            StatoSalute obj = this.ReadForDeleteModel<StatoSalute>(parms);
             return PartialView("~/Views/SIO/HealthData/StatoSalute/_PartialDelete.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Delete([FromBody] StatoSalute obj)
+        public IActionResult Delete([FromBody] ModelObject dataObj)
         {
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (String.IsNullOrWhiteSpace(obj.Ss1Icode))
+            StatoSalute obj = this.DeleteModel<StatoSalute>(dataObj);
+            if (ModelState.ErrorCount > 0)
             {
-                ModelState.AddModelError(string.Empty, "Identificativo nullo");
                 return PartialView("~/Views/SIO/HealthData/StatoSalute/_PartialDelete.cshtml", obj);
             }
+            this.StatusMessage = "Record cancellato!";
             //---GESTISCE AZIONI CLICK PULSANTE
             ViewData["IsModalACTION"] = "CLOSE";
             ViewData["IsPageACTION"] = "RELOAD";

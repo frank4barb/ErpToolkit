@@ -96,9 +96,9 @@ namespace ErpToolkit.Controllers.SIO.Costs
         }
 
         [HttpPost]
-        public IActionResult Edit([FromBody] ModelParam parms)  
+        public IActionResult ReadForEdit([FromBody] ModelParam parms)  
         {
-            TipoDiagnosi obj = this.EditModel<TipoDiagnosi>(parms);
+            TipoDiagnosi obj = this.ReadForEditModel<TipoDiagnosi>(parms);
             return PartialView("~/Views/SIO/Costs/TipoDiagnosi/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
@@ -118,26 +118,20 @@ namespace ErpToolkit.Controllers.SIO.Costs
             return PartialView("~/Views/SIO/Costs/TipoDiagnosi/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Alert([FromBody] ModelParam parms)  
+        public IActionResult ReadForDelete([FromBody] ModelParam parms)  
         {
-            TipoDiagnosi obj = new TipoDiagnosi();
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
-            {
-                try { obj = ErpContext.Instance.DogFactory.GetDog(dogId).Row<TipoDiagnosi>(parms.Id); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
-            }
+            TipoDiagnosi obj = this.ReadForDeleteModel<TipoDiagnosi>(parms);
             return PartialView("~/Views/SIO/Costs/TipoDiagnosi/_PartialDelete.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Delete([FromBody] TipoDiagnosi obj)
+        public IActionResult Delete([FromBody] ModelObject dataObj)
         {
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (String.IsNullOrWhiteSpace(obj.Td1Icode))
+            TipoDiagnosi obj = this.DeleteModel<TipoDiagnosi>(dataObj);
+            if (ModelState.ErrorCount > 0)
             {
-                ModelState.AddModelError(string.Empty, "Identificativo nullo");
                 return PartialView("~/Views/SIO/Costs/TipoDiagnosi/_PartialDelete.cshtml", obj);
             }
+            this.StatusMessage = "Record cancellato!";
             //---GESTISCE AZIONI CLICK PULSANTE
             ViewData["IsModalACTION"] = "CLOSE";
             ViewData["IsPageACTION"] = "RELOAD";

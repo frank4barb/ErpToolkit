@@ -85,9 +85,9 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         }
 
         [HttpPost]
-        public IActionResult Edit([FromBody] ModelParam parms)  
+        public IActionResult ReadForEdit([FromBody] ModelParam parms)  
         {
-            ParametroVitale obj = this.EditModel<ParametroVitale>(parms);
+            ParametroVitale obj = this.ReadForEditModel<ParametroVitale>(parms);
             return PartialView("~/Views/SIO/HealthData/ParametroVitale/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
@@ -107,26 +107,20 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             return PartialView("~/Views/SIO/HealthData/ParametroVitale/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Alert([FromBody] ModelParam parms)  
+        public IActionResult ReadForDelete([FromBody] ModelParam parms)  
         {
-            ParametroVitale obj = new ParametroVitale();
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
-            {
-                try { obj = ErpContext.Instance.DogFactory.GetDog(dogId).Row<ParametroVitale>(parms.Id); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
-            }
+            ParametroVitale obj = this.ReadForDeleteModel<ParametroVitale>(parms);
             return PartialView("~/Views/SIO/HealthData/ParametroVitale/_PartialDelete.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Delete([FromBody] ParametroVitale obj)
+        public IActionResult Delete([FromBody] ModelObject dataObj)
         {
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (String.IsNullOrWhiteSpace(obj.Pv1Icode))
+            ParametroVitale obj = this.DeleteModel<ParametroVitale>(dataObj);
+            if (ModelState.ErrorCount > 0)
             {
-                ModelState.AddModelError(string.Empty, "Identificativo nullo");
                 return PartialView("~/Views/SIO/HealthData/ParametroVitale/_PartialDelete.cshtml", obj);
             }
+            this.StatusMessage = "Record cancellato!";
             //---GESTISCE AZIONI CLICK PULSANTE
             ViewData["IsModalACTION"] = "CLOSE";
             ViewData["IsPageACTION"] = "RELOAD";

@@ -85,9 +85,9 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         }
 
         [HttpPost]
-        public IActionResult Edit([FromBody] ModelParam parms)  
+        public IActionResult ReadForEdit([FromBody] ModelParam parms)  
         {
-            RisultatoEsame obj = this.EditModel<RisultatoEsame>(parms);
+            RisultatoEsame obj = this.ReadForEditModel<RisultatoEsame>(parms);
             return PartialView("~/Views/SIO/HealthData/RisultatoEsame/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
@@ -107,26 +107,20 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             return PartialView("~/Views/SIO/HealthData/RisultatoEsame/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Alert([FromBody] ModelParam parms)  
+        public IActionResult ReadForDelete([FromBody] ModelParam parms)  
         {
-            RisultatoEsame obj = new RisultatoEsame();
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
-            {
-                try { obj = ErpContext.Instance.DogFactory.GetDog(dogId).Row<RisultatoEsame>(parms.Id); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
-            }
+            RisultatoEsame obj = this.ReadForDeleteModel<RisultatoEsame>(parms);
             return PartialView("~/Views/SIO/HealthData/RisultatoEsame/_PartialDelete.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Delete([FromBody] RisultatoEsame obj)
+        public IActionResult Delete([FromBody] ModelObject dataObj)
         {
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (String.IsNullOrWhiteSpace(obj.Re1Icode))
+            RisultatoEsame obj = this.DeleteModel<RisultatoEsame>(dataObj);
+            if (ModelState.ErrorCount > 0)
             {
-                ModelState.AddModelError(string.Empty, "Identificativo nullo");
                 return PartialView("~/Views/SIO/HealthData/RisultatoEsame/_PartialDelete.cshtml", obj);
             }
+            this.StatusMessage = "Record cancellato!";
             //---GESTISCE AZIONI CLICK PULSANTE
             ViewData["IsModalACTION"] = "CLOSE";
             ViewData["IsPageACTION"] = "RELOAD";

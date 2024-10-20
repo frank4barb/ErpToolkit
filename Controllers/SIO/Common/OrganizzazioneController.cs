@@ -96,9 +96,9 @@ namespace ErpToolkit.Controllers.SIO.Common
         }
 
         [HttpPost]
-        public IActionResult Edit([FromBody] ModelParam parms)  
+        public IActionResult ReadForEdit([FromBody] ModelParam parms)  
         {
-            Organizzazione obj = this.EditModel<Organizzazione>(parms);
+            Organizzazione obj = this.ReadForEditModel<Organizzazione>(parms);
             return PartialView("~/Views/SIO/Common/Organizzazione/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
@@ -118,26 +118,20 @@ namespace ErpToolkit.Controllers.SIO.Common
             return PartialView("~/Views/SIO/Common/Organizzazione/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Alert([FromBody] ModelParam parms)  
+        public IActionResult ReadForDelete([FromBody] ModelParam parms)  
         {
-            Organizzazione obj = new Organizzazione();
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
-            {
-                try { obj = ErpContext.Instance.DogFactory.GetDog(dogId).Row<Organizzazione>(parms.Id); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
-            }
+            Organizzazione obj = this.ReadForDeleteModel<Organizzazione>(parms);
             return PartialView("~/Views/SIO/Common/Organizzazione/_PartialDelete.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Delete([FromBody] Organizzazione obj)
+        public IActionResult Delete([FromBody] ModelObject dataObj)
         {
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (String.IsNullOrWhiteSpace(obj.Or1Icode))
+            Organizzazione obj = this.DeleteModel<Organizzazione>(dataObj);
+            if (ModelState.ErrorCount > 0)
             {
-                ModelState.AddModelError(string.Empty, "Identificativo nullo");
                 return PartialView("~/Views/SIO/Common/Organizzazione/_PartialDelete.cshtml", obj);
             }
+            this.StatusMessage = "Record cancellato!";
             //---GESTISCE AZIONI CLICK PULSANTE
             ViewData["IsModalACTION"] = "CLOSE";
             ViewData["IsPageACTION"] = "RELOAD";

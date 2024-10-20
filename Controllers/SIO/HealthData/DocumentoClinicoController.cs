@@ -85,9 +85,9 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         }
 
         [HttpPost]
-        public IActionResult Edit([FromBody] ModelParam parms)  
+        public IActionResult ReadForEdit([FromBody] ModelParam parms)  
         {
-            DocumentoClinico obj = this.EditModel<DocumentoClinico>(parms);
+            DocumentoClinico obj = this.ReadForEditModel<DocumentoClinico>(parms);
             return PartialView("~/Views/SIO/HealthData/DocumentoClinico/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
@@ -107,26 +107,20 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             return PartialView("~/Views/SIO/HealthData/DocumentoClinico/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Alert([FromBody] ModelParam parms)  
+        public IActionResult ReadForDelete([FromBody] ModelParam parms)  
         {
-            DocumentoClinico obj = new DocumentoClinico();
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
-            {
-                try { obj = ErpContext.Instance.DogFactory.GetDog(dogId).Row<DocumentoClinico>(parms.Id); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
-            }
+            DocumentoClinico obj = this.ReadForDeleteModel<DocumentoClinico>(parms);
             return PartialView("~/Views/SIO/HealthData/DocumentoClinico/_PartialDelete.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Delete([FromBody] DocumentoClinico obj)
+        public IActionResult Delete([FromBody] ModelObject dataObj)
         {
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (String.IsNullOrWhiteSpace(obj.Dc1Icode))
+            DocumentoClinico obj = this.DeleteModel<DocumentoClinico>(dataObj);
+            if (ModelState.ErrorCount > 0)
             {
-                ModelState.AddModelError(string.Empty, "Identificativo nullo");
                 return PartialView("~/Views/SIO/HealthData/DocumentoClinico/_PartialDelete.cshtml", obj);
             }
+            this.StatusMessage = "Record cancellato!";
             //---GESTISCE AZIONI CLICK PULSANTE
             ViewData["IsModalACTION"] = "CLOSE";
             ViewData["IsPageACTION"] = "RELOAD";

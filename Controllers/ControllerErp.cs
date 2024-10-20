@@ -57,7 +57,7 @@ namespace ErpToolkit.Controllers
         // GESTIONE MODELLO
         //---------------
 
-        public T EditModel<T>(ModelParam parms) where T : ModelErp
+        public T ReadForEditModel<T>(ModelParam parms) where T : ModelErp
         {
             T objModel = (T)Activator.CreateInstance(typeof(T)); // create an instance of that type
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
@@ -75,13 +75,12 @@ namespace ErpToolkit.Controllers
         }
         public T SaveModel<T>(ModelObject dataObj) where T : ModelErp
         {
-            T objModel = System.Text.Json.JsonSerializer.Deserialize<T>((System.Text.Json.JsonElement)dataObj.data);
-            objModel.action = 'A'; //add [Default]
             if (dataObj == null || dataObj.data == null)
             {
-                ModelState.AddModelError(string.Empty, "Oggetto Paziente non valido. null");
-                return objModel;  //restiuisco oggetto vuoto
+                ModelState.AddModelError(string.Empty, $"Oggetto {nameof(T)} non valido. null");
+                return (T)Activator.CreateInstance(typeof(T)); //restiuisco oggetto vuoto
             }
+            T objModel = System.Text.Json.JsonSerializer.Deserialize<T>((System.Text.Json.JsonElement)dataObj.data);
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
             if (!TryValidateModel(objModel))
             {
@@ -98,14 +97,54 @@ namespace ErpToolkit.Controllers
             {
                 return objModel;
             }
-            // salva e ricarica la pagina
+            if (objModel.action != 'A' && objModel.action != 'M')
+            {
+                ModelState.AddModelError(string.Empty, "L'azione impostata non è in [AM]. E' necessario ricaricare l'oggetto");
+                return objModel;
+            }
+            // salva 
             try { DogManager.DogResult objResult = ErpContext.Instance.DogFactory.GetDog(dogId).Mnt<T>(objModel); }
             catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Mnt: " + ex.Message); return objModel; }
             //non ci sono errori
             return objModel;
         }
 
-
+        public T ReadForDeleteModel<T>(ModelParam parms) where T : ModelErp
+        {
+            T objModel = (T)Activator.CreateInstance(typeof(T)); // create an instance of that type
+            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
+            if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
+            {
+                try { objModel = ErpContext.Instance.DogFactory.GetDog(dogId).Row<T>(parms.Id); }
+                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
+                objModel.action = 'D'; //update
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Identificativo nullo. E' necessario ricaricare l'oggetto");
+            }
+            return objModel;
+        }
+        public T DeleteModel<T>(ModelObject dataObj) where T : ModelErp
+        {
+            if (dataObj == null || dataObj.data == null)
+            {
+                ModelState.AddModelError(string.Empty, $"Oggetto {nameof(T)} non valido. null. E' necessario ricaricare l'oggetto");
+                return (T)Activator.CreateInstance(typeof(T)); //restiuisco oggetto vuoto
+            }
+            T objModel = System.Text.Json.JsonSerializer.Deserialize<T>((System.Text.Json.JsonElement)dataObj.data);
+            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
+            if (objModel.action != 'D')
+            {
+                ModelState.AddModelError(string.Empty, "L'azione impostata non è [D]. E' necessario ricaricare l'oggetto");
+                return objModel;
+            }
+            // cancella
+            try { DogManager.DogResult objResult = ErpContext.Instance.DogFactory.GetDog(dogId).Mnt<T>(objModel); }
+            catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Mnt: " + ex.Message); return objModel; }
+            //non ci sono errori
+            return objModel;
+        }
 
 
         //==========================================================================================================

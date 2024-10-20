@@ -43,10 +43,10 @@
                     @Html.DisplayFor(modelItem => item.DiIdComune)
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Distretto/Edit','@Html.DisplayFor(modelItem => item.Di1Icode)')">Edit</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Distretto/ReadForEdit','@Html.DisplayFor(modelItem => item.Di1Icode)')">Edit</a>
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Distretto/Alert','@Html.DisplayFor(modelItem => item.Di1Icode)')">Delete</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Distretto/ReadForDelete','@Html.DisplayFor(modelItem => item.Di1Icode)')">Delete</a>
                 </td>
             </tr>
         }
@@ -74,7 +74,7 @@
                     { "visible": true, "data": "DiNome", "name": "DiNome", "title": "Nome", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "DiNote", "name": "DiNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "DiIdComune", "name": "DiIdComune", "title": "Id Comune", "defaultContent": ".", "autoWidth": true },
-                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Distretto/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Distretto/ReadForEdit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                     { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                 ]
 

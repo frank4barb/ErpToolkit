@@ -96,9 +96,9 @@ namespace ErpToolkit.Controllers.SIO.Resource
         }
 
         [HttpPost]
-        public IActionResult Edit([FromBody] ModelParam parms)  
+        public IActionResult ReadForEdit([FromBody] ModelParam parms)  
         {
-            Sala obj = this.EditModel<Sala>(parms);
+            Sala obj = this.ReadForEditModel<Sala>(parms);
             return PartialView("~/Views/SIO/Resource/Sala/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
@@ -118,26 +118,20 @@ namespace ErpToolkit.Controllers.SIO.Resource
             return PartialView("~/Views/SIO/Resource/Sala/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Alert([FromBody] ModelParam parms)  
+        public IActionResult ReadForDelete([FromBody] ModelParam parms)  
         {
-            Sala obj = new Sala();
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
-            {
-                try { obj = ErpContext.Instance.DogFactory.GetDog(dogId).Row<Sala>(parms.Id); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
-            }
+            Sala obj = this.ReadForDeleteModel<Sala>(parms);
             return PartialView("~/Views/SIO/Resource/Sala/_PartialDelete.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Delete([FromBody] Sala obj)
+        public IActionResult Delete([FromBody] ModelObject dataObj)
         {
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (String.IsNullOrWhiteSpace(obj.Sa1Icode))
+            Sala obj = this.DeleteModel<Sala>(dataObj);
+            if (ModelState.ErrorCount > 0)
             {
-                ModelState.AddModelError(string.Empty, "Identificativo nullo");
                 return PartialView("~/Views/SIO/Resource/Sala/_PartialDelete.cshtml", obj);
             }
+            this.StatusMessage = "Record cancellato!";
             //---GESTISCE AZIONI CLICK PULSANTE
             ViewData["IsModalACTION"] = "CLOSE";
             ViewData["IsPageACTION"] = "RELOAD";

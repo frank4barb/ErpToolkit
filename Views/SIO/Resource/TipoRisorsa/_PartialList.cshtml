@@ -55,10 +55,10 @@
                     @Html.DisplayFor(modelItem => item.TsUnitaDiMisura)
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/TipoRisorsa/Edit','@Html.DisplayFor(modelItem => item.Ts1Icode)')">Edit</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/TipoRisorsa/ReadForEdit','@Html.DisplayFor(modelItem => item.Ts1Icode)')">Edit</a>
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/TipoRisorsa/Alert','@Html.DisplayFor(modelItem => item.Ts1Icode)')">Delete</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/TipoRisorsa/ReadForDelete','@Html.DisplayFor(modelItem => item.Ts1Icode)')">Delete</a>
                 </td>
             </tr>
         }
@@ -88,7 +88,7 @@
                     { "visible": true, "data": "TsDescrizione", "name": "TsDescrizione", "title": "Descrizione", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "TsNote", "name": "TsNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "TsUnitaDiMisura", "name": "TsUnitaDiMisura", "title": "Unita Di Misura", "defaultContent": ".", "autoWidth": true },
-                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/TipoRisorsa/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/TipoRisorsa/ReadForEdit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                     { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                 ]
 

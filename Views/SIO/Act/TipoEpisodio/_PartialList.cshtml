@@ -43,10 +43,10 @@
                     @Html.DisplayFor(modelItem => item.TeNote)
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/TipoEpisodio/Edit','@Html.DisplayFor(modelItem => item.Te1Icode)')">Edit</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/TipoEpisodio/ReadForEdit','@Html.DisplayFor(modelItem => item.Te1Icode)')">Edit</a>
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/TipoEpisodio/Alert','@Html.DisplayFor(modelItem => item.Te1Icode)')">Delete</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/TipoEpisodio/ReadForDelete','@Html.DisplayFor(modelItem => item.Te1Icode)')">Delete</a>
                 </td>
             </tr>
         }
@@ -74,7 +74,7 @@
                     { "visible": true, "data": "TeClasse", "name": "TeClasse", "title": "Classe", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "TeDescrizione", "name": "TeDescrizione", "title": "Descrizione", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "TeNote", "name": "TeNote", "title": "Note", "defaultContent": ".", "autoWidth": true },
-                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/TipoEpisodio/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/TipoEpisodio/ReadForEdit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                     { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                 ]
 

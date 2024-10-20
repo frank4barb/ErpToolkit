@@ -133,10 +133,10 @@
                     @Html.DisplayFor(modelItem => item.FmDataFineAutorizzazione)
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Farmaco/Edit','@Html.DisplayFor(modelItem => item.Fm1Icode)')">Edit</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Farmaco/ReadForEdit','@Html.DisplayFor(modelItem => item.Fm1Icode)')">Edit</a>
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Farmaco/Alert','@Html.DisplayFor(modelItem => item.Fm1Icode)')">Delete</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Farmaco/ReadForDelete','@Html.DisplayFor(modelItem => item.Fm1Icode)')">Delete</a>
                 </td>
             </tr>
         }
@@ -179,7 +179,7 @@
                     { "visible": true, "data": "FmCodiceAic", "name": "FmCodiceAic", "title": "Codice Aic", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "FmDataInizioAutorizzazione", "name": "FmDataInizioAutorizzazione", "title": "Data Inizio Autorizzazione", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "FmDataFineAutorizzazione", "name": "FmDataFineAutorizzazione", "title": "Data Fine Autorizzazione", "defaultContent": ".", "autoWidth": true },
-                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Farmaco/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Farmaco/ReadForEdit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                     { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                 ]
 

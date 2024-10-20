@@ -91,10 +91,10 @@
                     @Html.DisplayFor(modelItem => item.SaDataProssimaManutenzione)
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Sala/Edit','@Html.DisplayFor(modelItem => item.Sa1Icode)')">Edit</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('EditModale','/Sala/ReadForEdit','@Html.DisplayFor(modelItem => item.Sa1Icode)')">Edit</a>
                 </td>
                 <td>
-                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Sala/Alert','@Html.DisplayFor(modelItem => item.Sa1Icode)')">Delete</a>
+                    <a href="#" class="btn btn-primary" onclick="loadModalWithContent('DeleteModale','/Sala/ReadForDelete','@Html.DisplayFor(modelItem => item.Sa1Icode)')">Delete</a>
                 </td>
             </tr>
         }
@@ -130,7 +130,7 @@
                     { "visible": true, "data": "SaFrequenzaManutenzione", "name": "SaFrequenzaManutenzione", "title": "Frequenza Manutenzione", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "SaUsoMedioGiornaliero", "name": "SaUsoMedioGiornaliero", "title": "Uso Medio Giornaliero", "defaultContent": ".", "autoWidth": true },
                     { "visible": true, "data": "SaDataProssimaManutenzione", "name": "SaDataProssimaManutenzione", "title": "Data Prossima Manutenzione", "defaultContent": ".", "autoWidth": true },
-                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Sala/Edit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
+                    { "visible": true, "data": "edit", "name": ".", "title": "<a href=\"#\"  class=\"btn btn-primary\" onclick=\"loadModalWithContent(\'EditModale\',\'/Sala/ReadForEdit\',\'\')\">Add</a>", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                     { "visible": true, "data": "delete", "name": ".", "title": "", "defaultContent": ".", "autoWidth": true, "searchable": false, "orderable": false },
                 ]
 
