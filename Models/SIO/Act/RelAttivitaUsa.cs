@@ -24,8 +24,6 @@ public const string PREFIX = "Au"; //Table Prefix
 public const string LIVEDESC = "D"; //Table type: Live or Description
 public const string IS_RELTABLE = "Y"; //Is Relation Table: Yes or No
 
-public char? action = null; public IDictionary<string, string> options = new Dictionary<string, string>();  // proprietà necessarie per la mantain del record
-
 //1193-1179//REL_ATTIVITA_USA.AU_ID_GRUPPO
 public List<ErpToolkit.Models.SIO.Act.RelAttivitaUsa> RelAttivitaUsa4AuIdGruppo  { get; set; } = new List<ErpToolkit.Models.SIO.Act.RelAttivitaUsa>();
 [Display(Name = "Au1Ienv", ShortName="", Description = "Parametri dell'ambiente Ienv", Prompt="")]
@@ -172,7 +170,7 @@ public string? AuDescrizioneRisorsaUsata  { get; set; }
 public string? AuIdGruppo  { get; set; }
 public ErpToolkit.Models.SIO.Act.RelAttivitaUsa? AuIdGruppoObj  { get; set; }
 
-public bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState) 
     { 
         bool isValidate = true; 
         return isValidate; 

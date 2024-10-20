@@ -98,41 +98,17 @@ namespace ErpToolkit.Controllers.SIO.Act
         [HttpPost]
         public IActionResult Edit([FromBody] ModelParam parms)  
         {
-            TipoAttivita obj = new TipoAttivita();
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
-            {
-                try { obj = ErpContext.Instance.DogFactory.GetDog(dogId).Row<TipoAttivita>(parms.Id); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
-            }
+            TipoAttivita obj = this.EditModel<TipoAttivita>(parms);
             return PartialView("~/Views/SIO/Act/TipoAttivita/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
         public IActionResult Save([FromBody] ModelObject dataObj)
         {
-            if (dataObj == null || dataObj.data == null)
-            {
-                ModelState.AddModelError(string.Empty, "Oggetto TipoAttivita non valido. null");
-                return PartialView("~/Views/SIO/Act/TipoAttivita/_PartialEdit.cshtml", null);
-            }
-            TipoAttivita obj = System.Text.Json.JsonSerializer.Deserialize<TipoAttivita>((System.Text.Json.JsonElement)dataObj.data);
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
+            TipoAttivita obj = this.SaveModel<TipoAttivita>(dataObj);
             if (!TryValidateModel(obj))
             {
-                ModelState.AddModelError(string.Empty, "Verifica valore dei campi: "+
-                    string.Join(", ",
-                        ModelState.Where(ms => ms.Value.Errors.Any()).Select(kvp => kvp.Key).ToArray()
-                    )
-                );
                 return PartialView("~/Views/SIO/Act/TipoAttivita/_PartialEdit.cshtml", obj);
             }
-            if (!obj.TryValidateInt(ModelState))
-            {
-                return PartialView("~/Views/SIO/Act/TipoAttivita/_PartialEdit.cshtml", obj);
-            }
-            // salva e ricarica la pagina
-            try { DogManager.DogResult objResult = ErpContext.Instance.DogFactory.GetDog(dogId).Mnt<TipoAttivita>(obj); }
-            catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Mnt: " + ex.Message); }
             this.StatusMessage = "Record aggiornato!";
             //---GESTISCE AZIONI CLICK PULSANTE
             ViewData["IsModalACTION"] = "CLOSE";

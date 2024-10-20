@@ -187,7 +187,7 @@ namespace ErpToolkit.Helpers.Db
             DogManager.DogTable tab = dogMng.tabTypes[type];
             if (tab == null) throw new ArgumentNullException(nameof(tabModel));
             //campi di sistema
-            var sqlPrefixExt = dogMng.selTypes[type]?.SqlPrefixExt?.Trim() ?? "";
+            var sqlPrefixExt = dogMng.tabTypes[type]?.SqlPrefixExt?.Trim() ?? "";
             if (sqlPrefixExt == "") throw new ArgumentNullException(nameof(sqlPrefixExt));
             List<string> sysFieldList = new List<string>() { "_ICODE","_DELETED","_TIMESTAMP", "_CDATE","_CTIME","_CAGENT","_CUNIT", "_MDATE","_MTIME","_MAGENT","_MUNIT" };
 
@@ -200,7 +200,7 @@ namespace ErpToolkit.Helpers.Db
 
             if (options.Contains("*noSys*"))
             {
-                IDictionary<string, string>? opts = (IDictionary<string, string>)type.GetProperty("options", typeof(Dictionary<string, string>)).GetValue(tabModel);  //carico opzioni
+                IDictionary<string, string>? opts = (IDictionary<string, string>)type.GetField("options").GetValue(tabModel);  //carico opzioni
                 if (opts != null)
                 {
                     _db_cdate = opts["_db_cdate"] ?? dateNow; _db_ctime = opts["_db_ctime"] ?? timeNow; _db_cagent = opts["_db_cagent"] ?? agent; _db_cunit = opts["_db_cunit"] ?? unit;
@@ -209,7 +209,7 @@ namespace ErpToolkit.Helpers.Db
             }
 
             //gestione action
-            char? action = (char)type.GetProperty("action", typeof(char)).GetValue(tabModel);  //può assumere solo A[dd], M[odify], D[elete]
+            char? action = (char)type.GetField("action").GetValue(tabModel);  //può assumere solo A[dd], M[odify], D[elete]
             if (action == null || "AMD".Contains((char)action) == false) throw new ArgumentOutOfRangeException(nameof(action));
             if (action == 'A') { sb.Append($"insert into {tab.SqlTableNameExt} ("); sbValues.Append("("); } else { sb.Append($"update {tab.SqlTableNameExt} set"); }
             if (action != 'D')

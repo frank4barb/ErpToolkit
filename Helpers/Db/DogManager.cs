@@ -560,9 +560,13 @@ namespace ErpToolkit.Helpers.Db
             return objModel;
         }
         //salva su DB modifiche e nuovi record  
-        public DogResult Mnt<T>(T tablModel) { return Mnt((new List<object>() { (object)tablModel }).First()); }
+        public DogResult Mnt<T>(T tablModel, string options = "", string transactionId = null) {
+            List<object> tabModels = new List<object>() { tablModel };
+            List<DogResult> dogResults = MntList(tabModels, options, transactionId);
+            return dogResults.First(); 
+        }
 
-        public List<DogResult> Mnt(List<object> tabModels, string options = "", string transactionId = null)
+        public List<DogResult> MntList(List<object> tabModels, string options = "", string transactionId = null)
         {
             if (tabModels == null) { throw new ArgumentNullException(nameof(tabModels)); }
             List<DogResult> results = new List<DogResult>();

@@ -24,8 +24,6 @@ public const string PREFIX = "Cp"; //Table Prefix
 public const string LIVEDESC = "L"; //Table type: Live or Description
 public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
 
-public char? action = null; public IDictionary<string, string> options = new Dictionary<string, string>();  // proprietà necessarie per la mantain del record
-
 //119-119//REL_PRESTAZIONE_CAMPIONE.PC_ID_CAMPIONE
 public List<ErpToolkit.Models.SIO.Act.RelPrestazioneCampione> RelPrestazioneCampione4PcIdCampione  { get; set; } = new List<ErpToolkit.Models.SIO.Act.RelPrestazioneCampione>();
 [Display(Name = "Cp1Ienv", ShortName="", Description = "Parametri dell'ambiente Ienv", Prompt="")]
@@ -177,7 +175,7 @@ public string? CpOraCambiamentoStato  { get; set; }
 [DataType(DataType.Text)]
 public string? CpNoteCambiamentoStato  { get; set; }
 
-public bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState) 
     { 
         bool isValidate = true; 
         return isValidate; 

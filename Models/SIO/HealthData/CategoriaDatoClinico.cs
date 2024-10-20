@@ -24,8 +24,6 @@ public const string PREFIX = "Cc"; //Table Prefix
 public const string LIVEDESC = "D"; //Table type: Live or Description
 public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
 
-public char? action = null; public IDictionary<string, string> options = new Dictionary<string, string>();  // proprietà necessarie per la mantain del record
-
 [Display(Name = "Cc1Ienv", ShortName="", Description = "Parametri dell'ambiente Ienv", Prompt="")]
 [ErpDogField("CC__IENV", SqlFieldNameExt="", SqlFieldProperties="")]
 [DataType(DataType.Text)]
@@ -96,7 +94,7 @@ public string? CcNote  { get; set; }
 public string? CcIdGruppo  { get; set; }
 public ErpToolkit.Models.SIO.HealthData.CategoriaDatoClinico? CcIdGruppoObj  { get; set; }
 
-public bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState) 
     { 
         bool isValidate = true; 
         return isValidate; 

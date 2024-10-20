@@ -98,41 +98,17 @@ namespace ErpToolkit.Controllers.SIO.Patient
         [HttpPost]
         public IActionResult Edit([FromBody] ModelParam parms)  
         {
-            Comune obj = new Comune();
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
-            {
-                try { obj = ErpContext.Instance.DogFactory.GetDog(dogId).Row<Comune>(parms.Id); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
-            }
+            Comune obj = this.EditModel<Comune>(parms);
             return PartialView("~/Views/SIO/Patient/Comune/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
         public IActionResult Save([FromBody] ModelObject dataObj)
         {
-            if (dataObj == null || dataObj.data == null)
-            {
-                ModelState.AddModelError(string.Empty, "Oggetto Comune non valido. null");
-                return PartialView("~/Views/SIO/Patient/Comune/_PartialEdit.cshtml", null);
-            }
-            Comune obj = System.Text.Json.JsonSerializer.Deserialize<Comune>((System.Text.Json.JsonElement)dataObj.data);
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
+            Comune obj = this.SaveModel<Comune>(dataObj);
             if (!TryValidateModel(obj))
             {
-                ModelState.AddModelError(string.Empty, "Verifica valore dei campi: "+
-                    string.Join(", ",
-                        ModelState.Where(ms => ms.Value.Errors.Any()).Select(kvp => kvp.Key).ToArray()
-                    )
-                );
                 return PartialView("~/Views/SIO/Patient/Comune/_PartialEdit.cshtml", obj);
             }
-            if (!obj.TryValidateInt(ModelState))
-            {
-                return PartialView("~/Views/SIO/Patient/Comune/_PartialEdit.cshtml", obj);
-            }
-            // salva e ricarica la pagina
-            try { DogManager.DogResult objResult = ErpContext.Instance.DogFactory.GetDog(dogId).Mnt<Comune>(obj); }
-            catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Mnt: " + ex.Message); }
             this.StatusMessage = "Record aggiornato!";
             //---GESTISCE AZIONI CLICK PULSANTE
             ViewData["IsModalACTION"] = "CLOSE";

@@ -24,8 +24,6 @@ public const string PREFIX = "Ts"; //Table Prefix
 public const string LIVEDESC = "D"; //Table type: Live or Description
 public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
 
-public char? action = null; public IDictionary<string, string> options = new Dictionary<string, string>();  // proprietà necessarie per la mantain del record
-
 //126-124//REL_PRESTAZIONE_USA.PU_ID_TIPO_RISORSA
 public List<ErpToolkit.Models.SIO.Act.RelPrestazioneUsa> RelPrestazioneUsa4PuIdTipoRisorsa  { get; set; } = new List<ErpToolkit.Models.SIO.Act.RelPrestazioneUsa>();
 //1181-1179//REL_ATTIVITA_USA.AU_ID_TIPO_RISORSA
@@ -114,7 +112,7 @@ public string? TsNote  { get; set; }
 [DataType(DataType.Text)]
 public string? TsUnitaDiMisura  { get; set; }
 
-public bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState) 
     { 
         bool isValidate = true; 
         return isValidate; 

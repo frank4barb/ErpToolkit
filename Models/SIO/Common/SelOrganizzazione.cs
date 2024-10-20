@@ -118,7 +118,7 @@ public string? SelOrAttivo  { get; set; }
 [DataType(DataType.Text)]
 public string? SelOrIdentificativo  { get; set; }
 
-public bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState) 
     { 
         bool isValidate = true; 
         // verifica se almeno un campo indicizzato è valorizzato (test per validazioni complesse del modello) 

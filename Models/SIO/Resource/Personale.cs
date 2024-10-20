@@ -24,8 +24,6 @@ public const string PREFIX = "Pe"; //Table Prefix
 public const string LIVEDESC = "D"; //Table type: Live or Description
 public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
 
-public char? action = null; public IDictionary<string, string> options = new Dictionary<string, string>();  // proprietà necessarie per la mantain del record
-
 //127-124//REL_PRESTAZIONE_USA.PU_ID_RISORSA
 public List<ErpToolkit.Models.SIO.Act.RelPrestazioneUsa> RelPrestazioneUsa4PuIdRisorsa  { get; set; } = new List<ErpToolkit.Models.SIO.Act.RelPrestazioneUsa>();
 //1182-1179//REL_ATTIVITA_USA.AU_ID_RISORSA
@@ -170,7 +168,7 @@ public string? PeCodiceFiscale  { get; set; }
 [DataType(DataType.Text)]
 public string? PeEmail  { get; set; }
 
-public bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState) 
     { 
         bool isValidate = true; 
         return isValidate; 

@@ -121,7 +121,7 @@ public string? SelAvAttributi1  { get; set; }
 [DataType(DataType.Text)]
 public string? SelAvAttributi2  { get; set; }
 
-public bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState) 
     { 
         bool isValidate = true; 
         // verifica se almeno un campo indicizzato è valorizzato (test per validazioni complesse del modello) 

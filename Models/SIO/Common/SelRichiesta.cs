@@ -110,7 +110,7 @@ public List<string> SelRiIdPaziente  { get; set; } = new List<string>();
 [DataType(DataType.Text)]
 public List<string> SelRiIdEpisodio  { get; set; } = new List<string>();
 
-public bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState) 
     { 
         bool isValidate = true; 
         // verifica se almeno un campo indicizzato è valorizzato (test per validazioni complesse del modello) 

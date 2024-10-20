@@ -87,41 +87,17 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         [HttpPost]
         public IActionResult Edit([FromBody] ModelParam parms)  
         {
-            RisultatoEsame obj = new RisultatoEsame();
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
-            if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
-            {
-                try { obj = ErpContext.Instance.DogFactory.GetDog(dogId).Row<RisultatoEsame>(parms.Id); }
-                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
-            }
+            RisultatoEsame obj = this.EditModel<RisultatoEsame>(parms);
             return PartialView("~/Views/SIO/HealthData/RisultatoEsame/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
         public IActionResult Save([FromBody] ModelObject dataObj)
         {
-            if (dataObj == null || dataObj.data == null)
-            {
-                ModelState.AddModelError(string.Empty, "Oggetto RisultatoEsame non valido. null");
-                return PartialView("~/Views/SIO/HealthData/RisultatoEsame/_PartialEdit.cshtml", null);
-            }
-            RisultatoEsame obj = System.Text.Json.JsonSerializer.Deserialize<RisultatoEsame>((System.Text.Json.JsonElement)dataObj.data);
-            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
+            RisultatoEsame obj = this.SaveModel<RisultatoEsame>(dataObj);
             if (!TryValidateModel(obj))
             {
-                ModelState.AddModelError(string.Empty, "Verifica valore dei campi: "+
-                    string.Join(", ",
-                        ModelState.Where(ms => ms.Value.Errors.Any()).Select(kvp => kvp.Key).ToArray()
-                    )
-                );
                 return PartialView("~/Views/SIO/HealthData/RisultatoEsame/_PartialEdit.cshtml", obj);
             }
-            if (!obj.TryValidateInt(ModelState))
-            {
-                return PartialView("~/Views/SIO/HealthData/RisultatoEsame/_PartialEdit.cshtml", obj);
-            }
-            // salva e ricarica la pagina
-            try { DogManager.DogResult objResult = ErpContext.Instance.DogFactory.GetDog(dogId).Mnt<RisultatoEsame>(obj); }
-            catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Mnt: " + ex.Message); }
             this.StatusMessage = "Record aggiornato!";
             //---GESTISCE AZIONI CLICK PULSANTE
             ViewData["IsModalACTION"] = "CLOSE";

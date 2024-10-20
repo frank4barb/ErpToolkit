@@ -24,8 +24,6 @@ public const string PREFIX = "Tp"; //Table Prefix
 public const string LIVEDESC = "D"; //Table type: Live or Description
 public const string IS_RELTABLE = "N"; //Is Relation Table: Yes or No
 
-public char? action = null; public IDictionary<string, string> options = new Dictionary<string, string>();  // proprietà necessarie per la mantain del record
-
 //123-119//REL_PRESTAZIONE_CAMPIONE.PC_ID_TIPO_CAMPIONE
 public List<ErpToolkit.Models.SIO.Act.RelPrestazioneCampione> RelPrestazioneCampione4PcIdTipoCampione  { get; set; } = new List<ErpToolkit.Models.SIO.Act.RelPrestazioneCampione>();
 //371-370//REL_ATTIVITA_TIPO_CAMPIONE.AC_ID_TIPO_CAMPIONE
@@ -114,7 +112,7 @@ public string? TpContenitore  { get; set; }
 [DataType(DataType.Text)]
 public string? TpAttributi  { get; set; }
 
-public bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState) 
     { 
         bool isValidate = true; 
         return isValidate; 

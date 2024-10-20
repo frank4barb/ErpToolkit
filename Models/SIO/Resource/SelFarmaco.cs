@@ -134,7 +134,7 @@ public DateRange SelFmDataInizioAutorizzazione  { get; set; } = new DateRange();
 [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
 public DateRange SelFmDataFineAutorizzazione  { get; set; } = new DateRange();
 
-public bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState) 
     { 
         bool isValidate = true; 
         // verifica se almeno un campo indicizzato è valorizzato (test per validazioni complesse del modello) 

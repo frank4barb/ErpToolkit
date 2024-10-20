@@ -197,7 +197,7 @@ public List<string> SelEpIdRepartoPreh  { get; set; } = new List<string>();
 [DataType(DataType.Text)]
 public string? SelEpFaseEpisodio  { get; set; }
 
-public bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState) 
     { 
         bool isValidate = true; 
         // verifica se almeno un campo indicizzato è valorizzato (test per validazioni complesse del modello) 

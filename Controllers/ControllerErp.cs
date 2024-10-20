@@ -15,6 +15,8 @@ using Google.Api;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Policy;
 using static ErpToolkit.Helpers.Db.DogFactory;
+using ErpToolkit.Helpers.Db;
+using ErpToolkit.Models.SIO.Patient;
 
 
 namespace ErpToolkit.Controllers
@@ -47,6 +49,63 @@ namespace ErpToolkit.Controllers
         //$$//public const string DbConnectionString = "#connectionString_SQLSLocal";
         //$$//public readonly DogId dogId = new DogId("SIO", "SqlServer", "#connectionString_SQLSLocal");
         public readonly DogId dogId = new DogId(ErpContext.Instance.GetString("#defaultServerDOG"));  //connectionStringFull_NameTypeModel syntax: connectionStringAMM__SqlServer__SIO eg: #connectionStringAMM__SqlServer__SIO 
+
+
+        //==========================================================================================================
+        //==========================================================================================================
+
+        // GESTIONE MODELLO
+        //---------------
+
+        public T EditModel<T>(ModelParam parms) where T : ModelErp
+        {
+            T objModel = (T)Activator.CreateInstance(typeof(T)); // create an instance of that type
+            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
+            if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
+            {
+                try { objModel = ErpContext.Instance.DogFactory.GetDog(dogId).Row<T>(parms.Id); }
+                catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Row: " + ex.Message); }
+                objModel.action = 'M'; //update
+            }
+            else
+            {
+                objModel.action = 'A'; //add
+            }
+            return objModel;
+        }
+        public T SaveModel<T>(ModelObject dataObj) where T : ModelErp
+        {
+            T objModel = System.Text.Json.JsonSerializer.Deserialize<T>((System.Text.Json.JsonElement)dataObj.data);
+            objModel.action = 'A'; //add [Default]
+            if (dataObj == null || dataObj.data == null)
+            {
+                ModelState.AddModelError(string.Empty, "Oggetto Paziente non valido. null");
+                return objModel;  //restiuisco oggetto vuoto
+            }
+            ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
+            if (!TryValidateModel(objModel))
+            {
+                ModelState.AddModelError(string.Empty, "Verifica valore dei campi: " +
+                    string.Join(", ",
+                        ModelState.Where(ms => ms.Value.Errors.Any())
+                                    .Select(kvp => kvp.Key)
+                                    .ToArray()
+                    )
+                );
+                return objModel;
+            }
+            if (!objModel.TryValidateInt(ModelState))
+            {
+                return objModel;
+            }
+            // salva e ricarica la pagina
+            try { DogManager.DogResult objResult = ErpContext.Instance.DogFactory.GetDog(dogId).Mnt<T>(objModel); }
+            catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Mnt: " + ex.Message); return objModel; }
+            //non ci sono errori
+            return objModel;
+        }
+
+
 
 
         //==========================================================================================================
