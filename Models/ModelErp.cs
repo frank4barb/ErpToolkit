@@ -11,9 +11,14 @@ namespace ErpToolkit.Models {
 
         // proprietà necessarie per la mantain del record
         public char? action = null; 
-        public IDictionary<string, string> options = new Dictionary<string, string>();  
+        public IDictionary<string, string> options = new Dictionary<string, string>();
 
         //metodi obbligatori
+        //public abstract string getIcode(); // metodo astratto 
+        //public abstract string getTimestamp(); // metodo astratto 
+        //public abstract string getDeleted(); // metodo astratto 
+
+        //metodi virtuali (se non implementati si usa il default)
         public virtual bool TryValidateInt(ModelStateDictionary modelState)
         {
             return true;
