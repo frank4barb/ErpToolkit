@@ -49,7 +49,7 @@ public string? Fm1Deleted { get; set; }
 [Display(Name = "Fm1Timestamp", ShortName="", Description = "Timestamp dell'ultima modifica dell'istanza", Prompt="")]
 [ErpDogField("FM__TIMESTAMP", SqlFieldNameExt="FM__TIMESTAMP", SqlFieldProperties="prop()")]
 [DataType(DataType.Text)]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
+//[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 public byte[]? Fm1Timestamp { get; set; }
 [Display(Name = "Fm1Home", ShortName="", Description = "Posizione principale dell'istanza (cioè il nome del server contenente la copia master)", Prompt="")]
 [ErpDogField("FM__HOME", SqlFieldNameExt="FM__HOME", SqlFieldProperties="prop()")]

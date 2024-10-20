@@ -85,7 +85,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         }
 
         [HttpPost]
-        public IActionResult Edit([FromBody] ModalParams parms)  
+        public IActionResult Edit([FromBody] ModelParam parms)  
         {
             ParametroVitale obj = new ParametroVitale();
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 
@@ -97,7 +97,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             return PartialView("~/Views/SIO/HealthData/ParametroVitale/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Save([FromBody] ModalObject dataObj)
+        public IActionResult Save([FromBody] ModelObject dataObj)
         {
             if (dataObj == null || dataObj.data == null)
             {
@@ -120,7 +120,9 @@ namespace ErpToolkit.Controllers.SIO.HealthData
                 return PartialView("~/Views/SIO/HealthData/ParametroVitale/_PartialEdit.cshtml", obj);
             }
             // salva e ricarica la pagina
-            //StatusMessage = "Obj data was saved!";
+            try { DogManager.DogResult objResult = ErpContext.Instance.DogFactory.GetDog(dogId).Mnt<ParametroVitale>(obj); }
+            catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Mnt: " + ex.Message); }
+            this.StatusMessage = "Record aggiornato!";
             //---GESTISCE AZIONI CLICK PULSANTE
             ViewData["IsModalACTION"] = "CLOSE";
             ViewData["IsPageACTION"] = "RELOAD";
@@ -129,7 +131,7 @@ namespace ErpToolkit.Controllers.SIO.HealthData
             return PartialView("~/Views/SIO/HealthData/ParametroVitale/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
-        public IActionResult Alert([FromBody] ModalParams parms)  
+        public IActionResult Alert([FromBody] ModelParam parms)  
         {
             ParametroVitale obj = new ParametroVitale();
             ModelState.Clear(); //FORZA RICONVALIDA MODELLO 

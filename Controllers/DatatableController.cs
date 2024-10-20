@@ -163,7 +163,7 @@ namespace ErpToolkit.Controllers
 
 
         [HttpPost]
-        public IActionResult EditCustomer([FromBody] ModalParams parms)  //public IActionResult EditCustomer([FromBody] ModalParams parms)
+        public IActionResult EditCustomer([FromBody] ModelParam parms)  //public IActionResult EditCustomer([FromBody] ModalParams parms)
         {
             Customers customer = new Customers();
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))
@@ -209,7 +209,7 @@ namespace ErpToolkit.Controllers
             return PartialView("_PartialTableEdit", customer);
         }
         [HttpPost]
-        public IActionResult AlertCustomer([FromBody] ModalParams parms)  //public IActionResult EditCustomer([FromBody] ModalParams parms)
+        public IActionResult AlertCustomer([FromBody] ModelParam parms)  //public IActionResult EditCustomer([FromBody] ModalParams parms)
         {
             Customers customer = new Customers();
             if (parms != null && !String.IsNullOrWhiteSpace(parms.Id))

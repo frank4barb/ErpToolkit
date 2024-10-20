@@ -47,7 +47,7 @@ public string? Cp1Deleted { get; set; }
 [Display(Name = "Cp1Timestamp", ShortName="", Description = "Timestamp dell'ultima modifica dell'istanza", Prompt="")]
 [ErpDogField("CP__TIMESTAMP", SqlFieldNameExt="CP__TIMESTAMP", SqlFieldProperties="prop()")]
 [DataType(DataType.Text)]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
+//[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 public byte[]? Cp1Timestamp { get; set; }
 [Display(Name = "Cp1Home", ShortName="", Description = "Posizione principale dell'istanza (cioè il nome del server contenente la copia master)", Prompt="")]
 [ErpDogField("CP__HOME", SqlFieldNameExt="CP__HOME", SqlFieldProperties="prop()")]

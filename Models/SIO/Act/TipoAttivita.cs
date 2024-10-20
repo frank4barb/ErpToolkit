@@ -45,7 +45,7 @@ public string? Ta1Deleted { get; set; }
 [Display(Name = "Ta1Timestamp", ShortName="", Description = "Timestamp dell'ultima modifica dell'istanza", Prompt="")]
 [ErpDogField("TA__TIMESTAMP", SqlFieldNameExt="TA__TIMESTAMP", SqlFieldProperties="prop()")]
 [DataType(DataType.Text)]
-[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
+//[StringLength(8, ErrorMessage = "Inserire massimo 8 caratteri")]
 public byte[]? Ta1Timestamp { get; set; }
 [Display(Name = "Ta1Home", ShortName="", Description = "Posizione principale dell'istanza (cioè il nome del server contenente la copia master)", Prompt="")]
 [ErpDogField("TA__HOME", SqlFieldNameExt="TA__HOME", SqlFieldProperties="prop()")]

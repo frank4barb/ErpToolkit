@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models
 {
-    public class ModalObject
+    public class ModelObject
     {
         [Required(ErrorMessage = "Required ObjData.data")]
         public object data { get; set; }

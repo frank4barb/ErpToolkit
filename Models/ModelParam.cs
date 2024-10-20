@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ErpToolkit.Models
 {
-    public class ModalParams
+    public class ModelParam
     {
         [Key]
         [Required(ErrorMessage = "Required Id")]
