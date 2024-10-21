@@ -1,6 +1,6 @@
 ﻿@model ErpToolkit.Models.SIO.Common.Organizzazione
 @{
-    ViewData["Title"] = "Organizzazione Edit";
+    ViewData["Title"] = "Organizzazione Edit [" + (Model?.action ?? ' ') + "]";
 }
 <div class="modal-dialog" role="document">
         @Html.AntiForgeryToken()

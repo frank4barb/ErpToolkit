@@ -1,6 +1,6 @@
 ﻿@model ErpToolkit.Models.SIO.HealthData.RisultatoEsame
 @{
-    ViewData["Title"] = "RisultatoEsame Delete";
+    ViewData["Title"] = "RisultatoEsame Delete [" + (Model?.action ?? ' ') + "]";
 }
 <div class="modal-dialog" role="document">
     @Html.AntiForgeryToken()

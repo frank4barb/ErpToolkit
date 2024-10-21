@@ -104,7 +104,7 @@ namespace ErpToolkit.Controllers
             }
             // salva 
             try { DogManager.DogResult objResult = ErpContext.Instance.DogFactory.GetDog(dogId).Mnt<T>(objModel); }
-            catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Mnt: " + ex.Message); return objModel; }
+            catch (Exception ex) { ModelState.AddModelError(string.Empty, "Problemi in accesso al DB: Mnt: " + ex.Message + " " + (ex.InnerException?.Message ?? "")); return objModel; }
             //non ci sono errori
             return objModel;
         }

@@ -1,6 +1,6 @@
 ﻿@model ErpToolkit.Models.SIO.Patient.Nazione
 @{
-    ViewData["Title"] = "Nazione Edit";
+    ViewData["Title"] = "Nazione Edit [" + (Model?.action ?? ' ') + "]";
 }
 <div class="modal-dialog" role="document">
         @Html.AntiForgeryToken()

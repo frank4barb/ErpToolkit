@@ -1,6 +1,6 @@
 ﻿@model ErpToolkit.Models.SIO.Act.TipoAttivita
 @{
-    ViewData["Title"] = "TipoAttivita Delete";
+    ViewData["Title"] = "TipoAttivita Delete [" + (Model?.action ?? ' ') + "]";
 }
 <div class="modal-dialog" role="document">
     @Html.AntiForgeryToken()

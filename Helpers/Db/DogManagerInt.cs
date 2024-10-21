@@ -72,7 +72,8 @@ namespace ErpToolkit.Helpers.Db
                 try
                 {
                     string propertyName = property.Name; // Get property name and value
-                    object propertyValue = property.GetValue(selModel); 
+                    var sqlFieldNameExt = dogMng.selProperties[propertyName]?.SqlFieldNameExt?.Trim() ?? ""; //per applicare la condizione la proprietà deve avere un attributo [ErpDogField(..)]
+                    object propertyValue = property.GetValue(selModel);
                     if (propertyValue == null) continue;
                     // >>> verifica List
                     if (typeof(IEnumerable<object>).IsAssignableFrom(propertyValue.GetType()))
@@ -94,7 +95,6 @@ namespace ErpToolkit.Helpers.Db
                     numPreCond++; //condizione prevista
                     //---
                     // esiste una condizione
-                    var sqlFieldNameExt = dogMng.selProperties[propertyName]?.SqlFieldNameExt?.Trim() ?? "";
                     if (sqlFieldNameExt != "")
                     {
                         try
@@ -200,23 +200,31 @@ namespace ErpToolkit.Helpers.Db
 
             if (options.Contains("*noSys*"))
             {
-                IDictionary<string, string>? opts = (IDictionary<string, string>)type.GetField("options").GetValue(tabModel);  //carico opzioni
+                IDictionary<string, string>? opts = (IDictionary<string, string>)type.GetProperty("options",typeof(IDictionary<string, string>)).GetValue(tabModel);  //carico opzioni
                 if (opts != null)
                 {
-                    _db_cdate = opts["_db_cdate"] ?? dateNow; _db_ctime = opts["_db_ctime"] ?? timeNow; _db_cagent = opts["_db_cagent"] ?? agent; _db_cunit = opts["_db_cunit"] ?? unit;
-                    _db_mdate = opts["_db_mdate"] ?? dateNow; _db_mtime = opts["_db_mtime"] ?? timeNow; _db_magent = opts["_db_magent"] ?? agent; _db_munit = opts["_db_munit"] ?? unit;
+                    if (opts.ContainsKey("_db_cdate")) _db_cdate = opts["_db_cdate"];
+                    if (opts.ContainsKey("_db_ctime")) _db_cdate = opts["_db_ctime"];
+                    if (opts.ContainsKey("_db_cagent")) _db_cdate = opts["_db_cagent"];
+                    if (opts.ContainsKey("_db_cunit")) _db_cdate = opts["_db_cunit"];
+                    //--
+                    if (opts.ContainsKey("_db_mdate")) _db_cdate = opts["_db_mdate"];
+                    if (opts.ContainsKey("_db_mtime")) _db_cdate = opts["_db_mtime"];
+                    if (opts.ContainsKey("_db_magent")) _db_cdate = opts["_db_magent"];
+                    if (opts.ContainsKey("_db_munit")) _db_cdate = opts["_db_munit"];
                 }
             }
 
             //gestione action
-            char? action = (char)type.GetField("action").GetValue(tabModel);  //può assumere solo A[dd], M[odify], D[elete]
+            char? action = (char)type.GetProperty("action",typeof(char?)).GetValue(tabModel);  //può assumere solo A[dd], M[odify], D[elete]
             if (action == null || "AMD".Contains((char)action) == false) throw new ArgumentOutOfRangeException(nameof(action));
-            if (action == 'A') { sb.Append($"insert into {tab.SqlTableNameExt} ("); sbValues.Append("("); } else { sb.Append($"update {tab.SqlTableNameExt} set"); }
+            if (action == 'A') { sb.AppendLine($"insert into {tab.SqlTableNameExt} ("); sbValues.AppendLine("("); } else { sb.AppendLine($"update {tab.SqlTableNameExt} set "); }
             if (action != 'D')
             {
                 foreach (var property in type.GetProperties())
                 {
                     string propertyName = property.Name; // Get property name and value
+                    if (!dogMng.tabProperties.ContainsKey(propertyName)) continue; //per applicare la condizione la proprietà deve avere un attributo [ErpDogField(..)]
                     object propertyValue = property.GetValue(tabModel);
 
                     //string fieldOptions = ((ErpDogFieldAttribute)attribute).SqlFieldOptions?.ToString() ?? "";
@@ -325,6 +333,7 @@ namespace ErpToolkit.Helpers.Db
                     foreach (var property in type.GetProperties())
                     {
                         string propertyName = property.Name; // Get property name and value
+                        if (!dogMng.tabProperties.ContainsKey(propertyName)) continue; //per applicare la condizione la proprietà deve avere un attributo [ErpDogField(..)]
                         DogManager.DogField fld = dogMng.tabProperties[propertyName];
                         var sqlFieldNameExt = dogMng.tabProperties[propertyName]?.SqlFieldNameExt?.Trim() ?? "";
                         if (sqlFieldNameExt != "")

@@ -1,6 +1,6 @@
 ﻿@model ErpToolkit.Models.SIO.Act.Attivita
 @{
-    ViewData["Title"] = "Attivita Edit";
+    ViewData["Title"] = "Attivita Edit [" + (Model?.action ?? ' ') + "]";
 }
 <div class="modal-dialog" role="document">
         @Html.AntiForgeryToken()

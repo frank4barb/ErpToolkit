@@ -1,6 +1,6 @@
 ﻿@model ErpToolkit.Models.SIO.HealthData.ParametroVitale
 @{
-    ViewData["Title"] = "ParametroVitale Delete";
+    ViewData["Title"] = "ParametroVitale Delete [" + (Model?.action ?? ' ') + "]";
 }
 <div class="modal-dialog" role="document">
     @Html.AntiForgeryToken()

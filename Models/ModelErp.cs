@@ -10,8 +10,8 @@ namespace ErpToolkit.Models {
         //xx//public Dictionary<string, DogHelper.FieldAttr> AttrFields { get; set; } = new Dictionary<string, DogHelper.FieldAttr>();
 
         // proprietà necessarie per la mantain del record
-        public char? action = null; 
-        public IDictionary<string, string> options = new Dictionary<string, string>();
+        public char? action { get; set; } = null; 
+        public IDictionary<string, string> options { get; set; } = new Dictionary<string, string>();
 
         //metodi obbligatori
         //public abstract string getIcode(); // metodo astratto 

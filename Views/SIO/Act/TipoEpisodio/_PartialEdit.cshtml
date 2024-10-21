@@ -1,6 +1,6 @@
 ﻿@model ErpToolkit.Models.SIO.Act.TipoEpisodio
 @{
-    ViewData["Title"] = "TipoEpisodio Edit";
+    ViewData["Title"] = "TipoEpisodio Edit [" + (Model?.action ?? ' ') + "]";
 }
 <div class="modal-dialog" role="document">
         @Html.AntiForgeryToken()

@@ -1,6 +1,6 @@
 ﻿@model ErpToolkit.Models.SIO.Act.Campione
 @{
-    ViewData["Title"] = "Campione Delete";
+    ViewData["Title"] = "Campione Delete [" + (Model?.action ?? ' ') + "]";
 }
 <div class="modal-dialog" role="document">
     @Html.AntiForgeryToken()

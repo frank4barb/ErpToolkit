@@ -1,6 +1,6 @@
 ﻿@model ErpToolkit.Models.SIO.Resource.Sala
 @{
-    ViewData["Title"] = "Sala Delete";
+    ViewData["Title"] = "Sala Delete [" + (Model?.action ?? ' ') + "]";
 }
 <div class="modal-dialog" role="document">
     @Html.AntiForgeryToken()

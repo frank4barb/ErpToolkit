@@ -1,6 +1,6 @@
 ﻿@model ErpToolkit.Models.SIO.Costs.Diagnosi
 @{
-    ViewData["Title"] = "Diagnosi Delete";
+    ViewData["Title"] = "Diagnosi Delete [" + (Model?.action ?? ' ') + "]";
 }
 <div class="modal-dialog" role="document">
     @Html.AntiForgeryToken()
