@@ -224,7 +224,8 @@ namespace ErpToolkit.Controllers
                         .AddDefault("SelPaNome_Attr", DogManager.FieldAttr.strAttr(true, false))
                  , new Page("Episodio").AddDefault("SelTe1Icode", "UCSC")
                         .AddDefault("SelTe1Icode_Attr", DogManager.FieldAttr.strAttr(true, true))
-                        .AddDefault("SelEpLetto_Attr", DogManager.FieldAttr.strAttr(true, true)) } }
+                        .AddDefault("SelEpLetto_Attr", DogManager.FieldAttr.strAttr(true, true))
+                        .AddDefault("SelPaIdCittadinanza_Attr", DogManager.FieldAttr.strAttr(true, true)) } }
             ,{ "Percorso2", new List<Page> { new Page("Page2"), new Page("Page1") } }
             };
 

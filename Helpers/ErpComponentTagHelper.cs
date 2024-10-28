@@ -435,7 +435,11 @@ namespace ErpToolkit.Helpers
                 MinChars = 3;
 
                 var visibleInputName = For.Name + "Label";
-                var preSelectedValues = For.ModelExplorer.Model as List<string>;
+                //%%//var preSelectedValues = For.ModelExplorer.Model as List<string>;
+                var preSelectedValues = new List<string>();
+                if (For.ModelExplorer.Model is string) preSelectedValues = new List<string>() { For.ModelExplorer.Model as string };
+                else preSelectedValues = For.ModelExplorer.Model as List<string>;
+
                 var divId = $"{For.Name}SelectedItems";
 
                 var preSelectedValuesJson = preSelectedValues != null ? "{ \"preSelected\": " + JsonConvert.SerializeObject(preSelectedValues) + " }" : "{ \"preSelected\": [] }";
@@ -459,7 +463,7 @@ namespace ErpToolkit.Helpers
 
                 // Aggiungi il wrapper per l'input e l'icona
                 output.PreElement.AppendHtml("<div class='autocomplete-wrapper'>");
-                if (attrField.Readonly != 'Y' && attrField.Visible != 'N') output.PostElement.AppendHtml("<span class='autocomplete-icon'><i class='bi bi-search' aria-hidden='true'></i></span></div>");
+                if (attrField.Readonly != 'Y' && attrField.Visible != 'N') output.PostElement.AppendHtml($"<span id='{divId}AutocompleteIcon' class='autocomplete-icon'><i class='bi bi-search' aria-hidden='true'></i></span></div>");
                 //--
 
                 output.PostElement.AppendHtml(selectedItemsDiv);
@@ -470,7 +474,10 @@ namespace ErpToolkit.Helpers
                 MinChars = 1;
 
                 var visibleInputName = For.Name + "Label";
-                var preSelectedValues = For.ModelExplorer.Model as List<string>;
+                //%%//var preSelectedValues = For.ModelExplorer.Model as List<string>;
+                var preSelectedValues = new List<string>();
+                if (For.ModelExplorer.Model is string) preSelectedValues = new List<string>() { For.ModelExplorer.Model as string };
+                else preSelectedValues = For.ModelExplorer.Model as List<string>;
                 var divId = $"{For.Name}SelectedItems";
 
                 var preSelectedValuesJson = preSelectedValues != null ? "{ \"preSelected\": "+JsonConvert.SerializeObject(preSelectedValues)+" }" : "{ \"preSelected\": [] }";
@@ -494,8 +501,8 @@ namespace ErpToolkit.Helpers
                 output.Attributes.SetAttribute("value", ""); //pulisco valore campo
 
                 // Aggiungi il wrapper per l'input e l'icona
-                output.PreElement.AppendHtml("<div class='autocomplete-wrapper'>");
-                if (attrField.Readonly != 'Y' && attrField.Visible != 'N') output.PostElement.AppendHtml("<span class='autocomplete-icon'><i class='bi bi-search' aria-hidden='true'></i></span></div>");
+                output.PreElement.AppendHtml($"<div id='{For.Name}AutocompleteWrapper' class='autocomplete-wrapper'>");
+                output.PostElement.AppendHtml($"<div class='autocomplete-icon'><i class='bi bi-search' aria-hidden='true'></i></div></div>");
                 //--
 
                 output.PostElement.AppendHtml(selectedItemsDiv);

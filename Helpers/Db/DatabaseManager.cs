@@ -6,13 +6,14 @@ using System.Globalization;
 using System.Data.Common;
 using static ErpToolkit.Helpers.ErpError;
 using System.Text;
+using static ErpToolkit.Helpers.Db.DatabaseFactory;
 
 namespace ErpToolkit.Helpers.Db
 {
     // Funzioni di gestione accesso al Database, indipendentemente dal DBMS
     public class DatabaseManager : IDisposable
     {
-        private readonly string _databaseType = "";
+        private readonly DbTyp _databaseType;
         private readonly IDatabase _database;
         private static NLog.ILogger _logger;
 
@@ -22,7 +23,7 @@ namespace ErpToolkit.Helpers.Db
 
 
         // Proprietà configurabili
-        public string DatabaseType { get { return _databaseType; } }  
+        public DbTyp DatabaseType { get { return _databaseType; } }  
         public int PageSize { get; set; } = 1000;  //ReadBlob, WriteBlob
         public int MaxRetries { get; set; } = 3;
         public int DelayBetweenRetriesMs { get; set; } = 1000;
@@ -32,7 +33,7 @@ namespace ErpToolkit.Helpers.Db
         public bool EnableTrace { get; set; } = false;
         public int MaxFileLengthBytes { get; set; } = 1024 * 1024 * 1024;  // 1 Gb
 
-        internal DatabaseManager(string databaseType, IDatabase database)
+        internal DatabaseManager(DbTyp databaseType, IDatabase database)
         {
             //SetUpNLog();
             NLog.LogManager.Configuration = UtilHelper.GetNLogConfig(); // Apply config

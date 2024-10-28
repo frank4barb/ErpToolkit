@@ -10,6 +10,9 @@ namespace ErpToolkit.Helpers.Db
     public class DatabaseFactory : IDisposable
     {
 
+        public enum DbTyp { SqlServer, Sybase, MySql, PostgreSql, SQLite, Oracle, IRIS, MongoDb }
+
+
         private IDictionary<string, DatabaseManager> _itemsDB = new Dictionary<string, DatabaseManager>();  //
 
         public DatabaseFactory()
@@ -33,11 +36,10 @@ namespace ErpToolkit.Helpers.Db
 
         private static readonly object _lockObject = new object();
 
-        public DatabaseManager GetDatabase(string dbType, string connectionStringName, string databaseName = "")
+        public DatabaseManager GetDatabase(DbTyp dbType, string connectionStringName, string databaseName = "")
         {
-            if (String.IsNullOrWhiteSpace(dbType)) throw new ArgumentException("Errore: GetDatabase: dbType vuota.");
             if (String.IsNullOrWhiteSpace(connectionStringName)) throw new ArgumentException("Errore: GetDatabase: connectionStringName vuota.");
-            string key = dbType + "***" + connectionStringName;
+            string key = dbType.ToString() + "***" + connectionStringName;
             lock (_lockObject)
             {
 
@@ -49,28 +51,28 @@ namespace ErpToolkit.Helpers.Db
                     if (connectionString == "") throw new ArgumentException("Errore: connectionString vuota (" + connectionStringName + ") ");
                     switch (dbType)
                     {
-                        case "SqlServer":
+                        case DbTyp.SqlServer:
                             idb = new SqlServerDatabase(connectionString);
                             break;
-                        case "Sybase":
+                        case DbTyp.Sybase:
                             idb = new SybaseDatabase(connectionString);
                             break;
-                        case "MySql":
+                        case DbTyp.MySql:
                             idb = new MySqlDatabase(connectionString);
                             break;
-                        case "PostgreSql":
+                        case DbTyp.PostgreSql:
                             idb = new PostgreSqlDatabase(connectionString);
                             break;
-                        case "SQLite":
+                        case DbTyp.SQLite:
                             idb = new SQLiteDatabase(connectionString);
                             break;
-                        case "Oracle":
+                        case DbTyp.Oracle:
                             idb = new OracleDatabase(connectionString);
                             break;
-                        case "IRIS":
+                        case DbTyp.IRIS:
                             idb = new IRISDatabase(connectionString);
                             break;
-                        case "MongoDb":
+                        case DbTyp.MongoDb:
                             idb = new MongoDbDatabase(connectionString, databaseName);
                             break;
                         // Aggiungi altri DBMS qui

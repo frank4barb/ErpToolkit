@@ -4,6 +4,8 @@ using System.Reflection;
 using System.Text;
 using System.Collections;
 using static ErpToolkit.Helpers.Db.DogManager;
+using static ErpToolkit.Helpers.Db.DatabaseFactory;
+using System.Linq;
 
 
 namespace ErpToolkit.Helpers.Db
@@ -348,25 +350,34 @@ namespace ErpToolkit.Helpers.Db
             // terminatore di insert update
             if (action == 'A')
             {
+                //--
+                if (dogMng.DatabaseType != DbTyp.SqlServer && dogMng.DatabaseType != DbTyp.Sybase)
+                {
+                    sb.AppendLine($"{sqlPrefixExt}_TIMESTAMP, ");
+                    sbValues.AppendLine($"{DogManager.addParam(newTimestamp, ref parameters)}, ");
+                }
+                sb.AppendLine($"{sqlPrefixExt}_ICODE, {sqlPrefixExt}_DELETED, {sqlPrefixExt}_HOME, ");
+                sbValues.AppendLine($"{DogManager.addParam(icode, ref parameters)}, {DogManager.addParam("N", ref parameters)}, {DogManager.addParam(dogMng.DbHome, ref parameters)}, ");
+                //---
                 sb.AppendLine($"{sqlPrefixExt}_CDATE, {sqlPrefixExt}_CTIME, {sqlPrefixExt}_CAGENT, {sqlPrefixExt}_CUNIT, ");
                 sbValues.AppendLine($"{DogManager.addParam(_db_cdate, ref parameters)}, {DogManager.addParam(_db_ctime, ref parameters)}, {DogManager.addParam(_db_cagent, ref parameters)}, {DogManager.addParam(_db_cunit, ref parameters)}, ");
                 //--
-                sb.AppendLine($"{sqlPrefixExt}_MDATE, {sqlPrefixExt}_MTIME, {sqlPrefixExt}_MAGENT, {sqlPrefixExt}_MUNIT, ");
-                sbValues.AppendLine($"{DogManager.addParam(_db_mdate, ref parameters)}, {DogManager.addParam(_db_mtime, ref parameters)}, {DogManager.addParam(_db_magent, ref parameters)}, {DogManager.addParam(_db_munit, ref parameters)}, ");
-                //--
-                sb.AppendLine($"{sqlPrefixExt}_ICODE, {sqlPrefixExt}_DELETED, {sqlPrefixExt}_TIMESTAMP");
-                sbValues.AppendLine($"{DogManager.addParam(icode, ref parameters)}, {DogManager.addParam("N", ref parameters)}, {DogManager.addParam(newTimestamp, ref parameters)}");
+                sb.AppendLine($"{sqlPrefixExt}_MDATE, {sqlPrefixExt}_MTIME, {sqlPrefixExt}_MAGENT, {sqlPrefixExt}_MUNIT");
+                sbValues.AppendLine($"{DogManager.addParam(_db_mdate, ref parameters)}, {DogManager.addParam(_db_mtime, ref parameters)}, {DogManager.addParam(_db_magent, ref parameters)}, {DogManager.addParam(_db_munit, ref parameters)}");
                 //---
                 sb.AppendLine(") values (").Append(sbValues.ToString()).Append(") ");
             }
             else  // modify or delete
             {
+                if (dogMng.DatabaseType != DbTyp.SqlServer && dogMng.DatabaseType != DbTyp.Sybase)
+                {
+                    sb.AppendLine($"{sqlPrefixExt}_TIMESTAMP = {DogManager.addParam(newTimestamp, ref parameters)}, ");
+                }
+                //--
                 sb.AppendLine($"{sqlPrefixExt}_MDATE = {DogManager.addParam(_db_mdate, ref parameters)}, {sqlPrefixExt}_MTIME = {DogManager.addParam(_db_mtime, ref parameters)}, ");
-                sb.AppendLine($"{sqlPrefixExt}_MAGENT = {DogManager.addParam(_db_magent, ref parameters)}, {sqlPrefixExt}_MUNIT = {DogManager.addParam(_db_munit, ref parameters)}, ");
+                sb.AppendLine($"{sqlPrefixExt}_MAGENT = {DogManager.addParam(_db_magent, ref parameters)}, {sqlPrefixExt}_MUNIT = {DogManager.addParam(_db_munit, ref parameters)}");
                 //--
-                sb.AppendLine($"{sqlPrefixExt}_TIMESTAMP = {DogManager.addParam(newTimestamp, ref parameters)}");
-                //--
-                sb.AppendLine($" where {sqlPrefixExt}_ICODE = {DogManager.addParam(icode, ref parameters)}");
+                sb.AppendLine($" where {sqlPrefixExt}_ICODE = {DogManager.addParam(icode, ref parameters)} and {sqlPrefixExt}_DELETED = {DogManager.addParam('N', ref parameters)}");
                 if (options.Contains("*noTms*") == false) sb.Append($" and {sqlPrefixExt}_TIMESTAMP = {DogManager.addParam(oldTimestamp, ref parameters)}");
             }
 
@@ -375,7 +386,28 @@ namespace ErpToolkit.Helpers.Db
             return sb.ToString();
         }
 
-
+        //crea select per rileggere icode e timestamp dei record presenti nell'elenco result
+        //  ...serve quando il timestamp viene generato da DB e non in fase di insert/update (SqlServer/Sybase)
+        internal static string sqlSelectIcodeTimestamp(DogManager dogMng, List<DogResult> results, ref IDictionary<string, object> parameters, string options = "")
+        {
+            //divido per tabelle
+            IDictionary<System.Type, List<string>> tabList = new Dictionary<System.Type, List<string>>();
+            foreach (DogResult result in results) 
+            {
+                if (!tabList.ContainsKey(result.TabType)) tabList.Add(result.TabType, new List<string>());
+                tabList[result.TabType].Add(result.Icode); 
+            }
+            //scrivo query
+            StringBuilder sb = new StringBuilder(); 
+            foreach (System.Type tpy in tabList.Keys) {
+                DogManager.DogTable tab = dogMng.tabTypes[tpy];
+                if (sb.Length != 0) sb.AppendLine(" union ");
+                sb.Append($"select {tab.SqlPrefix}_ICODE as ICODE, {tab.SqlPrefix}_TIMESTAMP as TIMESTAMP from {tab.SqlTableName} where {tab.SqlPrefix}_ICODE in (")
+                    .Append(string.Join(", ", DogManager.addListParam(tabList[tpy].Select(str => str.TrimEnd()).ToList<object>(), ref parameters)))
+                    .AppendLine(") "); ;
+            }
+            return sb.ToString();
+        }
 
         //******************************************************************************************************************
         //******************************************************************************************************************

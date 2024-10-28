@@ -48,7 +48,7 @@ namespace ErpToolkit.Controllers
 
         //$$//public const string DbConnectionString = "#connectionString_SQLSLocal";
         //$$//public readonly DogId dogId = new DogId("SIO", "SqlServer", "#connectionString_SQLSLocal");
-        public readonly DogId dogId = new DogId(ErpContext.Instance.GetString("#defaultServerDOG"));  //connectionStringFull_NameTypeModel syntax: connectionStringAMM__SqlServer__SIO eg: #connectionStringAMM__SqlServer__SIO 
+        public readonly DogId dogId = new DogId(ErpContext.Instance.GetString("#defaultServerDOG"), "IU00");  //connectionStringFull_NameTypeModel syntax: connectionStringAMM__SqlServer__SIO eg: #connectionStringAMM__SqlServer__SIO 
 
 
         //==========================================================================================================

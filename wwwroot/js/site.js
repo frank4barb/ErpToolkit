@@ -44,6 +44,9 @@ function openModalWithContent(modalDialogId, modalAction, jsonParams) {
             if (isPageACTION_RELOAD) { location.reload(true); } //ricarica pagina dal server (ie: no cache)
             var isPageREDIRECT = $('#' + modalDialogId).find('[name="IsPageREDIRECT"]').val();
             if (isPageREDIRECT != "") { location.href = isPageREDIRECT; } //ridireziona su altra pagina
+
+            // Una volta completato il caricamento della PartialView
+            initializeAfterLoadPageAndPartial(); // Richiama la funzione anche dopo il caricamento della PartialView
         })
         .catch(error => console.error('Errore:', error));
 }
@@ -491,7 +494,7 @@ function handleMaxSelections(groupName, maxSelections) {
 
 
 
-$(document).ready(function () {
+function initializeAfterLoadPageAndPartial() {
     $('.autocomplete-input').each(function () {
         var input = $(this);
         var inputName = input.data('name');
@@ -542,7 +545,7 @@ $(document).ready(function () {
                 if (label) { label.style.display = 'none'; }
                 //---
 
-                input.hide();
+                input.hide(); $('#' + input.data('name') + 'AutocompleteWrapper').hide();
                 resultsDiv.hide();
                 selectedItemsDiv.hide(); // Nasconde anche il div delle scelte selezionate
                 return; // Esce dalla funzione per evitare ulteriori elaborazioni
@@ -599,7 +602,7 @@ $(document).ready(function () {
                 });
 
                 if (selectedItemsDiv.children().length > 0) {
-                    input.hide(); // Nasconde la input-box se ci sono elementi pre-selezionati
+                    input.hide(); $('#' + input.data('name') + 'AutocompleteWrapper').hide(); // Nasconde la input-box se ci sono elementi pre-selezionati
                     selectedItemsDiv.find('.remove-item').remove(); // Rimuove i pulsanti di rimozione
                 }
             }
@@ -740,15 +743,21 @@ $(document).ready(function () {
         function toggleInputVisibility(input, selectedItemsDiv, maxSelections) {
             var selectedCount = selectedItemsDiv.children().length;
             if (maxSelections > 0 && selectedCount >= maxSelections) {
-                input.hide();
+                input.hide(); $('#' + input.data('name') + 'AutocompleteWrapper').hide(); 
             } else {
-                input.show();
+                input.show(); $('#' + input.data('name') + 'AutocompleteWrapper').show();
             }
         }
 
         // Initial toggle in case there are pre-selected items
         toggleInputVisibility(input, selectedItemsDiv, maxSelections);
     });
+}
+
+
+
+$(document).ready(function () {
+    initializeAfterLoadPageAndPartial(); // Chiamata all'inizio del caricamento della pagina
 });
 
 

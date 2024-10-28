@@ -1,6 +1,7 @@
 ﻿@model ErpToolkit.Models.SIO.Patient.Paziente
 @{
     ViewData["Title"] = "Paziente Edit [" + (Model?.action ?? ' ') + "]";
+    //ViewData.TemplateInfo.HtmlFieldPrefix = "Eddit";
 }
 <div class="modal-dialog" role="document">
         @Html.AntiForgeryToken()

@@ -1,3 +1,4 @@
+using Amazon.SecurityToken.Model;
 using MongoDB.Driver;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -5,6 +6,7 @@ using System.Data;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
+using static ErpToolkit.Helpers.Db.DatabaseFactory;
 using static ErpToolkit.Helpers.ErpError;
 
 
@@ -29,7 +31,7 @@ namespace ErpToolkit.Helpers.Db
         internal const short DB_SHORT_EMPTY = (short)(-32768); //vuoto
         internal const long DB_LONG_EMPTY = (long)(-2147483647 - 1); //vuoto
         internal const double DB_DOUBLE_EMPTY = (double)(-2147483648.0000); //vuoto
-                                                      //---
+        //---
 
         //***************************************************************************************************************************************************
         //*** STRUTTURE STATICHE
@@ -94,14 +96,20 @@ namespace ErpToolkit.Helpers.Db
 
 
         private string _modelName; // = "SIO";
-        private string _databaseType; // = "SqlServer";
+        private DbTyp _databaseType; // = SqlServer;
         private string _connectionStringName; // = "#connectionString_SQLSLocal";
+        private string _dbRoot; // = "IU01";
+        private string _dbHome; // = "sio_PROD";
         private NLog.ILogger _logger;
+
+
+        public DbTyp DatabaseType { get { return this._databaseType; } }
+        public string DbHome { get { return this._dbHome; } }
 
         private DatabaseManager _getDbMg() { return ErpContext.Instance.DbFactory.GetDatabase(_databaseType, _connectionStringName); }
 
+
         // Proprietà configurabili
-        public string DatabaseType { get { return _getDbMg().DatabaseType; } }
         public int PageSize { get { return _getDbMg().PageSize; } set { _getDbMg().PageSize = value; } }  
         public int MaxRetries { get { return _getDbMg().MaxRetries; } set { _getDbMg().MaxRetries = value; } }
         public int DelayBetweenRetriesMs { get { return _getDbMg().DelayBetweenRetriesMs; } set { _getDbMg().DelayBetweenRetriesMs = value; } }
@@ -177,15 +185,17 @@ namespace ErpToolkit.Helpers.Db
         }
 
         private const string BASE_MODEL = "ErpToolkit.Models";
-        internal DogManager(string modelName, string databaseType, string connectionStringName)
+        internal DogManager(string modelName, DbTyp databaseType, string connectionStringName, string dbRoot, string dbHome)
         {
             //SetUpNLog();
             NLog.LogManager.Configuration = UtilHelper.GetNLogConfig(); // Apply config
             _logger = NLog.LogManager.GetCurrentClassLogger();
             //set dog
-            _modelName = databaseType;
+            _modelName = modelName;
             _databaseType = databaseType;
             _connectionStringName = connectionStringName;
+            _dbRoot = dbRoot;
+            _dbHome = dbHome;
 
             //-----------------------
             //Load Default Data Model
@@ -583,6 +593,21 @@ namespace ErpToolkit.Helpers.Db
             if (sql.Contains('\'') || sql.Contains('#') || sql.Contains("--")) { throw new ArgumentOutOfRangeException(nameof(sql)); }  // Non devo passare i parametri esplicitamente ma sempre attraverso il Dictionary parameters 
             int affectedRows = _getDbMg().ExecuteNonQuery(sql, EncodeSpecialFields(parameters, options), transactionId);
             if (affectedRows != results.Count()) throw new DatabaseException(ERR_DB_TIMESTAMP, "Timestamp non valido o errore in insert/update.", null);
+            
+            //se necessario rileggo i timestamp
+            if (_databaseType == DbTyp.SqlServer || _databaseType == DbTyp.Sybase)
+            {
+                IDictionary<string, object> parametersIcodeTimestamp = new Dictionary<string, object>();
+                string sqlIcodeTimestamp = DogManagerInt.sqlSelectIcodeTimestamp(this, results, ref parametersIcodeTimestamp);
+                DataTable dtIcodeTimestamp = _getDbMg().ExecuteQuery(sqlIcodeTimestamp, EncodeSpecialFields(parametersIcodeTimestamp, options), results.Count(), transactionId);
+                for(int i=0; i < results.Count(); i++)
+                {
+                    var row = dtIcodeTimestamp.AsEnumerable().FirstOrDefault(r => r.Field<string>("ICODE") == results[i].Icode); // Cerca la riga con ICODE uguale a results[i].Icode
+                    if (row == null) throw new DatabaseException(ERR_DB_TIMESTAMP, "Timestamp non trovato o errore in insert/update.", null);
+                    results[i].Timestamp = row.Field<byte[]>("TIMESTAMP");
+                }
+            }
+            
             return results;
         }
 
