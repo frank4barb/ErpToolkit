@@ -87,6 +87,11 @@ namespace ErpToolkit.Controllers.SIO.Patient
         [HttpPost]
         public IActionResult ReadForEdit([FromBody] ModelParam parms)  
         {
+
+
+            //ViewData.TemplateInfo.HtmlFieldPrefix = "EDIT";
+
+
             Paziente obj = this.ReadForEditModel<Paziente>(parms);
             return PartialView("~/Views/SIO/Patient/Paziente/_PartialEdit.cshtml", obj);
         }

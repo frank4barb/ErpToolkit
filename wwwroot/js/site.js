@@ -593,17 +593,19 @@ function initializeAfterLoadPageAndPartial() {
                 }
             }
 
-            // Gestione del parametro readonly
+            // Gestione del parametro readonly 
             if (readonly === 'Y') {
-                input.prop('readonly', true); // Rende il campo di input non modificabile
-                input.css({
-                    'background-color': '#e9ecef', // Colore di sfondo per indicare che è disabilitato
-                    'cursor': 'not-allowed'
-                });
-
-                if (selectedItemsDiv.children().length > 0) {
-                    input.hide(); $('#' + input.data('name') + 'AutocompleteWrapper').hide(); // Nasconde la input-box se ci sono elementi pre-selezionati
-                    selectedItemsDiv.find('.remove-item').remove(); // Rimuove i pulsanti di rimozione
+                if (preSelected.length > 0 && preSelected[0] != null) {  
+                    $('#' + input.data('name') + 'AutocompleteWrapper').find('.autocomplete-icon').hide(); // Rimuove lente ricerca
+                    input.hide(); // Nasconde la input-box se ci sono elementi pre-selezionati
+                }
+                else {
+                    $('#' + input.data('name') + 'AutocompleteWrapper').find('.autocomplete-icon').hide(); // Rimuove lente ricerca
+                    input.prop('readonly', true);  // Rende il campo di input non modificabile
+                    input.css({
+                        'background-color': '#e9ecef', // Colore di sfondo per indicare che è disabilitato
+                        'cursor': 'not-allowed'
+                    });
                 }
             }
 
@@ -737,6 +739,11 @@ function initializeAfterLoadPageAndPartial() {
             var inputField = $('<input type="hidden" name="' + input.data('name') + '" value="' + value + '" />');
             itemDiv.append(inputField);
             selectedItemsDiv.append(itemDiv);
+            //----- Gestione del parametro readonly quando vado ad inserire un item -----
+            if (input.data('readonly') == 'Y') {
+                selectedItemsDiv.find('.remove-item').remove(); // Rimuove i pulsanti di rimozione
+            }
+            //----------------------------------------------------------------------------
             toggleInputVisibility(input, selectedItemsDiv, maxSelections);
         }
 
@@ -745,12 +752,13 @@ function initializeAfterLoadPageAndPartial() {
             if (maxSelections > 0 && selectedCount >= maxSelections) {
                 input.hide(); $('#' + input.data('name') + 'AutocompleteWrapper').hide(); 
             } else {
-                input.show(); $('#' + input.data('name') + 'AutocompleteWrapper').show();
+                if (input.data('readonly') != 'Y') { input.show(); $('#' + input.data('name') + 'AutocompleteWrapper').show(); }
             }
         }
 
         // Initial toggle in case there are pre-selected items
         toggleInputVisibility(input, selectedItemsDiv, maxSelections);
+
     });
 }
 
