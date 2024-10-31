@@ -23,6 +23,32 @@ function updateModalWithContent(modalDialogId, modalAction, jsonObject) {
         'data': jsonObject
     });
 }
+//eg: updateModalWithContent('editModal', '/Datatable/SaveCustomer')
+function updateModalWithContentForm(button, prefix, modalDialogId, jsonObject) {
+    var fullprefix = prefix +".";
+    // Trova il form più vicino al pulsante
+    let form = button.closest('form');
+    if (!form) {
+        console.error("Nessun form trovato!");
+        return;
+    }
+    let modalAction = form.action;
+    // Usa FormData per raccogliere i dati modificati
+    let formData = new FormData(form);
+
+    formData.forEach((value, key) => {
+        if (key.startsWith(fullprefix)) key = key.substring(fullprefix.length);
+        if (jsonObject[key] == undefined) { /*skip*/ }
+        else if (jsonObject[key] == null && value == '') { /*skip*/ }
+        else { jsonObject[key] = value; /*update*/ }
+    });
+
+    openModalWithContent(modalDialogId, modalAction, {
+        'data': jsonObject
+    });
+}
+
+
 function openModalWithContent(modalDialogId, modalAction, jsonParams) {
     fetch(modalAction, {
         method: 'POST',
@@ -37,13 +63,13 @@ function openModalWithContent(modalDialogId, modalAction, jsonParams) {
             document.getElementById(modalDialogId).innerHTML = html;  //inserisco contenuto in dialog modale
 
             //AZIONI DA FARE AL CLICK BOTTONE
-            var isModalACTION_CLOSE = $('#' + modalDialogId).find('[name="IsModalACTION"]').val() == 'CLOSE';
-            if (isModalACTION_CLOSE) { $('#' + modalDialogId).modal('hide'); } //nascondi modal
+            var isModalACTION_CLOSE = $('#' + modalDialogId).find('[name$="IsModalACTION"]').val() == 'CLOSE';
+            if (isModalACTION_CLOSE == true) { $('#' + modalDialogId).modal('hide'); } //nascondi modal
             else { $('#' + modalDialogId).modal('show'); } //mostra modal
-            var isPageACTION_RELOAD = $('#' + modalDialogId).find('[name="IsPageACTION"]').val() == 'RELOAD';
-            if (isPageACTION_RELOAD) { location.reload(true); } //ricarica pagina dal server (ie: no cache)
-            var isPageREDIRECT = $('#' + modalDialogId).find('[name="IsPageREDIRECT"]').val();
-            if (isPageREDIRECT != "") { location.href = isPageREDIRECT; } //ridireziona su altra pagina
+            var isPageACTION_RELOAD = $('#' + modalDialogId).find('[name$="IsPageACTION"]').val() == 'RELOAD';
+            if (isPageACTION_RELOAD == true) { location.reload(true); } //ricarica pagina dal server (ie: no cache)
+            var isPageREDIRECT = $('#' + modalDialogId).find('[name$="IsPageREDIRECT"]').val();
+            if (isPageREDIRECT != undefined && isPageREDIRECT != "") { location.href = isPageREDIRECT; } //ridireziona su altra pagina
 
             // Una volta completato il caricamento della PartialView
             initializeAfterLoadPageAndPartial(); // Richiama la funzione anche dopo il caricamento della PartialView

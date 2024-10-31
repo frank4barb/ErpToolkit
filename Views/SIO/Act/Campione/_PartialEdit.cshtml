@@ -3,6 +3,8 @@
     ViewData["Title"] = "Campione Edit [" + (Model?.action ?? ' ') + "]";
 }
 <div class="modal-dialog" role="document">
+    @using (Html.BeginForm("Save", "Campione", FormMethod.Post))
+    {
         @Html.AntiForgeryToken()
         <!--GESTISCE AZIONI CLICK PULSANTE-->
         @Html.Hidden("IsModalACTION", @ViewData["IsModalACTION"])
@@ -98,7 +100,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                <button type="button" class="btn btn-primary" onclick='updateModalWithContent("EditModale","/Campione/Save",@Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
+                <button type="button" class="btn btn-primary" onclick='updateModalWithContentForm(this, "@ViewData.TemplateInfo.HtmlFieldPrefix", "EditModale", @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model)))'>Salva</button>
             </div>
         </div>
+    }
 </div>
