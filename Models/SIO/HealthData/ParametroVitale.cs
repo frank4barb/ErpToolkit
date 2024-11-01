@@ -152,7 +152,7 @@ public DateOnly? PvDataAcquisizione  { get; set; }
 [ErpDogField("PV_ORA_ACQUISIZIONE", SqlFieldNameExt="PV_ORA_ACQUISIZIONE", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [DataType(DataType.Time)]
-[DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
+[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
 public TimeOnly? PvOraAcquisizione  { get; set; }
 
 [Display(Name = "Stato Dato Clinico", ShortName="", Description = "Stato del dato: P[reliminare] - C[onfermato] - A[nnullato]", Prompt="")]
@@ -173,14 +173,14 @@ public DateOnly? PvDataValidazione  { get; set; }
 [ErpDogField("PV_ORA_VALIDAZIONE", SqlFieldNameExt="PV_ORA_VALIDAZIONE", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [DataType(DataType.Time)]
-[DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
+[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
 public TimeOnly? PvOraValidazione  { get; set; }
 
 [Display(Name = "Sequenza", ShortName="", Description = "Numero di sequenza del dato nel rapporto originale", Prompt="")]
 [ErpDogField("PV_SEQUENZA", SqlFieldNameExt="PV_SEQUENZA", SqlFieldOptions="", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 public short? PvSequenza  { get; set; }
 
-public override bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState, string? prefix = null) 
     { 
         bool isValidate = true; 
         return isValidate; 

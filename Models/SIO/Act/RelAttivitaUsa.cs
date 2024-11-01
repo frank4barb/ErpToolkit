@@ -170,7 +170,7 @@ public string? AuDescrizioneRisorsaUsata  { get; set; }
 public string? AuIdGruppo  { get; set; }
 public ErpToolkit.Models.SIO.Act.RelAttivitaUsa? AuIdGruppoObj  { get; set; }
 
-public override bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState, string? prefix = null) 
     { 
         bool isValidate = true; 
         return isValidate; 

@@ -117,7 +117,7 @@ public string? AeAttributi  { get; set; }
 [DataType(DataType.Text)]
 public string? AeFiltroRegimeErogazione  { get; set; }
 
-public override bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState, string? prefix = null) 
     { 
         bool isValidate = true; 
         return isValidate; 

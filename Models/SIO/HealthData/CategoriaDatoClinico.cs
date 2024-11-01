@@ -94,7 +94,7 @@ public string? CcNote  { get; set; }
 public string? CcIdGruppo  { get; set; }
 public ErpToolkit.Models.SIO.HealthData.CategoriaDatoClinico? CcIdGruppoObj  { get; set; }
 
-public override bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState, string? prefix = null) 
     { 
         bool isValidate = true; 
         return isValidate; 

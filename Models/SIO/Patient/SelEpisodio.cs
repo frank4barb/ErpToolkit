@@ -81,7 +81,7 @@ public DateRange SelEpDataInizio  { get; set; } = new DateRange();
 [ErpDogField("EP_ORA_INIZIO", SqlFieldNameExt="EP_ORA_INIZIO", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [DataType(DataType.Time)]
-[DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
+[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
 public TimeOnly? SelEpOraInizio  { get; set; }
 
 [Display(Name = "Data Fine", ShortName="", Description = "Data di fine del periodo di permanenza del contatto", Prompt="")]
@@ -94,7 +94,7 @@ public DateRange SelEpDataFine  { get; set; } = new DateRange();
 [ErpDogField("EP_ORA_FINE", SqlFieldNameExt="EP_ORA_FINE", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [DataType(DataType.Time)]
-[DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
+[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
 public TimeOnly? SelEpOraFine  { get; set; }
 
 [Display(Name = "Cartella Ps", ShortName="", Description = "Identificativo del documento correlato dell'organizzazione di origine", Prompt="")]
@@ -162,7 +162,7 @@ public DateRange SelEpDataInizioLa  { get; set; } = new DateRange();
 [ErpDogField("EP_ORA_INIZIO_LA", SqlFieldNameExt="EP_ORA_INIZIO_LA", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [DataType(DataType.Time)]
-[DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
+[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
 public TimeOnly? SelEpOraInizioLa  { get; set; }
 
 [Display(Name = "Id Reparto La", ShortName="", Description = "Identificativo dell'unità di assistenza responsabile del periodo di lista d'attesa", Prompt="")]
@@ -182,7 +182,7 @@ public DateRange SelEpDataInizioPreh  { get; set; } = new DateRange();
 [ErpDogField("EP_ORA_INIZIO_PREH", SqlFieldNameExt="EP_ORA_INIZIO_PREH", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [DataType(DataType.Time)]
-[DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
+[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
 public TimeOnly? SelEpOraInizioPreh  { get; set; }
 
 [Display(Name = "Id Reparto Preh", ShortName="", Description = "Identificativo dell'unità di assistenza responsabile del periodo di preospedalizzazione", Prompt="")]
@@ -197,7 +197,7 @@ public List<string> SelEpIdRepartoPreh  { get; set; } = new List<string>();
 [DataType(DataType.Text)]
 public string? SelEpFaseEpisodio  { get; set; }
 
-public override bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState, string? prefix = null) 
     { 
         bool isValidate = true; 
         // verifica se almeno un campo indicizzato è valorizzato (test per validazioni complesse del modello) 
@@ -211,7 +211,7 @@ public override bool TryValidateInt(ModelStateDictionary modelState)
                 if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim()) + ".EndDate") != null) found = true; 
             } 
         } 
-        if (!found) { isValidate = false;  modelState.AddModelError(string.Empty, "Deve essere compilato almeno un campo indicizzato."); } 
+        if (!found) { isValidate = false;  modelState.AddModelError(prefix ?? string.Empty, "Deve essere compilato almeno un campo indicizzato."); } 
         //-- 
         return isValidate; 
     } 

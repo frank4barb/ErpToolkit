@@ -145,7 +145,7 @@ public DateOnly? PuDataInizioUso  { get; set; }
 [ErpDogField("PU_ORA_INIZIO_USO", SqlFieldNameExt="PU_ORA_INIZIO_USO", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [DataType(DataType.Time)]
-[DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
+[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
 public TimeOnly? PuOraInizioUso  { get; set; }
 
 [Display(Name = "Data Fine Uso", ShortName="", Description = "Data di fine dell'utilizzo", Prompt="")]
@@ -159,7 +159,7 @@ public DateOnly? PuDataFineUso  { get; set; }
 [ErpDogField("PU_ORA_FINE_USO", SqlFieldNameExt="PU_ORA_FINE_USO", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [DataType(DataType.Time)]
-[DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
+[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
 public TimeOnly? PuOraFineUso  { get; set; }
 
 [Display(Name = "Quantita Prevista", ShortName="", Description = "Quantità pianificata da utilizzare", Prompt="")]
@@ -213,7 +213,7 @@ public double? PuCostoRisorsa  { get; set; }
 [DataType(DataType.Text)]
 public string? PuDescrizioneRisorsaUsata  { get; set; }
 
-public override bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState, string? prefix = null) 
     { 
         bool isValidate = true; 
         return isValidate; 

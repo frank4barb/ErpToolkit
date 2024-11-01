@@ -103,7 +103,7 @@ public string? PcNote  { get; set; }
 public string? PcIdTipoCampione  { get; set; }
 public ErpToolkit.Models.SIO.Act.TipoCampione? PcIdTipoCampioneObj  { get; set; }
 
-public override bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState, string? prefix = null) 
     { 
         bool isValidate = true; 
         return isValidate; 

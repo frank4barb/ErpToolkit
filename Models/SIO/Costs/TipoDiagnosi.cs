@@ -94,7 +94,7 @@ public string? TdNote  { get; set; }
 public string? TdIdGruppo  { get; set; }
 public ErpToolkit.Models.SIO.Costs.TipoDiagnosi? TdIdGruppoObj  { get; set; }
 
-public override bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState, string? prefix = null) 
     { 
         bool isValidate = true; 
         return isValidate; 

@@ -123,7 +123,7 @@ public string? DgTipoDrg  { get; set; }
 [MultipleChoices(new[] { "D", "O", " " }, MaxSelections=1, LabelClassName="")]
 public string? DgTipoIcd9  { get; set; }
 
-public override bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState, string? prefix = null) 
     { 
         bool isValidate = true; 
         return isValidate; 

@@ -95,7 +95,7 @@ public string? TiDescrizione  { get; set; }
 [DataType(DataType.Text)]
 public string? TiNote  { get; set; }
 
-public override bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState, string? prefix = null) 
     { 
         bool isValidate = true; 
         return isValidate; 

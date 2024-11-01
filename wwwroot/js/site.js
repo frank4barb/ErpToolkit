@@ -38,7 +38,7 @@ function updateModalWithContentForm(button, prefix, modalDialogId, jsonObject) {
 
     formData.forEach((value, key) => {
         if (key.startsWith(fullprefix)) key = key.substring(fullprefix.length);
-        if (jsonObject[key] == undefined) { /*skip*/ }
+        if (jsonObject[key] === undefined) { /*skip*/ }
         else if (jsonObject[key] == null && value == '') { /*skip*/ }
         else { jsonObject[key] = value; /*update*/ }
     });

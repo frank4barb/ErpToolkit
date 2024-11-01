@@ -46,7 +46,7 @@ public string? SelDiNote  { get; set; }
 [DataType(DataType.Text)]
 public List<string> SelDiIdComune  { get; set; } = new List<string>();
 
-public override bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState, string? prefix = null) 
     { 
         bool isValidate = true; 
         // verifica se almeno un campo indicizzato è valorizzato (test per validazioni complesse del modello) 
@@ -60,7 +60,7 @@ public override bool TryValidateInt(ModelStateDictionary modelState)
                 if (DogManager.getPropertyValue(this, "Sel" + UtilHelper.field2Property(fld.Trim()) + ".EndDate") != null) found = true; 
             } 
         } 
-        if (!found) { isValidate = false;  modelState.AddModelError(string.Empty, "Deve essere compilato almeno un campo indicizzato."); } 
+        if (!found) { isValidate = false;  modelState.AddModelError(prefix ?? string.Empty, "Deve essere compilato almeno un campo indicizzato."); } 
         //-- 
         return isValidate; 
     } 

@@ -19,7 +19,7 @@ namespace ErpToolkit.Models {
         //public abstract string getDeleted(); // metodo astratto 
 
         //metodi virtuali (se non implementati si usa il default)
-        public virtual bool TryValidateInt(ModelStateDictionary modelState)
+        public virtual bool TryValidateInt(ModelStateDictionary modelState, string? prefix = null)
         {
             return true;
         }

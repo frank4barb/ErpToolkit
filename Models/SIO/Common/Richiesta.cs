@@ -105,7 +105,7 @@ public DateOnly? RiDataRichiesta  { get; set; }
 [ErpDogField("RI_ORA_RICHIESTA", SqlFieldNameExt="RI_ORA_RICHIESTA", SqlFieldOptions="[TIME]", Xref="", SqlFieldProperties="prop() xref() xdup() multbxref()")]
 [DefaultValue(" ")]
 [DataType(DataType.Time)]
-[DisplayFormat(DataFormatString = "{0:HH:mm:ss}", ApplyFormatInEditMode = true)]
+[DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = true)]
 public TimeOnly? RiOraRichiesta  { get; set; }
 
 [Display(Name = "Urgenza", ShortName="", Description = "Livello di urgenza da 1 a 5 [1: il più alto]", Prompt="")]
@@ -158,7 +158,7 @@ public ErpToolkit.Models.SIO.Patient.Paziente? RiIdPazienteObj  { get; set; }
 public string? RiIdEpisodio  { get; set; }
 public ErpToolkit.Models.SIO.Patient.Episodio? RiIdEpisodioObj  { get; set; }
 
-public override bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState, string? prefix = null) 
     { 
         bool isValidate = true; 
         return isValidate; 

@@ -94,7 +94,7 @@ public string? TaNote  { get; set; }
 public string? TaIdGruppo  { get; set; }
 public ErpToolkit.Models.SIO.Act.TipoAttivita? TaIdGruppoObj  { get; set; }
 
-public override bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState, string? prefix = null) 
     { 
         bool isValidate = true; 
         return isValidate; 

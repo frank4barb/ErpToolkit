@@ -94,7 +94,7 @@ public string? NzCodIstat  { get; set; }
 [DataType(DataType.Text)]
 public string? NzNote  { get; set; }
 
-public override bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState, string? prefix = null) 
     { 
         bool isValidate = true; 
         return isValidate; 

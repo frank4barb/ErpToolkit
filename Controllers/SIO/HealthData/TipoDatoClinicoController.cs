@@ -98,16 +98,18 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         [HttpPost]
         public IActionResult ReadForEdit([FromBody] ModelParam parms)  
         {
-            ViewData.TemplateInfo.HtmlFieldPrefix = "EDIT";  //prefisso da applicare a id e name nei tag, se uso lo stesso @model più volte nella stessa pagina eg: <xx id="EDIT_IdPatient" name="EDIT.IdPatient" ..>
-            TipoDatoClinico obj = this.ReadForEditModel<TipoDatoClinico>(parms);
+            string modelPrefix = "EDIT";
+            ViewData.TemplateInfo.HtmlFieldPrefix = modelPrefix;  //prefisso da applicare a id e name nei tag, se uso lo stesso @model più volte nella stessa pagina eg: <xx id="EDIT_IdPatient" name="EDIT.IdPatient" ..>
+            TipoDatoClinico obj = this.ReadForEditModel<TipoDatoClinico>(parms, modelPrefix);
             return PartialView("~/Views/SIO/HealthData/TipoDatoClinico/_PartialEdit.cshtml", obj);
         }
         [HttpPost]
         public IActionResult Save([FromBody] ModelObject dataObj)
         {
-            ViewData.TemplateInfo.HtmlFieldPrefix = "EDIT";  //prefisso da applicare a id e name nei tag, se uso lo stesso @model più volte nella stessa pagina eg: <xx id="EDIT_IdPatient" name="EDIT.IdPatient" ..>
-            TipoDatoClinico obj = this.SaveModel<TipoDatoClinico>(dataObj);
-            if (!TryValidateModel(obj))
+            string modelPrefix = "EDIT";
+            ViewData.TemplateInfo.HtmlFieldPrefix = modelPrefix;  //prefisso da applicare a id e name nei tag, se uso lo stesso @model più volte nella stessa pagina eg: <xx id="EDIT_IdPatient" name="EDIT.IdPatient" ..>
+            TipoDatoClinico obj = this.SaveModel<TipoDatoClinico>(dataObj, modelPrefix);
+            if (!TryValidateModel(obj, modelPrefix))
             {
                 return PartialView("~/Views/SIO/HealthData/TipoDatoClinico/_PartialEdit.cshtml", obj);
             }
@@ -122,15 +124,17 @@ namespace ErpToolkit.Controllers.SIO.HealthData
         [HttpPost]
         public IActionResult ReadForDelete([FromBody] ModelParam parms)  
         {
-            ViewData.TemplateInfo.HtmlFieldPrefix = "DELETE";  //prefisso da applicare a id e name nei tag, se uso lo stesso @model più volte nella stessa pagina eg: <xx id="EDIT_IdPatient" name="EDIT.IdPatient" ..>
-            TipoDatoClinico obj = this.ReadForDeleteModel<TipoDatoClinico>(parms);
+            string modelPrefix = "DELETE";
+            ViewData.TemplateInfo.HtmlFieldPrefix = modelPrefix;  //prefisso da applicare a id e name nei tag, se uso lo stesso @model più volte nella stessa pagina eg: <xx id="EDIT_IdPatient" name="EDIT.IdPatient" ..>
+            TipoDatoClinico obj = this.ReadForDeleteModel<TipoDatoClinico>(parms, modelPrefix);
             return PartialView("~/Views/SIO/HealthData/TipoDatoClinico/_PartialDelete.cshtml", obj);
         }
         [HttpPost]
         public IActionResult Delete([FromBody] ModelObject dataObj)
         {
-            ViewData.TemplateInfo.HtmlFieldPrefix = "DELETE";  //prefisso da applicare a id e name nei tag, se uso lo stesso @model più volte nella stessa pagina eg: <xx id="EDIT_IdPatient" name="EDIT.IdPatient" ..>
-            TipoDatoClinico obj = this.DeleteModel<TipoDatoClinico>(dataObj);
+            string modelPrefix = "DELETE";
+            ViewData.TemplateInfo.HtmlFieldPrefix = modelPrefix;  //prefisso da applicare a id e name nei tag, se uso lo stesso @model più volte nella stessa pagina eg: <xx id="EDIT_IdPatient" name="EDIT.IdPatient" ..>
+            TipoDatoClinico obj = this.DeleteModel<TipoDatoClinico>(dataObj, modelPrefix);
             if (ModelState.ErrorCount > 0)
             {
                 return PartialView("~/Views/SIO/HealthData/TipoDatoClinico/_PartialDelete.cshtml", obj);

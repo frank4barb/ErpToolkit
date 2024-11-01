@@ -96,7 +96,7 @@ public string? CmCodIstat  { get; set; }
 [DataType(DataType.Text)]
 public string? CmNote  { get; set; }
 
-public override bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState, string? prefix = null) 
     { 
         bool isValidate = true; 
         return isValidate; 

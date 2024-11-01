@@ -94,7 +94,7 @@ public string? DiNote  { get; set; }
 public string? DiIdComune  { get; set; }
 public ErpToolkit.Models.SIO.Patient.Comune? DiIdComuneObj  { get; set; }
 
-public override bool TryValidateInt(ModelStateDictionary modelState) 
+public override bool TryValidateInt(ModelStateDictionary modelState, string? prefix = null) 
     { 
         bool isValidate = true; 
         return isValidate; 
