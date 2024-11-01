@@ -345,7 +345,7 @@ namespace ErpToolkit.Controllers
             {
                 return dateOnly;
             }
-            throw new Exception($"The JSON value could not be converted to {typeof(DateOnly?)}"); // Oppure gestisci eventuali errori
+            throw new System.Text.Json.JsonException($"The JSON value could not be converted to {Nullable.GetUnderlyingType(typeToConvert) ?? typeToConvert}. Value:{reader.GetString()}"); // Gestisci eventuali errori
         }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, DateOnly? value, System.Text.Json.JsonSerializerOptions options)
         {
@@ -361,7 +361,7 @@ namespace ErpToolkit.Controllers
             {
                 return timeOnly;
             }
-            throw new Exception($"The JSON value could not be converted to {typeof(TimeOnly?)}"); // Oppure gestisci eventuali errori
+            throw new System.Text.Json.JsonException($"The JSON value could not be converted to {Nullable.GetUnderlyingType(typeToConvert) ?? typeToConvert}. Value:{reader.GetString()}"); // Gestisci eventuali errori
         }
         public override void Write(System.Text.Json.Utf8JsonWriter writer, TimeOnly? value, System.Text.Json.JsonSerializerOptions options)
         {
