@@ -462,8 +462,8 @@ namespace ErpToolkit.Helpers
                 output.Attributes.SetAttribute("value", ""); //pulisco valore campo
 
                 // Aggiungi il wrapper per l'input e l'icona
-                output.PreElement.AppendHtml("<div class='autocomplete-wrapper'>");
-                if (attrField.Readonly != 'Y' && attrField.Visible != 'N') output.PostElement.AppendHtml($"<span id='{divId}AutocompleteIcon' class='autocomplete-icon'><i class='bi bi-search' aria-hidden='true'></i></span></div>");
+                output.PreElement.AppendHtml($"<div id='{For.Name}AutocompleteWrapper' class='autocomplete-wrapper'>");
+                output.PostElement.AppendHtml($"<div class='autocomplete-icon'><i class='bi bi-search' aria-hidden='true'></i></div></div>");
                 //--
 
                 output.PostElement.AppendHtml(selectedItemsDiv);
