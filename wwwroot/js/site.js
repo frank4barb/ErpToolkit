@@ -523,8 +523,9 @@ function handleMaxSelections(groupName, maxSelections) {
 function initializeAfterLoadPageAndPartial() {
     $('.autocomplete-input').each(function () {
         var input = $(this);
-        var inputName = input.data('name');
-        var resultsDivId = input.data('name') + 'AutocompleteResults';
+        //var inputId = input.data('id');
+        //var inputName = input.data('name');
+        var resultsDivId = input.data('id') + 'AutocompleteResults';
         var selectedItemsDivId = input.data('selected-items-div-id');
         var resultsDiv = $('#' + resultsDivId);
         var selectedItemsDiv = $('#' + selectedItemsDivId);
@@ -567,11 +568,11 @@ function initializeAfterLoadPageAndPartial() {
             if (visible === 'N') {
 
                 //nasconde anche la label che è esterna al tag asp-for
-                var label = document.querySelector('label[for="' + inputName + '"]');
+                var label = document.querySelector('label[for="' + input.data('id') + '"]');
                 if (label) { label.style.display = 'none'; }
                 //---
 
-                input.hide(); $('#' + input.data('name') + 'AutocompleteWrapper').hide();
+                input.hide(); $('#' + input.data('id') + 'AutocompleteWrapper').hide();
                 resultsDiv.hide();
                 selectedItemsDiv.hide(); // Nasconde anche il div delle scelte selezionate
                 return; // Esce dalla funzione per evitare ulteriori elaborazioni
@@ -622,11 +623,11 @@ function initializeAfterLoadPageAndPartial() {
             // Gestione del parametro readonly 
             if (readonly === 'Y') {
                 if (preSelected.length > 0 && preSelected[0] != null) {  
-                    $('#' + input.data('name') + 'AutocompleteWrapper').find('.autocomplete-icon').hide(); // Rimuove lente ricerca
+                    $('#' + input.data('id') + 'AutocompleteWrapper').find('.autocomplete-icon').hide(); // Rimuove lente ricerca
                     input.hide(); // Nasconde la input-box se ci sono elementi pre-selezionati
                 }
                 else {
-                    $('#' + input.data('name') + 'AutocompleteWrapper').find('.autocomplete-icon').hide(); // Rimuove lente ricerca
+                    $('#' + input.data('id') + 'AutocompleteWrapper').find('.autocomplete-icon').hide(); // Rimuove lente ricerca
                     input.prop('readonly', true);  // Rende il campo di input non modificabile
                     input.css({
                         'background-color': '#e9ecef', // Colore di sfondo per indicare che è disabilitato
@@ -776,9 +777,9 @@ function initializeAfterLoadPageAndPartial() {
         function toggleInputVisibility(input, selectedItemsDiv, maxSelections) {
             var selectedCount = selectedItemsDiv.children().length;
             if (maxSelections > 0 && selectedCount >= maxSelections) {
-                input.hide(); $('#' + input.data('name') + 'AutocompleteWrapper').hide(); 
+                input.hide(); $('#' + input.data('id') + 'AutocompleteWrapper').hide(); 
             } else {
-                if (input.data('readonly') != 'Y') { input.show(); $('#' + input.data('name') + 'AutocompleteWrapper').show(); }
+                if (input.data('readonly') != 'Y') { input.show(); $('#' + input.data('id') + 'AutocompleteWrapper').show(); }
             }
         }
 

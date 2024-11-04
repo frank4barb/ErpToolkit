@@ -425,22 +425,27 @@ namespace ErpToolkit.Helpers
             var attributeErpDogField = property.GetCustomAttributes(typeof(ErpDogFieldAttribute), false).FirstOrDefault() as ErpDogFieldAttribute;
             var attributeErpDogField_Xref = attributeErpDogField?.Xref ?? "";
 
+            //-------------------------------------
             //calcola restrizioni visibilità pagina
             //-------------------------------------
             DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
-
+            //-------------------------------------
+            //calcola prefix id name (Accedi al valore di HtmlFieldPrefix)
+            //-------------------------------------
+            var prefix = (ViewContext.ViewData.TemplateInfo.HtmlFieldPrefix ?? "").Trim();
+            var prefixInputId = (prefix != "") ? prefix + "_" + For.Name : For.Name;
+            var prefixInputName = (prefix != "") ? prefix + "." + For.Name : For.Name;
+            //-------------------------------------
 
             if (attributeServer != null)
             {
                 MinChars = 3;
 
-                var visibleInputName = For.Name + "Label";
-                //%%//var preSelectedValues = For.ModelExplorer.Model as List<string>;
                 var preSelectedValues = new List<string>();
                 if (For.ModelExplorer.Model is string) preSelectedValues = new List<string>() { For.ModelExplorer.Model as string };
                 else preSelectedValues = For.ModelExplorer.Model as List<string>;
 
-                var divId = $"{For.Name}SelectedItems";
+                var divId = $"{prefixInputId}SelectedItems";
 
                 var preSelectedValuesJson = preSelectedValues != null ? "{ \"preSelected\": " + JsonConvert.SerializeObject(preSelectedValues) + " }" : "{ \"preSelected\": [] }";
 
@@ -453,7 +458,8 @@ namespace ErpToolkit.Helpers
                 output.Attributes.SetAttribute("data-action", attributeServer.Action);
                 output.Attributes.SetAttribute("data-preload-action", attributeServer.PreloadAction);
                 output.Attributes.SetAttribute("data-pre-selected", preSelectedValuesJson);
-                output.Attributes.SetAttribute("data-name", For.Name);
+                output.Attributes.SetAttribute("data-id", prefixInputId);
+                output.Attributes.SetAttribute("data-name", prefixInputName);
                 output.Attributes.SetAttribute("data-min-chars", MinChars);
                 output.Attributes.SetAttribute("data-mode", "autocompleteServer");  // Modalità di autocomplete
                 output.Attributes.SetAttribute("data-readonly", attrField.Readonly);  // Readonly field value
@@ -462,23 +468,21 @@ namespace ErpToolkit.Helpers
                 output.Attributes.SetAttribute("value", ""); //pulisco valore campo
 
                 // Aggiungi il wrapper per l'input e l'icona
-                output.PreElement.AppendHtml($"<div id='{For.Name}AutocompleteWrapper' class='autocomplete-wrapper'>");
+                output.PreElement.AppendHtml($"<div id='{prefixInputId}AutocompleteWrapper' class='autocomplete-wrapper'>");
                 output.PostElement.AppendHtml($"<div class='autocomplete-icon'><i class='bi bi-search' aria-hidden='true'></i></div></div>");
                 //--
 
                 output.PostElement.AppendHtml(selectedItemsDiv);
-                output.PostElement.AppendHtml($"<div id='{For.Name}AutocompleteResults' class='autocomplete-results' style='display: none;'></div>"); // Aggiungi l'ID del div dei risultati dell'autocomplete
+                output.PostElement.AppendHtml($"<div id='{prefixInputId}AutocompleteResults' class='autocomplete-results' style='display: none;'></div>"); // Aggiungi l'ID del div dei risultati dell'autocomplete
             }
             else if (attributeClient != null)
             {
                 MinChars = 1;
 
-                var visibleInputName = For.Name + "Label";
-                //%%//var preSelectedValues = For.ModelExplorer.Model as List<string>;
                 var preSelectedValues = new List<string>();
                 if (For.ModelExplorer.Model is string) preSelectedValues = new List<string>() { For.ModelExplorer.Model as string };
                 else preSelectedValues = For.ModelExplorer.Model as List<string>;
-                var divId = $"{For.Name}SelectedItems";
+                var divId = $"{prefixInputId}SelectedItems";
 
                 var preSelectedValuesJson = preSelectedValues != null ? "{ \"preSelected\": "+JsonConvert.SerializeObject(preSelectedValues)+" }" : "{ \"preSelected\": [] }";
                 //var encodedPreSelectedValuesJson = HtmlEncoder.Default.Encode(preSelectedValuesJson);
@@ -492,7 +496,8 @@ namespace ErpToolkit.Helpers
                 output.Attributes.SetAttribute("data-controller", attributeClient.Controller);
                 output.Attributes.SetAttribute("data-action", attributeClient.Action);
                 output.Attributes.SetAttribute("data-pre-selected", preSelectedValuesJson);
-                output.Attributes.SetAttribute("data-name", For.Name);
+                output.Attributes.SetAttribute("data-id", prefixInputId);
+                output.Attributes.SetAttribute("data-name", prefixInputName);
                 output.Attributes.SetAttribute("data-min-chars", MinChars);
                 output.Attributes.SetAttribute("data-mode", "autocompleteClient");  // Modalità di autocomplete
                 output.Attributes.SetAttribute("data-readonly", attrField.Readonly);  // Readonly field value
@@ -501,12 +506,12 @@ namespace ErpToolkit.Helpers
                 output.Attributes.SetAttribute("value", ""); //pulisco valore campo
 
                 // Aggiungi il wrapper per l'input e l'icona
-                output.PreElement.AppendHtml($"<div id='{For.Name}AutocompleteWrapper' class='autocomplete-wrapper'>");
+                output.PreElement.AppendHtml($"<div id='{prefixInputId}AutocompleteWrapper' class='autocomplete-wrapper'>");
                 output.PostElement.AppendHtml($"<div class='autocomplete-icon'><i class='bi bi-search' aria-hidden='true'></i></div></div>");
                 //--
 
                 output.PostElement.AppendHtml(selectedItemsDiv);
-                output.PostElement.AppendHtml($"<div id='{For.Name}AutocompleteResults' class='autocomplete-results' style='display: none;'></div>"); // Aggiungi l'ID del div dei risultati dell'autocomplete
+                output.PostElement.AppendHtml($"<div id='{prefixInputId}AutocompleteResults' class='autocomplete-results' style='display: none;'></div>"); // Aggiungi l'ID del div dei risultati dell'autocomplete
 
             }
         }
@@ -655,8 +660,22 @@ namespace ErpToolkit.Helpers
                 //string format = options == "DateTime" ? "dd-MM-yyyy HH:mm" : "dd-MM-yyyy";  // future use: attualmente non implementato
                 string format = options == "DateTime" ? "yyyy-MM-ddTHH:mm" : "yyyy-MM-dd";  // Formato ISO 8601 ( i browser si aspettano automaticamente un formato ISO 8601 (yyyy-MM-dd) per gli input di tipo date)
 
-                string startDateId = $"{For.Name}.StartDate";
-                string endDateId = $"{For.Name}.EndDate";
+
+                //-------------------------------------
+                //calcola restrizioni visibilità pagina
+                //-------------------------------------
+                DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
+                //-------------------------------------
+                //calcola prefix id name (Accedi al valore di HtmlFieldPrefix)
+                //-------------------------------------
+                var prefix = (ViewContext.ViewData.TemplateInfo.HtmlFieldPrefix ?? "").Trim();
+                var prefixInputId = (prefix != "") ? prefix + "_" + For.Name : For.Name;
+                var prefixInputName = (prefix != "") ? prefix + "." + For.Name : For.Name;
+                //-------------------------------------
+
+
+                string startDateId = $"{prefixInputId}_StartDate", startDateName = $"{prefixInputName}.StartDate";
+                string endDateId = $"{prefixInputId}_EndDate", endDateName = $"{prefixInputName}.EndDate";
 
 
                 // Recupera i valori dal modello
@@ -669,26 +688,19 @@ namespace ErpToolkit.Helpers
                 string startDateFormatted = startDateValue?.ToString(format) ?? "";
                 string endDateFormatted = endDateValue?.ToString(format) ?? "";
 
-
-                //calcola restrizioni visibilità pagina
-                //-------------------------------------
-                DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
-
-
                 string content = $@"
                 <div class='row'>
                     <div class='col-md-6'>
                         <label for='{startDateId}'>{startDateLabel}</label>
-                        <input class='form-control' type='date' data-val='true' id='{startDateId}' name='{startDateId}' value='{startDateFormatted}' {(attrField.Readonly == 'Y' ? "readonly" : "")}>
+                        <input class='form-control' type='date' data-val='true' id='{startDateId}' name='{startDateName}' value='{startDateFormatted}' {(attrField.Readonly == 'Y' ? "readonly" : "")}>
                         <input name='__Invariant' type='hidden' value='{startDateId}'>
                     </div>
                     <div class='col-md-6'>
                         <label for='{endDateId}'>{endDateLabel}</label>
-                        <input class='form-control' type='date' data-val='true' id='{endDateId}' name='{endDateId}' value='{endDateFormatted}' {(attrField.Readonly == 'Y' ? "readonly" : "")}>
+                        <input class='form-control' type='date' data-val='true' id='{endDateId}' name='{endDateName}' value='{endDateFormatted}' {(attrField.Readonly == 'Y' ? "readonly" : "")}>
                         <input name='__Invariant' type='hidden' value='{endDateId}'>
                     </div>
                 </div>";
-
 
 
                 if (attrField.Visible == 'N')
@@ -780,9 +792,16 @@ namespace ErpToolkit.Helpers
             if (multipleChoicesAttribute != null)
             {
 
+                //-------------------------------------
                 //calcola restrizioni visibilità pagina
                 //-------------------------------------
                 DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
+                //-------------------------------------
+                //calcola prefix id name (Accedi al valore di HtmlFieldPrefix)
+                //-------------------------------------
+                var prefix = (ViewContext.ViewData.TemplateInfo.HtmlFieldPrefix ?? "").Trim();
+                var prefixInputId = (prefix != "") ? prefix + "_" + For.Name : For.Name;
+                var prefixInputName = (prefix != "") ? prefix + "." + For.Name : For.Name;
                 //-------------------------------------
 
 
@@ -794,7 +813,7 @@ namespace ErpToolkit.Helpers
                     string script = $@"
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {{
-                                        var label = document.querySelector('label[for=""{For.Name}""]');
+                                        var label = document.querySelector('label[for=""{prefixInputId}""]');
                                         if (label) {{
                                             label.style.display = 'none';
                                         }}
@@ -810,7 +829,7 @@ namespace ErpToolkit.Helpers
                 var choices = multipleChoicesAttribute.Choices;
                 var maxSelections = multipleChoicesAttribute.MaxSelections; // disable controll if maxSelections < 1 
                 var isMultiple = maxSelections != 1;
-                var name = For.Name;
+                //var name = For.Name;
                 var readonlyAttr = attrField.Readonly == 'Y' ? "disabled" : "";
                 var labels = choices;
 
@@ -854,14 +873,14 @@ namespace ErpToolkit.Helpers
                     //    content.AppendLine("<div class='w-100'></div>"); // Line break after 6 items
                     //}
 
-                    string id = $"{name}_{i}";
+                    string id = $"{prefixInputId}_{i}";
                     string value = choices[i].Trim();
                     string inputType = isMultiple ? "checkbox" : "radio";
                     string checkedAttr = selectedValues.Contains(value) ? "checked" : "";
 
                     content.AppendLine($@"
                         <div class='form-check form-switch d-inline-block mb-2'>
-                            <input class='form-check-input' type='{inputType}' name='{name}' id='{id}' value='{value}' {checkedAttr} {readonlyAttr} onchange='handleMaxSelections(""{name}"", {maxSelections})'>
+                            <input class='form-check-input' type='{inputType}' name='{prefixInputName}' id='{id}' value='{value}' {checkedAttr} {readonlyAttr} onchange='handleMaxSelections(""{prefixInputName}"", {maxSelections})'>
                             <label class='form-check-label' for='{id}'>{value}</label> &nbsp; &nbsp; 
                         </div>");
                 }
@@ -874,7 +893,7 @@ namespace ErpToolkit.Helpers
                     content.AppendLine($@"
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {{
-                                handleMaxSelections('{name}', {maxSelections});
+                                handleMaxSelections('{prefixInputName}', {maxSelections});
                             }});
                         </script>");
                 }
@@ -1089,9 +1108,16 @@ namespace ErpToolkit.Helpers
             if (property != null)
             {
 
+                //-------------------------------------
                 //calcola restrizioni visibilità pagina
                 //-------------------------------------
                 DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
+                //-------------------------------------
+                //calcola prefix id name (Accedi al valore di HtmlFieldPrefix)
+                //-------------------------------------
+                var prefix = (ViewContext.ViewData.TemplateInfo.HtmlFieldPrefix ?? "").Trim();
+                var prefixInputId = (prefix != "") ? prefix + "_" + For.Name : For.Name;
+                var prefixInputName = (prefix != "") ? prefix + "." + For.Name : For.Name;
                 //-------------------------------------
 
                 var dataTypeAttribute = property.GetCustomAttributes(typeof(DataTypeAttribute), false).FirstOrDefault() as DataTypeAttribute;
@@ -1107,7 +1133,7 @@ namespace ErpToolkit.Helpers
                         string script = $@"
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function() {{
-                                        var label = document.querySelector('label[for=""{For.Name}""]');
+                                        var label = document.querySelector('label[for=""{prefixInputId}""]');
                                         if (label) {{
                                             label.style.display = 'none';
                                         }}
