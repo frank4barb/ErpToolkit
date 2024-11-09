@@ -1,6 +1,7 @@
 ﻿@model ErpToolkit.Models.SIO.Resource.TipoRisorsa
 @{
     ViewData["Title"] = "TipoRisorsa Delete [" + (Model?.action ?? ' ') + "]";
+    ViewData["TagHelper__READONLY_PAGE"] = "Y";
 }
 <div class="modal-dialog" role="document">
     @using (Html.BeginForm("Delete", "TipoRisorsa", FormMethod.Post))
@@ -21,30 +22,30 @@
                 <div class="container">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     Sei proprio sicuro di voler cancellare il seguente record?
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TsCodice, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TsCodice, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TsClasseRisorsa, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TsClasseRisorsa, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TsIdGruppo, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TsIdGruppo, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TsDescrizione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TsDescrizione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TsNote, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TsNote, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TsUnitaDiMisura, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TsUnitaDiMisura, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+                    <div class="form-group">
+                        <label asp-for="TsCodice" class="control-label"></label>
+                        <input asp-for="TsCodice" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TsClasseRisorsa" class="control-label"></label>
+                        <input asp-for="TsClasseRisorsa" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TsIdGruppo" class="control-label"></label>
+                        <input asp-for="TsIdGruppo" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TsDescrizione" class="control-label"></label>
+                        <input asp-for="TsDescrizione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TsNote" class="control-label"></label>
+                        <input asp-for="TsNote" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TsUnitaDiMisura" class="control-label"></label>
+                        <input asp-for="TsUnitaDiMisura" class="form-control" />
+                    </div>
                 </div>
                 <br />
             </div>

@@ -1,6 +1,7 @@
 ﻿@model ErpToolkit.Models.SIO.HealthData.ParametroVitale
 @{
     ViewData["Title"] = "ParametroVitale Delete [" + (Model?.action ?? ' ') + "]";
+    ViewData["TagHelper__READONLY_PAGE"] = "Y";
 }
 <div class="modal-dialog" role="document">
     @using (Html.BeginForm("Delete", "ParametroVitale", FormMethod.Post))
@@ -21,70 +22,70 @@
                 <div class="container">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     Sei proprio sicuro di voler cancellare il seguente record?
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PvClasse, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PvClasse, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PvIdPaziente, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PvIdPaziente, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PvIdEpisodio, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PvIdEpisodio, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PvIdTipoDatoClinico, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PvIdTipoDatoClinico, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PvValoreMinimo, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PvValoreMinimo, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PvValoreMassimo, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PvValoreMassimo, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PvValoreScelta, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PvValoreScelta, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PvValoreTesto, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PvValoreTesto, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PvNote, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PvNote, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PvCodiceReferto, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PvCodiceReferto, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PvDataAcquisizione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PvDataAcquisizione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PvOraAcquisizione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PvOraAcquisizione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PvStatoDatoClinico, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PvStatoDatoClinico, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PvDataValidazione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PvDataValidazione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PvOraValidazione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PvOraValidazione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PvSequenza, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PvSequenza, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+                    <div class="form-group">
+                        <label asp-for="PvClasse" class="control-label"></label>
+                        <input asp-for="PvClasse" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvIdPaziente" class="control-label"></label>
+                        <input asp-for="PvIdPaziente" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvIdEpisodio" class="control-label"></label>
+                        <input asp-for="PvIdEpisodio" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvIdTipoDatoClinico" class="control-label"></label>
+                        <input asp-for="PvIdTipoDatoClinico" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvValoreMinimo" class="control-label"></label>
+                        <input asp-for="PvValoreMinimo" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvValoreMassimo" class="control-label"></label>
+                        <input asp-for="PvValoreMassimo" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvValoreScelta" class="control-label"></label>
+                        <input asp-for="PvValoreScelta" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvValoreTesto" class="control-label"></label>
+                        <input asp-for="PvValoreTesto" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvNote" class="control-label"></label>
+                        <input asp-for="PvNote" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvCodiceReferto" class="control-label"></label>
+                        <input asp-for="PvCodiceReferto" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvDataAcquisizione" class="control-label"></label>
+                        <input asp-for="PvDataAcquisizione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvOraAcquisizione" class="control-label"></label>
+                        <input asp-for="PvOraAcquisizione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvStatoDatoClinico" class="control-label"></label>
+                        <input asp-for="PvStatoDatoClinico" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvDataValidazione" class="control-label"></label>
+                        <input asp-for="PvDataValidazione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvOraValidazione" class="control-label"></label>
+                        <input asp-for="PvOraValidazione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PvSequenza" class="control-label"></label>
+                        <input asp-for="PvSequenza" class="form-control" />
+                    </div>
                 </div>
                 <br />
             </div>

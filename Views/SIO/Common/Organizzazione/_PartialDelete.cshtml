@@ -1,6 +1,7 @@
 ﻿@model ErpToolkit.Models.SIO.Common.Organizzazione
 @{
     ViewData["Title"] = "Organizzazione Delete [" + (Model?.action ?? ' ') + "]";
+    ViewData["TagHelper__READONLY_PAGE"] = "Y";
 }
 <div class="modal-dialog" role="document">
     @using (Html.BeginForm("Delete", "Organizzazione", FormMethod.Post))
@@ -21,62 +22,62 @@
                 <div class="container">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     Sei proprio sicuro di voler cancellare il seguente record?
-                <div class="form-group">
-                    @Html.LabelFor(model => model.OrClasseAssistenza, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.OrClasseAssistenza, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.OrCodice, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.OrCodice, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.OrDescrizione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.OrDescrizione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.OrNote, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.OrNote, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.OrEmail, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.OrEmail, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.OrTipoAssistenza, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.OrTipoAssistenza, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.OrTelefono, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.OrTelefono, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.OrIdPersonale, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.OrIdPersonale, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.OrIdIstituto, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.OrIdIstituto, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.OrIdUnita, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.OrIdUnita, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.OrIdPostazione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.OrIdPostazione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.OrPwdCrypt, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.OrPwdCrypt, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.OrAttivo, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.OrAttivo, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.OrIdentificativo, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.OrIdentificativo, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+                    <div class="form-group">
+                        <label asp-for="OrClasseAssistenza" class="control-label"></label>
+                        <input asp-for="OrClasseAssistenza" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrCodice" class="control-label"></label>
+                        <input asp-for="OrCodice" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrDescrizione" class="control-label"></label>
+                        <input asp-for="OrDescrizione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrNote" class="control-label"></label>
+                        <input asp-for="OrNote" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrEmail" class="control-label"></label>
+                        <input asp-for="OrEmail" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrTipoAssistenza" class="control-label"></label>
+                        <input asp-for="OrTipoAssistenza" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrTelefono" class="control-label"></label>
+                        <input asp-for="OrTelefono" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrIdPersonale" class="control-label"></label>
+                        <input asp-for="OrIdPersonale" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrIdIstituto" class="control-label"></label>
+                        <input asp-for="OrIdIstituto" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrIdUnita" class="control-label"></label>
+                        <input asp-for="OrIdUnita" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrIdPostazione" class="control-label"></label>
+                        <input asp-for="OrIdPostazione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrPwdCrypt" class="control-label"></label>
+                        <input asp-for="OrPwdCrypt" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrAttivo" class="control-label"></label>
+                        <input asp-for="OrAttivo" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OrIdentificativo" class="control-label"></label>
+                        <input asp-for="OrIdentificativo" class="form-control" />
+                    </div>
                 </div>
                 <br />
             </div>

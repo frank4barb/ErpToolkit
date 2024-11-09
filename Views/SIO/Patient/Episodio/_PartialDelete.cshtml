@@ -1,6 +1,7 @@
 ﻿@model ErpToolkit.Models.SIO.Patient.Episodio
 @{
     ViewData["Title"] = "Episodio Delete [" + (Model?.action ?? ' ') + "]";
+    ViewData["TagHelper__READONLY_PAGE"] = "Y";
 }
 <div class="modal-dialog" role="document">
     @using (Html.BeginForm("Delete", "Episodio", FormMethod.Post))
@@ -21,110 +22,110 @@
                 <div class="container">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     Sei proprio sicuro di voler cancellare il seguente record?
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpCodEpisodio, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpCodEpisodio, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpIdPaziente, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpIdPaziente, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpSesso, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpSesso, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpIdTipoEpisodio, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpIdTipoEpisodio, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpStatoEpisodio, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpStatoEpisodio, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpIdUnitaIngresso, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpIdUnitaIngresso, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpDataInizio, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpDataInizio, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpOraInizio, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpOraInizio, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpDataFine, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpDataFine, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpOraFine, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpOraFine, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpCartellaPs, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpCartellaPs, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpIdCorsia, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpIdCorsia, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpIdReparto, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpIdReparto, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpLetto, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpLetto, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpStanza, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpStanza, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpIdDiagnosiAmmissione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpIdDiagnosiAmmissione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpIdDiagnosiDimissione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpIdDiagnosiDimissione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpNote, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpNote, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpIdAttoAmministrativo, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpIdAttoAmministrativo, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpDataInizioLa, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpDataInizioLa, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpOraInizioLa, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpOraInizioLa, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpIdRepartoLa, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpIdRepartoLa, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpDataInizioPreh, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpDataInizioPreh, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpOraInizioPreh, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpOraInizioPreh, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpIdRepartoPreh, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpIdRepartoPreh, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.EpFaseEpisodio, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.EpFaseEpisodio, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+                    <div class="form-group">
+                        <label asp-for="EpCodEpisodio" class="control-label"></label>
+                        <input asp-for="EpCodEpisodio" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpIdPaziente" class="control-label"></label>
+                        <input asp-for="EpIdPaziente" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpSesso" class="control-label"></label>
+                        <input asp-for="EpSesso" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpIdTipoEpisodio" class="control-label"></label>
+                        <input asp-for="EpIdTipoEpisodio" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpStatoEpisodio" class="control-label"></label>
+                        <input asp-for="EpStatoEpisodio" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpIdUnitaIngresso" class="control-label"></label>
+                        <input asp-for="EpIdUnitaIngresso" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpDataInizio" class="control-label"></label>
+                        <input asp-for="EpDataInizio" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpOraInizio" class="control-label"></label>
+                        <input asp-for="EpOraInizio" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpDataFine" class="control-label"></label>
+                        <input asp-for="EpDataFine" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpOraFine" class="control-label"></label>
+                        <input asp-for="EpOraFine" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpCartellaPs" class="control-label"></label>
+                        <input asp-for="EpCartellaPs" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpIdCorsia" class="control-label"></label>
+                        <input asp-for="EpIdCorsia" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpIdReparto" class="control-label"></label>
+                        <input asp-for="EpIdReparto" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpLetto" class="control-label"></label>
+                        <input asp-for="EpLetto" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpStanza" class="control-label"></label>
+                        <input asp-for="EpStanza" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpIdDiagnosiAmmissione" class="control-label"></label>
+                        <input asp-for="EpIdDiagnosiAmmissione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpIdDiagnosiDimissione" class="control-label"></label>
+                        <input asp-for="EpIdDiagnosiDimissione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpNote" class="control-label"></label>
+                        <input asp-for="EpNote" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpIdAttoAmministrativo" class="control-label"></label>
+                        <input asp-for="EpIdAttoAmministrativo" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpDataInizioLa" class="control-label"></label>
+                        <input asp-for="EpDataInizioLa" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpOraInizioLa" class="control-label"></label>
+                        <input asp-for="EpOraInizioLa" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpIdRepartoLa" class="control-label"></label>
+                        <input asp-for="EpIdRepartoLa" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpDataInizioPreh" class="control-label"></label>
+                        <input asp-for="EpDataInizioPreh" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpOraInizioPreh" class="control-label"></label>
+                        <input asp-for="EpOraInizioPreh" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpIdRepartoPreh" class="control-label"></label>
+                        <input asp-for="EpIdRepartoPreh" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EpFaseEpisodio" class="control-label"></label>
+                        <input asp-for="EpFaseEpisodio" class="form-control" />
+                    </div>
                 </div>
                 <br />
             </div>

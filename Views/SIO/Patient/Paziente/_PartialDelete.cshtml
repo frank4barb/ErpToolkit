@@ -1,6 +1,7 @@
 ﻿@model ErpToolkit.Models.SIO.Patient.Paziente
 @{
     ViewData["Title"] = "Paziente Delete [" + (Model?.action ?? ' ') + "]";
+    ViewData["TagHelper__READONLY_PAGE"] = "Y";
 }
 <div class="modal-dialog" role="document">
     @using (Html.BeginForm("Delete", "Paziente", FormMethod.Post))
@@ -21,118 +22,118 @@
                 <div class="container">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     Sei proprio sicuro di voler cancellare il seguente record?
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaCodFiscale, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaCodFiscale, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaCodSanitario, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaCodSanitario, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaNome, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaNome, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaCognome, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaCognome, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaSesso, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaSesso, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaDataNascita, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaDataNascita, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaOraNascita, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaOraNascita, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaIdComuneNascita, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaIdComuneNascita, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaIdNazioneNascita, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaIdNazioneNascita, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaIdCittadinanza, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaIdCittadinanza, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaIndirizzoRes, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaIndirizzoRes, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaNumCivicoRes, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaNumCivicoRes, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaCapRes, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaCapRes, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaIdComuneRes, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaIdComuneRes, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaIdDistrettoRes, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaIdDistrettoRes, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaIdNazioneDom, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaIdNazioneDom, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaMail, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaMail, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaIndirizzoDom, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaIndirizzoDom, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaNumCivicoDom, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaNumCivicoDom, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaCapDom, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaCapDom, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaIdComuneDom, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaIdComuneDom, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaTelefono, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaTelefono, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaCellulare, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaCellulare, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaIdDistrettoDom, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaIdDistrettoDom, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaNote, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaNote, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaDataDecesso, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaDataDecesso, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaOraDecesso, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaOraDecesso, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PaIdNazioneRes, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PaIdNazioneRes, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+                    <div class="form-group">
+                        <label asp-for="PaCodFiscale" class="control-label"></label>
+                        <input asp-for="PaCodFiscale" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaCodSanitario" class="control-label"></label>
+                        <input asp-for="PaCodSanitario" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaNome" class="control-label"></label>
+                        <input asp-for="PaNome" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaCognome" class="control-label"></label>
+                        <input asp-for="PaCognome" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaSesso" class="control-label"></label>
+                        <input asp-for="PaSesso" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaDataNascita" class="control-label"></label>
+                        <input asp-for="PaDataNascita" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaOraNascita" class="control-label"></label>
+                        <input asp-for="PaOraNascita" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaIdComuneNascita" class="control-label"></label>
+                        <input asp-for="PaIdComuneNascita" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaIdNazioneNascita" class="control-label"></label>
+                        <input asp-for="PaIdNazioneNascita" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaIdCittadinanza" class="control-label"></label>
+                        <input asp-for="PaIdCittadinanza" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaIndirizzoRes" class="control-label"></label>
+                        <input asp-for="PaIndirizzoRes" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaNumCivicoRes" class="control-label"></label>
+                        <input asp-for="PaNumCivicoRes" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaCapRes" class="control-label"></label>
+                        <input asp-for="PaCapRes" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaIdComuneRes" class="control-label"></label>
+                        <input asp-for="PaIdComuneRes" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaIdDistrettoRes" class="control-label"></label>
+                        <input asp-for="PaIdDistrettoRes" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaIdNazioneDom" class="control-label"></label>
+                        <input asp-for="PaIdNazioneDom" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaMail" class="control-label"></label>
+                        <input asp-for="PaMail" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaIndirizzoDom" class="control-label"></label>
+                        <input asp-for="PaIndirizzoDom" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaNumCivicoDom" class="control-label"></label>
+                        <input asp-for="PaNumCivicoDom" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaCapDom" class="control-label"></label>
+                        <input asp-for="PaCapDom" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaIdComuneDom" class="control-label"></label>
+                        <input asp-for="PaIdComuneDom" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaTelefono" class="control-label"></label>
+                        <input asp-for="PaTelefono" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaCellulare" class="control-label"></label>
+                        <input asp-for="PaCellulare" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaIdDistrettoDom" class="control-label"></label>
+                        <input asp-for="PaIdDistrettoDom" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaNote" class="control-label"></label>
+                        <input asp-for="PaNote" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaDataDecesso" class="control-label"></label>
+                        <input asp-for="PaDataDecesso" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaOraDecesso" class="control-label"></label>
+                        <input asp-for="PaOraDecesso" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PaIdNazioneRes" class="control-label"></label>
+                        <input asp-for="PaIdNazioneRes" class="form-control" />
+                    </div>
                 </div>
                 <br />
             </div>

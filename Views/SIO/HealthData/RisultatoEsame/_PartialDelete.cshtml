@@ -1,6 +1,7 @@
 ﻿@model ErpToolkit.Models.SIO.HealthData.RisultatoEsame
 @{
     ViewData["Title"] = "RisultatoEsame Delete [" + (Model?.action ?? ' ') + "]";
+    ViewData["TagHelper__READONLY_PAGE"] = "Y";
 }
 <div class="modal-dialog" role="document">
     @using (Html.BeginForm("Delete", "RisultatoEsame", FormMethod.Post))
@@ -21,70 +22,70 @@
                 <div class="container">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     Sei proprio sicuro di voler cancellare il seguente record?
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReClasse, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.ReClasse, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReIdPaziente, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.ReIdPaziente, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReIdTipoDatoClinico, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.ReIdTipoDatoClinico, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReIdGruppoDatoClinico, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.ReIdGruppoDatoClinico, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReValoreMinimo, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.ReValoreMinimo, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReValoreMassimo, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.ReValoreMassimo, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReValoreScelta, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.ReValoreScelta, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReValoreTesto, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.ReValoreTesto, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReNote, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.ReNote, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReCodiceReferto, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.ReCodiceReferto, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReDataAcquisizione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.ReDataAcquisizione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReOraAcquisizione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.ReOraAcquisizione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReStatoDatoClinico, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.ReStatoDatoClinico, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReDataValidazione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.ReDataValidazione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReOraValidazione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.ReOraValidazione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.ReSequenza, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.ReSequenza, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+                    <div class="form-group">
+                        <label asp-for="ReClasse" class="control-label"></label>
+                        <input asp-for="ReClasse" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReIdPaziente" class="control-label"></label>
+                        <input asp-for="ReIdPaziente" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReIdTipoDatoClinico" class="control-label"></label>
+                        <input asp-for="ReIdTipoDatoClinico" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReIdGruppoDatoClinico" class="control-label"></label>
+                        <input asp-for="ReIdGruppoDatoClinico" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReValoreMinimo" class="control-label"></label>
+                        <input asp-for="ReValoreMinimo" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReValoreMassimo" class="control-label"></label>
+                        <input asp-for="ReValoreMassimo" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReValoreScelta" class="control-label"></label>
+                        <input asp-for="ReValoreScelta" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReValoreTesto" class="control-label"></label>
+                        <input asp-for="ReValoreTesto" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReNote" class="control-label"></label>
+                        <input asp-for="ReNote" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReCodiceReferto" class="control-label"></label>
+                        <input asp-for="ReCodiceReferto" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReDataAcquisizione" class="control-label"></label>
+                        <input asp-for="ReDataAcquisizione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReOraAcquisizione" class="control-label"></label>
+                        <input asp-for="ReOraAcquisizione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReStatoDatoClinico" class="control-label"></label>
+                        <input asp-for="ReStatoDatoClinico" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReDataValidazione" class="control-label"></label>
+                        <input asp-for="ReDataValidazione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReOraValidazione" class="control-label"></label>
+                        <input asp-for="ReOraValidazione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ReSequenza" class="control-label"></label>
+                        <input asp-for="ReSequenza" class="form-control" />
+                    </div>
                 </div>
                 <br />
             </div>

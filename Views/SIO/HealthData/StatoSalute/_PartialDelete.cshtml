@@ -1,6 +1,7 @@
 ﻿@model ErpToolkit.Models.SIO.HealthData.StatoSalute
 @{
     ViewData["Title"] = "StatoSalute Delete [" + (Model?.action ?? ' ') + "]";
+    ViewData["TagHelper__READONLY_PAGE"] = "Y";
 }
 <div class="modal-dialog" role="document">
     @using (Html.BeginForm("Delete", "StatoSalute", FormMethod.Post))
@@ -21,70 +22,70 @@
                 <div class="container">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     Sei proprio sicuro di voler cancellare il seguente record?
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SsClasse, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SsClasse, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SsIdPaziente, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SsIdPaziente, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SsIdEpisodio, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SsIdEpisodio, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SsIdTipoDatoClinico, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SsIdTipoDatoClinico, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SsValoreMinimo, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SsValoreMinimo, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SsValoreMassimo, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SsValoreMassimo, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SsValoreScelta, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SsValoreScelta, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SsValoreTesto, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SsValoreTesto, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SsNote, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SsNote, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SsCodiceReferto, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SsCodiceReferto, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SsDataAcquisizione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SsDataAcquisizione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SsOraAcquisizione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SsOraAcquisizione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SsStatoDatoClinico, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SsStatoDatoClinico, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SsDataValidazione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SsDataValidazione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SsOraValidazione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SsOraValidazione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SsSequenza, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SsSequenza, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+                    <div class="form-group">
+                        <label asp-for="SsClasse" class="control-label"></label>
+                        <input asp-for="SsClasse" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SsIdPaziente" class="control-label"></label>
+                        <input asp-for="SsIdPaziente" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SsIdEpisodio" class="control-label"></label>
+                        <input asp-for="SsIdEpisodio" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SsIdTipoDatoClinico" class="control-label"></label>
+                        <input asp-for="SsIdTipoDatoClinico" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SsValoreMinimo" class="control-label"></label>
+                        <input asp-for="SsValoreMinimo" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SsValoreMassimo" class="control-label"></label>
+                        <input asp-for="SsValoreMassimo" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SsValoreScelta" class="control-label"></label>
+                        <input asp-for="SsValoreScelta" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SsValoreTesto" class="control-label"></label>
+                        <input asp-for="SsValoreTesto" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SsNote" class="control-label"></label>
+                        <input asp-for="SsNote" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SsCodiceReferto" class="control-label"></label>
+                        <input asp-for="SsCodiceReferto" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SsDataAcquisizione" class="control-label"></label>
+                        <input asp-for="SsDataAcquisizione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SsOraAcquisizione" class="control-label"></label>
+                        <input asp-for="SsOraAcquisizione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SsStatoDatoClinico" class="control-label"></label>
+                        <input asp-for="SsStatoDatoClinico" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SsDataValidazione" class="control-label"></label>
+                        <input asp-for="SsDataValidazione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SsOraValidazione" class="control-label"></label>
+                        <input asp-for="SsOraValidazione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SsSequenza" class="control-label"></label>
+                        <input asp-for="SsSequenza" class="form-control" />
+                    </div>
                 </div>
                 <br />
             </div>

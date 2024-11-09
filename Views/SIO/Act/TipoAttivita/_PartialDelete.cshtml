@@ -1,6 +1,7 @@
 ﻿@model ErpToolkit.Models.SIO.Act.TipoAttivita
 @{
     ViewData["Title"] = "TipoAttivita Delete [" + (Model?.action ?? ' ') + "]";
+    ViewData["TagHelper__READONLY_PAGE"] = "Y";
 }
 <div class="modal-dialog" role="document">
     @using (Html.BeginForm("Delete", "TipoAttivita", FormMethod.Post))
@@ -21,22 +22,22 @@
                 <div class="container">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     Sei proprio sicuro di voler cancellare il seguente record?
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TaCodice, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TaCodice, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TaDescrizione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TaDescrizione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TaNote, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TaNote, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TaIdGruppo, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TaIdGruppo, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+                    <div class="form-group">
+                        <label asp-for="TaCodice" class="control-label"></label>
+                        <input asp-for="TaCodice" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TaDescrizione" class="control-label"></label>
+                        <input asp-for="TaDescrizione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TaNote" class="control-label"></label>
+                        <input asp-for="TaNote" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TaIdGruppo" class="control-label"></label>
+                        <input asp-for="TaIdGruppo" class="form-control" />
+                    </div>
                 </div>
                 <br />
             </div>

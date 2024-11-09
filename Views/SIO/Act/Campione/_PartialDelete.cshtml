@@ -1,6 +1,7 @@
 ﻿@model ErpToolkit.Models.SIO.Act.Campione
 @{
     ViewData["Title"] = "Campione Delete [" + (Model?.action ?? ' ') + "]";
+    ViewData["TagHelper__READONLY_PAGE"] = "Y";
 }
 <div class="modal-dialog" role="document">
     @using (Html.BeginForm("Delete", "Campione", FormMethod.Post))
@@ -21,66 +22,66 @@
                 <div class="container">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     Sei proprio sicuro di voler cancellare il seguente record?
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CpIdTipoCampione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CpIdTipoCampione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CpDescrizione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CpDescrizione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CpCodiceUnivoco, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CpCodiceUnivoco, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CpDataPrelievo, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CpDataPrelievo, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CpOraPrelievo, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CpOraPrelievo, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CpNote, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CpNote, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CpIdEpisodio, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CpIdEpisodio, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CpIdPaziente, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CpIdPaziente, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CpCodiceAssoluto, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CpCodiceAssoluto, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CpStatoCampione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CpStatoCampione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CpIdPosizioneAttuale, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CpIdPosizioneAttuale, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CpDescPosizioneAttuale, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CpDescPosizioneAttuale, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CpDataCambiamentoStato, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CpDataCambiamentoStato, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CpOraCambiamentoStato, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CpOraCambiamentoStato, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CpNoteCambiamentoStato, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CpNoteCambiamentoStato, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+                    <div class="form-group">
+                        <label asp-for="CpIdTipoCampione" class="control-label"></label>
+                        <input asp-for="CpIdTipoCampione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpDescrizione" class="control-label"></label>
+                        <input asp-for="CpDescrizione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpCodiceUnivoco" class="control-label"></label>
+                        <input asp-for="CpCodiceUnivoco" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpDataPrelievo" class="control-label"></label>
+                        <input asp-for="CpDataPrelievo" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpOraPrelievo" class="control-label"></label>
+                        <input asp-for="CpOraPrelievo" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpNote" class="control-label"></label>
+                        <input asp-for="CpNote" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpIdEpisodio" class="control-label"></label>
+                        <input asp-for="CpIdEpisodio" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpIdPaziente" class="control-label"></label>
+                        <input asp-for="CpIdPaziente" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpCodiceAssoluto" class="control-label"></label>
+                        <input asp-for="CpCodiceAssoluto" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpStatoCampione" class="control-label"></label>
+                        <input asp-for="CpStatoCampione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpIdPosizioneAttuale" class="control-label"></label>
+                        <input asp-for="CpIdPosizioneAttuale" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpDescPosizioneAttuale" class="control-label"></label>
+                        <input asp-for="CpDescPosizioneAttuale" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpDataCambiamentoStato" class="control-label"></label>
+                        <input asp-for="CpDataCambiamentoStato" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpOraCambiamentoStato" class="control-label"></label>
+                        <input asp-for="CpOraCambiamentoStato" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CpNoteCambiamentoStato" class="control-label"></label>
+                        <input asp-for="CpNoteCambiamentoStato" class="form-control" />
+                    </div>
                 </div>
                 <br />
             </div>

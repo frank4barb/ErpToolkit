@@ -1,6 +1,7 @@
 ﻿@model ErpToolkit.Models.SIO.Resource.Personale
 @{
     ViewData["Title"] = "Personale Delete [" + (Model?.action ?? ' ') + "]";
+    ViewData["TagHelper__READONLY_PAGE"] = "Y";
 }
 <div class="modal-dialog" role="document">
     @using (Html.BeginForm("Delete", "Personale", FormMethod.Post))
@@ -21,58 +22,58 @@
                 <div class="container">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     Sei proprio sicuro di voler cancellare il seguente record?
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PeCodice, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PeCodice, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PeDescrizione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PeDescrizione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PeIdTipoRisorsa, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PeIdTipoRisorsa, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PeCostoUnitarioUso, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PeCostoUnitarioUso, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PeMisuraUnitariaUso, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PeMisuraUnitariaUso, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PeNote, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PeNote, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PeDisponibilita, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PeDisponibilita, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PeTelefono, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PeTelefono, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PeCellulare, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PeCellulare, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PeNome, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PeNome, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PeCognome, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PeCognome, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PeCodiceFiscale, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PeCodiceFiscale, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.PeEmail, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.PeEmail, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+                    <div class="form-group">
+                        <label asp-for="PeCodice" class="control-label"></label>
+                        <input asp-for="PeCodice" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PeDescrizione" class="control-label"></label>
+                        <input asp-for="PeDescrizione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PeIdTipoRisorsa" class="control-label"></label>
+                        <input asp-for="PeIdTipoRisorsa" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PeCostoUnitarioUso" class="control-label"></label>
+                        <input asp-for="PeCostoUnitarioUso" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PeMisuraUnitariaUso" class="control-label"></label>
+                        <input asp-for="PeMisuraUnitariaUso" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PeNote" class="control-label"></label>
+                        <input asp-for="PeNote" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PeDisponibilita" class="control-label"></label>
+                        <input asp-for="PeDisponibilita" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PeTelefono" class="control-label"></label>
+                        <input asp-for="PeTelefono" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PeCellulare" class="control-label"></label>
+                        <input asp-for="PeCellulare" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PeNome" class="control-label"></label>
+                        <input asp-for="PeNome" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PeCognome" class="control-label"></label>
+                        <input asp-for="PeCognome" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PeCodiceFiscale" class="control-label"></label>
+                        <input asp-for="PeCodiceFiscale" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PeEmail" class="control-label"></label>
+                        <input asp-for="PeEmail" class="form-control" />
+                    </div>
                 </div>
                 <br />
             </div>

@@ -1,6 +1,7 @@
 ﻿@model ErpToolkit.Models.SIO.HealthData.CategoriaDatoClinico
 @{
     ViewData["Title"] = "CategoriaDatoClinico Delete [" + (Model?.action ?? ' ') + "]";
+    ViewData["TagHelper__READONLY_PAGE"] = "Y";
 }
 <div class="modal-dialog" role="document">
     @using (Html.BeginForm("Delete", "CategoriaDatoClinico", FormMethod.Post))
@@ -21,22 +22,22 @@
                 <div class="container">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     Sei proprio sicuro di voler cancellare il seguente record?
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CcCodice, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CcCodice, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CcDescrizione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CcDescrizione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CcNote, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CcNote, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.CcIdGruppo, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.CcIdGruppo, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+                    <div class="form-group">
+                        <label asp-for="CcCodice" class="control-label"></label>
+                        <input asp-for="CcCodice" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CcDescrizione" class="control-label"></label>
+                        <input asp-for="CcDescrizione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CcNote" class="control-label"></label>
+                        <input asp-for="CcNote" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CcIdGruppo" class="control-label"></label>
+                        <input asp-for="CcIdGruppo" class="form-control" />
+                    </div>
                 </div>
                 <br />
             </div>

@@ -1,6 +1,7 @@
 ﻿@model ErpToolkit.Models.SIO.Resource.Sala
 @{
     ViewData["Title"] = "Sala Delete [" + (Model?.action ?? ' ') + "]";
+    ViewData["TagHelper__READONLY_PAGE"] = "Y";
 }
 <div class="modal-dialog" role="document">
     @using (Html.BeginForm("Delete", "Sala", FormMethod.Post))
@@ -21,54 +22,54 @@
                 <div class="container">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     Sei proprio sicuro di voler cancellare il seguente record?
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SaCodice, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SaCodice, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SaIdTipoRisorsa, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SaIdTipoRisorsa, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SaDescrizione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SaDescrizione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SaCostoUnitarioUso, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SaCostoUnitarioUso, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SaMisuraUnitariaUso, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SaMisuraUnitariaUso, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SaNote, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SaNote, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SaDisponibilita, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SaDisponibilita, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SaTelefonoFornitore, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SaTelefonoFornitore, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SaDataUltimaManutenzione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SaDataUltimaManutenzione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SaFrequenzaManutenzione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SaFrequenzaManutenzione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SaUsoMedioGiornaliero, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SaUsoMedioGiornaliero, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.SaDataProssimaManutenzione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.SaDataProssimaManutenzione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+                    <div class="form-group">
+                        <label asp-for="SaCodice" class="control-label"></label>
+                        <input asp-for="SaCodice" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SaIdTipoRisorsa" class="control-label"></label>
+                        <input asp-for="SaIdTipoRisorsa" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SaDescrizione" class="control-label"></label>
+                        <input asp-for="SaDescrizione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SaCostoUnitarioUso" class="control-label"></label>
+                        <input asp-for="SaCostoUnitarioUso" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SaMisuraUnitariaUso" class="control-label"></label>
+                        <input asp-for="SaMisuraUnitariaUso" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SaNote" class="control-label"></label>
+                        <input asp-for="SaNote" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SaDisponibilita" class="control-label"></label>
+                        <input asp-for="SaDisponibilita" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SaTelefonoFornitore" class="control-label"></label>
+                        <input asp-for="SaTelefonoFornitore" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SaDataUltimaManutenzione" class="control-label"></label>
+                        <input asp-for="SaDataUltimaManutenzione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SaFrequenzaManutenzione" class="control-label"></label>
+                        <input asp-for="SaFrequenzaManutenzione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SaUsoMedioGiornaliero" class="control-label"></label>
+                        <input asp-for="SaUsoMedioGiornaliero" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SaDataProssimaManutenzione" class="control-label"></label>
+                        <input asp-for="SaDataProssimaManutenzione" class="form-control" />
+                    </div>
                 </div>
                 <br />
             </div>

@@ -226,6 +226,11 @@ namespace ErpToolkit.Helpers
                 {
                     attrField = new DogManager.FieldAttr(sequenzaPagine[paginaIdx].defaultFields[$"{xrefFieldName}_Attr"] ?? "");
                 }
+                if(viewContext.ViewData.ContainsKey("TagHelper__READONLY_PAGE"))
+                {
+                    string READONLY_PAGE = viewContext?.ViewData["TagHelper__READONLY_PAGE"]?.ToString() ?? ""; //deve essere scritto nella PartialView
+                    if (READONLY_PAGE == "Y") { attrField.Readonly = 'Y'; }
+                }
             }
             catch (Exception ex) { } // skip exeptions
 

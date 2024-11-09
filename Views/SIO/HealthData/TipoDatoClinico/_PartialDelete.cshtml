@@ -1,6 +1,7 @@
 ﻿@model ErpToolkit.Models.SIO.HealthData.TipoDatoClinico
 @{
     ViewData["Title"] = "TipoDatoClinico Delete [" + (Model?.action ?? ' ') + "]";
+    ViewData["TagHelper__READONLY_PAGE"] = "Y";
 }
 <div class="modal-dialog" role="document">
     @using (Html.BeginForm("Delete", "TipoDatoClinico", FormMethod.Post))
@@ -21,42 +22,42 @@
                 <div class="container">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     Sei proprio sicuro di voler cancellare il seguente record?
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TcCodice, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TcCodice, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TcDescrizione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TcDescrizione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TcNote, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TcNote, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TcIdCategoriaDatoClinico, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TcIdCategoriaDatoClinico, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TcUnitaDiMisura, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TcUnitaDiMisura, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TcIdGruppo, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TcIdGruppo, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TcSequenza, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TcSequenza, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TcAttributi1, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TcAttributi1, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.TcAttributi2, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.TcAttributi2, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+                    <div class="form-group">
+                        <label asp-for="TcCodice" class="control-label"></label>
+                        <input asp-for="TcCodice" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TcDescrizione" class="control-label"></label>
+                        <input asp-for="TcDescrizione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TcNote" class="control-label"></label>
+                        <input asp-for="TcNote" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TcIdCategoriaDatoClinico" class="control-label"></label>
+                        <input asp-for="TcIdCategoriaDatoClinico" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TcUnitaDiMisura" class="control-label"></label>
+                        <input asp-for="TcUnitaDiMisura" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TcIdGruppo" class="control-label"></label>
+                        <input asp-for="TcIdGruppo" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TcSequenza" class="control-label"></label>
+                        <input asp-for="TcSequenza" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TcAttributi1" class="control-label"></label>
+                        <input asp-for="TcAttributi1" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="TcAttributi2" class="control-label"></label>
+                        <input asp-for="TcAttributi2" class="form-control" />
+                    </div>
                 </div>
                 <br />
             </div>

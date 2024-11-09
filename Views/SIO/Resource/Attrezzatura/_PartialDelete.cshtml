@@ -1,6 +1,7 @@
 ﻿@model ErpToolkit.Models.SIO.Resource.Attrezzatura
 @{
     ViewData["Title"] = "Attrezzatura Delete [" + (Model?.action ?? ' ') + "]";
+    ViewData["TagHelper__READONLY_PAGE"] = "Y";
 }
 <div class="modal-dialog" role="document">
     @using (Html.BeginForm("Delete", "Attrezzatura", FormMethod.Post))
@@ -21,66 +22,66 @@
                 <div class="container">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     Sei proprio sicuro di voler cancellare il seguente record?
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AtCodice, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AtCodice, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AtDescrizione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AtDescrizione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AtIdTipoRisorsa, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AtIdTipoRisorsa, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AtCostoUnitarioUso, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AtCostoUnitarioUso, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AtMisuraUnitariaUso, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AtMisuraUnitariaUso, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AtNote, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AtNote, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AtDisponibilita, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AtDisponibilita, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AtTelefonoFornitore, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AtTelefonoFornitore, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AtNumeroSeriale, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AtNumeroSeriale, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AtRiferimentiAssistenza, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AtRiferimentiAssistenza, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AtTelefonoAssistenza, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AtTelefonoAssistenza, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AtDataUltimaManutenzione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AtDataUltimaManutenzione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AtFrequenzaManutenzione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AtFrequenzaManutenzione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AtUsoMedioGiornaliero, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AtUsoMedioGiornaliero, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AtDataProssimaManutenzione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AtDataProssimaManutenzione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+                    <div class="form-group">
+                        <label asp-for="AtCodice" class="control-label"></label>
+                        <input asp-for="AtCodice" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AtDescrizione" class="control-label"></label>
+                        <input asp-for="AtDescrizione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AtIdTipoRisorsa" class="control-label"></label>
+                        <input asp-for="AtIdTipoRisorsa" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AtCostoUnitarioUso" class="control-label"></label>
+                        <input asp-for="AtCostoUnitarioUso" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AtMisuraUnitariaUso" class="control-label"></label>
+                        <input asp-for="AtMisuraUnitariaUso" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AtNote" class="control-label"></label>
+                        <input asp-for="AtNote" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AtDisponibilita" class="control-label"></label>
+                        <input asp-for="AtDisponibilita" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AtTelefonoFornitore" class="control-label"></label>
+                        <input asp-for="AtTelefonoFornitore" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AtNumeroSeriale" class="control-label"></label>
+                        <input asp-for="AtNumeroSeriale" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AtRiferimentiAssistenza" class="control-label"></label>
+                        <input asp-for="AtRiferimentiAssistenza" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AtTelefonoAssistenza" class="control-label"></label>
+                        <input asp-for="AtTelefonoAssistenza" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AtDataUltimaManutenzione" class="control-label"></label>
+                        <input asp-for="AtDataUltimaManutenzione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AtFrequenzaManutenzione" class="control-label"></label>
+                        <input asp-for="AtFrequenzaManutenzione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AtUsoMedioGiornaliero" class="control-label"></label>
+                        <input asp-for="AtUsoMedioGiornaliero" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AtDataProssimaManutenzione" class="control-label"></label>
+                        <input asp-for="AtDataProssimaManutenzione" class="form-control" />
+                    </div>
                 </div>
                 <br />
             </div>

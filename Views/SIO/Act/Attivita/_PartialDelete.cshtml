@@ -1,6 +1,7 @@
 ﻿@model ErpToolkit.Models.SIO.Act.Attivita
 @{
     ViewData["Title"] = "Attivita Delete [" + (Model?.action ?? ' ') + "]";
+    ViewData["TagHelper__READONLY_PAGE"] = "Y";
 }
 <div class="modal-dialog" role="document">
     @using (Html.BeginForm("Delete", "Attivita", FormMethod.Post))
@@ -21,66 +22,66 @@
                 <div class="container">
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     Sei proprio sicuro di voler cancellare il seguente record?
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AvCodice, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AvCodice, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AvDescrizione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AvDescrizione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AvNote, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AvNote, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AvFiltroRegimeErogazione, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AvFiltroRegimeErogazione, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AvCostoMedio, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AvCostoMedio, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AvIdGruppo, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AvIdGruppo, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AvAttivitaPreferenziale, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AvAttivitaPreferenziale, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AvDurataValidita, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AvDurataValidita, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AvDurataMedia, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AvDurataMedia, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AvInEvidenza, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AvInEvidenza, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AvIdTipoAttivita, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AvIdTipoAttivita, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AvRoutine, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AvRoutine, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AvNoteEstese, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AvNoteEstese, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AvAttributi1, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AvAttributi1, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(model => model.AvAttributi2, htmlAttributes: new { @class = "control-label" })
-                    @Html.EditorFor(model => model.AvAttributi2, new { htmlAttributes = new { @class = "form-control" } })
-                </div>
+                    <div class="form-group">
+                        <label asp-for="AvCodice" class="control-label"></label>
+                        <input asp-for="AvCodice" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvDescrizione" class="control-label"></label>
+                        <input asp-for="AvDescrizione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvNote" class="control-label"></label>
+                        <input asp-for="AvNote" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvFiltroRegimeErogazione" class="control-label"></label>
+                        <input asp-for="AvFiltroRegimeErogazione" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvCostoMedio" class="control-label"></label>
+                        <input asp-for="AvCostoMedio" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvIdGruppo" class="control-label"></label>
+                        <input asp-for="AvIdGruppo" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvAttivitaPreferenziale" class="control-label"></label>
+                        <input asp-for="AvAttivitaPreferenziale" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvDurataValidita" class="control-label"></label>
+                        <input asp-for="AvDurataValidita" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvDurataMedia" class="control-label"></label>
+                        <input asp-for="AvDurataMedia" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvInEvidenza" class="control-label"></label>
+                        <input asp-for="AvInEvidenza" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvIdTipoAttivita" class="control-label"></label>
+                        <input asp-for="AvIdTipoAttivita" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvRoutine" class="control-label"></label>
+                        <input asp-for="AvRoutine" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvNoteEstese" class="control-label"></label>
+                        <input asp-for="AvNoteEstese" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvAttributi1" class="control-label"></label>
+                        <input asp-for="AvAttributi1" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="AvAttributi2" class="control-label"></label>
+                        <input asp-for="AvAttributi2" class="form-control" />
+                    </div>
                 </div>
                 <br />
             </div>
