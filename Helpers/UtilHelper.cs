@@ -205,7 +205,7 @@ namespace ErpToolkit.Helpers
         //calcola restrizioni visibilità pagina
         //-------------------------------------
 
-        public static DogManager.FieldAttr fieldAttrTagHelper(string fieldName, string xrefFieldName, ViewContext viewContext)
+        public static DogManager.FieldAttr fieldAttrTagHelper(string prefix, string fieldName, string xrefFieldName, ViewContext viewContext)
         {
             DogManager.FieldAttr attrField = new DogManager.FieldAttr("");
             try
@@ -214,13 +214,17 @@ namespace ErpToolkit.Helpers
                 List<HomeController.Page> sequenzaPagine = HomeController.PathMenu[nomePercorso];
                 string nomePagina = ((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)viewContext.ActionDescriptor).ControllerName;
                 int paginaIdx = sequenzaPagine.FindIndex(page => page.pageName.Equals(nomePagina, StringComparison.Ordinal));
-                if (sequenzaPagine[paginaIdx].defaultFields.ContainsKey(fieldName + "_Attr"))
+                if (sequenzaPagine[paginaIdx].defaultFields.ContainsKey($"{fieldName}_Attr"))
                 {
-                    attrField = new DogManager.FieldAttr(sequenzaPagine[paginaIdx].defaultFields[fieldName + "_Attr"] ?? "");
+                    attrField = new DogManager.FieldAttr(sequenzaPagine[paginaIdx].defaultFields[$"{fieldName}_Attr"] ?? "");
                 }
-                else if (sequenzaPagine[paginaIdx].defaultFields.ContainsKey(xrefFieldName + "_Attr"))
+                else if (sequenzaPagine[paginaIdx].defaultFields.ContainsKey($"{prefix}.{fieldName}_Attr"))
                 {
-                    attrField = new DogManager.FieldAttr(sequenzaPagine[paginaIdx].defaultFields[xrefFieldName + "_Attr"] ?? "");
+                    attrField = new DogManager.FieldAttr(sequenzaPagine[paginaIdx].defaultFields[$"{prefix}.{fieldName}_Attr"] ?? "");
+                }
+                else if (sequenzaPagine[paginaIdx].defaultFields.ContainsKey($"{xrefFieldName}_Attr"))
+                {
+                    attrField = new DogManager.FieldAttr(sequenzaPagine[paginaIdx].defaultFields[$"{xrefFieldName}_Attr"] ?? "");
                 }
             }
             catch (Exception ex) { } // skip exeptions

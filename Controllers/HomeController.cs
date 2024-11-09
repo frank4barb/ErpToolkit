@@ -224,6 +224,7 @@ namespace ErpToolkit.Controllers
                         .AddDefault("SelPaNome_Attr", DogManager.FieldAttr.strAttr(true, false))
                         .AddDefault("SelPaIdCittadinanza_Attr", DogManager.FieldAttr.strAttr(true, true))
                         .AddDefault("PaNome_Attr", DogManager.FieldAttr.strAttr(false, false))
+                        .AddDefault("EDIT.PaSesso_Attr", DogManager.FieldAttr.strAttr(false, false))
                  , new Page("Episodio").AddDefault("SelTe1Icode", "UCSC")
                         .AddDefault("SelEpIdPaziente_Attr", DogManager.FieldAttr.strAttr(true, true))
                         .AddDefault("SelTe1Icode_Attr", DogManager.FieldAttr.strAttr(true, true))

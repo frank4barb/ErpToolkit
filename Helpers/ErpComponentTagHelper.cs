@@ -426,15 +426,15 @@ namespace ErpToolkit.Helpers
             var attributeErpDogField_Xref = attributeErpDogField?.Xref ?? "";
 
             //-------------------------------------
-            //calcola restrizioni visibilità pagina
-            //-------------------------------------
-            DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
-            //-------------------------------------
             //calcola prefix id name (Accedi al valore di HtmlFieldPrefix)
             //-------------------------------------
             var prefix = (ViewContext.ViewData.TemplateInfo.HtmlFieldPrefix ?? "").Trim();
             var prefixInputId = (prefix != "") ? prefix + "_" + For.Name : For.Name;
             var prefixInputName = (prefix != "") ? prefix + "." + For.Name : For.Name;
+            //-------------------------------------
+            //calcola restrizioni visibilità pagina
+            //-------------------------------------
+            DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(prefix, For.Name, attributeErpDogField_Xref, ViewContext);
             //-------------------------------------
 
             if (attributeServer != null)
@@ -521,6 +521,61 @@ namespace ErpToolkit.Helpers
     }
 
 
+
+    //*****************************************************************************************************************************************************
+    //
+    // CANCELLA LABEL
+    //
+    // Cancella le label degli Input invisibili
+
+    [HtmlTargetElement("label", Attributes = "asp-for")]
+    public class EliminaLabel_TagHelper : TagHelper  //public class EliminaLabel_DateRangeTagHelper : TagHelper
+    {
+        [HtmlAttributeName("asp-for")]
+        public ModelExpression For { get; set; }
+
+        [ViewContext]
+        [HtmlAttributeNotBound]
+        public ViewContext ViewContext { get; set; }
+
+
+        public override void Process(TagHelperContext context, TagHelperOutput output)
+        {
+            var property = For.Metadata.ContainerType.GetProperty(For.Name);
+            var attributeServer = property.GetCustomAttributes(typeof(AutocompleteServerAttribute), false).FirstOrDefault() as AutocompleteServerAttribute;
+            var attributeClient = property.GetCustomAttributes(typeof(AutocompleteClientAttribute), false).FirstOrDefault() as AutocompleteClientAttribute;
+            var attributeErpDogField = property.GetCustomAttributes(typeof(ErpDogFieldAttribute), false).FirstOrDefault() as ErpDogFieldAttribute;
+            var attributeErpDogField_Xref = attributeErpDogField?.Xref ?? "";
+
+            //-------------------------------------
+            //calcola prefix id name (Accedi al valore di HtmlFieldPrefix)
+            //-------------------------------------
+            var prefix = (ViewContext.ViewData.TemplateInfo.HtmlFieldPrefix ?? "").Trim();
+            var prefixInputId = (prefix != "") ? prefix + "_" + For.Name : For.Name;
+            var prefixInputName = (prefix != "") ? prefix + "." + For.Name : For.Name;
+            //-------------------------------------
+            //calcola restrizioni visibilità pagina
+            //-------------------------------------
+            DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(prefix, For.Name, attributeErpDogField_Xref, ViewContext);
+            //-------------------------------------
+
+            // SE LABEL di DataRange ==> cancello sempre la label
+            if (property != null && property.GetCustomAttributes(typeof(DateRangeAttribute), false).Length > 0)
+            {
+                output.SuppressOutput(); return;
+            }
+
+            // SE LABEL di INPUT non visibile ==> cancello la label
+            if (attrField.Visible == 'N')
+            {
+                output.SuppressOutput(); return;
+            }
+
+        }
+    }
+
+
+
     //*****************************************************************************************************************************************************
     //
     // INTERVALLO DI DATE
@@ -568,19 +623,6 @@ namespace ErpToolkit.Helpers
         }
     }
 
-    //TagHelper
-
-    [HtmlTargetElement("label", Attributes = "asp-for")]
-    public class EliminaLabel_DateRangeTagHelper : TagHelper
-    {
-        [HtmlAttributeName("asp-for")]
-        public ModelExpression AspFor { get; set; }
-        public override void Process(TagHelperContext context, TagHelperOutput output)
-        {
-            var property = AspFor.Metadata.ContainerType.GetProperty(AspFor.Name);
-            if (property != null && property.GetCustomAttributes(typeof(DateRangeAttribute), false).Length > 0) output.SuppressOutput();
-        }
-    }
 
     //[HtmlTargetElement("input", Attributes = "asp-for")]
     //public class DateRangeTagHelper : TagHelper
@@ -627,13 +669,6 @@ namespace ErpToolkit.Helpers
     //}
 
 
-
-
-
-
-
-
-
     [HtmlTargetElement("input", Attributes = "asp-for")]
     public class DateRangeTagHelper : TagHelper
     {
@@ -662,15 +697,15 @@ namespace ErpToolkit.Helpers
 
 
                 //-------------------------------------
-                //calcola restrizioni visibilità pagina
-                //-------------------------------------
-                DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
-                //-------------------------------------
                 //calcola prefix id name (Accedi al valore di HtmlFieldPrefix)
                 //-------------------------------------
                 var prefix = (ViewContext.ViewData.TemplateInfo.HtmlFieldPrefix ?? "").Trim();
                 var prefixInputId = (prefix != "") ? prefix + "_" + For.Name : For.Name;
                 var prefixInputName = (prefix != "") ? prefix + "." + For.Name : For.Name;
+                //-------------------------------------
+                //calcola restrizioni visibilità pagina
+                //-------------------------------------
+                DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(prefix, For.Name, attributeErpDogField_Xref, ViewContext);
                 //-------------------------------------
 
 
@@ -793,38 +828,22 @@ namespace ErpToolkit.Helpers
             {
 
                 //-------------------------------------
-                //calcola restrizioni visibilità pagina
-                //-------------------------------------
-                DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
-                //-------------------------------------
                 //calcola prefix id name (Accedi al valore di HtmlFieldPrefix)
                 //-------------------------------------
                 var prefix = (ViewContext.ViewData.TemplateInfo.HtmlFieldPrefix ?? "").Trim();
                 var prefixInputId = (prefix != "") ? prefix + "_" + For.Name : For.Name;
                 var prefixInputName = (prefix != "") ? prefix + "." + For.Name : For.Name;
                 //-------------------------------------
-
+                //calcola restrizioni visibilità pagina
+                //-------------------------------------
+                DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(prefix, For.Name, attributeErpDogField_Xref, ViewContext);
+                //-------------------------------------
 
                 if (attrField.Visible == 'N')
                 {
                     output.SuppressOutput();
-
-                    // Aggiungi codice JavaScript per rimuovere la label associata
-                    string script = $@"
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {{
-                                        var label = document.querySelector('label[for=""{prefixInputId}""]');
-                                        if (label) {{
-                                            label.style.display = 'none';
-                                        }}
-                                    }});
-                                </script>";
-                    output.PostElement.AppendHtml(script);
-
                     return;
                 }
-
-
 
                 var choices = multipleChoicesAttribute.Choices;
                 var maxSelections = multipleChoicesAttribute.MaxSelections; // disable controll if maxSelections < 1 
@@ -1109,15 +1128,15 @@ namespace ErpToolkit.Helpers
             {
 
                 //-------------------------------------
-                //calcola restrizioni visibilità pagina
-                //-------------------------------------
-                DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(For.Name, attributeErpDogField_Xref, ViewContext);
-                //-------------------------------------
                 //calcola prefix id name (Accedi al valore di HtmlFieldPrefix)
                 //-------------------------------------
                 var prefix = (ViewContext.ViewData.TemplateInfo.HtmlFieldPrefix ?? "").Trim();
                 var prefixInputId = (prefix != "") ? prefix + "_" + For.Name : For.Name;
                 var prefixInputName = (prefix != "") ? prefix + "." + For.Name : For.Name;
+                //-------------------------------------
+                //calcola restrizioni visibilità pagina
+                //-------------------------------------
+                DogManager.FieldAttr attrField = UtilHelper.fieldAttrTagHelper(prefix, For.Name, attributeErpDogField_Xref, ViewContext);
                 //-------------------------------------
 
                 var dataTypeAttribute = property.GetCustomAttributes(typeof(DataTypeAttribute), false).FirstOrDefault() as DataTypeAttribute;
@@ -1128,19 +1147,6 @@ namespace ErpToolkit.Helpers
                     {
                         // Nascondi il controllo se Visible è "N"
                         output.SuppressOutput();
-
-                        // Aggiungi codice JavaScript per rimuovere la label associata
-                        string script = $@"
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {{
-                                        var label = document.querySelector('label[for=""{prefixInputId}""]');
-                                        if (label) {{
-                                            label.style.display = 'none';
-                                        }}
-                                    }});
-                                </script>";
-                        output.PostElement.AppendHtml(script);
-
                     }
                     else
                     {
