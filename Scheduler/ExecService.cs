@@ -61,7 +61,8 @@ namespace ErpToolkit.Scheduler
                 //}
 
 
-                dll = Assembly.LoadFile(Environment.CurrentDirectory + "\\TestObject.dll");
+                //dll = Assembly.LoadFile(Environment.CurrentDirectory + "\\TestObject.dll");
+                dll = Assembly.LoadFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestObject.dll"));
                 Type taskType = null;
                 foreach (Type t in dll.GetExportedTypes())
                 {
