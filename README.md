@@ -1,7 +1,9 @@
 # ErpToolkit
 
 
+
 `>>>>` Progetto Deprecato. Fare riferimento al nuovo progetto [ErpToolkitSuite](https://github.com/frank4barb/ErpToolkitSuite) `<<<<`
+
 
 
 L'obiettivo del progetto è costruire una piattaforma di supporto per la creazione, gestione e monitoraggio di semplici ERP (Enterprise Resource Planning). La struttura del software si compone di:
