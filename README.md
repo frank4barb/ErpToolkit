@@ -1,5 +1,9 @@
 # ErpToolkit
 
+
+>>>> Progetto Deprecato. Fare riferimento al nuovo progetto [ErpToolkitSuite](https://github.com/frank4barb/ErpToolkitSuite) <<<<
+
+
 L'obiettivo del progetto è costruire una piattaforma di supporto per la creazione, gestione e monitoraggio di semplici ERP (Enterprise Resource Planning). La struttura del software si compone di:
 
 1. **Server Web** (ASP.NET Core 8) per la visualizzazione dell'interfaccia grafica basata su architettura MVC (Model-View-Controller), che separa logicamente struttura, visualizzazione e gestione dei dati.
